@@ -1,6 +1,6 @@
 # 许可证与公开范围
 
-本仓按组件保留原许可证；此索引不为整个仓库授予一个新许可证。M4 是本地迁移候选，25文件公开范围已获用户确认；当前未授权远程交付，状态仍为 **HOLD**。
+本仓按组件保留原许可证；此索引不为整个仓库授予一个新许可证。M4 是本地迁移候选，25文件公开范围及本次 GitHub 候选交付已获用户确认；发布清单已记录该次授权。已有组件许可和下述来源限制继续保留。
 
 | 范围 | 已有声明与证据 |
 | --- | --- |
@@ -17,4 +17,4 @@
 
 历史源码摘录及设计参考的具体对应另见 [来源与声明](docs/vendor/historical-snippets/README.md)。该补充只增加归属信息，不授予远程操作权限。
 
-补充声明：[历史计划模板](docs/vendor/historical-snippets/TEMPLATE-SOURCES.md)；[Mermaid 精确发行物声明](docs/vendor/mermaid/README.md)。它们保留第三方原声明，不改变公开 HOLD 或整仓许可。
+补充声明：[历史计划模板](docs/vendor/historical-snippets/TEMPLATE-SOURCES.md)；[Mermaid 精确发行物声明](docs/vendor/mermaid/README.md)。它们保留第三方原声明；本次远程交付授权不改变整仓许可，不消除已披露的来源限制。

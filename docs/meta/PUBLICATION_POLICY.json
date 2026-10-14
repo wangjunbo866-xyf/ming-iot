@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "publication_status": "hold",
-  "scope": "Local M4 preparation only. No GitHub push, publication, source deletion or live credential rotation authorized.",
+  "publication_status": "ready",
+  "scope": "User-authorized GitHub candidate push, hosted CI and independent review only. Preserve old repositories and private backups. No merge, release, M5 runtime cutover, source deletion or production action.",
   "history_strategy": "New isolated history from attribution assembly plus approved 25-file scope. Original complete histories, candidates and backups remain private; never push their refs wholesale.",
   "source_head": "302170043c6ce8dd81ff2a9826156d941ea7deb7",
   "source_tree": "7acc3768b9d5b8aa1ba60048db16e3ab767a4635",
@@ -55,14 +55,7 @@
       "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
     }
   ],
-  "pending_decisions": [
-    {
-      "id": "PUBLICATION-AUTHORIZATION",
-      "title": "Future remote action must be explicitly authorized for the verified candidate; current task is local only.",
-      "paths": [],
-      "resolution": "本地最终候选验证和独立复审后，依据用户明确授权再实施远程操作；本轮不推送。"
-    }
-  ],
+  "pending_decisions": [],
   "limitations": [
     "Pattern scanning is not proof of absence of every secret or personal datum. Media rights/content and transitive runtime compliance are not certified.",
     "Local-address and historical workstation path references remain source context, not active configuration or permission to connect.",
@@ -96,5 +89,27 @@
       "evidence": "LICENSES.md",
       "result": "No new project-wide open-source license. Preserve existing component licenses and third-party exceptions; this scope choice is not a blanket ownership representation."
     }
-  ]
+  ],
+  "remote_authorization": {
+    "date": "2026-10-15",
+    "source": "explicit_user_request",
+    "repository": "https://github.com/wangjunbo866-xyf/ming-iot",
+    "reviewed_base_head": "de45752d63f6f701eade27a550c86aaa58bbe7ff",
+    "candidate_branch": "codex/monorepo-migration",
+    "allowed_actions": [
+      "initialize empty default branch for PR base",
+      "push verified candidate branch",
+      "create migration PR",
+      "run hosted CI",
+      "independent exact-head review"
+    ],
+    "permitted_followups": "Necessary delivery metadata or CI corrections must be validated and independently reviewed for their final exact head.",
+    "excluded_actions": [
+      "merge",
+      "version release",
+      "M5 runtime cutover",
+      "delete source repositories or backups",
+      "production operations"
+    ]
+  }
 }

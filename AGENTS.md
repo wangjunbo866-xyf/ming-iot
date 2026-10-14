@@ -5,7 +5,7 @@
 - 业务代码：`backend/saas`、`backend/share`、`backend/things`；Core/Share/Things 已并入，不再寻找同名兄弟仓实现。
 - 查规格或变更时，从 [知识导航](docs/README.md) 进入模块当前正文；查历史时按 [来源表](docs/meta/DOC_REGISTRY.yaml) 区分适用版本。
 - 本地入口：`make knowledge-check`、`make verify-pr`；具体边界见 [工具说明](tooling/README.md) 和 [部署说明](deploy/README.md)。
-- 当前状态：单仓本地候选；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。
+- 当前状态：已授权交付 GitHub 的单仓候选；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。
 - 当前 Goal 为 `ming-iot-knowledge-pilot`。LoopX 仍使用已注册的本机运行入口；其迁出旧路径另行验证，不在候选内建立第二份数据库。
 
 ## 关键约定速查
@@ -14,7 +14,7 @@
 | --- | --- |
 | 需求与规格 | 按模块当前有效正文及已确认决定执行；历史材料不自动成为规则 |
 | 代码检查 | 完整 verify-pr 与独立复审绑定同一候选，真实依赖未运行则明确记录 |
-| 迁移 | 保留原候选与来源证据；本轮不推送远程、不删除旧仓 |
+| 迁移 | 已授权推送候选至 GitHub 并完成 CI/复审；保留旧源与备份，M5、合并和删除另行授权 |
 
 
 ## 开始修改前
@@ -48,7 +48,7 @@
 
 - 代码变更从仓库根 `Makefile` 选择 Verification Profile；以 `make help` 的当前输出为入口说明，并按 `deploy/README.md` 的变更面选择规则运行最低档位。
 - 普通代码 PR 必须运行 `make verify-pr`。需要真实 Kafka 或 Things 依赖时另跑显式 `verify-integration` suite；发布候选才运行带重型确认的 `verify-release`。重型验证结论不授予发布或生产权限。
-- PR 关联需求/变更入口、本仓规格适用版本、完整 40 位候选 Head、实际 Profile 结论和同一 Head 的独立 Review。GitHub PR 模板与单仓 CI 已在本地准备；提交前按 [CI 说明](docs/runbook/monorepo-ci.md) 运行完整检查。公开前核对发布清单；HOLD 状态不可发布。`.gitee/` 保留历史，远程 CI 尚未运行。
+- PR 关联需求/变更入口、本仓规格适用版本、完整 40 位候选 Head、实际 Profile 结论和同一 Head 的独立 Review。GitHub PR 模板与单仓 CI 已在本地准备；提交前按 [CI 说明](docs/runbook/monorepo-ci.md) 运行完整检查。公开前核对发布清单；HOLD 状态不可发布。`.gitee/` 保留历史，远程 CI 以关联 PR 的实际运行结果为准；本地检查不代替托管运行。
 - 未运行项以非 PASS 结论记录原因和补验证方式；既有失败保留真实状态并关联独立缺陷 Issue，不通过缩小或绕过 Profile 获得绿色。
 
 ## LoopX 上下文与 Evidence 热路径
@@ -68,8 +68,8 @@
 
 以下规则在 `ming-iot` 内覆盖上级工作区对每次 commit、push 单独授权的要求：
 
-- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；本轮迁移明确禁止推送。
-- 所有跟踪文件变更通过 PR 进入 `master`；禁止直接 push `master`。
+- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；本轮已明确授权 GitHub 候选推送、PR、CI 与独立复审；具体范围见 `docs/meta/PUBLICATION_POLICY.json`。
+- 所有跟踪文件变更通过 PR 进入默认分支；禁止直接 push 默认分支的产品变更。首次空仓可建立不含文件的根提交作为 PR 基线。
 - PR 默认由有权限的人在目标托管平台完成 Review 和合并；人执行合并本身即为该次合并授权，不再要求单独的 LoopX User Gate。
 - 只有要求 Agent 执行 PR 合并时，才建立绑定精确 PR、Head、目标分支和合并方式的 User Gate。
 - 版本发布、生产环境变更、凭据处理和权限变更必须建立绑定精确目标与动作的 User Gate。

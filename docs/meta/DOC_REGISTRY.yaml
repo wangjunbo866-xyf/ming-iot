@@ -6,7 +6,7 @@ materials:
     role: current_goal_migration_plan
     status: active-plan
     path: docs/architecture/monorepo-migration.md
-    revision: 0.4.8
+    revision: 0.4.9
     authority: user_confirmed_direction_design_candidate
     related:
       - docs/changelog/2026-10-15-monorepo-inventory.md
@@ -193,10 +193,19 @@ materials:
     conflict_rule: "0.4.7累计17文件旁注候选独立于原M4A和旧演练；技术及完整verify-pr通过不等于全新clone或公开放行。74原文块与三处模板具体对应，不是全文权利或原始checkout证明。25/26文件公开范围未决定未执行，Jison Lex原生完整声明缺口保持；不新增许可、不推送或删除旧源。"
   - source_id: ming-iot-monorepo-public25-20261015
     role: monorepo_approved_public_scope_and_final_local_candidate
-    status: approved_scope_validation_external
+    status: validated_local_publication_hold
     path: docs/changelog/2026-10-15-monorepo-inventory.md
     revision: public25-1
     authority: scoped_migration_evidence
     related:
       - docs/architecture/monorepo-migration.md
     conflict_rule: "用户已确认25文件方案，覆盖旧未决定状态；本地候选另建历史，旧源完整保留。精确验证和复审以Goal登记的monorepo-public25-20261015回执为准；不新增整仓许可，不授权推送、删除或真人验收。"
+  - source_id: ming-iot-monorepo-github-delivery-20261015
+    role: monorepo_github_candidate_ci_and_review
+    status: authorized_pending_hosted_validation
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: github-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "用户已授权GitHub候选推送、托管CI和独立复审；以实际远程Head和运行回执验收，保留旧源、候选和私有备份，不授权M5、删除、自动合并或版本发布。"
