@@ -1,0 +1,203 @@
+info(
+	title: "用户管理模块"
+	desc: "用户管理相关接口，包括创建账号，登录，获取验证码，获取用户列表，获取单个用户信息，更新用户信息，删除用户"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+	group: things/user/device/collect
+	prefix: /api/v1/things/user/device/collect
+	accessCodePrefix: "thingsUserDevice"
+	accessNamePrefix: "设备收藏"
+	accessGroup: "用户设备"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+	@doc "批量收藏设备"
+	@handler multiCreate
+	post /multi-create (UserCollectDeviceSave) returns ()
+	@doc "批量取消收藏设备"
+	@handler multiDelete
+	post /multi-delete (UserCollectDeviceSave) returns ()
+	@doc "获取收藏设备列表"
+	@handler index
+	post /index () returns (UserCollectDeviceInfo)
+}
+
+@server (
+	group: things/user/device/share
+	prefix: /api/v1/things/user/device/share
+	accessCodePrefix: "thingsUserDevice"
+	accessNamePrefix: "设备分享"
+	accessGroup: "用户设备"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+	@doc "分享设备"
+	@handler create
+	post /create (UserDeviceShareInfo) returns (WithID)
+	@doc "生成批量分享设备二维码"
+	@handler multiCreate
+	post /multi-create (UserDeviceShareMultiInfo) returns (UserDeviceShareMultiToken)
+	@doc "获取批量分享的设备列表"
+	@handler multiIndex
+	post /multi-index (UserDeviceShareMultiToken) returns (UserDeviceShareMultiIndexResp)
+	@doc "接受批量分享设备"
+	@handler multiAccept
+	post /multi-accept (UserDeviceShareMultiAcceptInfo) returns ()
+	@doc "取消分享设备"
+	@handler delete
+	post /delete (UserDeviceShareReadReq) returns ()
+	@doc "批量取消分享设备"
+	@handler multiDelete
+	post /multi-delete (UserDeviceShareMultiDeleteReq) returns ()
+	@doc "更新分享设备信息"
+	@handler update
+	post /update (UserDeviceShareInfo) returns ()
+	@doc "获取分享设备详情"
+	@handler read
+	post /read (UserDeviceShareReadReq) returns (UserDeviceShareInfo)
+	@doc "获取分享设备列表"
+	@handler index
+	post /index (UserDeviceShareIndexReq) returns (UserDeviceShareIndexResp)
+	@doc "获取批量分享 Token 列表"
+	@handler multiGetTokenList
+	post /multi-get-token-list () returns (UserDeviceShareMultiGetTokenListResp)
+	@doc "删除批量分享 Token"
+	@handler multiDeleteToken
+	post /multi-delete-token (UserDeviceShareMultiDeleteTokenReq) returns ()
+}
+
+@server (
+	group: things/user/device/share
+	prefix: /api/v1/things/user/device/share
+	middleware:  InitCtxsWare
+)
+service api {
+	@doc(
+		summary: "公开查询批量分享 Token 状态"
+		description: "H5 分享承接页公开查询 shareToken 是否仍有效，只返回过期时间和精简状态，不返回权限详情。"
+		isNeedAuth: "false"
+	)
+	@handler tokenCheck
+	post /token/check (UserDeviceShareTokenCheckReq) returns (UserDeviceShareTokenCheckResp)
+}
+
+type (
+	UserDeviceShareMultiDeleteReq{
+		IDs []int64 `json:"ids,optional"`
+		ProjectID int64 `json:"projectID,string,optional"`
+	}
+	UserDeviceShareInfo {
+		ID         int64       `json:"id,optional"`
+		ProjectID int64 `json:"projectID,string,optional"`
+		Device     DeviceCore `json:"device,optional"`         //设备信息
+		SharedUserID     int64       `json:"sharedUserID,string,optional"`        //分享的对象
+		SharedUserAccount string `json:"sharedUserAccount,optional"`
+		AuthType int64  `json:"authType,optional"`//授权类型:1:全部授权 2:部分授权
+		SchemaPerm map[string ]*SharePerm  `json:"schemaPerm,optional"`//普通功能权限 2:读写权限 3读权限
+		AccessPerm map[string ]*SharePerm  `json:"accessPerm,optional"`//系统功能权限 2:读写权限 3读权限
+		ExpTime *int64 `json:"expTime,optional,string"` //到期时间
+		UseBy  string      `json:"useBy,optional,omitempty"`   //用途
+		Desc  string      `json:"desc,optional,omitempty"`   //备注
+		User *UserCore `json:"user,optional"` //只读,传withUser会赋值
+		CreatedTime int64  `json:"createdTime,optional"`
+	}
+	UserDeviceShareMultiInfo{
+		Devices     []*DeviceCore `json:"devices,optional"`         //批量设备信息
+		AuthType int64  `json:"authType,optional"`//授权类型:1:全部授权 2:部分授权
+		SchemaPerm map[string ]*SharePerm  `json:"schemaPerm,optional"`//普通功能权限 2:读写权限 3读权限
+		AccessPerm map[string ]*SharePerm  `json:"accessPerm,optional"`//系统功能权限 2:读写权限 3读权限
+		ExpTime int64 `json:"expTime,optional"` //到期时间
+		UseBy  string      `json:"useBy,optional,omitempty"`   //用途
+		Desc  string      `json:"desc,optional,omitempty"`   //备注
+		CreatedTime int64  `json:"createdTime,optional"`
+	}
+	UserDeviceShareMultiAcceptInfo{
+		ShareToken string `json:"shareToken,optional"` //分享后的用于生成二维码的字符串
+		Devices     []*DeviceCore `json:"devices,optional"`         //批量设备信息
+	}
+	UserDeviceShareMultiToken{
+		ShareToken string `json:"shareToken,optional"`
+		LinkExpireAt int64 `json:"linkExpireAt,optional"`
+		AuthExpireAt int64 `json:"authExpireAt,optional"`
+		CreatedTime int64 `json:"createdTime,optional"`
+	}
+	UserDeviceShareTokenCheckReq{
+		ShareToken string `json:"shareToken"`
+	}
+	UserDeviceShareTokenCheckResp{
+		Valid bool `json:"valid"`
+		Reason string `json:"reason,optional"`
+		LinkExpireAt int64 `json:"linkExpireAt,optional"`
+		AuthExpireAt int64 `json:"authExpireAt,optional"`
+		CreatedTime int64 `json:"createdTime,optional"`
+		UseBy string `json:"useBy,optional,omitempty"`
+		Desc string `json:"desc,optional,omitempty"`
+		DeviceCount int64 `json:"deviceCount,optional"`
+	}
+	SharePerm{
+		Perm int64 `json:"perm,optional,default=3"`//2:读写权限 3读权限
+	}
+	UserDeviceShareReadReq{
+		ID     int64       `json:"id,optional"`
+		UseBy  string      `json:"useBy,optional,omitempty"`   //用途
+		Device *DeviceCore `json:"device,optional"` //设备信息
+	}
+	UserDeviceShareIndexReq{
+		Page   *PageInfo   `json:"page,optional"`
+		Device *DeviceCore `json:"device,optional"` //设备信息
+		WithUser bool  `json:"withUser,optional"`//同时返回用户信息
+	}
+	UserDeviceShareIndexResp{
+		List  []*UserDeviceShareInfo `json:"list,optional"`
+		Total int64                  `json:"total,optional"`
+	}
+	UserDeviceShareMultiIndexResp{
+		Devices     []*DeviceShareInfo `json:"devices,optional"`         //批量设备信息
+		AuthType int64  `json:"authType,optional"`//授权类型:1:全部授权 2:部分授权
+		SchemaPerm map[string ]*SharePerm  `json:"schemaPerm,optional"`//普通功能权限 2:读写权限 3读权限
+		AccessPerm map[string ]*SharePerm  `json:"accessPerm,optional"`//系统功能权限 2:读写权限 3读权限
+		ExpTime int64 `json:"expTime,optional"` //到期时间
+		UseBy  string      `json:"useBy,optional,omitempty"`   //用途
+		Desc  string      `json:"desc,optional,omitempty"`   //备注
+
+		CreatedTime int64  `json:"createdTime,optional"`
+	}
+	UserDeviceShareMultiListItem{
+		ShareToken string `json:"shareToken,optional"` //分享 Token
+		DeviceCount int64 `json:"deviceCount,optional"` //设备数量
+		CreatedTime int64 `json:"createdTime,optional"` //创建时间
+		ExpTime int64 `json:"expTime,optional"` //分享过期时间
+		AuthType int64 `json:"authType,optional"` //授权类型
+		UseBy string `json:"useBy,optional,omitempty"` //用途
+		Desc string `json:"desc,optional,omitempty"` //备注
+	}
+	UserDeviceShareMultiGetTokenListResp{
+		List []*UserDeviceShareMultiListItem `json:"list,optional"` //Token 列表
+		Total int64 `json:"total,optional"` //总数
+	}
+	UserDeviceShareMultiDeleteTokenReq{
+		ShareToken string `json:"shareToken"` //要删除的分享 Token
+	}
+	DeviceShareInfo{
+		ProductID string `json:"productID"`      //产品ID
+        ProductName string `json:"productName,optional,omitempty"`
+        ProductImg string `json:"productImg,optional,omitempty"`                        //产品图片
+        DeviceName string `json:"deviceName"`    //设备名称
+        DeviceAlias string `json:"deviceAlias,optional"`                                  //设备别名 读写
+		UseBy  string      `json:"useBy,optional,omitempty"`   //用途
+
+	}
+)
+
+type (
+	UserCollectDeviceSave{
+		Devices []*DeviceCore `json:"devices"`
+	}
+	UserCollectDeviceInfo{
+		Devices []*DeviceInfo `json:"devices"`
+	}
+)

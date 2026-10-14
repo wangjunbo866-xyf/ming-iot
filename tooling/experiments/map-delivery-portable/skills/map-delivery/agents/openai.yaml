@@ -1,0 +1,4 @@
+interface:
+  display_name: "业务地图交付"
+  short_description: "按业务模块组织规格、增量变更和验证证据，支持跨项目复用与交接"
+  default_prompt: "使用 $map-delivery，按本项目约定建立业务地图并推进一个可验证的变更。"

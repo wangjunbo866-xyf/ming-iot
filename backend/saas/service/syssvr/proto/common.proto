@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "department.proto";
+
+service Common {
+  rpc config(Empty) returns(configResp); //添加菜单
+  rpc qrCodeRead(QRCodeReadReq)returns(QRCodeReadResp);
+  rpc weatherRead(WeatherReadReq)returns(WeatherReadResp);
+
+  rpc slotInfoIndex(SlotInfoIndexReq) returns(SlotInfoIndexResp);//获取插槽列表
+  rpc slotInfoCreate(SlotInfo) returns(WithID); //添加角色
+  rpc slotInfoMultiCreate(SlotInfoMultiCreateReq) returns(Empty); //添加角色
+
+  rpc slotInfoUpdate(SlotInfo) returns(Empty); //更新角色
+  rpc slotInfoDelete(WithID) returns(Empty); //删除角色
+  rpc slotInfoRead(WithID) returns(SlotInfo);   //获取详情接口
+
+  rpc serviceInfoRead(WithCode)returns(ServiceInfo);
+  rpc serviceInfoUpdate(ServiceInfo) returns(Empty); //更新服务信息
+
+  rpc thirdDeptRead(ThirdDeptInfoReadReq)returns(DeptInfo);//获取第三方的部门信息,Children只能获取一层,需要递归获取
+  rpc thirdDeptIndex(ThirdDeptInfoIndexReq)returns(DeptInfoIndexResp);//获取第三方的部门信息,Children只能获取一层,需要递归获取
+}
+
+message ServiceInfo{
+  string code =1;//服务编码
+  string name =2;//服务名
+  string version =3;//服务版本
+  string desc =4;
+  int64 createdTime =5;//创建时间
+  int64 updatedTime = 6;//更新时间
+}
+
+message SlotInfo{
+  int64 id =1;
+  string  code =2;  // 主编码
+  string subCode =3;// 子编码
+  string  slotCode =4;  //slot的编码
+  string  method =5;  // 请求方式 GET  POST
+  string  uri =6;  // 参考: /api/v1/system/user/self/captcha?fwefwf=gwgweg&wefaef=gwegwe
+  repeated string  hosts =7;  //访问的地址 host or host:port
+  string  body =8;  // body 参数模板
+  map<string,string>  handler =9;  //http头
+  string  authType =10;  //鉴权类型 core
+  string desc = 11;//描述类型
+}
+
+message WeatherAir  {
+    string aqi =1;
+    string level =2;
+    string category =3;
+    string primary =4;
+    string pm10 =5;
+    string pm2p5 =6;
+    string no2 =7;
+    string so2 =8;
+    string co =9;
+    string o3 =10;
+}
+
+message WeatherReadReq  {
+    Point position=1;
+    int64 ProjectID =2;
+}
+
+message WeatherReadResp  {
+    string obsTime=1;
+    string temp=2;
+    string feelsLike=3;
+    string icon=4;
+    string text=5;
+    string wind360=6;
+    string windDir=7;
+    string windScale=8;
+    string windSpeed=9;
+    string humidity=10;
+    string precip=11;
+    string pressure=12;
+    string vis=13;
+    string cloud=14;
+    string dew=15;
+    WeatherAir air=17;
+}
+
+message QRCodeReadReq{
+  string page =1; //默认是主页，页面 page，例如 pages/index/index，根路径前不要填加 /，不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面。scancode_time为系统保留参数，不允许配置
+  string scene=2; //        	最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
+  string envVersion=3; //要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"。默认是正式版。
+}
+
+message QRCodeReadResp{
+  bytes buffer =1;
+}
+
+message SlotInfoMultiCreateReq{
+  repeated SlotInfo list=1;
+}
+
+message SlotInfoIndexReq{
+  string code =1;
+  string subCode =2;
+  PageInfo page       = 3;  // 分页信息 只获取一个则不填
+}
+
+message SlotInfoIndexResp{
+  repeated SlotInfo list=1;
+  int64 total = 2;
+}
+
+message ThirdDeptInfoIndexReq{
+  PageInfo page = 1;//分页信息
+  int64 parentID =2;//父节点
+  string thirdType =3;//第三方的类型 ding:钉钉  wxE:企业微信
+  ThirdAppConfig thirdConfig =4;//第三方配置
+}
+
+message ThirdDeptInfoReadReq{
+  int64 id = 1;//需要获取的第三方部门ID,顶级为1
+  bool withFather = 2;//是否返回父级
+  bool withChildren =3;//是否返回子级
+  string thirdType =4;//第三方的类型 ding:钉钉  wxE:企业微信
+  ThirdAppConfig thirdConfig =5;//第三方配置
+}
+
+message Map{
+  string mode = 1;       //坐标系 默认百度坐标系
+  string accessKey = 2;  //设备地图key
+  string accessSecret =3;
+}
+
+message configResp{
+  Map map = 1;           //设备地图相关配置
+}
+

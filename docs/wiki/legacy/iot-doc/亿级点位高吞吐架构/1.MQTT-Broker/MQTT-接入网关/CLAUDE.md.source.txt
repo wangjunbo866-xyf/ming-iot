@@ -1,0 +1,47 @@
+# CLAUDE.md — MQTT Gateway
+
+专用逆变器 MQTT 接入层（不是通用 MQTT Broker）。设计依据：
+[iot_doc/doc/mqtt-gateway/](../iot_doc/doc/mqtt-gateway/)，尤
+[7.实现红线](../iot_doc/doc/mqtt-gateway/7.cloud-mqtt-gateway-implementation-red-lines.md)。
+
+## 开发方式：Loop Programming（Agent 开发闭环）
+
+每个改动走一圈：`plan → 先写验证 → 小步实现 → 自验(跑测试/压测) → 修 → 收口`。
+先写能判定成败的测试/断言，再写实现。严格 TDD：没有先失败的测试，不写生产代码。
+
+## 红线（违反即 reject）
+
+来自实现红线文档的最高优先级十条，**实现期必须遵守**：
+
+1. **QoS1 PUBACK 只能在 durable raw log ack 之后发送**。禁止 producer buffer 成功即 PUBACK；禁止把写失败静默吞掉。
+2. **Session 必须 pointer-poor**：禁止每连接 `map` / `channel` / `time.Timer` / `interface{}` / `logger` / 大 buffer。下行 inflight 用 `[4]DownlinkSlot`，不用 `map`。device_id 用 numeric/interned id，不存 string。
+3. **payload 必须 bounded-memory，先预算后分配**：解析出 `payload_len` → 申请 per-client + global byte budget → 分配 exact-size buffer → `io.ReadFull`。禁止 queue 里引用大 read buffer 的 subslice。
+4. **所有 queue 必须有 bytes 上限**（accept/auth/append/downlink/metrics）。禁止无界 channel、无界 slice append、无界 goroutine spawn、无界 retry、无界本地 spool。
+5. **append queue 满时**：QoS1 断连不 ACK；QoS0 丢弃或断连。
+6. **CONNECT 成功 = 认证成功 且 Presence 写入成功**。Presence 写失败禁止返回成功 CONNACK。
+7. **append callback 不直接操作 session**：callback 只产出 `AppendResult{ConnID, SessionVersion, ...}`，经 bounded 回执队列投递回 session 拥有者，用 `ConnID + SessionVersion` fencing 校验后才发 PUBACK / 改 session 字段。byte budget 无条件释放。
+8. **Presence 删除和下行投递必须带 fencing**（broker_id/broker_epoch/conn_id/session_version）。
+9. **设备重试必须退避并带 jitter**（服务端不能假设设备会善意退避，需配合 accept 限流）。
+10. **第一阶段不做**：QoS2、retain、持久会话、通用 wildcard/shared 订阅、Broker 内离线队列、Broker 内解码、Broker 内写时序库、本地无限 WAL/spool。
+
+## goroutine 红线
+
+`goroutine 总数 ≤ 连接数 × 1.x`（≈1.0~1.2）。每连接只允许 1 个 read loop goroutine。
+worker pool（auth/append/shard）固定数量，与 CPU 核数相关，不随连接数线性增长。
+
+## 上线门槛
+
+无风暴压测（含 TLS 握手风暴、raw log 变慢、append queue 高水位、建断连 100 万次后 goroutine/fd/heap 回落）、无核心指标 dashboard、无降级开关，不允许上线。
+
+## 协议范围（第一阶段 MQTT 3.1.1 子集）
+
+`CONNECT/CONNACK · PUBLISH QoS0/QoS1 · PUBACK · PINGREQ/PINGRESP · DISCONNECT · CleanSession=true`，
+受限 `SUBSCRIBE/SUBACK`（仅设备自己的命令 topic，禁 wildcard / 跨设备 / `$share`）。
+
+## 构建测试
+
+```bash
+cd mqtt-gateway
+go test ./...
+go test -race ./...   # 并发/竞态相关改动必须跑
+```

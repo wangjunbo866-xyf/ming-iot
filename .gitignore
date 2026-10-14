@@ -1,0 +1,22 @@
+/backend/bin/
+/backend/.thingsbaseline-*/
+/backend/.saastxn/
+/backend/.goctl-patch-work/
+/backend/tools/.bin/
+/deploy/.runtime/
+/deploy/profiles/things-baseline/.env.local
+**/.env
+**/*.local.yaml
+**/*.local.yml
+/.worktrees/
+/.loopx/
+/.codex/goals/
+/.codex/skills/
+/.local/
+/.opencode/goals/
+
+**/__pycache__/
+**/*.pyc
+
+# Local audit tools and private scan results
+/.cache/

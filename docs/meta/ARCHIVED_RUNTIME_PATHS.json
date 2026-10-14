@@ -1,0 +1,1355 @@
+{
+  "source_head": "487c2f068a66f0a4878eef04dafad1241270a535",
+  "files": [
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "3879975baf0213ea1281f3d40af6e6244f513f2ae4240536a784b84c948440f8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "d84efe37027d06ad86e36545a2f1e22baa17c9a9a9cba15d2d3163d7a8caa4b5",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "099a5ceb4f0f9b2dd46afad4471337195887ec334be284447200993b118a939c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "1b6d139c06abd75c77a4ad9c18cc84db3de6d3c2eb79931d97fb7a06392e6c3c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "3879975baf0213ea1281f3d40af6e6244f513f2ae4240536a784b84c948440f8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "d84efe37027d06ad86e36545a2f1e22baa17c9a9a9cba15d2d3163d7a8caa4b5",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "099a5ceb4f0f9b2dd46afad4471337195887ec334be284447200993b118a939c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "1b6d139c06abd75c77a4ad9c18cc84db3de6d3c2eb79931d97fb7a06392e6c3c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "3879975baf0213ea1281f3d40af6e6244f513f2ae4240536a784b84c948440f8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "d84efe37027d06ad86e36545a2f1e22baa17c9a9a9cba15d2d3163d7a8caa4b5",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "099a5ceb4f0f9b2dd46afad4471337195887ec334be284447200993b118a939c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/baseline/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "1b6d139c06abd75c77a4ad9c18cc84db3de6d3c2eb79931d97fb7a06392e6c3c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "4aa70ef19a8f4a7b979f57c343ed67722ddb81b7247448bd7f67e0162b2d473b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "4aa70ef19a8f4a7b979f57c343ed67722ddb81b7247448bd7f67e0162b2d473b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "4aa70ef19a8f4a7b979f57c343ed67722ddb81b7247448bd7f67e0162b2d473b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v1/candidate/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "7bb7c2896b01d3404dd46b04e227452be5f54521bdc553d4169f6568b4e033dd",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/code-standalone/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "7bb7c2896b01d3404dd46b04e227452be5f54521bdc553d4169f6568b4e033dd",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/missing-code/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/SKILL.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/SKILL.md.source.txt",
+      "sha256": "7bb7c2896b01d3404dd46b04e227452be5f54521bdc553d4169f6568b4e033dd",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/agent-evaluation.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/agent-evaluation.md",
+      "sha256": "62cc05984882591dbceb95b9d68b7728d9ad8e30a49083c5bfda9ab51cf7e66e",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/decision-notes.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/decision-notes.md",
+      "sha256": "afff66dfef2db4a5be2a847d6b76e7b114caed7c0b9098f03e8416a91e46e2d9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.md",
+      "sha256": "06eff8dc702cd4d43c5b7d7c8be0075b87f01f5454f16fd351c5ba7aa7f8efa6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/examples.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/examples.zh-CN.md",
+      "sha256": "bec3c4cf64925aa6d681661e374d06793ddf92e41bd6eb64f0a6cc7e11d6193c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/lifecycle-checklists.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/lifecycle-checklists.md",
+      "sha256": "0178b384ae3d1d8c5b11c728d92a43dc76b7781e1604018a49908c0ec5e0180f",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/metadata-schema.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/metadata-schema.md",
+      "sha256": "75a90e18a61ebf46ccc548d641289c569b2cfdf94a264aed4e277a5bc89b6b93",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/migration-matrix.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/migration-matrix.md",
+      "sha256": "fef4d207285b338ebaace7be0a764323468d59b99e54fd1e5eb46f10a76a7f05",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.md",
+      "sha256": "8e053bdcf6e163f6ce5ac8fd5b1bf398c695faa966a68e70837e5375efa6dff6",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/pitfalls.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/pitfalls.zh-CN.md",
+      "sha256": "d7d52d2e16bb7da61e90badf96908c57f069f4e21dfcea3fca301b19ff27bb39",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/project-config.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/project-config.md",
+      "sha256": "60d73b43770e20924bfea2bb97e6911be572c7f0e91ff33972890cfdec1ab374",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.md",
+      "sha256": "d3db7a1cb59e07c005835a433888e17ed5b1d3748ab9d76c2cc0055d795cab55",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/repair.zh-CN.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/repair.zh-CN.md",
+      "sha256": "299fa435f71e911fe819c85e83ed9f900dc40218c3db313f5baba5e9a61c0dbe",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/AGENTS.md.source.txt",
+      "sha256": "5fd1595b43380e8a25c320f5b53992ef66cf8f45ef90000c8d94435e29f52f4b",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.md",
+      "sha256": "4229bc240ed5318e214eb9c0315b79ab535c56ebdbf9cef20af845f896420d14",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/README.template.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/README.template.md",
+      "sha256": "d1a2c5ccf0301c4e523e0c0ccdebedf4966e5cc94c354365337e11a6d43ea4da",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/adr.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/adr.md",
+      "sha256": "f2ca99d54f51dc0b05e4f118112406b0ceff8e445733c09058b046ce7291df23",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/api.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/api.md",
+      "sha256": "2837a73c7331028ff3f8388a83bbf251c5410fa0c5f8f71a3c18528342f342b0",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/decision.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/decision.md",
+      "sha256": "1a705439dc9b39eff838981431d2ba36bab9ab0a0b1ffea11f6c33178024879d",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/design.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/design.md",
+      "sha256": "d3e2b8cfc14869df04c41cb07cee7a7ab51171b8f56cd8cd26a4cbb153f31ec9",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/release.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/release.md",
+      "sha256": "c5ef8e82c5a1509f89603874f18eb0efeb6271c0785009ac3c640a55a4a1e6d8",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/requirements.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/requirements.md",
+      "sha256": "3db507b88a4324e394bd560ef587a11d13d9a23b5f5122816f5ca210a0347139",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/templates/testing.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/templates/testing.md",
+      "sha256": "33b8c0744849c39a6130e9531cce6261074078e870457e35535c3b38403892cf",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/verification.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/verification.md",
+      "sha256": "de323a6a96b4e3f14e06a5b65cac8ed2f1d7dbae5e6ab3ad67b26adbc1464e6c",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    },
+    {
+      "source_path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/.codex/skills/r-doc/references/workflow.md",
+      "path": "docs/wiki/legacy/ai-native/r-doc-reports/real-discovery-v2/iteration-1/paired-slice/with_skill/outputs/workspace/codex-materials/skills/r-doc/references/workflow.md",
+      "sha256": "c8abc19e69588c762eb6ae89db3e676863127bb2924aa526bb228bfaf9991beb",
+      "reason": "Historical captured Skill material; keep outside runtime .codex paths and automatic discovery."
+    }
+  ]
+}

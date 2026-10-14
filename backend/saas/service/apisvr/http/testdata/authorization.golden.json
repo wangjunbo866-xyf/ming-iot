@@ -1,0 +1,1898 @@
+[
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/tree",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/read",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/module/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/module/multi-update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/api/batch-agg",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/config",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/debug",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/debug",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/debug-tencent",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/download-file",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/ntp/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/qr-code/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/third/dept/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/third/dept/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/upload-file",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/upload-url/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/weather/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/websocket/connect",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/multi-update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/user/apply/deal",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/user/apply/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/execute",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/multi-delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/multi-export",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/multi-import",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/cancel",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/read",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/read",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/log/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/send",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/log/login/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/log/oper/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/multi-export",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/multi-import",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/multi-export",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/multi-import",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/test/send",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/tree",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/access/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/access/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/app/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/app/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/menu/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/menu/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/module/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/module/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/read",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/tree",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/core/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/multi-create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/update",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/config/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/config/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/core/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/core/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/create",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/delete",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/index",
+    "effectiveAuthType": "supper",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/data/area/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/data/project/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/dept/multi-create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/dept/multi-delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/role/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/role/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/access/tree",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/app/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/app/read",
+    "effectiveAuthType": "public",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/area/apply/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/bind-account",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/cancel",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/captcha",
+    "effectiveAuthType": "public",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/change-pwd",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/forget-pwd",
+    "effectiveAuthType": "public",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/login",
+    "effectiveAuthType": "public",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/logout",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/menu/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/multi-is-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/statistics",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/module/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/push-client/report",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/register",
+    "effectiveAuthType": "public",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/user/search",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "GET",
+    "fullPath": "/open/oss/download",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "PUT",
+    "fullPath": "/open/oss/upload",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  }
+]

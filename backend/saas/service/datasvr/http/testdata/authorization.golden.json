@@ -1,0 +1,58 @@
+[
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": false
+  }
+]

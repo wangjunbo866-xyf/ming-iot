@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "module": "saas.notification-trigger",
+  "task": "todo_60ac9c3f4982",
+  "type": "patch",
+  "claim": "docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/change.md",
+  "confirmation_source": "user-reply:2026-10-14:Q1:manual-nickname-first; Q2:independent-ai-handoff; change:R2",
+  "spec": "docs/specs/saas/notification-trigger/spec.md#display-name",
+  "spec_version": "observed-v0",
+  "backlink": "docs/specs/saas/notification-trigger/README.md#display-name-patches",
+  "write_scope": [
+    "docs/runbook/team-development.md",
+    "docs/specs/README.md",
+    "docs/specs/saas/notification-trigger/**",
+    "docs/changelog/2026-10-14-ming-specs-handoff-pilot.md",
+    "docs/meta/DOC_REGISTRY.yaml",
+    ".agents/skills/ming-specs/**",
+    "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams.go",
+    "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams_test.go"
+  ]
+}

@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+
+service Log {
+  rpc loginLogIndex(LoginLogIndexReq) returns (LoginLogIndexResp); //获取登录日志列表
+  rpc operLogIndex(OperLogIndexReq) returns (OperLogIndexResp);    //获取操作日志列表
+  rpc loginLogCreate(LoginLogCreateReq) returns(Empty);         //登录日志数据入库
+  rpc operLogCreate(OperLogCreateReq) returns(Empty);           //操作日志数据入库
+}
+
+message DateRange{
+  string start = 1;
+  string end = 2;
+}
+
+message LoginLogIndexReq{
+  PageInfo page       = 1;  // 分页信息 只获取一个则不填
+  string appCode = 2;//应用编码
+  string ipAddr = 3;        // 登录IP地址
+  string loginLocation = 4; // 登录地点
+  DateRange date = 5;       // 时间范围
+  int64  userID = 6;           // 用户id
+  string userName = 7;      // 登录账号
+  int64 code = 8;           // 登录状态（200成功 其它失败）
+}
+
+message LoginLogInfo {
+  int64  userID = 1;           // 用户id
+  string userName = 2;      // 登录账号
+  string ipAddr = 3;        // 登录IP地址
+  string loginLocation = 4; // 登录地点
+  string browser = 5;       // 浏览器
+  string os = 6;            // 操作系统
+  int64 code = 7;           // 登录状态（200成功 其它失败）
+  string msg = 8;           // 提示消息
+  int64  createdTime = 9;   // 登录时间
+  string appCode = 10;//应用编码
+}
+
+message LoginLogIndexResp{
+  repeated LoginLogInfo list = 1;
+  int64 total = 2; //总记录数
+}
+
+message OperLogIndexReq{
+  PageInfo page       = 1; //分页信息 只获取一个则不填
+  string operName     = 2; //按操作名称查找
+  string operUserName = 3; //按操作人员名称查找
+  int64 businessType  = 4; //按业务类型（1新增 2修改 3删除 4查询）查找
+  string appCode = 5;//应用编码
+  int64  code = 6;               //登录状态（200成功 其它失败）
+  int64  operUserID = 7;                //用户id
+}
+
+message OperLogInfo {
+    int64  userID = 1;                //用户id
+    string operUserName = 2;       //操作人员名称
+    string operName = 3;           //操作名称
+    int64  businessType = 4;       //业务类型（1新增 2修改 3删除 4查询）
+    string uri = 5;                //请求地址
+    string operIpAddr = 6;         //操作主机地址
+    string operLocation = 7;       //操作地点
+    string req = 8;                //请求参数
+    string resp = 9;               //返回参数
+    int64  code = 10;               //登录状态（200成功 其它失败）
+    string msg = 11;               //提示消息
+    int64  createdTime = 12;       //操作时间
+    string appCode = 13;//应用编码
+}
+
+message OperLogIndexResp{
+  repeated OperLogInfo list = 1;
+  int64 total = 2; //总记录数
+}
+
+message LoginLogCreateReq{
+  int64  userID = 1;           // 用户id
+  string userName = 2;      // 登录账号
+  string ipAddr = 3;        // 登录IP地址
+  string loginLocation = 4; // 登录地点
+  string browser = 5;       // 浏览器
+  string os = 6;            // 操作系统
+  int64 code = 7;           // 登录状态（200成功 其它失败）
+  string msg = 8;           // 提示消息
+  string appCode = 9;//应用编码
+}
+
+message OperLogCreateReq{
+  int64  userID = 1;                //用户id
+  string operUserName = 2;       //操作人员名称
+  string operName = 3;           //操作名称
+  int64  businessType = 4;       //业务类型（1新增 2修改 3删除 4查询）
+  string uri = 5;                //请求地址
+  string route = 6;              //接口路由
+  string operIpAddr = 7;         //操作主机地址
+  string operLocation = 8;       //操作地点
+  string req = 9;                //请求参数
+  string resp = 10;              //返回参数
+  int64  code = 11;              //返回状态（200成功 其它失败）
+  string msg = 12;               //提示消息
+  string appCode = 13;//应用编码
+}
+

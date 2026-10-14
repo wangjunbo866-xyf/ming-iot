@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "area.proto";
+import "google/protobuf/wrappers.proto";
+
+service ProjectManage {
+  //新增项目
+  rpc projectInfoCreate (ProjectInfo) returns (ProjectWithID);
+  //更新项目
+  rpc projectInfoUpdate (ProjectInfo) returns (Empty);
+  //删除项目
+  rpc projectInfoDelete (ProjectWithID) returns (Empty);
+  //获取项目信息详情
+  rpc projectInfoRead (ProjectWithID) returns (ProjectInfo);
+  //获取项目信息列表
+  rpc projectInfoIndex (ProjectInfoIndexReq) returns (ProjectInfoIndexResp);
+
+  rpc projectProfileRead(ProjectProfileReadReq)returns(ProjectProfile);
+  rpc projectProfileUpdate(ProjectProfile)returns(Empty);
+  rpc projectProfileIndex(ProjectProfileIndexReq)returns(ProjectProfileIndexResp);
+
+
+  // 新增项目crud
+  rpc projectCrudCreate (ProjectCrud) returns (WithID);
+  // 更新项目crud
+  rpc projectCrudUpdate (ProjectCrud) returns (Empty);
+  // 删除项目crud
+  rpc projectCrudDelete (WithID) returns (Empty);
+  // 获取项目crud详情
+  rpc projectCrudRead (WithID) returns (ProjectCrud);
+  // 获取项目crud列表
+  rpc projectCrudIndex (ProjectCrudIndexReq) returns (ProjectCrudIndexResp);
+}
+
+message ProjectCrudIndexReq {
+  PageInfo page = 1;                         // 分页信息（可选，不传默认2000条，相当于全部）
+  string purpose = 2;                        // 用途（必填）
+  map<string, Compare> params = 5;     // 参数过滤查询（可选）
+}
+
+message ProjectCrud {
+  int64 id = 1;                              // ID
+  string purpose = 2;                        // 用途（新增必填）
+  string params = 5;            // 普通业务参数（可选）
+  int64 sort = 6;                            // 排序（可选）
+  int64 created_time = 7;                    // 创建时间（只读，可选）
+}
+
+message ProjectCrudIndexResp {
+  int64 total = 1;                    // 总数
+  repeated ProjectCrud list = 2;             // 项目列表
+}
+
+message ProjectWithID{
+  int64 projectID = 1; //项目id（只读）
+  bool withTopAreas =5;  //同时返回顶层的区域列表
+}
+
+message ProjectInfo {
+  string tenantCode =20;//租户号
+  int64 createdTime = 1; //创建时间（只读）
+  int64 projectID = 2; //项目id（只读）
+  string projectName = 3; //项目名称（读写）
+  int64 adminUserID = 5;//管理员
+//  google.protobuf.StringValue region = 6; //项目省市区县（读写）
+  Point Position = 6; //项目区域定位
+  google.protobuf.FloatValue area =7;//建筑面积(单位平米)
+  int64 ppsm =10;//w.h/m2 每平方米功耗 建筑定额能耗 Power per square meter
+  google.protobuf.StringValue desc = 8; //项目备注（读写）
+  google.protobuf.StringValue address = 11;//项目详细地址
+  google.protobuf.Int64Value deviceCount=12;//设备统计
+  google.protobuf.Int64Value deviceOnlineCount=23;//设备统计
+  int64 alarmStatus=24;//报警状态 （1正常 2提醒 3一般 4严重 5紧急 6超紧急）
+  int64 status=25;//项目状态  1 正常，2-禁用，3-过期
+  string type =26;//项目类型
+  int64 areaCount =9;//项目下的区域统计(只读)
+  int64 userCount =17;//项目下用户统计
+  string projectImg =15;//项目图片
+  bool isUpdateProjectImg =16;//是否更新项目的图片
+  int64 isSysCreated =18; //是否是系统创建的,系统创建的只有管理员可以删除
+  repeated AreaInfo areas =19;//
+  map<string, string> tags = 21;
+  int64 sort = 22;          // 排序标记,不能为0,默认为1
+  repeated Attachment attachments =27;//附件列表
+}
+
+message ProjectProfile{
+  string code =4;
+  string params =5;
+}
+
+message ProjectProfileReadReq{
+  string code =1;
+}
+
+message ProjectProfileIndexReq{
+  repeated string codes = 2;
+}
+
+message ProjectProfileIndexResp{
+  repeated ProjectProfile profiles =1;
+}
+
+message ProjectInfoIndexReq {
+  PageInfo page = 1; //进行数据分页（不传默认2000相当于全部）
+  string projectName = 2; //过滤条件: 项目名称
+  bool isGetAll =4;//是否获取所有(管理员获取所有)
+  repeated int64 projectIDs = 3; //过滤条件: 过滤项目id列表
+  bool withTopAreas =5;  //同时返回顶层的区域列表
+  string tenantCode =6;//指定租户(只有default租户下的管理员才有效)
+  int64 alarmStatus=24;//报警状态 （1正常 2提醒 3一般 4严重 5紧急 6超紧急）
+  int64 status=25;//项目状态  1 正常，2-禁用，3-过期
+  string type =26;//项目类型
+}
+
+message ProjectInfoIndexResp {
+  int64 total = 1; //总数
+  repeated ProjectInfo list = 2; //项目列表
+}
+

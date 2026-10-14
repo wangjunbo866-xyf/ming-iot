@@ -1,0 +1,18 @@
+goVersion: go1.24.4
+target:
+  goos: linux
+  goarch: amd64
+  cgoEnabled: false
+protoc:
+  version: "34.1"
+  archive: https://github.com/protocolbuffers/protobuf/releases/download/v34.1/protoc-34.1-linux-x86_64.zip
+  archiveSha256: "af27ea66cd26938fe48587804ca7d4817457a08350021a1c6e23a27ccc8c6904"
+  binarySha256: "3d6aef252f3851bdee5a7e7a2c8c927d4980e014d8ac0f18c8ba2d6f084a0504"
+protocGenGo:
+  version: "v1.31.0"
+  module: google.golang.org/protobuf/cmd/protoc-gen-go
+  binarySha256: "af82804db3c133183c6a66d7234cdff2c8a0c930f5c52b53b89639d722b29320"
+protocGenGoGrpc:
+  version: "v1.3.0"
+  module: google.golang.org/grpc/cmd/protoc-gen-go-grpc
+  binarySha256: "88303c94425d279d11fcdb2e16bc1ef24c6612035be8c42b6beebca3c6b410de"

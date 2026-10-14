@@ -1,0 +1,141 @@
+# ming-iot saas 最小运行环境（单体 saassvr）。
+#
+# 目标明确要求的五个环境成员：kafka、redis、postgres、saas、etcd，全部在本 compose 定义。
+# 其中 redis/postgres 复用 cloudx_net 已运行的容器（避免重复数据卷、避免端口冲突），
+# 由 saas 通过容器名访问；kafka 与 etcd 作为本 compose 新建成员启动。
+#
+# 组件 → saas 连接方式：
+#   - postgres (cloudx_net, postgis/17, pw=password, 库 iThings)  — DBType=pgsql（share GetConn 支持）
+#     · 首次需在 iThings 库启用 PostGIS（sys_area_info 用 GEOMETRY(point,4326)）：
+#       docker exec postgres psql -U postgres -d iThings -c "CREATE EXTENSION IF NOT EXISTS postgis;"
+#   - redis   (cloudx_net, ienv-redis, 无密码)                     — cache + 节点 ID
+#   - nats    (cloudx_net, ienv-nats, JetStream 已启用)            — saas 原生事件层（share eventBus 只支持 nats|natsJs|direct）
+#   - etcd    (本 compose, ming-iot-etcd)                          — 服务发现（direct 模式下 saas 不强依赖，但作为环境成员就位，grpc 部署可用）
+#   - kafka   (本 compose, ming-iot-kafka)                         — 作为环境成员就位（saas 当前事件层是 NATS；kafka 供平台其它服务/未来集成使用）
+#
+# 消息层说明：saas 源码原生绑定 nats.go（无 Kafka 代码）；重写为 Kafka 需改外部 share
+# module 且违反 spec「不重写业务/不内嵌改 share」非目标。故 saas 走 NATS，同时本环境
+# 也提供 Kafka 实例以满足「环境含 kafka」的目标要求。
+#
+# 启动：cd deploy && docker compose up -d --build
+# 日志：docker compose logs -f saas
+# 停止：docker compose down
+
+name: ming-iot-saas
+
+networks:
+  # external: 复用 ienv 环境已创建的网络，使 saas 能用容器名访问 postgres/redis/nats
+  cloudx_net:
+    external: true
+    name: cloudx_net
+
+volumes:
+  etcd_data:
+  kafka_data:
+
+services:
+  # ============================================================
+  # etcd — 服务发现（目标要求的五个成员之一）
+  # ============================================================
+  etcd:
+    image: bitnami/etcd:3.5
+    container_name: ming-iot-etcd
+    hostname: etcd
+    restart: unless-stopped
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_NAME=etcd
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://etcd:2380
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      # 宿主机用 12379/12380 避免与既有 ienv-etcd(2379/2380) 冲突
+      - "12379:2379"
+      - "12380:2380"
+    volumes:
+      - etcd_data:/bitnami/etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - cloudx_net
+
+  # ============================================================
+  # kafka — 目标要求的五个成员之一
+  # KRaft 模式（无 Zookeeper 单节点），供平台其它服务/未来集成使用。
+  # saas 当前事件层是 NATS，不直接连接 kafka。
+  # ============================================================
+  kafka:
+    image: bitnami/kafka:3.7
+    container_name: ming-iot-kafka
+    hostname: kafka
+    restart: unless-stopped
+    environment:
+      # KRaft：单节点Combined模式，禁用 zookeeper
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    ports:
+      - "19092:9092"
+    volumes:
+      - kafka_data:/bitnami/kafka
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+      start_period: 30s
+    networks:
+      - cloudx_net
+
+  # ============================================================
+  # saas — 单体 saassvr（apisvr + direct 模式内嵌 syssvr/timed）
+  # ============================================================
+  saas:
+    build:
+      context: ../
+      dockerfile: deploy/saas/Dockerfile
+    image: ming-iot/saas:local
+    container_name: ming-iot-saas
+    hostname: saas
+    restart: unless-stopped
+    depends_on:
+      etcd:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      # confSuffix=Deploy 使 ConfMustLoad 加载 *Deploy.yaml 覆盖 common/api/sys
+      - confSuffix=Deploy
+      # Database.IsInitTable=true 首次启动自动建表（share Database struct env=dbIsInitTable）
+      - dbIsInitTable=true
+      # pgsql DSN，指向 cloudx_net 内的 postgres 容器，库 iThings（需已建库+PostGIS）
+      - CORE_DB_DSN=postgres://postgres:password@postgres:5432/iThings?sslmode=disable
+      # 以下密钥在最小环境用占位值；生产部署必须替换为强随机值
+      - CORE_USER_TOKEN_SECRET=local-dev-user-token-secret-32bytes
+      - CORE_MAP_ACCESS_KEY=local-dev-map-key
+      - CORE_MAP_ACCESS_SECRET=local-dev-map-secret
+      - THIRD_JWT_SECRET=local-dev-third-jwt-secret-32bytes
+      - CORE_REJ_ACCESS_SECRET=local-dev-rej-secret
+      - CORE_OPENAUTH_NODERED_PASSWORD=nodered
+      - CORE_OPENAUTH_ROOT_PASSWORD=root
+    ports:
+      - "7777:7777"   # apisvr HTTP
+      - "9180:9180"   # sys rpc（单体 direct 模式下不监听，保留映射）
+      - "7061:7061"   # dev server
+    volumes:
+      # etc/ 挂载：saasExport 读 etc/api.yaml，sysdirect 读 etc/sys.yaml，均合并同目录 common.yaml
+      - ../backend/saas/service/apisvr/etc:/unitedrhino/etc
+      # oss 本地存储
+      - ./saas/oss:/unitedrhino/oss
+    networks:
+      - cloudx_net

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "records": [
+    {
+      "sourceRepository": "ming-iot",
+      "path": "docs/superpowers/specs/2026-08-18-graph-dashboard-systemd-service-switch-design.md",
+      "gitStatus": "untracked",
+      "sha256": "38d0b16e2fcaee4f7f56cbbb55f457f5e0f9514cbf35e8a9acda78aba9ef7ec7",
+      "decision": "DISCARDED_SUPERSEDED",
+      "contentArchived": false,
+      "reason": "The design only served the retired .graph runtime dashboard and is superseded by the LoopX cutover and legacy Graph retirement design.",
+      "supersededBy": "specs/2026-08-23-ming-iot-rd-docs-archive-and-legacy-graph-retirement-design.md"
+    }
+  ]
+}

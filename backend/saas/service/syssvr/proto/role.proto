@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "google/protobuf/wrappers.proto";
+
+service RoleManage {
+  rpc roleInfoCreate(RoleInfo) returns(WithID); //添加角色
+  rpc roleInfoIndex(RoleInfoIndexReq) returns(RoleInfoIndexResp); //获取角色列表
+  rpc roleInfoUpdate(RoleInfo) returns(Empty); //更新角色
+  rpc roleInfoDelete(WithID) returns(Empty); //删除角色
+
+  rpc roleMenuIndex(RoleMenuIndexReq) returns (RoleMenuIndexResp); //获取角色API权限列表
+  rpc roleMenuMultiUpdate(RoleMenuMultiUpdateReq) returns(Empty); //添加角色
+
+  rpc roleAppIndex(RoleAppIndexReq) returns (RoleAppIndexResp); //获取角色API权限列表
+  rpc roleAppMultiUpdate(RoleAppMultiUpdateReq) returns (Empty);  //更新角色API权限
+
+  rpc roleModuleIndex(RoleModuleIndexReq) returns (RoleModuleIndexResp); //获取角色API权限列表
+  rpc roleModuleMultiUpdate(RoleModuleMultiUpdateReq) returns (Empty);  //更新角色API权限
+
+
+  rpc roleApiAuth(RoleApiAuthReq) returns(RoleApiAuthResp);   //角色API鉴权
+  rpc roleAccessMultiUpdate(RoleAccessMultiUpdateReq) returns (Empty);  //更新角色API权限
+  rpc roleAccessIndex(RoleAccessIndexReq) returns (RoleAccessIndexResp); //获取角色API权限列表
+}
+
+message RoleAccessMultiUpdateReq{
+  int64 id = 1;//角色ID
+  repeated  string  accessCodes = 4;
+}
+
+message RoleAccessIndexReq{
+  repeated int64 ids = 1;//角色ID
+  int64 id = 2;//角色ID
+}
+
+message RoleAccessIndexResp{
+  int64 total = 1;
+  repeated string accessCodes = 3;
+}
+
+message RoleMenuIndexReq{
+  repeated int64 ids = 1;//角色ID
+  int64 id = 4;//角色ID
+  string appCode = 2;//appCode
+  string moduleCode = 3;//模块编码
+}
+
+message RoleMenuIndexResp{
+  int64 total = 1;
+  repeated int64 menuIDs = 3;
+}
+
+message RoleAppIndexReq{
+  repeated int64 ids = 1;//角色ID
+  int64 id = 2;//角色ID
+}
+
+message RoleAppIndexResp{
+  int64 total = 1;
+  repeated string appCodes = 3;
+}
+
+message RoleModuleIndexReq{
+  repeated int64 ids = 1;//角色ID
+  int64 id = 3;//角色ID
+  string appCode = 2;//appCode
+}
+
+message RoleModuleIndexResp{
+  int64 total = 1;
+  repeated string moduleCodes = 3;
+}
+
+message RoleAppMultiUpdateReq{
+  int64 id = 1;
+  repeated string appCodes = 3;
+}
+
+message RoleModuleMultiUpdateReq{
+  int64 id = 1;
+  string appCode = 2;
+  repeated string moduleCodes = 3;
+}
+
+message RoleMenuMultiUpdateReq{
+  int64 id = 1;
+  string appCode = 2;
+  string moduleCode = 3;//模块编码
+  repeated int64 menuIDs = 4;
+}
+
+message RoleApiAuthReq{
+  string path = 1;
+  string method = 2;
+}
+
+message RoleApiAuthResp{
+  int64  businessType = 1; // 业务类型（1新增 2修改 3删除 4查询 5其它)
+  string name =2;//操作名
+  int64 recordLogMode = 3; //1为自动模式(读取类型忽略,其他类型记录日志) 2全部记录 3不记录
+}
+
+message RoleInfoIndexReq{
+  PageInfo page = 1;//分页信息
+  string name = 2;
+  int64 status = 3;
+  repeated int64 ids =4;//角色id列表
+  repeated   string codes =5;
+
+}
+
+message RoleInfoIndexResp{
+  repeated  RoleInfo list =1;
+  int64 total = 2;
+}
+
+message RoleInfo{
+  int64   id = 1;
+  string  name = 2;
+  google.protobuf.StringValue  desc = 3;
+  int64   createdTime  =4;
+  int64   status = 5;
+  string code =6;
+}
+
+message RoleAppUpdateReq{
+  int64 id = 1;
+  repeated string appCodes = 2;
+}
+

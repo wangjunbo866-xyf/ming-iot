@@ -1,0 +1,162 @@
+info(
+	title: "用户管理模块"
+	desc: "用户管理相关接口，包括创建账号，登录，获取验证码，获取用户列表，获取单个用户信息，更新用户信息，删除用户"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+//import "common.api"  //公共结构体定义
+//import "system.api"
+
+
+
+@server (
+	group: system/user/info
+	prefix: /api/v1/system/user/info
+	accessCodePrefix: "systemUserManage"
+	accessNamePrefix: "用户信息"
+	accessGroup: "用户管理"
+	defaultAuthType: "admin"
+	defaultNeedAuth: "true"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+	@doc(
+		summary: "创建用户信息"
+		description: "在当前租户下新建用户账号并写入基本资料，可同时分配初始角色集合"
+		authType: "admin"
+		resource: "user"
+		action: "create"
+		group: "system/user/info"
+		recordLogMode: "2"
+	)
+	@handler create
+	post /create (UserInfoCreateReq) returns (UserCreateResp)
+
+	@doc(
+		summary: "查询用户信息列表"
+		description: "按用户名、手机、邮箱、部门或角色等条件分页查询用户，可附带角色与部门"
+		authType: "admin"
+		resource: "user"
+		action: "view"
+		group: "system/user/info"
+		recordLogMode: "1"
+	)
+	@handler Index
+	post /index (UserInfoIndexReq) returns (UserInfoIndexResp)
+
+	@doc(
+		summary: "更新用户基本数据"
+		description: "修改指定用户的资料、状态与私有标签等基本信息"
+		authType: "admin"
+		resource: "user"
+		action: "update"
+		group: "system/user/info"
+		recordLogMode: "2"
+	)
+	@handler update
+	post /update (UserInfo) returns ()
+
+	@doc(
+		summary: "获取用户信息"
+		description: "按用户编号读取用户资料，可附带角色、租户与所属部门信息"
+		authType: "admin"
+		resource: "user"
+		action: "view"
+		group: "system/user/info"
+		recordLogMode: "1"
+	)
+	@handler read
+	post /read (UserInfoReadReq) returns (UserInfo)
+
+	@doc(
+		summary: "刪除用户"
+		description: "按用户编号删除用户账号，其角色与部门授权关系一并清理"
+		authType: "admin"
+		resource: "user"
+		action: "delete"
+		group: "system/user/info"
+		recordLogMode: "2"
+	)
+	@handler delete
+	post /delete (UserInfoDeleteReq) returns ()
+}
+
+
+
+type (
+	 UserInfo {
+		UserID         int64  `json:"userID,string,optional"`        // 用户id
+		UserName    string `json:"userName,optional"`          // 用户名(唯一)
+		Password    string `json:"password,optional,omitempty"`         // 登录密码
+        Email       *string `json:"email,optional"`             // 邮箱
+        Phone       *string `json:"phone,optional"`             // 手机号
+        LastIP      string `json:"lastIP,optional"`            // 最后登录ip
+        RegIP       string `json:"regIP,optional"`             // 注册ip
+		NickName    string `json:"nickName,optional"`          // 用户的昵称
+		City        string `json:"city,optional"`              // 用户所在城市
+		Country     string `json:"country,optional"`           // 用户所在国家
+		Province    string `json:"province,optional"`          // 用户所在省份
+		Language    string `json:"language,optional"`          // 用户的语言，简体中文为zh_CN
+		HeadImg  string `json:"headImg,optional"`        // 用户头像
+		IsUpdateHeadImg  bool `json:"isUpdateHeadImg,omitempty,optional"`        // 用户头像
+	 	DeviceCount int64  `json:"deviceCount,optional,omitempty"` //用户所拥有的设备数量统计
+		CreatedTime int64  `json:"createdTime,string,optional"`// 创建时间
+        Role        int64  `json:"role,optional"`                       // 用户角色默认
+        Sex         int64  `json:"sex,optional"`               // 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+		IsAllData   int64  `json:"isAllData,optional,omitempty"`  	   // 是否所有数据权限（1是，2否）
+		DeptIDs 		[]string `json:"deptIDs,optional,omitempty"` //部门ID列表
+		Status int64  `json:"status,optional"`
+		Tags    map[string]string       `json:"tags,optional,omitempty"` //私有标签,只有管理员可以修改
+        PubTags  map[string]string      `json:"pubTags,optional,omitempty"`  // 公共的标签,用户自己可以修改
+		MessageNotRead map[string]int64  `json:"messageNotRead,optional,omitempty"`
+	 	Roles []*RoleInfo `json:"roles,optional,omitempty"`
+		Tenant *TenantInfo `json:"tenant,optional,omitempty"`
+		Projects []*ProjectInfo `json:"projects,optional,omitempty"`    //项目列表
+	 	Depts []*DeptInfo `json:"depts,optional,omitempty"`
+        BindThird map[string]string `json:"bindThird,optional,omitempty"` //key为: wx:微信  ding: 钉钉 Value有值代表已绑定
+	 }
+
+
+
+	UserCreateResp {
+		UserID         int64  `json:"userID,string,optional"`        // 用户id
+	}
+
+
+	 UserInfoCreateReq{
+	 	Info *UserInfo `json:"info"`
+	 	RoleIDs 		[]int64 `json:"roleIDs,optional,range=(0:120]"` //角色编号列表
+	 }
+	UserInfoIndexReq {
+		Page *PageInfo `json:"page,optional"` //分页信息
+		UserName    string `json:"userName,optional"`          //用户名(唯一)
+		Phone       string `json:"phone,optional"`             // 手机号
+		Email       string `json:"email,optional"`             // 邮箱
+		Account string  `json:"account,optional"`
+		UserIDs []int64  `json:"userIDs,string,optional"`
+		HasAccessAreas []int64 `json:"hasAccessAreas,string,optional"` //查询拥有该区域权限的用户
+		DeptID int64 `json:"deptID,string,optional"`
+		RoleCode string  `json:"roleCode,optional"` //查询角色code
+		NickName    string `json:"nickName,optional"`          // 用户的昵称
+		WithRoles bool  `json:"withRoles,optional"` //同时返回所有的角色列表
+		WithDepts bool  `json:"withDepts,optional"` //同时返回所属的部门列表
+	}
+
+	UserInfoIndexResp {
+		List  []*UserInfo `json:"list,omitempty"`           //用户信息列表
+		PageResp
+	}
+
+	UserInfoReadReq{
+		UserID         int64  `json:"userID,string,optional"`        // 用户id
+		WithRoles bool  `json:"withRoles,optional"`
+		WithTenant bool `json:"withTenant,optional"`
+		WithDepts bool  `json:"withDepts,optional"` //同时返回所属的部门列表
+	}
+
+	UserInfoDeleteReq {
+		UserID         int64  `json:"userID,string,optional"`        // 用户id
+	}
+)
+

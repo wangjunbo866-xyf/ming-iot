@@ -1,0 +1,152 @@
+name: ming-iot-things-baseline
+
+x-app-common: &app-common
+  env_file:
+    - ${THINGS_BASELINE_ENV_FILE:-.env.local}
+  environment:
+    CORE_DB_DSN: postgres://${THINGS_BASELINE_DB_USER}:${THINGS_BASELINE_DB_PASSWORD}@host.docker.internal:${POSTGRES_ADMIN_PORT}/ming_iot_things_baseline?sslmode=disable
+    THINGS_DB_DSN: postgres://${THINGS_BASELINE_DB_USER}:${THINGS_BASELINE_DB_PASSWORD}@host.docker.internal:${POSTGRES_ADMIN_PORT}/ming_iot_things_baseline?sslmode=disable
+    THINGS_TSDB_DSN: root:${TDENGINE_ROOT_PASSWORD}@http(tdengine:6041)/ithings?readBufferSize=5242880
+    CORE_LOCAL_SKIP_STARTUP_SIDE_EFFECTS: "true"
+    CORE_LOCAL_SKIP_AUTO_MIGRATE: "false"
+  extra_hosts:
+    - host.docker.internal:host-gateway
+  volumes:
+    - local_oss:/app/oss
+  networks: [baseline]
+  restart: "no"
+
+services:
+  postgres-bootstrap:
+    image: postgres:17-alpine
+    profiles: [tools]
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    env_file:
+      - ${THINGS_BASELINE_ENV_FILE:-.env.local}
+    volumes:
+      - ./scripts/bootstrap-postgres.sh:/usr/local/bin/bootstrap-postgres:ro
+    entrypoint: [/usr/local/bin/bootstrap-postgres]
+    networks: [baseline]
+
+  redis:
+    image: redis:7.4-alpine
+    command: [redis-server, --appendonly, "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 3s
+      timeout: 2s
+      retries: 30
+    networks: [baseline]
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.21
+    command:
+      - etcd
+      - --name=etcd
+      - --data-dir=/etcd-data
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://etcd:2379
+    volumes:
+      - etcd_data:/etcd-data
+    healthcheck:
+      test: [CMD, etcdctl, endpoint, health]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    networks: [baseline]
+
+  nats:
+    image: nats:2.10-alpine
+    command: [-js, -sd, /data, -m, "8222"]
+    volumes:
+      - nats_data:/data
+    networks: [baseline]
+
+  tdengine:
+    image: tdengine/tdengine:3.3.6.13
+    hostname: tdengine
+    environment:
+      TAOS_ROOT_PASSWORD: ${TDENGINE_ROOT_PASSWORD}
+    volumes:
+      - tdengine_data:/var/lib/taos
+      - tdengine_log:/var/log/taos
+      - ./scripts/bootstrap-tdengine.sql:/docker-entrypoint-initdb.d/001-create-ithings.sql:ro
+    networks: [baseline]
+
+  emqx:
+    image: emqx/emqx:5.8.9
+    user: "1000:1000"
+    hostname: emqx
+    environment:
+      EMQX_NODE__NAME: emqx@127.0.0.1
+      EMQX_API_KEY__BOOTSTRAP_FILE: /opt/emqx/etc/default_api_key.conf
+    volumes:
+      - emqx_data:/opt/emqx/data
+      - ./config/emqx/base.hocon:/opt/emqx/etc/base.hocon:ro
+      - type: bind
+        source: ../../.runtime/secrets/emqx-api-key.conf
+        target: /opt/emqx/etc/default_api_key.conf
+        read_only: true
+        bind:
+          create_host_path: false
+    ports:
+      - "127.0.0.1:${THINGS_BASELINE_MQTT_PORT:-11883}:1883"
+      - "127.0.0.1:${THINGS_BASELINE_EMQX_DASHBOARD_PORT:-18084}:18083"
+    healthcheck:
+      test: [CMD, /opt/emqx/bin/emqx, ctl, status]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+    networks: [baseline]
+
+  grpcurl:
+    image: fullstorydev/grpcurl:v1.9.3-alpine
+    profiles: [tools]
+    networks: [baseline]
+
+  curl:
+    image: curlimages/curl:8.12.1
+    profiles: [tools]
+    networks: [baseline]
+
+  timedjob:
+    <<: *app-common
+    image: ming-iot-timedjob:baseline
+    depends_on: [redis, etcd, nats]
+
+  sys:
+    <<: *app-common
+    image: ming-iot-sys:baseline
+    depends_on: [redis, etcd, nats, timedjob]
+
+  dm:
+    <<: *app-common
+    image: ming-iot-dm:baseline
+    depends_on: [redis, etcd, nats, tdengine, timedjob, sys]
+
+  dg:
+    <<: *app-common
+    image: ming-iot-dg:baseline
+    depends_on: [redis, nats, emqx, timedjob, dm]
+
+  api:
+    <<: *app-common
+    image: ming-iot-api:baseline
+    depends_on: [redis, etcd, nats, timedjob, sys, dm, dg]
+    ports:
+      - "127.0.0.1:${THINGS_BASELINE_API_PORT:-17788}:7788"
+
+networks:
+  baseline: {}
+
+volumes:
+  redis_data: {}
+  etcd_data: {}
+  nats_data: {}
+  tdengine_data: {}
+  tdengine_log: {}
+  emqx_data: {}
+  local_oss: {}

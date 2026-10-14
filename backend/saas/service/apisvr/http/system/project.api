@@ -1,0 +1,253 @@
+info(
+    title: "项目管理模块"
+    desc: "项目管理模块"
+    author: "大绵羊"
+    email: "robotyang123@163.com"
+    version: "v1"
+)
+
+@server(
+    group: system/project/info
+    prefix: /api/v1/system/project/info
+    accessCodePrefix: "systemProjectManage"
+    accessNamePrefix: "项目管理"
+    accessGroup: "项目管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "新增项目"
+        description: "创建项目并初始化其名称、类型、租户归属与管理员等基本信息"
+        authType: "admin"
+        resource: "project"
+        action: "create"
+        group: "system/project/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (ProjectInfo) returns (ProjectWithID)
+    @doc(
+        summary: "更新项目"
+        description: "修改指定项目的基本信息、状态与租户归属"
+        authType: "admin"
+        resource: "project"
+        action: "update"
+        group: "system/project/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (ProjectInfo) returns ()
+    @doc(
+        summary: "删除项目"
+        description: "按编号删除项目，其下区域与设备授权关系随之清理"
+        authType: "admin"
+        resource: "project"
+        action: "delete"
+        group: "system/project/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (ProjectWithID) returns ()
+    @doc(
+        summary: "获取项目详情"
+        description: "按编号读取项目完整信息，可选附带管理员与顶层区域列表，无需登录鉴权"
+        authType: "all"
+        isNeedAuth: "false"
+        resource: "project"
+        action: "view"
+        group: "system/project/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (ProjectWithID) returns (ProjectInfo)
+    @doc(
+        summary: "获取项目列表"
+        description: "按名称、编号、状态等分页查询项目，可选附带顶层区域与管理员，无需登录鉴权"
+        authType: "all"
+        isNeedAuth: "false"
+        resource: "project"
+        action: "view"
+        group: "system/project/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (ProjectInfoIndexReq) returns (ProjectInfoIndexResp)
+}
+
+@server(
+    group: system/project/profile
+    prefix: /api/v1/system/project/profile
+    accessCodePrefix: "systemProjectManage"
+    accessNamePrefix: "项目配置"
+    accessGroup: "项目管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "获取项目配置详情"
+        description: "按配置编号读取项目的个性化配置参数 JSON"
+        authType: "all"
+        resource: "project"
+        action: "view"
+        group: "system/project/profile"
+        recordLogMode: "1"
+    )
+    @handler profileRead
+    post /read (WithCode) returns (ProjectProfile)
+    @doc(
+        summary: "更新项目配置"
+        description: "写入或覆盖指定项目编号下的个性化配置参数"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "project"
+        action: "update"
+        group: "system/project/profile"
+        recordLogMode: "2"
+    )
+    @handler profileUpdate
+    post /update (ProjectProfile) returns ()
+    @doc(
+        summary: "获取项目配置列表"
+        description: "按编号集合批量获取项目的个性化配置列表"
+        authType: "all"
+        resource: "project"
+        action: "view"
+        group: "system/project/profile"
+        recordLogMode: "1"
+    )
+    @handler profileIndex
+    post /index (ProjectProfileIndexReq) returns (ProjectProfileIndexResp)
+}
+
+@server(
+    group: system/project/crud
+    prefix: /api/v1/system/project/crud
+    accessCodePrefix: "systemProjectCrud"
+    accessNamePrefix: "项目下的curl业务"
+    accessGroup: "项目管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "新增项目crud"
+        description: "按用途新增一条项目级通用业务参数记录，含参数 JSON 与排序"
+        authType: "admin"
+        resource: "project"
+        action: "create"
+        group: "system/project/crud"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (ProjectCrud) returns (WithIDStr)
+    @doc(
+        summary: "更新项目crud"
+        description: "修改指定项目通用业务参数记录的用途、参数内容与排序"
+        authType: "admin"
+        resource: "project"
+        action: "update"
+        group: "system/project/crud"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (ProjectCrud) returns ()
+    @doc(
+        summary: "删除项目crud"
+        description: "按主键删除项目通用业务参数记录"
+        authType: "admin"
+        resource: "project"
+        action: "delete"
+        group: "system/project/crud"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDStr) returns ()
+    @doc(
+        summary: "获取项目crud详情"
+        description: "按主键读取单条项目通用业务参数记录"
+        authType: "admin"
+        resource: "project"
+        action: "view"
+        group: "system/project/crud"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDStr) returns (ProjectCrud)
+    @doc(
+        summary: "获取项目crud列表"
+        description: "按用途与参数比较条件分页查询项目通用业务参数记录"
+        authType: "admin"
+        resource: "project"
+        action: "view"
+        group: "system/project/crud"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (ProjectCrudIndexReq) returns (ProjectCrudIndexResp)
+}
+
+
+type(
+    ProjectCrudIndexReq{
+        Page *PageInfo `json:"page,optional"`            //进行数据分页（不传默认2000相当于全部）
+        Purpose string `json:"purpose"`//用途必填
+        Params map[string]*Compare `json:"params,optional"`//params过滤查询,key 是params的key, value是对象,说明: {"cmpType":"比较类型(如=、>、like)","value":"比较值(需与类型匹配)","castTo":"数据类型(int/float/string,选填，填则转换)"}，其中 like 仅支持 string 类型，value 需以字符串格式传入 示例: {"aaa":{"cmpType":">","castTo":"int","value":"100"}
+    }
+    ProjectCrudIndexResp{
+        PageResp
+        List []*ProjectCrud `json:"list"`    //项目列表
+    }
+    ProjectCrud {
+        ID int64  `json:"id,string,optional"`
+        Purpose string `json:"purpose,optional"`//用途 新增必填
+        Params string `json:"params,optional"` //普通业务参数,如果是文件类型,则需要以 Img,File结尾,后端会进行文件的处理,上传方式可以参考设备图片
+        Sort int64  `json:"sort,optional,omitempty"` //排序
+        CreatedTime int64  `json:"createdTime,string,optional"`//只读
+    }
+)
+
+type (
+    ProjectProfile{
+        Code string `json:"code"`
+        Params string  `json:"params"`
+    }
+    ProjectProfileIndexReq{
+        Codes []string `json:"codes"`
+    }
+    ProjectProfileIndexResp{
+        Profiles []*ProjectProfile `json:"profiles"`
+    }
+)
+
+
+
+type (
+
+
+    ProjectWithID  {
+        ProjectID int64 `json:"projectID,string"` //项目id 只读
+        WithAdminUser bool `json:"withAdminUser,optional"` //同时获取管理员核心信息
+        WithTopAreas bool `json:"withTopAreas,optional"` //同时返回顶层的区域列表
+    }
+
+    ProjectInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`            //进行数据分页（不传默认2000相当于全部）
+        ProjectName string `json:"projectName,optional"` //过滤项目名称
+        IsGetAll bool   `json:"isGetAll,optional"`//是否获取所有(管理员获取所有)
+        ProjectIDs []int64 `json:"projectIDs,optional"`  //过滤项目id列表
+        WithTopAreas bool `json:"withTopAreas,optional"` //同时返回顶层的区域列表
+        WithAdminUser bool `json:"withAdminUser,optional"` //同时获取管理员核心信息
+        TenantCode string `json:"tenantCode,optional"`//指定租户(只有default租户下的管理员才有效)
+        AlarmStatus  int64  `json:"alarmStatus,optional,omitempty"`//报警状态(只读) （1正常 2提醒 3一般 4严重 5紧急 6超紧急）
+        Status  int64  `json:"status,optional,omitempty"`//项目状态  1 正常，2-禁用，3-过期
+        Type  string  `json:"type,optional,omitempty"`//项目类型
+    }
+
+    ProjectInfoIndexResp  {
+        PageResp
+        List []*ProjectInfo `json:"list"`    //项目列表
+    }
+)

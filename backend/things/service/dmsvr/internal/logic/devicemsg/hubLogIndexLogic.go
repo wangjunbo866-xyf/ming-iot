@@ -1,0 +1,81 @@
+package devicemsglogic
+
+import (
+	"context"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/deviceLog"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/logic"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/devices"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type HubLogIndexLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewHubLogIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *HubLogIndexLogic {
+	return &HubLogIndexLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+// 获取设备调试信息记录登入登出,操作
+func (l *HubLogIndexLogic) HubLogIndex(in *dm.HubLogIndexReq) (*dm.HubLogIndexResp, error) {
+	_, err := logic.SchemaAccess(l.ctx, l.svcCtx, def.AuthRead, devices.Core{
+		ProductID:  in.ProductID,
+		DeviceName: in.DeviceName,
+	}, nil)
+	if err != nil {
+		return nil, err
+	}
+	filter := deviceLog.HubFilter{
+		ProductID:  in.ProductID,
+		DeviceName: in.DeviceName,
+		Actions:    in.Actions,
+		Topics:     in.Topics,
+		Content:    in.Content,
+		RequestID:  in.RequestID,
+	}
+	page := def.PageInfo2{
+		TimeStart: in.TimeStart,
+		TimeEnd:   in.TimeEnd,
+		Page:      in.Page.GetPage(),
+		Size:      in.Page.GetSize(),
+	}
+	uc := ctxs.GetUserCtxNoNil(l.ctx)
+	if !uc.IsAdmin {
+		di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{
+			ProductID:  in.ProductID,
+			DeviceName: in.DeviceName,
+		})
+		if err != nil {
+			return nil, err
+		}
+		if di.LastBind*1000 > page.TimeStart {
+			page.TimeStart = di.LastBind * 1000
+		}
+	}
+	total, err := l.svcCtx.HubLogRepo.GetCountLog(l.ctx, filter, page)
+	if err != nil {
+		return nil, errors.Database.AddDetail(err)
+	}
+	logs, err := l.svcCtx.HubLogRepo.GetDeviceLog(l.ctx, filter, page)
+	if err != nil {
+		return nil, errors.Database.AddDetail(err)
+	}
+
+	var data []*dm.HubLogInfo
+	for _, v := range logs {
+		data = append(data, ToDataHubLogIndex(v))
+	}
+	return &dm.HubLogIndexResp{List: data, Total: total}, nil
+}

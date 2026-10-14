@@ -1,0 +1,45 @@
+package devices
+
+import "gitee.com/ming-iot/share/def"
+
+const (
+	DeviceRegisterUnable   = 1
+	DeviceAutoCreateEnable = 3
+	EncTypeCert            = 1 //证书加密
+	EncTypeKey             = 2 //秘钥加密
+)
+
+type Core struct {
+	ProductID  string `json:"productID"`  //产品id
+	DeviceName string `json:"deviceName"` //设备名称
+}
+
+type WithGateway struct {
+	Dev     Core  `json:"dev"`
+	Gateway *Core `json:"gateway,omitempty"` //如果是子设备类型,会带上网关
+}
+
+type Info struct {
+	ProductID   string `json:"productID"`  //产品id
+	DeviceName  string `json:"deviceName"` //设备名称
+	TenantCode  string
+	ProjectID   int64
+	AreaID      int64
+	AreaIDPath  string
+	BelongGroup map[string]def.IDsInfo
+}
+
+// 归属
+type Affiliation struct {
+	TenantCode  string
+	ProjectID   int64
+	AreaID      int64
+	AreaIDPath  string
+	BelongGroup map[string]def.IDsInfo
+}
+
+// 设备标签
+type Tag struct {
+	Key   string `json:"key"`   //设备标签key
+	Value string `json:"value"` //设备标签value
+}

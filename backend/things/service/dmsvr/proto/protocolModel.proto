@@ -1,0 +1,34 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+message ProtocolInfo{
+  int64  id = 1;
+  string  name = 2;
+  string code =3;//  iThings,iThings-thingsboard,wumei,aliyun,huaweiyun,tuya
+  string type =4;//协议类型: 普通设备(默认):normal  音视频:media
+  string  transProtocol = 5;// 传输协议: mqtt,tcp,udp
+  string  desc = 6;
+  repeated string  endpoints = 7;
+  string  etcdKey = 8;
+  int64 isEnableSyncProduct =13;//是否支持主动同步产品信息
+  int64 isEnableSyncDevice =14;//是否支持主动同步设备信息
+  repeated ProtocolConfigField configFields =9;//配置字段列表,没有可以不传
+  repeated ProtocolConfigInfo configInfos =10;//配置列表
+  repeated ProtocolConfigField productFields =11;//产品需要的配置字段列表
+  repeated ProtocolConfigField deviceFields =12;//设备需要的配置字段列表
+}
+
+message ProtocolConfigField{
+  int64 id =1;
+  string group =2;
+  string key =3;
+  string label =4;
+  bool isRequired =5;
+  int64 sort =6;
+}
+
+message ProtocolConfigInfo{
+  int64 id =1;
+  map<string,string> config =2;
+  string desc =3;
+}

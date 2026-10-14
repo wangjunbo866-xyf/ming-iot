@@ -1,0 +1,32 @@
+version: "1.0"
+name: map-docs-check
+displayName: 业务地图文档检查
+stages:
+- name: validation
+  displayName: 文档验证
+  strategy: naturally
+  trigger: auto
+  steps:
+  - step: build@python
+    name: map-check
+    displayName: Python 文档校验
+    pythonVersion: "3.12"
+    commands:
+    - set -eu
+    - python --version
+    - git config core.hooksPath .githooks
+    - python -m unittest discover -s tests -v
+    - python tools/check_delivery_metadata.py --docs-root . --since 2026-09-03
+    - python tools/map_docs.py check --docs-root .
+    - git diff --check
+    notify: []
+    strategy:
+      retry: "0"
+triggers:
+  pr:
+    branches:
+      precise:
+        - master
+notify: []
+strategy:
+  blocking: true

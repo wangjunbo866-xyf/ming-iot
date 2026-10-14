@@ -1,0 +1,740 @@
+// 用户注册逻辑。
+package usermanagelogic
+
+import (
+	"context"
+	"database/sql"
+	"strings"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/saas/service/syssvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/saas/share/caches"
+	"gitee.com/ming-iot/saas/share/dataType"
+	"gitee.com/ming-iot/saas/share/topics"
+	"gitee.com/ming-iot/saas/share/users"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+
+	"time"
+
+	"github.com/spf13/cast"
+	"gorm.io/gorm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+// 默认注册项目名常量。
+const (
+	defaultRegisterProjectNameZH = "我的物联"
+	defaultRegisterProjectNameEN = "My Home"
+)
+
+type UserRegisterLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+	uc *ctxs.UserCtx
+}
+
+func NewUserRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserRegisterLogic {
+	return &UserRegisterLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+		uc:     ctxs.GetUserCtx(ctx),
+	}
+}
+
+func (l *UserRegisterLogic) UserRegister(in *sys.UserRegisterReq) (*sys.UserLoginResp, error) {
+	var userID int64
+	var err error
+	switch in.RegType {
+	case users.RegDingApp:
+		userID, err = l.handleDingApp(in)
+	case users.RegWxMiniP:
+		userID, err = l.handleWxminip(in)
+	case users.RegEmail, users.RegPhone:
+		userID, err = l.handleEmailOrPhone(in)
+	case users.RegHuawei:
+		userID, err = l.handleHuawei(in)
+	case users.RegGoogle:
+		userID, err = l.handleGoogle(in)
+	case users.RegGithub:
+		userID, err = l.handleGithub(in)
+	case users.RegApple:
+		userID, err = l.handleApple(in)
+	case users.RegJwt:
+		userID, err = l.handleJwt(in)
+	default:
+		return nil, errors.NotRealize.AddMsgf(in.RegType)
+	}
+	if err != nil {
+		return nil, err
+	}
+	ui, err := relationDB.NewUserInfoRepo(l.ctx).FindOne(l.ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	if !in.IsWithLogin {
+		resp := &sys.UserLoginResp{
+			Info: UserInfoToPb(l.ctx, ui, l.svcCtx),
+		}
+		return resp, nil
+	}
+	return GenLoginResp(l.ctx, l.svcCtx, in.DeviceID, ui)
+}
+
+func (l *UserRegisterLogic) handleEmailOrPhone(in *sys.UserRegisterReq) (int64, error) {
+	ui := relationDB.SysUserInfo{
+		UserID: l.svcCtx.UserID.GetSnowflakeId(),
+	}
+	ui.Password = utils.MakePwd(in.Password, ui.UserID, false)
+	if in.Info != nil {
+		ui.NickName = in.Info.NickName
+		if in.Info.UserName == "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+
+	switch in.RegType {
+	case users.RegEmail:
+		email := l.svcCtx.Captcha.Verify(l.ctx, def.CaptchaTypeEmail, def.CaptchaUseRegister, in.CodeID, in.Code)
+		if email == "" || email != in.Account {
+			return 0, errors.Captcha
+		}
+		ui.Email = utils.AnyToNullString(in.Account)
+		ui.UserName = ui.Email
+	case users.RegPhone:
+		phone := l.svcCtx.Captcha.Verify(l.ctx, def.CaptchaTypePhone, def.CaptchaUseRegister, in.CodeID, in.Code)
+		if phone == "" || phone != in.Account {
+			return 0, errors.Captcha
+		}
+		ui.Phone = utils.AnyToNullString(in.Account)
+		ui.UserName = ui.Phone
+	}
+	if in.Password != "" {
+		err := CheckPwd(l.svcCtx, in.Password)
+		if err != nil {
+			return 0, err
+		}
+	}
+
+	huaweiCode := in.Expand["huaweiCode"]
+	if huaweiCode != "" {
+		cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+		if err != nil || cli.Huawei == nil {
+			return 0, errors.System.AddDetail(err)
+		}
+
+		// 优先从缓存读取
+		loginResult, err := GetHuaweiLoginResult(l.ctx, huaweiCode)
+		if err != nil {
+			// 缓存没有，调用华为接口
+			loginResult, err = cli.Huawei.QuickLoginByCode(l.ctx, huaweiCode)
+			if err != nil {
+				l.Errorf("%v.QuickLoginByCode err:%v", utils.FuncName(), err)
+				return 0, errors.System.AddDetail(err)
+			}
+		}
+
+		// 存储到注册缓存
+		StoreHuaweiRegisterResult(l.ctx, huaweiCode, loginResult)
+
+		if loginResult.UserInfo.UnionID != "" {
+			ui.HuaweiUnionID = sql.NullString{Valid: true, String: loginResult.UserInfo.UnionID}
+		}
+		ui.HuaweiOpenID = sql.NullString{Valid: true, String: loginResult.UserInfo.OpenID}
+	}
+
+	wxOpenCode := in.Expand["wxOpenCode"]
+	if wxOpenCode != "" {
+		at, err := GetWxLoginResAccessToken(l.ctx, wxOpenCode)
+		if err != nil {
+			cli, er := l.svcCtx.Cm.GetClients(l.ctx, "")
+			if er != nil {
+				return 0, errors.System.AddDetail(er)
+			}
+			if cli.WxOfficial == nil {
+				return 0, errors.System.AddDetail(er)
+			}
+			at2, er := cli.WxOfficial.GetOauth().GetUserAccessToken(wxOpenCode)
+			if er != nil {
+				return 0, errors.System.AddDetail(er)
+			}
+			at = &at2
+		}
+		StoreWxRegisterResAccessToken(l.ctx, wxOpenCode, at)
+		_, err = relationDB.NewUserInfoRepo(l.ctx).FindOneByFilter(l.ctx, relationDB.UserInfoFilter{WechatUnionID: at.UnionID, WechatOpenID: at.OpenID})
+		if err == nil {
+			return 0, errors.BindAccount.WithMsg("微信已绑定其他账号")
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return 0, err
+		}
+		ui.WechatOpenID = sql.NullString{Valid: true, String: at.OpenID}
+		if at.UnionID != "" {
+			ui.WechatUnionID = sql.NullString{Valid: true, String: at.UnionID}
+		}
+	}
+	conn := stores.GetTenantConn(l.ctx)
+	err := l.FillUserInfo(&ui, conn)
+	if err != nil {
+		return 0, err
+	}
+	e := l.svcCtx.FastEvent.Publish(l.ctx, topics.CoreUserCreate, def.IDs{IDs: []int64{ui.UserID}})
+	if e != nil {
+		l.Errorf("Publish CoreUserCreate %v err:%v", ui, e)
+	}
+	return ui.UserID, nil
+}
+
+func (l *UserRegisterLogic) handleWxminip(in *sys.UserRegisterReq) (int64, error) {
+	cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if err != nil || cli.MiniProgram == nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	auth := cli.MiniProgram.GetAuth()
+
+	wxUid, err := auth.Code2SessionContext(l.ctx, in.Code)
+	if err != nil {
+		l.Errorf("%v.Code2SessionContext err:%v", err)
+		if wxUid.ErrCode != 0 {
+			return 0, errors.System.AddDetail(wxUid.ErrMsg)
+		}
+		return 0, errors.System.AddDetail(err)
+	} else if wxUid.ErrCode != 0 {
+		return 0, errors.Parameter.AddDetail(wxUid.ErrMsg)
+	}
+
+	if in.Expand == nil || in.Expand["phoneCode"] == "" {
+		return 0, errors.Parameter.AddMsg("微信小程序注册需要填写expand.phoneCode")
+	}
+	phoneCode := in.Expand["phoneCode"]
+	wxPhone, err := auth.GetPhoneNumber(phoneCode)
+	if err != nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	if wxPhone.ErrCode != 0 {
+		return 0, errors.Parameter.AddDetail(wxPhone.ErrMsg)
+	}
+	if in.Password != "" {
+		err := CheckPwd(l.svcCtx, in.Password)
+		if err != nil {
+			return 0, err
+		}
+	}
+	var userID int64
+	conn := stores.GetTenantConn(l.ctx)
+	err = conn.Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		_, err = uidb.FindOneByFilter(l.ctx,
+			relationDB.UserInfoFilter{WechatUnionID: wxUid.UnionID, WechatOpenID: wxUid.OpenID})
+		if err == nil { //已经注册过
+			return errors.DuplicateRegister
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		ui, err := uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{Phones: []string{wxPhone.PhoneInfo.PurePhoneNumber}})
+		if err != nil {
+			if !errors.Cmp(err, errors.NotFind) {
+				return err
+			}
+			userID = l.svcCtx.UserID.GetSnowflakeId()
+			ui = &relationDB.SysUserInfo{
+				UserID:       userID,
+				Phone:        sql.NullString{Valid: true, String: wxPhone.PhoneInfo.PurePhoneNumber},
+				UserName:     sql.NullString{Valid: true, String: wxPhone.PhoneInfo.PurePhoneNumber},
+				WechatOpenID: sql.NullString{Valid: true, String: wxUid.OpenID},
+			}
+			if in.Password != "" {
+				ui.Password = utils.MakePwd(in.Password, ui.UserID, false)
+			}
+		} else if !(ui.WechatUnionID.Valid || ui.WechatOpenID.Valid) {
+			userID = l.svcCtx.UserID.GetSnowflakeId()
+			ui = &relationDB.SysUserInfo{
+				UserID:       userID,
+				Phone:        sql.NullString{Valid: true, String: wxPhone.PhoneInfo.PurePhoneNumber},
+				UserName:     sql.NullString{Valid: true, String: wxPhone.PhoneInfo.PurePhoneNumber},
+				WechatOpenID: sql.NullString{Valid: true, String: wxUid.OpenID},
+			}
+			if in.Password != "" {
+				ui.Password = utils.MakePwd(in.Password, ui.UserID, false)
+			}
+		}
+		userID = ui.UserID
+		phone, err := uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{Phone: wxPhone.PhoneInfo.PurePhoneNumber})
+		if err == nil { //手机号注册过,绑定微信信息
+			phone.WechatOpenID = sql.NullString{Valid: true, String: wxUid.OpenID}
+			if wxUid.UnionID != "" {
+				phone.WechatUnionID = sql.NullString{Valid: true, String: wxUid.UnionID}
+			}
+			return uidb.Update(l.ctx, phone)
+		} else if !errors.Cmp(err, errors.NotFind) { //如果是数据库错误,则直接返回
+			return err
+		}
+
+		if wxUid.UnionID != "" {
+			ui.WechatUnionID = sql.NullString{Valid: true, String: wxUid.UnionID}
+		}
+		if in.Info != nil {
+			ui.NickName = in.Info.NickName
+			if in.Info.UserName != "" {
+				ui.UserName = utils.AnyToNullString(in.Info.UserName)
+			}
+		}
+		err = l.FillUserInfo(ui, tx)
+		return err
+	})
+
+	return userID, err
+}
+
+func (l *UserRegisterLogic) handleDingApp(in *sys.UserRegisterReq) (int64, error) {
+	cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if err != nil || cli.DingMini == nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	ret, err := cli.DingMini.GetUserInfoByCode(in.Code)
+	if err != nil {
+		l.Errorf("%v.Code2SessionContext err:%v", err)
+		if ret.Code != 0 {
+			return 0, errors.System.AddDetail(ret.Msg)
+		}
+		return 0, errors.System.AddDetail(err)
+	} else if ret.Code != 0 {
+		return 0, errors.Parameter.AddDetail(ret.Msg)
+	}
+	userID := l.svcCtx.UserID.GetSnowflakeId()
+	ui := relationDB.SysUserInfo{
+		UserID:         userID,
+		DingTalkUserID: sql.NullString{Valid: true, String: ret.UserInfo.UserId},
+		NickName:       ret.UserInfo.Name,
+	}
+	if ret.UserInfo.UnionId != "" {
+		ui.DingTalkUnionID = sql.NullString{Valid: true, String: ret.UserInfo.UnionId}
+	}
+	if in.Info != nil {
+		ui.NickName = in.Info.NickName
+		if in.Info.UserName != "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		_, err = uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{DingTalkUserID: ret.UserInfo.UserId, DingTalkUnionID: ret.UserInfo.UnionId})
+		if err == nil { //已经注册过
+			return errors.DuplicateRegister
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		return l.FillUserInfo(&ui, tx)
+	})
+	return userID, err
+}
+
+func (l *UserRegisterLogic) FillUserInfo(in *relationDB.SysUserInfo, tx *gorm.DB) error {
+	err := Register(l.ctx, l.svcCtx, in, tx)
+	if err != nil && errors.Cmp(err, errors.Duplicate) { //已经注册过
+		return errors.DuplicateRegister
+	}
+	return err
+}
+
+func Register(ctx context.Context, svcCtx *svc.ServiceContext, in *relationDB.SysUserInfo, tx *gorm.DB) error {
+	ctx = ctxs.WithAdmin(ctx)
+	uc := ctxs.GetUserCtx(ctx)
+	cfg, err := svcCtx.TenantConfigCache.GetData(ctx, uc.TenantCode)
+	if err != nil {
+		return err
+	}
+	err = tx.Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		in.RegIP = uc.IP
+		in.Role = cfg.RegisterRoleID
+		err = uidb.Insert(ctx, in)
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewUserRoleRepo(tx).Insert(ctx, &relationDB.SysUserRole{
+			UserID: in.UserID,
+			RoleID: cfg.RegisterRoleID,
+		})
+		if err != nil {
+			return err
+		}
+		if len(cfg.RegisterAutoCreateProject) > 0 {
+			var pis []*relationDB.SysProjectInfo
+			var dps []*relationDB.SysDataProject
+			var ais []*relationDB.SysAreaInfo
+			for _, rap := range cfg.RegisterAutoCreateProject {
+				po := relationDB.SysProjectInfo{
+					ProjectID:   dataType.ProjectID(svcCtx.ProjectID.GetSnowflakeId()),
+					ProjectName: localizedRegisterProjectName(rap.ProjectName, uc.AcceptLanguage),
+					AdminUserID: in.UserID,
+					AreaCount:   int64(len(rap.Areas)),
+					UserCount:   1,
+					IsSysCreated: rap.IsSysCreated,
+					Desc:        "自动创建",
+				}
+				pis = append(pis, &po)
+				dps = append(dps, &relationDB.SysDataProject{
+					ProjectID:  int64(po.ProjectID),
+					TargetType: def.TargetUser,
+					TargetID:   po.AdminUserID,
+					AuthType:   def.AuthAdmin,
+				})
+				if rap.Areas != nil {
+					for _, area := range rap.Areas {
+						var areaID = svcCtx.AreaID.GetSnowflakeId()
+						var areaIDPath string = cast.ToString(areaID) + "-"
+						var areaNamePath = area.AreaName + "-"
+						areaPo := relationDB.SysAreaInfo{
+							AreaID:       dataType.AreaID(areaID),
+							ParentAreaID: def.RootNode,
+							ProjectID:    po.ProjectID,
+							AreaIDPath:   areaIDPath,
+							AreaNamePath: areaNamePath,
+							AreaName:     area.AreaName,
+							AreaImg:      area.AreaImg,
+							IsLeaf:       def.True,
+							IsSysCreated: area.IsSysCreated,
+						}
+						ais = append(ais, &areaPo)
+					}
+				}
+			}
+			if len(pis) > 0 {
+				piDb := relationDB.NewProjectInfoRepo(tx)
+				err := piDb.MultiInsert(ctx, pis)
+				if err != nil {
+					return err
+				}
+			}
+			if len(dps) > 0 {
+				err := relationDB.NewDataProjectRepo(tx).MultiInsert(ctx, dps)
+				if err != nil {
+					return err
+				}
+			}
+			if len(ais) > 0 {
+				err := relationDB.NewAreaInfoRepo(tx).MultiInsert(ctx, ais)
+				if err != nil {
+					return err
+				}
+			}
+		}
+		return nil
+	})
+	return err
+}
+
+// localizedRegisterProjectName 按请求语言转换注册自动创建项目的默认名称。
+func localizedRegisterProjectName(projectName, acceptLanguage string) string {
+	if projectName != defaultRegisterProjectNameZH {
+		return projectName
+	}
+	lang := strings.TrimSpace(strings.ToLower(acceptLanguage))
+	if lang == "" || strings.HasPrefix(lang, "zh") {
+		return defaultRegisterProjectNameZH
+	}
+	return defaultRegisterProjectNameEN
+}
+
+func Init() {
+	ctx := ctxs.WithRoot(context.Background())
+	utils.Go(ctx, func() {
+		t := time.NewTicker(time.Second * 5)
+		for {
+			select {
+			case <-t.C:
+				tenantCodes, err := caches.GetTenantCodes(ctx)
+				if err != nil {
+					logx.WithContext(ctx).Error(err)
+					continue
+				}
+				for _, code := range tenantCodes {
+					err = stores.WithNoDebug(ctx, relationDB.NewTenantInfoRepo).UpdateUserCount(ctx, code)
+					if err != nil {
+						logx.WithContext(ctx).Error(err)
+					}
+				}
+			}
+		}
+	})
+}
+
+func (l *UserRegisterLogic) handleJwt(in *sys.UserRegisterReq) (int64, error) {
+	account, err := ParseThirdJwt(in.Code, l.svcCtx.Config.ThirdJwtSecret)
+	if err != nil {
+		return 0, err
+	}
+	userID := l.svcCtx.UserID.GetSnowflakeId()
+	ui := relationDB.SysUserInfo{UserID: userID}
+	if utils.IsPhone(account) {
+		ui.Phone = sql.NullString{Valid: true, String: account}
+		ui.UserName = sql.NullString{Valid: true, String: account}
+	} else if utils.IsEmail(account) {
+		ui.Email = sql.NullString{Valid: true, String: account}
+		ui.UserName = sql.NullString{Valid: true, String: account}
+	} else {
+		ui.UserName = sql.NullString{Valid: true, String: account}
+	}
+	if in.Password != "" {
+		err = CheckPwd(l.svcCtx, in.Password)
+		if err != nil {
+			return 0, err
+		}
+		ui.Password = utils.MakePwd(in.Password, ui.UserID, false)
+	}
+	if in.Info != nil {
+		ui.NickName = in.Info.NickName
+		if in.Info.UserName != "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+
+	// 处理华为账号绑定
+	huaweiCode := in.Expand["huaweiCode"]
+	if huaweiCode != "" {
+		cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+		if err != nil || cli.Huawei == nil {
+			return 0, errors.System.AddDetail(err)
+		}
+
+		// 优先从缓存读取
+		loginResult, err := GetHuaweiLoginResult(l.ctx, huaweiCode)
+		if err != nil {
+			// 缓存没有，调用华为接口
+			loginResult, err = cli.Huawei.QuickLoginByCode(l.ctx, huaweiCode)
+			if err != nil {
+				l.Errorf("%v.QuickLoginByCode err:%v", utils.FuncName(), err)
+				return 0, errors.System.AddDetail(err)
+			}
+		}
+
+		// 存储到注册缓存
+		StoreHuaweiRegisterResult(l.ctx, huaweiCode, loginResult)
+
+		if loginResult.UserInfo.UnionID != "" {
+			ui.HuaweiUnionID = sql.NullString{Valid: true, String: loginResult.UserInfo.UnionID}
+		}
+		ui.HuaweiOpenID = sql.NullString{Valid: true, String: loginResult.UserInfo.OpenID}
+	}
+
+	conn := stores.GetTenantConn(l.ctx)
+	err = l.FillUserInfo(&ui, conn)
+	if err != nil {
+		return 0, err
+	}
+	e := l.svcCtx.FastEvent.Publish(l.ctx, topics.CoreUserCreate, def.IDs{IDs: []int64{ui.UserID}})
+	if e != nil {
+		l.Errorf("Publish CoreUserCreate %v err:%v", ui, e)
+	}
+	return ui.UserID, nil
+}
+
+func (l *UserRegisterLogic) handleHuawei(in *sys.UserRegisterReq) (int64, error) {
+	return 0, errors.NotRealize.AddMsg("华为注册功能暂未开放")
+	// cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	// if err != nil || cli.Huawei == nil {
+	// 	return 0, errors.System.AddDetail(err)
+	// }
+
+	// loginResult, err := cli.Huawei.QuickLoginByCode(l.ctx, in.Code)
+	// if err != nil {
+	// 	l.Errorf("%v.GetPhoneNumber err:%v", err)
+	// 	return 0, errors.System.AddDetail(err)
+	// }
+	// if len(loginResult.PhoneNumber) == 0 {
+	// 	return 0, errors.UnBindAccount.AddDetail("华为账号未绑定手机号")
+	// }
+	// old, err := relationDB.NewUserInfoRepo(l.ctx).FindOneByFilter(l.ctx, relationDB.UserInfoFilter{
+	// 	Phone: loginResult.PhoneNumber,
+	// })
+	// if err == nil { //如果已经注册
+	// 	old.HuaweiUnionID = sql.NullString{Valid: true, String: loginResult.UnionID}
+	// 	old.HuaweiOpenID = sql.NullString{Valid: true, String: loginResult.OpenID}
+	// 	return old.UserID, relationDB.NewUserInfoRepo(l.ctx).Update(l.ctx, old)
+	// }
+
+	// userID := l.svcCtx.UserID.GetSnowflakeId()
+	// ui := relationDB.SysUserInfo{
+	// 	UserID:        userID,
+	// 	HuaweiUnionID: sql.NullString{Valid: true, String: loginResult.UnionID},
+	// 	HuaweiOpenID:  sql.NullString{Valid: true, String: loginResult.OpenID},
+	// 	Phone:         sql.NullString{Valid: true, String: loginResult.PhoneNumber},
+	// }
+	// if in.Info != nil {
+	// 	ui.NickName = in.Info.NickName
+	// 	if in.Info.UserName != "" {
+	// 		ui.UserName = utils.AnyToNullString(in.Info.UserName)
+	// 	}
+	// }
+	// err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+	// 	uidb := relationDB.NewUserInfoRepo(tx)
+	// 	_, err = uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{
+	// 		HuaweiUnionID: loginResult.UnionID,
+	// 		HuaweiOpenID:  loginResult.OpenID,
+	// 	})
+	// 	if err == nil { //已经注册过
+	// 		return errors.DuplicateRegister
+	// 	}
+	// 	if !errors.Cmp(err, errors.NotFind) {
+	// 		return err
+	// 	}
+	// 	return l.FillUserInfo(&ui, tx)
+	// })
+	// return userID, err
+}
+
+func (l *UserRegisterLogic) handleGoogle(in *sys.UserRegisterReq) (int64, error) {
+	cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if err != nil || cli.Google == nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	gUser, err := cli.Google.ResolveUser(l.ctx, in.Code)
+	if err != nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	userID := l.svcCtx.UserID.GetSnowflakeId()
+	ui := relationDB.SysUserInfo{
+		UserID:       userID,
+		GoogleUserID: sql.NullString{Valid: true, String: gUser.ID},
+		NickName:     gUser.Name,
+		Email:        sql.NullString{Valid: true, String: gUser.Email},
+		HeadImg:      gUser.Picture,
+	}
+	if in.Info != nil {
+		if in.Info.NickName != "" {
+			ui.NickName = in.Info.NickName
+		}
+		if in.Info.UserName != "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+	applyOAuthLoginAccount(&ui)
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		_, err = uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{GoogleUserID: gUser.ID})
+		if err == nil { //已经注册过
+			return errors.DuplicateRegister
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		return l.FillUserInfo(&ui, tx)
+	})
+	return userID, err
+}
+
+func (l *UserRegisterLogic) handleGithub(in *sys.UserRegisterReq) (int64, error) {
+	cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if err != nil || cli.Github == nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	token, err := cli.Github.ExchangeCode(l.ctx, in.Code, "")
+	if err != nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	ghUser, err := cli.Github.GetUserInfo(l.ctx, token)
+	if err != nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	userID := l.svcCtx.UserID.GetSnowflakeId()
+	ui := relationDB.SysUserInfo{
+		UserID:       userID,
+		GithubUserID: sql.NullString{Valid: true, String: cast.ToString(ghUser.ID)},
+		NickName:     ghUser.Name,
+		Email:        sql.NullString{Valid: true, String: ghUser.Email},
+		HeadImg:      ghUser.AvatarURL,
+	}
+	if in.Info != nil {
+		if in.Info.NickName != "" {
+			ui.NickName = in.Info.NickName
+		}
+		if in.Info.UserName != "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		_, err = uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{GithubUserID: cast.ToString(ghUser.ID)})
+		if err == nil { //已经注册过
+			return errors.DuplicateRegister
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		return l.FillUserInfo(&ui, tx)
+	})
+	return userID, err
+}
+
+func (l *UserRegisterLogic) handleApple(in *sys.UserRegisterReq) (int64, error) {
+	cli, err := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if err != nil || cli.Apple == nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	aUser, _, err := cli.Apple.ExchangeCode(l.ctx, in.Code)
+	if err != nil {
+		return 0, errors.System.AddDetail(err)
+	}
+	userID := l.svcCtx.UserID.GetSnowflakeId()
+	ui := relationDB.SysUserInfo{
+		UserID:      userID,
+		AppleUserID: sql.NullString{Valid: true, String: aUser.Sub},
+		Email:       sql.NullString{Valid: true, String: aUser.Email},
+	}
+	if in.Info != nil {
+		if in.Info.NickName != "" {
+			ui.NickName = in.Info.NickName
+		}
+		if in.Info.UserName != "" {
+			ui.UserName = utils.AnyToNullString(in.Info.UserName)
+		}
+	}
+	applyOAuthLoginAccount(&ui)
+	tenantCode := ctxs.GetUserCtxNoNil(l.ctx).TenantCode
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		_, err = uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{
+			TenantCode:  tenantCode,
+			AppleUserID: aUser.Sub,
+		})
+		if err == nil { //已经注册过
+			return errors.DuplicateRegister
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		boundUser, err := findOrBindAppleUser(l.ctx, uidb, tenantCode, aUser)
+		if err == nil {
+			userID = boundUser.UserID
+			return nil
+		}
+		if !errors.Cmp(err, errors.NotFind) {
+			return err
+		}
+		if err = l.FillUserInfo(&ui, tx); err != nil {
+			if errors.Cmp(err, errors.Duplicate) {
+				uc, findErr := uidb.FindOneByFilter(l.ctx, relationDB.UserInfoFilter{
+					TenantCode:  tenantCode,
+					AppleUserID: aUser.Sub,
+				})
+				if findErr == nil {
+					userID = uc.UserID
+					return nil
+				}
+			}
+			return err
+		}
+		return nil
+	})
+	return userID, err
+}

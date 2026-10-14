@@ -1,0 +1,88 @@
+package app
+
+import (
+	"context"
+
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/share/utils"
+
+	tenantoauth "gitee.com/ming-iot/saas/service/apisvr/internal/logic/system/tenant"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/types"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type IndexLogic struct {
+	logx.Logger
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+}
+
+func NewIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *IndexLogic {
+	return &IndexLogic{
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+		svcCtx: svcCtx,
+	}
+}
+
+func (l *IndexLogic) Index(req *types.TenantAppIndexReq) (resp *types.TenantAppIndexResp, err error) {
+	ret, err := l.svcCtx.TenantRpc.TenantAppIndex(l.ctx, &sys.TenantAppIndexReq{Code: req.Code})
+	if err != nil {
+		return nil, err
+	}
+	if len(ret.List) == 0 {
+		return &types.TenantAppIndexResp{}, nil
+	}
+	appCodes := make([]string, 0)
+	codeIDMap := make(map[string]*sys.TenantAppInfo)
+	for _, v := range ret.List {
+		appCodes = append(appCodes, v.AppCode)
+		codeIDMap[v.AppCode] = v
+	}
+	apps, err := l.svcCtx.AppRpc.AppInfoIndex(l.ctx, &sys.AppInfoIndexReq{
+		Codes: appCodes,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var retList []*types.TenantApp
+	for _, v := range apps.List {
+		ta := codeIDMap[v.Code]
+		v.Id = ta.Id //修正为关联的id
+		val := utils.Copy[types.TenantApp](v)
+		if ta.WxMini != nil && ta.WxMini.AppID != "" {
+			val.WxMini = utils.Copy[types.ThirdAppConfig](ta.WxMini)
+		}
+		if ta.DingMini != nil && ta.DingMini.AppID != "" {
+			val.DingMini = utils.Copy[types.ThirdAppConfig](ta.DingMini)
+		}
+		if ta.WxOpen != nil && ta.WxOpen.AppID != "" {
+			val.WxOpen = utils.Copy[types.ThirdAppConfig](ta.WxOpen)
+		}
+		if ta.Huawei != nil && ta.Huawei.AppID != "" {
+			val.Huawei = utils.Copy[types.ThirdAppConfig](ta.Huawei)
+		}
+		if ta.Google != nil && (ta.Google.AppID != "" || ta.Google.AppSecret != "") {
+			val.Google = utils.Copy[types.ThirdAppConfig](ta.Google)
+		}
+		if ta.Github != nil && (ta.Github.AppID != "" || ta.Github.AppSecret != "") {
+			val.Github = utils.Copy[types.ThirdAppConfig](ta.Github)
+		}
+		if ta.Apple != nil && (ta.Apple.AppID != "" || ta.Apple.PrivateKey != "") {
+			val.Apple = utils.Copy[types.AppleAppConfig](ta.Apple)
+		}
+		if ta.Android != nil {
+			val.Android = utils.Copy[types.ThirdApp](ta.Android)
+		}
+		val.LoginTypes = ta.LoginTypes
+		val.IsAutoRegister = ta.IsAutoRegister
+		val.Config = ta.Config
+		tenantoauth.FillTenantAppOut(l.ctx, val)
+		retList = append(retList, val)
+	}
+	return &types.TenantAppIndexResp{
+		List: retList,
+	}, nil
+}

@@ -1,0 +1,343 @@
+info(
+	title: "租户管理模块"
+	desc: "租户管理"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+    group: system/tenant/app
+    prefix: /api/v1/system/tenant/app
+    accessCodePrefix: "systemTenantManage"
+    accessNamePrefix: "租户应用"
+    accessGroup: "租户管理"
+    defaultNeedAuth: "true"
+    defaultAuthType: "supper"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取租户应用列表"
+        description: "返回当前租户已开通应用及其多端登录方式、第三方登录配置清单"
+        authType: "admin"
+        accessCode: "systemTenantManageApp"
+        accessName: "租户获取应用信息"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/app"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantAppIndexReq) returns (TenantAppIndexResp)
+
+    @doc(
+        summary: "绑定租户应用"
+        description: "为当前租户开通指定应用并写入多端登录与第三方登录配置"
+        authType: "supper"
+        resource: "tenant"
+        action: "bind"
+        group: "system/tenant/app"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (TenantAppInfo) returns ()
+
+    @doc(
+        summary: "更新租户应用"
+        description: "修改当前租户下指定应用的模块、多端登录与第三方登录配置"
+        authType: "supper"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/app"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (TenantAppInfo) returns ()
+
+    @doc(
+        summary: "解绑租户应用"
+        description: "解除当前租户与指定应用的绑定关系，需超管权限"
+        authType: "supper"
+        resource: "tenant"
+        action: "unbind"
+        group: "system/tenant/app"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (TenantAppWithIDOrCode) returns ()
+}
+
+@server (
+    group: system/tenant/app/core
+    prefix: /api/v1/system/tenant/app/core
+    middleware:  InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "获取应用信息"
+        description: "按应用编号读取登录端核心信息与所属租户，并在网关层隐藏华为应用配置"
+        authType: "all"
+        resource: "app"
+        action: "view"
+        group: "system/tenant/app/core"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithCode) returns (AppCore)
+}
+
+@server (
+    group: system/tenant/app/module
+    prefix: /api/v1/system/tenant/app/module
+    accessCodePrefix: "systemTenantManage"
+    accessNamePrefix: "租户模块"
+    accessGroup: "租户管理"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取租户应用模块列表"
+        description: "分页返回当前租户在指定应用下已开通的功能模块清单"
+        authType: "admin"
+        accessCode: "systemTenantManageApp"
+        accessName: "租户获取应用信息"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/app/module"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantModuleIndexReq) returns (TenantModuleIndexResp)
+
+    @doc(
+        summary: "新增租户应用模块"
+        description: "为租户应用挂载单个模块并绑定其菜单与接口集合"
+        authType: "supper"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/app/module"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (TenantModuleCreateReq) returns ()
+
+    @doc(
+        summary: "批量新增租户应用模块"
+        description: "一次性为租户应用挂载多个模块及其菜单与接口授权"
+        authType: "supper"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/app/module"
+        recordLogMode: "2"
+    )
+    @handler multiCreate
+    post /multi-create (TenantAppModuleMultiCreate) returns ()
+
+    @doc(
+        summary: "删除租户应用模块"
+        description: "按编号或编号组合移除租户应用下已挂载的模块及其授权"
+        authType: "supper"
+        resource: "tenant"
+        action: "delete"
+        group: "system/tenant/app/module"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (TenantModuleWithIDOrCode) returns ()
+}
+
+@server (
+    group: system/tenant/app/menu
+    prefix: /api/v1/system/tenant/app/menu
+    accessCodePrefix: "systemTenantManage"
+    accessNamePrefix: "租户管理"
+    accessGroup: "租户管理"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取租户应用菜单列表"
+        description: "按租户、应用与模块查询租户自定义菜单，可选返回树形结构"
+        authType: "admin"
+        accessCode: "systemTenantManageApp"
+        accessName: "租户获取应用信息"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/app/menu"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantAppMenuIndexReq) returns (TenantAppMenuIndexResp)
+
+    @doc(
+        summary: "创建租户应用菜单"
+        description: "在租户应用的指定模块下新增菜单项，可基于模板复制生成"
+        authType: "supper"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/app/menu"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (TenantAppMenu) returns (WithID)
+
+    @doc(
+        summary: "更新租户应用菜单"
+        description: "修改租户应用菜单的名称、路径、图标等展示属性"
+        authType: "supper"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/app/menu"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (TenantAppMenu) returns (WithID)
+
+    @doc(
+        summary: "删除租户应用菜单"
+        description: "按应用编号与菜单编号删除租户应用的自定义菜单项"
+        authType: "supper"
+        resource: "tenant"
+        action: "delete"
+        group: "system/tenant/app/menu"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithAppCodeID) returns ()
+}
+
+
+
+type (
+    WithAppCodeID{
+        AppCode string `json:"appCode"`
+        ID int64 `json:"id"`
+        Code string `json:"code"`
+    }
+    TenantAppMenuIndexReq{
+        Code string `json:"code,optional"`                     // 租户编号
+        AppCode string `json:"appCode"`
+        ModuleCode string `json:"moduleCode"`
+        IsRetTree bool `json:"isRetTree,optional"`
+    }
+    TenantAppMenuIndexResp{
+        List []*TenantAppMenu `json:"list"`
+    }
+    TenantAppMenu{
+        TemplateID int64 `json:"templateID,omit"`
+        Code string `json:"code,optional"`                             // 租户编号
+        AppCode string `json:"appCode,optional"`                         // 应用编号
+        MenuInfo
+        Children []*TenantAppMenu `json:"children,optional"`
+    }
+)
+
+type (
+    TenantModuleCreateReq{
+        Code string `json:"code,optional"`                     // 租户编号
+        AppCode string `json:"appCode"`
+        ModuleCode string `json:"moduleCode"`
+        MenuIDs []int64 `json:"menuIDs"`
+        ApiIDs []int64 `json:"apiIDs"`
+    }
+    TenantModuleIndexReq{
+        Code string `json:"code,optional"`                     // 租户编号
+        AppCode string `json:"appCode"`
+        Page *PageInfo `json:"page,optional"`
+    }
+
+    TenantModuleIndexResp{
+        List []*ModuleInfo `json:"list"`
+    }
+    TenantModuleWithIDOrCode{
+        ID int64 `json:"id,optional"`                                // 租户编号
+        Code string `json:"code,optional"`                             // 应用编号
+        AppCode string `json:"appCode,optional"`                         // 应用编号
+        ModuleCode string `json:"moduleCode,optional"`
+    }
+
+)
+
+
+type(
+    TenantAppWithIDOrCode{
+        ID int64 `json:"id,optional"`                                // 编号
+        Code string `json:"code,optional"`                             // 租户编号
+        AppCode string `json:"appCode,optional"`                         // 应用编号
+    }
+
+    TenantAppIndexReq{
+        Code string `json:"code,optional"`                     // 租户编号
+    }
+    TenantAppIndexResp{
+        List []*TenantApp `json:"list"`            // 租户列表数据
+        PageResp
+    }
+    TenantAppModuleMultiCreate{
+        Code string `json:"code,optional"`                     // 租户编号
+        AppCode string `json:"appCode"`
+        Modules []*TenantAppModule `json:"modules"`
+    }
+    TenantApp {
+		AppInfo
+		DingMini *ThirdAppConfig `json:"dingMini,optional"`//钉钉小程序
+		WxOpen *ThirdAppConfig `json:"wxOpen,optional"`//微信开放 web app需要填写
+		WxMini *ThirdAppConfig `json:"wxMini,optional"`
+		Android *ThirdApp  `json:"android,optional"`//安卓应用
+		Huawei *ThirdAppConfig `json:"huawei,optional"`//华为应用
+		Google *ThirdAppConfig `json:"google,optional"`//Google登录
+		GoogleConfig *ThirdAppConfig `json:"googleConfig,optional"`//Google登录（前端字段名）
+		Github *ThirdAppConfig `json:"github,optional"`//GitHub登录
+		GithubConfig *ThirdAppConfig `json:"githubConfig,optional"`//GitHub登录（前端字段名）
+		Apple *AppleAppConfig `json:"apple,optional"`//Apple登录
+		AppleConfig *AppleAppConfig `json:"appleConfig,optional"`//Apple登录（前端字段名）
+		LoginTypes []string `json:"loginTypes,optional"`//支持的登录类型(不填支持全部登录方式):  	 "email":邮箱 "phone":手机号  "wxMiniP":微信小程序  "wxOpen": 微信开放平台登录   "dingApp":钉钉应用(包含小程序,h5等方式)  "pwd":账号密码注册  "google":Google  "github":GitHub  "apple":Apple
+		IsAutoRegister int64 `json:"isAutoRegister,optional"` //登录未注册是否自动注册
+		Config string `json:"config,optional"` //自定义配置json
+	}
+    AppCore{
+		ID int64 `json:"id,optional"`                                      // 编号
+		Code string `json:"code"`                               // 应用编码
+		Type string `json:"type"` //应用类型 web:web页面  app:应用  mini:小程序
+		SubType string `json:"subType,optional"`//子类型  wx:微信小程序  ding:钉钉小程序  huawei:华为应用
+		Name string `json:"name,optional"`                                 // 应用名称
+		LoginTypes []string `json:"loginTypes,optional"`//支持的登录类型(不填支持全部登录方式):  	 "email":邮箱 "phone":手机号  "wxMiniP":微信小程序  "wxOpen": 微信开放平台登录   "dingApp":钉钉应用(包含小程序,h5等方式)  "pwd":账号密码注册
+		WxOpen *ThirdMiniCore `json:"wxOpen,optional,omitempty"`//微信开放 web app有
+		IsAutoRegister int64 `json:"isAutoRegister,optional"` //登录未注册是否自动注册
+		Config string `json:"config,optional"` //自定义配置json
+		Android *ThirdApp  `json:"android,optional,omitempty"`//安卓应用
+		Huawei *ThirdAppConfig `json:"huawei,optional,omitempty"`//华为应用
+		Tenant *TenantCore `json:"tenant"` //租户信息
+	}
+    TenantAppInfo {
+		Code string `json:"code,optional"`                     // 租户编号
+		AppCode string `json:"appCode"`
+		Modules []*TenantAppModule `json:"modules"`
+		DingMini *ThirdAppConfig `json:"dingMini,optional"`//钉钉小程序
+		WxOpen *ThirdAppConfig `json:"wxOpen,optional"`//微信开放 web app需要填写
+		WxMini *ThirdAppConfig `json:"wxMini,optional"`
+		Android *ThirdAppConfig `json:"android,optional"`//安卓应用
+		Huawei *ThirdAppConfig `json:"huawei,optional"`//华为应用
+		Google *ThirdAppConfig `json:"google,optional"`//Google登录
+		GoogleConfig *ThirdAppConfig `json:"googleConfig,optional"`//Google登录（前端字段名）
+		Github *ThirdAppConfig `json:"github,optional"`//GitHub登录
+		GithubConfig *ThirdAppConfig `json:"githubConfig,optional"`//GitHub登录（前端字段名）
+		Apple *AppleAppConfig `json:"apple,optional"`//Apple登录
+		AppleConfig *AppleAppConfig `json:"appleConfig,optional"`//Apple登录（前端字段名）
+		LoginTypes []string `json:"loginTypes,optional"`//支持的登录类型(不填支持全部登录方式):  	 "email":邮箱 "phone":手机号  "wxMiniP":微信小程序  "wxOfficial": 微信公众号登录   "dingApp":钉钉应用(包含小程序,h5等方式)  "pwd":账号密码注册  "huawei":华为应用登录  "google":Google  "github":GitHub  "apple":Apple
+		IsAutoRegister int64 `json:"isAutoRegister,optional"` //登录未注册是否自动注册
+		Config string `json:"config,optional"` //自定义配置json
+	}
+
+    TenantAppModule{
+        Code string `json:"code"`                     // 应用编号
+        MenuIDs []int64 `json:"menuIDs,optional"`
+        ApiIDs []int64 `json:"apiIDs,optional"`
+    }
+)

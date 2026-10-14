@@ -1,0 +1,49 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+message Empty {
+}
+
+message PageInfo{
+  int64 page = 1;
+  int64 size = 2;
+  //排序信息
+  repeated OrderBy orders = 3;
+  message OrderBy {
+    //排序的字段名
+    string field = 1;
+    //排序方式：1 从小到大, 2 从大到小
+    int64 sort = 2;
+  }
+}
+
+message CompareString{
+  string CmpType =1;//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+  string value =2;//值
+}
+
+message FileCore{
+  string path =1;//文件的路径
+  bool isUpdate=2;//如果要更新该文件,则需要将该参数置为true
+}
+
+message WithIDCode{
+  int64 id = 1;
+  string code=2;
+}
+
+message WithID{
+  int64 id = 1;
+}
+
+message ImportResp{
+  int64 total =1;      //导入总接口数
+  int64  errCount =2; //失败数
+  int64  ignoreCount =3; //忽略数
+  int64  succCount =4; //成功数
+}
+
+message DeviceCore{
+  string   productID = 1; //产品id
+  string  deviceName = 2; //设备名称
+}

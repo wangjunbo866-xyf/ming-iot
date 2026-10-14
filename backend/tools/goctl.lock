@@ -1,0 +1,35 @@
+# goctl fork 可复现构建锁定文件。
+#
+# 字段说明：
+#   repository           go-zero/goctl fork 的 git URL。
+#   commit               fork 精确 commit SHA（detached checkout）。
+#   goVersion            构建使用的 Go toolchain（GOTOOLCHAIN）。
+#   target               固定构建目标。
+#   patches              按序应用的补丁，每个补丁带 sha256（Task 6 写入）。
+#   sourceArchiveSha256  `git archive --prefix=go-zero/ <commit>` 产出的
+#                        未压缩 tar 的 sha256（不含 .git，不含 patches），
+#                        在 bootstrap 后写入并锁定。
+#   binarySha256         最终 backend/bin/goctl 的 sha256。
+#
+# bootstrap 在可信源码与补丁测试全部通过后会打印实际 checksum，由维护者
+# review 后写回本文件；后续普通 build 只校验不自动更新。任何 checksum 字段
+# 缺失时普通 build 必须失败。
+
+repository: https://gitee.com/unitedrhino/go-zero.git
+commit: 6579a20bfd96919a80af5a9cb4e12f03598d4bb3
+goVersion: go1.24.4
+target:
+  goos: linux
+  goarch: amd64
+  cgoEnabled: false
+patches:
+  - path: patches/goctl/0001-api-accept-supper.patch
+    sha256: a9020f5492b181ee8abeb77cb5d46909040129615356dec5d9c97cce8e475e99
+  - path: patches/goctl/0002-api-new-required-metadata.patch
+    sha256: 96c5239916bd999e147237d86332dfe38b8a34af2c6561b4bccea9d29a1c47cc
+  - path: patches/goctl/0003-api-restore-ws-routes.patch
+    sha256: 6faf7206c98da7eeb4ad582f61c6034555b7cb47d767bb740f34ea9fdd8f0016
+  - path: patches/goctl/0004-api-update-strict-validation-fixtures.patch
+    sha256: 78405b19ea0663cdd537b6db7683787f7bd8c126afa7ea35c31c038292f84ff6
+sourceArchiveSha256: d77571bf37492f951ad7b5c6a3360f5eabb08d8e03b741451e22bdc40ee7a8c2
+binarySha256: ab78ed4d859dc2506a38979bdb592ac007235bcdca31c71d4b1f8244f6fec973

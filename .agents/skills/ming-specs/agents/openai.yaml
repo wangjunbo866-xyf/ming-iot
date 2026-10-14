@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ming IoT 规格维护（草案）"
+  short_description: "维护需求决定、模块认领、规格变更与差异，按固定版本交接任务"
+  default_prompt: "使用 $ming-specs 为已授权任务澄清需求并留存决定，维护认领与变更、检查提交差异，或核对交接包并留下接收回执。"

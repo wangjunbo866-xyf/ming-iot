@@ -1,0 +1,84 @@
+[
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/index",
+    "handler": "index",
+    "requestType": "StaticsticsInfoIndexReq",
+    "responseType": "StaticsticsInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/read",
+    "handler": "read",
+    "requestType": "StaticsticsInfoReadReq",
+    "responseType": "StaticsticsInfoReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/create",
+    "handler": "create",
+    "requestType": "DataStatisticsManage",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/index",
+    "handler": "index",
+    "requestType": "DataStatisticsManageIndexReq",
+    "responseType": "DataStatisticsManageIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "DataStatisticsManage",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/update",
+    "handler": "update",
+    "requestType": "DataStatisticsManage",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  }
+]

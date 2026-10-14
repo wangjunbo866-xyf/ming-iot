@@ -1,0 +1,85 @@
+package protocolmanagelogic
+
+import (
+	"context"
+
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/protocol"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type ProtocolScriptUpdateLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewProtocolScriptUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ProtocolScriptUpdateLogic {
+	return &ProtocolScriptUpdateLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+// 协议更新
+func (l *ProtocolScriptUpdateLogic) ProtocolScriptUpdate(in *dm.ProtocolScript) (*dm.Empty, error) {
+	if err := ctxs.IsAdmin(l.ctx); err != nil {
+		return nil, err
+	}
+	old, err := relationDB.NewProtocolScriptRepo(l.ctx).FindOne(l.ctx, in.Id)
+	if err != nil {
+		return &dm.Empty{}, err
+	}
+	if !ctxs.CanHandTenant(l.ctx, in.TenantCode) {
+		return nil, errors.Permissions
+	}
+	if in.Name != "" {
+		old.Name = in.Name
+	}
+	if in.Desc != nil {
+		old.Desc = in.Desc.GetValue()
+	}
+	if in.Script != "" && in.Script != old.Script {
+		handle, _, err := l.svcCtx.ScriptTrans.GetFunc(l.ctx, in.Script, "Handle")
+		if err != nil {
+			return &dm.Empty{}, errors.Parameter.AddMsgf("脚本定义错误:%s", err.Error())
+		}
+		switch old.TriggerTimer {
+		case protocol.TriggerTimerBefore:
+			_, ok := handle.(func(context.Context, *deviceMsg.PublishMsg) *deviceMsg.PublishMsg)
+			if !ok {
+				return nil, errors.Parameter.AddMsg("结构体中需要定义: func Handle(context.Context,req *dm.PublishMsg) *dm.PublishMsg")
+			}
+		case protocol.TriggerTimerAfter:
+			if old.TriggerDir == protocol.TriggerDirUp {
+				_, ok := handle.(func(context.Context, *deviceMsg.PublishMsg, *deviceMsg.PublishMsg))
+				if !ok {
+					return nil, errors.Parameter.AddMsg("结构体中需要定义: func Handle(ctx context.Context,req *dm.PublishMsg,resp *dm.PublishMsg)")
+				}
+			} else {
+				_, ok := handle.(func(context.Context, *deviceMsg.PublishMsg))
+				if !ok {
+					return nil, errors.Parameter.AddMsg("结构体中需要定义: func Handle(ctx context.Context,req *dm.PublishMsg,resp *dm.PublishMsg)")
+				}
+			}
+		}
+		old.Script = in.Script
+	}
+	if in.TriggerType != "" {
+		old.TriggerType = in.TriggerType
+	}
+	if in.TriggerHandle != "" {
+		old.TriggerHandle = in.TriggerHandle
+	}
+	if in.Status != 0 {
+		old.Status = in.Status
+	}
+	err = relationDB.NewProtocolScriptRepo(l.ctx).Update(l.ctx, old)
+	return &dm.Empty{}, err
+}

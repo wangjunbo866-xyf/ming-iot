@@ -1,0 +1,230 @@
+info(
+    title: "通知管理模块"
+    desc: "通知管理"
+    author: "L"
+    email: "174805676@qq.com"
+    version: "v0.1.0"
+)
+
+@server (
+    group: system/notify/config
+    prefix: /api/v1/system/notify/config
+    accessCodePrefix: "systemNotifyConfig"
+    accessNamePrefix: "通知配置"
+    accessGroup: "通知配置"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加通知配置"
+        description: "定义一条通知项，含编码、分组、支持通道与启用的通道类型及变量参数"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "notify"
+        action: "create"
+        group: "system/notify/config"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (NotifyConfig) returns (WithID)
+
+    @doc(
+        summary: "获取通知列表"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按名称、编号或分组分页查询通知配置清单"
+        resource: "notify"
+        action: "view"
+        group: "system/notify/config"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (NotifyConfigIndexReq) returns (NotifyConfigIndexResp)
+
+    @doc(
+        summary: "获取通知列表树"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按分组聚合通知配置并以树形结构返回，供前端通知配置导航"
+        resource: "notify"
+        action: "view"
+        group: "system/notify/config"
+        recordLogMode: "1"
+    )
+    @handler tree
+    post /tree (NotifyConfigIndexReq) returns (NotifyConfigTreeResp)
+
+
+    @doc(
+        summary: "获取通知详情"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按编号或主键读取单条通知配置的完整信息"
+        resource: "notify"
+        action: "view"
+        group: "system/notify/config"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (NotifyConfig)
+
+    @doc(
+        summary: "更新通知配置"
+        authType: "supper"
+        isNeedAuth: "true"
+        description: "修改通知配置的分组、支持通道、启用通道与变量参数等属性"
+        resource: "notify"
+        action: "update"
+        group: "system/notify/config"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (NotifyConfig) returns ()
+
+    @doc(
+        summary: "删除通知配置"
+        authType: "supper"
+        isNeedAuth: "true"
+        description: "按主键删除通知配置，关联的绑定模板与消息记录引用随之失效"
+        resource: "notify"
+        action: "delete"
+        group: "system/notify/config"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+    @doc(
+        summary: "测试下发通知"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按通知配置与通道类型向指定用户或账号试发一条通知，用于校验通道连通性"
+        resource: "notify"
+        action: "send"
+        group: "system/notify/config"
+        recordLogMode: "2"
+    )
+    @handler testSend
+    post /test/send (NotifyConfigTestSendReq) returns ()
+
+}
+
+
+@server (
+    group: system/notify/config/template
+    prefix: /api/v1/system/notify/config/template
+    accessCodePrefix: "systemNotifyTemplate"
+    accessNamePrefix: "通知模版"
+    accessGroup: "通知管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取通知绑定模版列表"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按通知编号和通道类型查询该通知绑定的消息模板列表"
+        resource: "template"
+        action: "view"
+        group: "system/notify/config/template"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (NotifyConfigTemplateIndexReq) returns (NotifyConfigTemplateIndexResp)
+    @doc(
+        summary: "更新通知绑定模版"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "为通知配置的指定通道类型绑定或更新消息模板"
+        resource: "template"
+        action: "update"
+        group: "system/notify/config/template"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (NotifyConfigTemplate) returns ()
+    @doc(
+        summary: "删除通知绑定模版"
+        authType: "admin"
+        isNeedAuth: "true"
+        description: "按通知编号与通道类型解除其消息模板绑定关系"
+        resource: "template"
+        action: "delete"
+        group: "system/notify/config/template"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (NotifyConfigTemplateDeleteReq) returns ()
+}
+
+
+
+type (
+    NotifyConfigTemplate {
+        ID int64 `json:"id,optional"`
+        NotifyCode string `json:"notifyCode,optional"`
+        Type string `json:"type,optional"`
+        TemplateID int64 `json:"templateID,optional"`
+    }
+    NotifyConfigTemplateDeleteReq{
+        NotifyCode string `json:"notifyCode"`
+        Type string `json:"type"`
+    }
+    NotifyConfigTemplateIndexReq{
+        NotifyCode string `json:"notifyCode"`
+        Type string `json:"type,optional"`
+    }
+    NotifyConfigTemplateIndexResp{
+        List []*NotifyConfigTemplate `json:"list"`
+    }
+)
+
+
+
+type (
+
+    NotifyConfigIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Name string `json:"name,optional"`                     // 应用名称
+        Code string `json:"code,optional"`                     // 应用编号
+        Group string  `json:"group,optional"` //分组
+    }
+
+
+    NotifyConfigIndexResp  {
+        List []*NotifyConfig `json:"list"`            // 通知列表数据
+        PageResp
+    }
+    NotifyConfigTreeResp  {
+        List []*NotifyGroupInfo `json:"list"`            // 通知列表数据
+    }
+    NotifyGroupInfo  {
+        ID string `json:"id,optional"`                               // id
+        Code string `json:"code,optional"`                               // 应用编号
+        name  string `json:"name,optional"`                               // 接口分组
+        Children []*NotifyConfig `json:"children,omitempty"`            // 列表数据
+    }
+
+    NotifyConfig{
+         ID int64 `json:"id,optional"` // id编号
+         Group string `json:"group,optional"` //分组
+         Code string `json:"code,optional"` // 通知类型编码
+         Name string `json:"name,optional"` //通知的命名
+         SupportTypes []string `json:"supportTypes,optional"` //支持的通知类型 sms(短信),email(邮箱),dingTalk(钉钉机器人),dingWebhook(钉钉webhook),wxEWebHook(企业微信webhook)
+         EnableTypes []string `json:"enableTypes,optional"` //启用的通知类型 sms(短信),email(邮箱),dingTalk(钉钉机器人),dingWebhook(钉钉webhook),wxEWebHook(企业微信webhook)
+         Desc string `json:"desc,optional"` // 备注
+         IsRecord int64 `json:"isRecord,optional"` //是否记录该消息,是的情况下会将消息存一份到消息中心
+         Params map[string]string `json:"params,optional"` //变量属性 key是变量参数,value是变量描述
+    }
+
+    NotifyConfigTestSendReq {
+        NotifyCode string `json:"notifyCode"` // 通知配置 code，如 ruleScene
+        Type string `json:"type"` // 通道类型 wxMini/message/sms 等
+        UserIDs []int64 `json:"userIDs,string,optional"`
+        Accounts []string `json:"accounts,optional"`
+        Params map[string]string `json:"params,optional"`
+        TemplateID int64 `json:"templateID,optional"`
+    }
+)

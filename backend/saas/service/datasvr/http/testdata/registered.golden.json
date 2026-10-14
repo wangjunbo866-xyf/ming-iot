@@ -1,0 +1,72 @@
+[
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/index",
+    "handler": "index",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/info/read",
+    "handler": "read",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/create",
+    "handler": "create",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/delete",
+    "handler": "delete",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/index",
+    "handler": "index",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/read",
+    "handler": "read",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "datasvr",
+    "method": "POST",
+    "fullPath": "/api/v1/data/staticstics/manage/update",
+    "handler": "update",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  }
+]

@@ -1,0 +1,455 @@
+package utils
+
+import (
+	"bytes"
+	"database/sql"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"io"
+	"reflect"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/fatih/structs"
+	"github.com/spf13/cast"
+	"google.golang.org/protobuf/types/known/wrapperspb"
+)
+
+/*
+@in src 赋值的数据源
+@in dst 赋值对象的结构体
+@out dst类型的结构体
+*/
+func Convert(src any, dst any) any {
+
+	srcType := reflect.TypeOf(src) //获取type
+	dstType := reflect.TypeOf(dst)
+
+	srcEl := reflect.ValueOf(src).Elem() //获取value
+	dstEl := reflect.ValueOf(dst).Elem()
+	//双循环，对相同名字对字段进行赋值
+	for i := 0; i < srcType.NumField(); i++ {
+		for j := 0; j < dstType.NumField(); j++ {
+			if srcType.Field(i).Name == dstType.Field(j).Name {
+				dstEl.Field(i).Set(srcEl.Field(j))
+			}
+		}
+	}
+	return dst
+}
+
+func ToEmptyInt64(val *wrapperspb.Int64Value) int64 {
+	if val == nil {
+		return 0
+	}
+	return val.Value
+}
+func ToNullInt64(val *wrapperspb.Int64Value) *int64 {
+	if val == nil {
+		return nil
+	}
+	return &val.Value
+}
+func ToRpcNullInt64(val any) *wrapperspb.Int64Value {
+	if val == nil {
+		return nil
+	}
+
+	var wrapVal any
+	switch val.(type) {
+	case string:
+		wrapVal = val
+	case *string:
+		if v := val.(*string); v != nil {
+			wrapVal = *v
+		}
+	case sql.NullString:
+		if v := val.(sql.NullString); v.Valid == true {
+			wrapVal = v.String
+		}
+	case int64:
+		wrapVal = val
+	case *int64:
+		if v := val.(*int64); v != nil {
+			wrapVal = *v
+		}
+	case sql.NullInt64:
+		if v := val.(sql.NullInt64); v.Valid == true {
+			wrapVal = v.Int64
+		}
+	default:
+		return nil
+	}
+
+	if wrapVal != nil {
+		return &wrapperspb.Int64Value{Value: cast.ToInt64(wrapVal)}
+	} else {
+		return nil
+	}
+}
+
+func SqlToString(val sql.NullString) string {
+	if !val.Valid {
+		return ""
+	}
+	return val.String
+}
+
+func ToEmptyString(val *wrapperspb.StringValue) string {
+	if val == nil {
+		return ""
+	}
+	return val.Value
+}
+func ToNullString(val *wrapperspb.StringValue) *string {
+	if val == nil {
+		return nil
+	}
+	return &val.Value
+}
+
+func ToRpcNullString(val any) *wrapperspb.StringValue {
+	if val == nil {
+		return nil
+	}
+	switch val.(type) {
+	case string:
+		v := val.(string)
+		if v == "" {
+			return nil
+		}
+		return &wrapperspb.StringValue{
+			Value: v,
+		}
+	case *string:
+		v := val.(*string)
+		if v != nil {
+			return &wrapperspb.StringValue{
+				Value: *v,
+			}
+		}
+	case sql.NullString:
+		v := val.(sql.NullString)
+		if v.Valid == true {
+			return &wrapperspb.StringValue{Value: v.String}
+		}
+	}
+	return nil
+}
+
+func ToRpcNullFloat32(val any) *wrapperspb.FloatValue {
+	if val == nil {
+		return nil
+	}
+	switch val.(type) {
+	case float32:
+		v := val.(float32)
+		if v == 0 {
+			return nil
+		}
+		return &wrapperspb.FloatValue{
+			Value: v,
+		}
+	case *float32:
+		v := val.(*float32)
+		if v != nil {
+			return &wrapperspb.FloatValue{
+				Value: *v,
+			}
+		}
+	case sql.NullFloat64:
+		v := val.(sql.NullFloat64)
+		if v.Valid == true {
+			return &wrapperspb.FloatValue{Value: float32(v.Float64)}
+		}
+	}
+	return nil
+}
+
+func SqlToFloat32(val sql.NullFloat64) float32 {
+	if !val.Valid {
+		return 0
+	}
+	return float32(val.Float64)
+}
+
+func ToEmptyFloat32(val *wrapperspb.FloatValue) float32 {
+	if val == nil {
+		return 0
+	}
+	return val.Value
+}
+func ToNullFloat32(val *wrapperspb.FloatValue) *float32 {
+	if val == nil {
+		return nil
+	}
+	return &val.Value
+}
+
+func ToRpcNullDouble(val *float64) *wrapperspb.DoubleValue {
+	if val != nil {
+		return &wrapperspb.DoubleValue{
+			Value: *val,
+		}
+	}
+	return nil
+}
+
+var empty = time.Time{}
+
+func Int64ToTimex(in int64) *time.Time {
+	if in == 0 {
+		return nil
+	}
+	ret := time.Unix(in, 0)
+	return &ret
+}
+
+func Int64ToSqlTime(in int64) sql.NullTime {
+	if in == 0 {
+		return sql.NullTime{}
+	}
+	ret := time.Unix(in, 0)
+	return sql.NullTime{Valid: true, Time: ret}
+}
+
+func TimeToInt64(t time.Time) int64 {
+	if t == empty {
+		return 0
+	}
+	return t.Unix()
+}
+func Time2ToInt64(t *time.Time) int64 {
+	if t == nil {
+		return 0
+	}
+	return TimeToInt64(*t)
+}
+func SetToSlice[t comparable, vT any](in map[t]vT) (ret []t) {
+	for k := range in {
+		ret = append(ret, k)
+	}
+	return
+}
+
+func MapVToSlice[t comparable, vT any](in map[t]vT) (ret []vT) {
+	for _, v := range in {
+		ret = append(ret, v)
+	}
+	return
+}
+func MapVToSlice2[t comparable, vT any](in map[t]vT) (ret []*vT) {
+	for _, v := range in {
+		ret = append(ret, &v)
+	}
+	return
+}
+
+func GetMapValOne[t comparable, vT any](in map[t]vT) (ret vT, ok bool) {
+	if len(in) == 0 {
+		return
+	}
+	for _, v := range in {
+		return v, true
+	}
+	return
+}
+
+func GetMapKeyOne[t comparable, vT any](in map[t]vT) (ret t, ok bool) {
+	if len(in) == 0 {
+		return
+	}
+	for k := range in {
+		return k, true
+	}
+	return
+}
+
+func AnyToNullString(in any) sql.NullString {
+	if in == nil || IsNil(in) {
+		return sql.NullString{}
+	}
+	switch in.(type) {
+	case string, []byte:
+		str := cast.ToString(in)
+		if len(str) == 0 {
+			return sql.NullString{}
+		}
+		return sql.NullString{
+			String: cast.ToString(in),
+			Valid:  true,
+		}
+	case *wrapperspb.StringValue:
+		v := in.(*wrapperspb.StringValue)
+		if v == nil {
+			return sql.NullString{}
+		}
+		return sql.NullString{
+			String: v.Value,
+			Valid:  true,
+		}
+	}
+	str, err := json.Marshal(in)
+	if err != nil {
+		return sql.NullString{}
+	}
+	return sql.NullString{String: string(str), Valid: true}
+}
+func SqlNullStringToAny(in sql.NullString, ret any) error {
+	if in.Valid == false {
+		return nil
+	}
+	err := json.Unmarshal([]byte(in.String), ret)
+	return err
+}
+
+func SliceTo[retT any](values []string, cov func(any) retT) []retT {
+	var ret []retT
+	for _, v := range values {
+		ret = append(ret, cov(v))
+	}
+	return ret
+}
+
+func TrimNil[a any](in *a) a {
+	if in != nil {
+		return *in
+	}
+	var ret a
+	return ret
+}
+
+// TimeTo24Sec 转换成 24小时的秒单位表示
+func TimeTo24Sec(t time.Time) int64 {
+	ret := t.Hour() * 60 * 60
+	ret += t.Minute() * 60
+	ret += t.Second()
+	return int64(ret)
+}
+
+func ToTimeX(t time.Time) *time.Time {
+	if t.IsZero() {
+		return nil
+	}
+	return &t
+}
+func TimeXToTime(t *time.Time) time.Time {
+	if t == nil {
+		return time.Time{}
+	}
+	return *t
+}
+
+func MapBoolToInt(in map[string]any) {
+	for k, v := range in {
+		if b, ok := v.(bool); ok {
+			if b {
+				in[k] = 1
+			} else {
+				in[k] = 0
+			}
+		}
+	}
+	return
+}
+
+func ToStringMapString(in any) map[string]string {
+	t := reflect.TypeOf(in)
+	kind := t.Kind()
+	if kind == reflect.Ptr {
+		t = t.Elem()
+		kind = t.Kind()
+	}
+	if kind != reflect.Struct {
+		return cast.ToStringMapString(in)
+	}
+	var ret = make(map[string]string)
+	m := structs.Map(in)
+	for k, v := range m {
+		ret[k] = cast.ToString(v)
+	}
+	return ret
+}
+
+func ToStringMap(in any) map[string]any {
+	var m = map[string]interface{}{}
+	switch v := in.(type) {
+	case map[string]string:
+		for k, val := range v {
+			m[k] = val
+		}
+		return m
+	}
+	return cast.ToStringMap(in)
+}
+
+func BStrToInt64(binStr string) int64 {
+	if binStr == "" {
+		return 0
+	}
+	decimal, err := strconv.ParseInt(binStr, 2, 64)
+	if err != nil {
+		return 0
+	}
+	return decimal
+}
+func Int64ToBStr(num int64, bit int) string {
+	str := strconv.FormatInt(num, 2)
+	if len(str) > bit {
+		return str
+	}
+	for len(str) < bit {
+		str = "0" + str
+	}
+	return str
+}
+
+func HexToBytes(hex string) ([]byte, error) {
+	if len(hex)%2 != 0 {
+		return nil, fmt.Errorf("hex string has an odd length")
+	}
+	hex = strings.TrimSpace(hex)
+	hex = strings.ToLower(hex)
+	bytes := make([]byte, 0, len(hex)/2)
+	for i := 0; i < len(hex); i += 2 {
+		halfWord := hex[i : i+2]
+		byteValue, err := parseHexByte(halfWord)
+		if err != nil {
+			return nil, err
+		}
+		bytes = append(bytes, byteValue)
+	}
+	return bytes, nil
+}
+
+func parseHexByte(halfWord string) (byte, error) {
+	val, err := strconv.ParseInt(halfWord, 16, 16)
+	if err != nil {
+		return 0, err
+	}
+	return byte(val), nil
+}
+
+// 将io.Reader转换为io.ReadSeeker
+func ReaderToReadSeeker(reader io.Reader) (io.ReadSeeker, error) {
+	// 对于已经实现了ReadSeeker的类型直接返回
+	if rs, ok := reader.(io.ReadSeeker); ok {
+		return rs, nil
+	}
+
+	// 否则读取到字节缓冲区
+	buf := &bytes.Buffer{}
+	_, err := io.Copy(buf, reader)
+	if err != nil {
+		return nil, fmt.Errorf("复制数据到缓冲区失败: %w", err)
+	}
+	return bytes.NewReader(buf.Bytes()), nil
+}
+
+// base64Decode 将base64编码的字符串解码为[]byte
+func Base64Decode(encodedStr string) ([]byte, error) {
+	// 使用标准库的DecodeString函数进行解码
+	return base64.StdEncoding.DecodeString(encodedStr)
+}

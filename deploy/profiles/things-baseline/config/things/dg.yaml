@@ -1,0 +1,13 @@
+Name: dg.rpc
+ListenOn: 0.0.0.0:6166
+Mode: dev
+Log:
+  Encoding: plain
+CacheRedis: [{Host: "redis:6379", Type: node}]
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: dgsvr}}
+DmRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Endpoints: ["dm:9081"]}}
+TimedJobRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Endpoints: ["timedjob:3256"]}}
+DevLink:
+  Mode: mqtt
+  SubMode: emq
+  Mqtt: {ClientID: dg.rpc, User: dgsvr, Pass: "${THINGS_INTERNAL_AUTH_PASSWORD}", Brokers: ["tcp://emqx:1883"]}

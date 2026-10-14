@@ -1,0 +1,122 @@
+# =============================================================================
+# TDengine 3.3.6.34 (LTS) 三节点集群 Helm values
+# 适用 Chart：官方 tdengine chart >= 3.5.0（appVersion 3.3.5.1+，services.* 新 schema）
+#   helm install tdengine tdengine-3.5.0.tgz -f tdengine-values.yaml
+# 注意：旧 chart（<=3.0.2）的 replicaCount / storage.dataSize / taoscfg 顶层键已废弃
+#
+# 场景：百万设备 × 500 测点（400 float / 50 int / 50 string(50)）
+#       每设备 5 分钟 1 条消息，每天 12 小时，500 点位拆 3 张超级表
+# 数据模型：300 万子表，~10,000 行/s（167 万测点/s），裸数据 ~620 GB/天
+# 资源：Pod 独占节点，固定 32C / 64G（Guaranteed QoS），推导见 README.md
+# =============================================================================
+
+name: "tdengine"
+
+# -----------------------------------------------------------------------------
+# 镜像：chart 拼接方式为 "{{ repository }}{{ server }}"
+#   默认 image.cloud.taosdata.com/ + taosx/integrated（企业版一体镜像）
+#   社区版使用 Docker Hub 官方镜像 tdengine/tdengine:3.3.6.34
+# -----------------------------------------------------------------------------
+image:
+  repository: ""                        # 留空 = 直接使用 server 中的完整镜像名
+  server: tdengine/tdengine:3.3.6.34
+  #pullPolicy: IfNotPresent
+
+# 时区在此设置（模板注入 TZ 环境变量），不要在 environment 里设
+timezone: "Asia/Shanghai"
+
+labels:
+  app.kubernetes.io/part-of: iot-platform
+
+services:
+  server:
+    type: ClusterIP
+    replica: 3                          # 三节点集群
+    ports:
+      # TCP: 6030(taosc) 6041(REST/WS) 6043(taosKeeper) 6044-6049 6060(taosExplorer)
+      tcp: [6030, 6041, 6042, 6043, 6044, 6046, 6047, 6048, 6049, 6060]
+      udp: [6044, 6045]
+
+    # -------------------------------------------------------------------------
+    # 存储：单级存储挂到默认 dataDir /var/lib/taos，无需额外 files/dataDir 配置
+    #   压缩率按官方保守值 5x → 逻辑 ~124 GB/天，replica 3 → 每节点 ~124 GB/天
+    #   size 按 KEEP 周期选择（含 30% 余量 + WAL）：
+    #     30 天 → 5Ti | 90 天 → 15Ti | 180 天 → 29Ti | 365 天 → 58Ti
+    #   多级存储（可选）：参考 chart 默认 values 的 tier0/tier1/tier2 示例，
+    #   多挂几个 volume 并用 files 注入 dataDir /data/taos0/ 0 1 等配置
+    # -------------------------------------------------------------------------
+    volumes:
+      - name: data
+        mountPath: /var/lib/taos
+        spec:
+          storageClassName: ""           # TODO: 填集群 NVMe/SSD StorageClass（kubectl get sc）
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: "15Ti"            # 示例按 KEEP 90 天；按上表调整
+
+    # 清空 chart 默认的 files（默认注入多级存储 dataDir 配置，与单级存储冲突）
+    files: []
+
+    # -------------------------------------------------------------------------
+    # taosd 配置：TAOS_ 前缀环境变量自动转 camelCase 写入 taos.cfg
+    # （集群引导 TAOS_FIRST_EP / TAOS_FQDN / TAOS_SERVER_PORT 由 chart 自动注入，勿重复设置）
+    # -------------------------------------------------------------------------
+    environment:
+      # 集群级副本数（建库时仍需显式 REPLICA 3，双保险）
+      TAOS_REPLICA: "3"
+
+      # ---- 写入/提交 ----
+      TAOS_NUM_OF_COMMIT_THREADS: "8"    # 落盘提交线程，匹配高吞吐写入
+
+      # ---- 连接 ----
+      TAOS_MAX_SHELL_CONNS: "50000"      # 百万设备经网关汇聚后连接数有限，保留余量
+
+      # ---- 监控 ----
+      TAOS_MONITOR: "1"                  # 开启 taosKeeper 监控上报
+      TAOS_MONITOR_INTERVAL: "30"
+      TAOS_TELEMETRY_REPORTING: "0"      # 关闭遥测上报（生产建议）
+
+      # ---- 日志/磁盘保护 ----
+      TAOS_MINIMAL_LOG_DIR_G_B: "2"
+      TAOS_MINIMAL_TMP_DIR_G_B: "2"
+      TAOS_MINIMAL_DATA_DIR_G_B: "5"
+      TAOS_LOG_KEEP_DAYS: "7"
+
+      # ---- RPC 压缩：报文超过该字节数才压缩（消息体 4.3KB，省带宽）----
+      TAOS_COMPRESS_MSG_SIZE: "1024"
+
+      # ---- SQL 上限：v3.3.6.34+ 支持 maxSQLLength，配 4MB 支撑高效批量写入 ----
+      TAOS_MAX_SQL_LENGTH: "4194304"
+
+      TAOS_ENABLE_CORE_FILE: "1"
+      TAOS_DEBUG_FLAG: "131"             # 只输出 warning/error
+
+    # -------------------------------------------------------------------------
+    # 资源规划（每节点）：Pod 独占节点，requests = limits → Guaranteed QoS
+    #   - vgroups=30 × replica 3 = 90 vnode，每节点 30 vnode
+    #   - 单 vnode ≈ buffer(128MB) + pages×pagesize(1MB) + cachesize(64MB) ≈ 193MB
+    #   - taosd 缓存 ≈ 30 × 193MB ≈ 6GB（保底）；实际工作负载 16~24GB，
+    #     叠加 2.5 倍余量后取整 = 64GB/节点（推导见 README 内存一节）
+    #   - CPU 官方口径每核服务 1~2 vnode → 每节点 15~30 核；取固定 32 核
+    #   注意：节点规格需 > 32C/64G（如 48C/96G），为 OS/kubelet/系统 Pod 留余量
+    # -------------------------------------------------------------------------
+    resources:
+      requests:
+        cpu: "32"
+        memory: 64Gi
+      limits:
+        cpu: "32"
+        memory: 64Gi
+
+    # -------------------------------------------------------------------------
+    # 反亲和：三个 Pod 强制落在不同 K8s 节点（独占）
+    # -------------------------------------------------------------------------
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: "tdengine"
+                component: "taosd"
+            topologyKey: kubernetes.io/hostname

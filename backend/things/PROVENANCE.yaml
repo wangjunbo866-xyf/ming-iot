@@ -1,0 +1,26 @@
+schemaVersion: 1
+loopId: L0
+source:
+  repository: https://gitee.com/unitedrhino/things
+  ref: refs/remotes/origin/master
+  commit: 243ab1aa03b8a3f106761a81cdd9bd8827d448c8
+  tree: 544b638ae3ee5e5f3a041bea22ca035dbb7e5859
+  module: gitee.com/unitedrhino/things
+target:
+  module: gitee.com/ming-iot/things
+  saasModule: gitee.com/ming-iot/saas
+dependencies:
+  shareModule: gitee.com/ming-iot/share
+  shareVersion: v1.6.4
+license: AGPL-3.0
+files:
+  source: 976
+  target: 980
+transforms:
+  corePrefixCount: 94
+  thingsPrefixCount: 2726
+  credentialLineCount: 55
+  privateKeyBlockCount: 1
+  vetFixCount: 1
+  schemaFixtureIdentifierCount: 45
+  nonYamlCredentialValueCount: 5

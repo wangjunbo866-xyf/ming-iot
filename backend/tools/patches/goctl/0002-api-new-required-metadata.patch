@@ -1,0 +1,224 @@
+diff --git a/tools/goctl/api/apigen/api.tpl b/tools/goctl/api/apigen/api.tpl
+index 2176441c..c2049035 100644
+--- a/tools/goctl/api/apigen/api.tpl
++++ b/tools/goctl/api/apigen/api.tpl
+@@ -1,24 +1,43 @@
+ syntax = "v1"
+ 
+ info (
+-	title: // TODO: add title
+-	desc: // TODO: add description
+-	author: "{{.gitUser}}"
+-	email: "{{.gitEmail}}"
++	title:    "TODO: 替换为实际服务标题"
++	desc:     "TODO: 替换为实际服务描述"
++	author:   "{{.gitUser}}"
++	email:    "{{.gitEmail}}"
++	version:  "v1"
+ )
+ 
+ type request {
+-	// TODO: add members here and delete this comment
++	// TODO: 替换为实际请求字段，并删除本注释
+ }
+ 
+ type response {
+-	// TODO: add members here and delete this comment
++	// TODO: 替换为实际响应字段，并删除本注释
+ }
+ 
+ service {{.serviceName}} {
+-	@handler GetUser // TODO: set handler name and delete this comment
++	@doc(
++		summary:       "TODO: 替换为接口功能简述"
++		description:   "TODO: 替换为业务说明，描述接口用途、使用场景、关键行为"
++		authType:      "admin"
++		resource:      "example"
++		action:        "view"
++		group:         "example/view"
++		recordLogMode: "1"
++	)
++	@handler GetUser // TODO: 替换为实际 handler 名并删除本注释
+ 	get /users/id/:userId(request) returns(response)
+ 
+-	@handler CreateUser // TODO: set handler name and delete this comment
++	@doc(
++		summary:       "TODO: 替换为接口功能简述"
++		description:   "TODO: 替换为业务说明，描述接口用途、使用场景、关键行为"
++		authType:      "admin"
++		resource:      "example"
++		action:        "create"
++		group:         "example/create"
++		recordLogMode: "1"
++	)
++	@handler CreateUser // TODO: 替换为实际 handler 名并删除本注释
+ 	post /users/create(request)
+ }
+diff --git a/tools/goctl/api/apigen/template_metadata_test.go b/tools/goctl/api/apigen/template_metadata_test.go
+new file mode 100644
+index 00000000..e5309125
+--- /dev/null
++++ b/tools/goctl/api/apigen/template_metadata_test.go
+@@ -0,0 +1,70 @@
++package apigen
++
++import (
++	"bytes"
++	"html/template"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
++)
++
++// renderApiTpl 渲染 apigen/api.tpl，模拟 CreateApiTemplate 写入 .api 文件
++// 的真实数据契约（gitUser/gitEmail/serviceName）。返回渲染后的 .api 内容。
++func renderApiTpl(t *testing.T) string {
++	t.Helper()
++	tpl := template.Must(template.New("api").Parse(apiTemplate))
++	var buf bytes.Buffer
++	if err := tpl.Execute(&buf, map[string]string{
++		"gitUser":     "tester",
++		"gitEmail":    "tester@example.com",
++		"serviceName": "example-api",
++	}); err != nil {
++		t.Fatalf("render apigen/api.tpl: %v", err)
++	}
++	return buf.String()
++}
++
++// parseValidateFile 把 .api 内容写入临时文件，走与 DoGenProject 完全一致的
++// parser.Parse(file) → ApiSpec.Validate() 路径（file-based parse 会剥引号）。
++func parseValidateFile(t *testing.T, content string) error {
++	t.Helper()
++	dir := t.TempDir()
++	f := filepath.Join(dir, "rendered.api")
++	if err := os.WriteFile(f, []byte(content), 0o644); err != nil {
++		t.Fatalf("write tmp api: %v", err)
++	}
++	spec, err := parser.Parse(f)
++	if err != nil {
++		return err
++	}
++	return spec.Validate()
++}
++
++// TestApiTemplatePassesStrictValidate 断言 apigen/api.tpl 渲染结果通过 strict
++// ApiSpec.Validate()。原始模板每条 route 只有 @handler，缺七项 metadata，
++// 本测试在补丁前应为红；补丁把每条 route 改成 @doc(...) + @handler 后转绿。
++func TestApiTemplatePassesStrictValidate(t *testing.T) {
++	content := renderApiTpl(t)
++	// 模板至少要包含 service 块，防止渲染空壳悄悄绕过校验。
++	if !strings.Contains(content, "service ") {
++		t.Fatalf("rendered template missing service block:\n%s", content)
++	}
++	if err := parseValidateFile(t, content); err != nil {
++		t.Fatalf("apigen/api.tpl must satisfy strict Validate after patch: %v", err)
++	}
++}
++
++// TestApiTemplateNoHandlerOnlyRoute 断言模板不再生成只有 @handler 没有 @doc
++// 的 route（这是导致 strict validator 失败的根因）。每个 @handler 必须对应
++// 一个 @doc(...) 块。
++func TestApiTemplateNoHandlerOnlyRoute(t *testing.T) {
++	content := renderApiTpl(t)
++	docBlocks := strings.Count(content, "@doc(")
++	handlers := strings.Count(content, "@handler")
++	if docBlocks != handlers {
++		t.Fatalf("template @doc( blocks (%d) must equal @handler count (%d)", docBlocks, handlers)
++	}
++}
+diff --git a/tools/goctl/api/new/api.tpl b/tools/goctl/api/new/api.tpl
+index e9a4d6a6..e07112a9 100644
+--- a/tools/goctl/api/new/api.tpl
++++ b/tools/goctl/api/new/api.tpl
+@@ -9,6 +9,15 @@ type Response {
+ }
+ 
+ service {{.name}} {
++  @doc(
++    summary:       "TODO: 替换为接口功能简述"
++    description:   "TODO: 替换为业务说明，描述接口用途、使用场景、关键行为"
++    authType:      "admin"
++    resource:      "example"
++    action:        "view"
++    group:         "example/view"
++    recordLogMode: "1"
++  )
+   @handler {{.handler}}Handler
+   get /from/:name(Request) returns (Response)
+ }
+diff --git a/tools/goctl/api/new/template_metadata_test.go b/tools/goctl/api/new/template_metadata_test.go
+new file mode 100644
+index 00000000..cc7438fb
+--- /dev/null
++++ b/tools/goctl/api/new/template_metadata_test.go
+@@ -0,0 +1,66 @@
++package new
++
++import (
++	"bytes"
++	"html/template"
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
++)
++
++// renderNewApiTpl 渲染 new/api.tpl，模拟 CreateServiceCommand 写入 .api 文件
++// 的真实数据契约（name/handler）。返回渲染后的 .api 内容。
++func renderNewApiTpl(t *testing.T) string {
++	t.Helper()
++	tpl := template.Must(template.New("api").Parse(apiTemplate))
++	var buf bytes.Buffer
++	if err := tpl.Execute(&buf, map[string]string{
++		"name":    "example",
++		"handler": "Example",
++	}); err != nil {
++		t.Fatalf("render new/api.tpl: %v", err)
++	}
++	return buf.String()
++}
++
++func parseValidateFileNew(t *testing.T, content string) error {
++	t.Helper()
++	dir := t.TempDir()
++	f := filepath.Join(dir, "rendered.api")
++	if err := os.WriteFile(f, []byte(content), 0o644); err != nil {
++		t.Fatalf("write tmp api: %v", err)
++	}
++	spec, err := parser.Parse(f)
++	if err != nil {
++		return err
++	}
++	return spec.Validate()
++}
++
++// TestNewApiTemplatePassesStrictValidate 断言 new/api.tpl 渲染结果通过 strict
++// ApiSpec.Validate()。`goctl api new` 在 CreateServiceCommand 里会立刻调用
++// DoGenProjectWithModule → parser.Parse → Validate，因此模板本身必须默认满足
++// 七项 metadata，否则生成的脚手架无法编译/生成。
++func TestNewApiTemplatePassesStrictValidate(t *testing.T) {
++	content := renderNewApiTpl(t)
++	if !strings.Contains(content, "service ") {
++		t.Fatalf("rendered template missing service block:\n%s", content)
++	}
++	if err := parseValidateFileNew(t, content); err != nil {
++		t.Fatalf("new/api.tpl must satisfy strict Validate after patch: %v", err)
++	}
++}
++
++// TestNewApiTemplateNoHandlerOnlyRoute 断言模板不再生成只有 @handler 没有
++// @doc 的 route。每个 @handler 必须对应一个 @doc(...) 块。
++func TestNewApiTemplateNoHandlerOnlyRoute(t *testing.T) {
++	content := renderNewApiTpl(t)
++	docBlocks := strings.Count(content, "@doc(")
++	handlers := strings.Count(content, "@handler")
++	if docBlocks != handlers {
++		t.Fatalf("template @doc( blocks (%d) must equal @handler count (%d)", docBlocks, handlers)
++	}
++}

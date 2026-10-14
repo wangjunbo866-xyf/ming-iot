@@ -1,0 +1,11 @@
+# Manual sync pilot: no built-in lifecycle tracking, reporting, or auto-update.
+# sharing.hooks.autoApply:false alone does not disable TeamAI built-in hooks.
+hooks: []
+builtin:
+  disabled:
+    - Hook dispatch session-start
+    - Hook dispatch stop
+    - Hook dispatch post-tool-use wildcard
+    - Hook dispatch post-tool-use Skill
+    - Hook dispatch post-tool-use TodoWrite
+    - Hook dispatch prompt-submit

@@ -1,0 +1,78 @@
+info(
+    desc: "菜单权限"
+	author: "lbs"
+	email: "174805676@qq.com"
+)
+
+@server(
+    group: system/ops/feedback
+    prefix: /api/v1/system/ops
+    accessNamePrefix: "帮助与反馈"
+    accessGroup: "运营管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "添加帮助与反馈"
+        description: "提交一条问题反馈，含类型、联系方式与问题描述，进入待处理状态"
+        authType: "all"
+        resource: "feedback"
+        action: "create"
+        group: "system/ops/feedback"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /feedback/create (OpsFeedback) returns (WithID)
+
+    @doc(
+        summary: "更新帮助与反馈"
+        description: "修改反馈的处理状态、内容或归属项目，用于运营跟进处置"
+        authType: "all"
+        resource: "feedback"
+        action: "update"
+        group: "system/ops/feedback"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /feedback/update (OpsFeedback) returns (WithID)
+
+    @doc(
+        summary: "获取帮助与反馈"
+        description: "按类型、项目、状态或租户分页查询问题反馈清单"
+        authType: "all"
+        resource: "feedback"
+        action: "view"
+        group: "system/ops/feedback"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /feedback/index (OpsFeedbackIndexReq) returns (OpsFeedbackIndexResp)
+}
+type (
+    OpsFeedback{
+        ID int64 `json:"id,optional"`
+        TenantCode string `json:"tenantCode,optional"`
+        RaiseUserID int64 `json:"raiseUserID,optional"`
+        ProjectID int64 `json:"projectID,optional"`
+        Type string `json:"type,optional"` //反馈类型 设备问题:thingsDevice 智能场景:thingsScene 体验问题: experience 其他: other
+        ContactInformation string `json:"contactInformation,optional"`//联系方式
+        IssueDesc string `json:"issueDesc,optional"` //反馈内容
+        CreatedTime int64 `json:"createdTime,optional"` //创建时间
+        Status      int64  `json:"status,optional,range=[0:3]"`           // 状态（1 待处理 2:处理中 3:已完成）
+        User *UserCore `json:"user,optional"`//获取用户类型返回
+    }
+    OpsFeedbackIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Type string  `json:"type,optional"` //反馈类型	设备问题:thingsDevice 智能场景:thingsScene 体验问题: experience 其他: other
+        ProjectID string  `json:"projectID,optional"` //所属项目
+        Status      int64  `json:"status,optional,range=[0:3]"`           // 状态（1 待处理 2:处理中 3:已完成）
+        IsAllTenant bool `json:"isAllTenant,optional"`//default租户获取所有租户的信息
+        TenantCode string `json:"tenantCode,optional"` //过滤所属租户,isAllTenant为true有效
+    }
+
+    OpsFeedbackIndexResp  {
+        List []*OpsFeedback `json:"list"` //菜单列表
+        PageResp
+    }
+
+)

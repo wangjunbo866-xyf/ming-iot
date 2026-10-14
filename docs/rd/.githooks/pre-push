@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+# 仅允许推送到 Gitee 镜像；其他远程仓库仍需用户明确批准。
+remote_url="$2"
+allowed="https://gitee.com/ming-industry/ming-iot-rd-docs"
+case "$remote_url" in
+  "$allowed"|"$allowed.git")
+    ;;
+  *)
+    echo "ming-iot-rd-docs may only be pushed to $allowed" >&2
+    exit 1
+    ;;
+esac
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+python tools/map_docs.py check --docs-root .

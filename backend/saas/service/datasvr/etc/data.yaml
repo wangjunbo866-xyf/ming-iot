@@ -1,0 +1,28 @@
+Name: data
+Host: 0.0.0.0
+CpuThreshold: 0
+Timeout: 1000000
+MaxBytes: 1000000000
+Port: 9218
+NodeID: 1
+Log:
+  Encoding: plain
+  #Mode: file
+CacheRedis:
+  - Host: localhost:6379
+    Pass:
+    Type: node
+Database:
+  DBType: mysql
+  DSN: ${CORE_DB_DSN}
+#  DBType: pgsql
+#  DSN: ${CORE_DB_DSN}
+SysRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Etcd:
+      Hosts:
+        - localhost:2379
+      Key: sys.rpc

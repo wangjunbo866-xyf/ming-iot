@@ -1,0 +1,373 @@
+info(
+    title: "用户数据权限管理模块"
+    desc: "用户数据权限管理接口"
+    author: "大绵羊"
+    email: "robotyang123@163.com"
+    version: "v1"
+)
+
+
+@server(
+    group: system/data/project
+    prefix: /api/v1/system/data/project
+    accessCodePrefix: "systemDataManage"
+    accessNamePrefix: "项目权限"
+    accessGroup: "数据权限"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "删除授权项目权限"
+        description: "按用户或角色与项目移除单条项目数据授权记录"
+        authType: "all"
+        resource: "data"
+        action: "delete"
+        group: "system/data/project"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (DataProjectDeleteReq) returns ()
+
+    @doc(
+        summary: "批量删除授权项目权限"
+        description: "按目标编号列表批量移除项目数据授权，影响被授权对象的项目可见性"
+        authType: "all"
+        resource: "data"
+        action: "delete"
+        group: "system/data/project"
+        recordLogMode: "2"
+    )
+    @handler multiDelete
+    post /multi-delete (DataProjectMultiDeleteReq) returns ()
+
+    @doc(
+        summary: "批量创建授权项目权限"
+        description: "为目标集合批量授予指定项目的数据权限及管理或读写授权类型"
+        authType: "all"
+        resource: "data"
+        action: "create"
+        group: "system/data/project"
+        recordLogMode: "2"
+    )
+    @handler projectMultiCreate
+    post /multi-create (DataProjectMultiSaveReq) returns ()
+
+    @doc(
+        summary: "创建授权项目权限"
+        description: "为单个用户或角色授予指定项目的数据权限并设定授权类型"
+        authType: "all"
+        resource: "data"
+        action: "create"
+        group: "system/data/project"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DataProjectSaveReq) returns (DataProject)
+
+    @doc(
+        summary: "获取项目权限列表"
+        description: "按项目和目标分页查询已授予的项目数据权限清单"
+        authType: "all"
+        resource: "data"
+        action: "view"
+        group: "system/data/project"
+        recordLogMode: "1"
+    )
+    @handler projectIndex
+    post /index (DataProjectIndexReq) returns (DataProjectIndexResp)
+}
+
+@server(
+    group: system/data/area
+    prefix: /api/v1/system/data/area
+    accessCodePrefix: "systemDataManage"
+    accessNamePrefix: "区域权限"
+    accessGroup: "数据权限"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "更新授权区域权限"
+        description: "整体覆盖目标在指定项目下的区域数据权限，含授权类型与是否级联子区域"
+        authType: "all"
+        resource: "data"
+        action: "update"
+        group: "system/data/area"
+        recordLogMode: "2"
+    )
+    @handler multiUpdate
+    post /multi-update (DataAreaMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "删除授权区域权限"
+        description: "按项目和目标移除指定区域的批量数据授权"
+        authType: "all"
+        resource: "data"
+        action: "delete"
+        group: "system/data/area"
+        recordLogMode: "2"
+    )
+    @handler multiDelete
+    post /multi-delete (DataAreaMultiDeleteReq) returns ()
+
+    @doc(
+        summary: "获取区域权限列表"
+        description: "按项目和目标分页查询已授予的区域数据权限及其授权类型"
+        authType: "all"
+        resource: "data"
+        action: "view"
+        group: "system/data/area"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DataAreaIndexReq) returns (DataAreaIndexResp)
+}
+
+@server(
+    group: system/data/area/user/apply
+    prefix: /api/v1/system/data/area/user/apply
+    accessCodePrefix: "systemDataManage"
+    accessNamePrefix: "区域授权"
+    accessGroup: "数据权限"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "授权区域权限"
+        description: "审批用户提交的区域数据权限申请，可同意或拒绝并批量更新申请状态"
+        authType: "all"
+        resource: "data"
+        action: "approve"
+        group: "system/data/area/user/apply"
+        recordLogMode: "2"
+    )
+    @handler deal
+    post /deal (UserAreaApplyDealReq) returns ()
+
+    @doc(
+        summary: "获取区域权限列表"
+        description: "按区域、授权类型分页查询用户区域权限申请记录，可附带区域与用户信息"
+        authType: "all"
+        resource: "data"
+        action: "view"
+        group: "system/data/area/user/apply"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (UserAreaApplyIndexReq) returns (UserAreaApplyIndexResp)
+}
+
+
+@server(
+    group: system/open/access
+    prefix: /api/v1/system/open/access
+    accessCodePrefix: "systemOpenAccess"
+    accessNamePrefix: "开放认证"
+    accessGroup: "数据权限"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新开放认证"
+        description: "修改开放认证的秘钥、IP 白名单与绑定用户等安全配置"
+        authType: "all"
+        resource: "data"
+        action: "update"
+        group: "system/open/access"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (DataOpenAccess) returns ()
+
+    @doc(
+        summary: "删除开放认证"
+        description: "按主键删除开放认证凭证，对应的开放接口调用将不再可用"
+        authType: "all"
+        resource: "data"
+        action: "delete"
+        group: "system/open/access"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+    @doc(
+        summary: "创建开放认证"
+        description: "新建一组开放认证凭证，含自定义编码、秘钥与 IP 白名单"
+        authType: "all"
+        resource: "data"
+        action: "create"
+        group: "system/open/access"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DataOpenAccess) returns (WithID)
+
+    @doc(
+        summary: "获取开放认证详情"
+        description: "按主键读取单条开放认证的完整配置信息"
+        authType: "all"
+        resource: "data"
+        action: "view"
+        group: "system/open/access"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithID) returns (DataOpenAccess)
+
+    @doc(
+        summary: "获取开放认证列表"
+        description: "按租户、编码或绑定用户分页查询开放认证凭证清单"
+        authType: "all"
+        resource: "data"
+        action: "view"
+        group: "system/open/access"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DataOpenAccessIndexReq) returns (DataOpenAccessIndexResp)
+}
+
+type (
+    DataOpenAccessIndexReq {
+        Page *PageInfo `json:"page,optional"`        //进行数据分页（不传默认2000相当于全部）
+        TenantCode string `json:"tenantCode,optional"` // 租户号
+        Code string `json:"code,optional"` //自定义编码
+        UserID int64 `json:"userID,optional"` //绑定权限的用户ID
+    }
+
+    DataOpenAccessIndexResp {
+        PageResp
+        List  []*DataOpenAccess `json:"list"`    //用户数据权限列表
+    }
+
+    DataOpenAccess{
+        ID int64 `json:"id,optional"`
+        TenantCode string `json:"tenantCode,optional"` // 租户号
+        Code string `json:"code,optional"` //自定义编码
+        UserID int64 `json:"userID,string,optional"` //绑定权限的用户ID
+        AccessSecret string `json:"accessSecret,optional"` //秘钥
+        IpRange []string `json:"ipRange,optional"` //ip白名单,如果不填是不限制
+        Desc string `json:"desc,optional"`
+        User *UserCore `json:"user,optional"`//获取用户信息
+    }
+)
+
+
+//用户级权限控制
+type (
+    DataProject  {
+        ProjectID   int64 `json:"projectID,string"`     //权限数据ID
+        AuthType  int64 `json:"authType"`// 1:管理权限,可以修改别人的权限,及读写权限 2:读写权限,可以读写该权限 3:读权限,只能读,不能修改
+        TargetID   int64 `json:"targetID,string,optional"`    //用户ID
+        UpdatedTime int64 `json:"updatedTime,optional"` //更新时间
+        User *UserCore `json:"user,optional"`//获取用户类型返回
+    }
+
+    DataProjectDeleteReq{
+        TargetID   int64 `json:"targetID,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        ProjectID   int64 `json:"projectID,string,optional"`     //权限数据ID
+    }
+    DataProjectMultiDeleteReq{
+        TargetID   []int64 `json:"targetIDs,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        ProjectID   int64 `json:"projectID,string,optional"`     //权限数据ID
+    }
+    DataProjectSaveReq{
+        TargetID   int64 `json:"targetID,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        ProjectID   int64 `json:"projectID,string"`     //权限数据ID
+        AuthType  int64 `json:"authType"`// 1:管理权限,可以修改别人的权限,及读写权限 2:读写权限,可以读写该权限 3:读权限,只能读,不能修改
+    }
+
+    DataProjectMultiSaveReq{
+        TargetIDs   []int64 `json:"targetID,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        ProjectID   int64 `json:"projectID,string"`     //权限数据ID
+        AuthType  int64 `json:"authType"`// 1:管理权限,可以修改别人的权限,及读写权限 2:读写权限,可以读写该权限 3:读权限,只能读,不能修改
+    }
+
+    DataProjectIndexReq  {
+        Page *PageInfo `json:"page,optional"`        //进行数据分页（不传默认2000相当于全部）
+        ProjectID   int64 `json:"projectID,string,optional"`     //权限数据ID
+        TargetID   int64 `json:"targetID,string,optional"`    //用户ID
+        TargetType string `json:"targetType"`
+    }
+    DataProjectIndexResp  {
+        PageResp
+        List  []*DataProject `json:"list"`    //用户数据权限列表
+    }
+
+    DataAreaMultiDeleteReq{
+        ProjectID int64           `json:"projectID,string,optional"` //项目id
+        TargetID   int64 `json:"targetID,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        AreaIDs []int64         `json:"areaIDs,string"`
+    }
+    DataAreaMultiUpdateReq  {
+        TargetID   int64 `json:"targetID,string"`    //用户ID
+        TargetType string `json:"targetType"`
+        ProjectID int64           `json:"projectID,string,optional"` //项目id
+        Areas     []*DataArea `json:"areas"`          //权限数据IDs
+    }
+    DataArea  {
+        AreaID int64 `json:"areaID,string"` //项目id
+        AuthType  int64 `json:"authType"`// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+        IsAuthChildren int64 `json:"isAuthChildren,optional"`//是否同时授权子节点,默认为2
+    }
+
+    DataAreaIndexReq  {
+        Page *PageInfo `json:"page,optional"`        //进行数据分页（不传默认2000相当于全部）
+        TargetID   int64 `json:"targetID,string,optional"`    //用户ID
+        TargetType string `json:"targetType,optional"`
+        ProjectID int64           `json:"projectID,string,optional"` //项目id
+    }
+
+    DataAreaDetail  {
+        *AreaInfo
+        AuthType  int64 `json:"authType"`// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+        IsAuthChildren int64 `json:"isAuthChildren,optional"`//是否同时授权子节点,默认为2
+        TargetID   int64 `json:"targetID,string,optional"`    //用户ID
+        TargetType string `json:"targetType,optional"`
+        UpdatedTime int64 `json:"updatedTime,optional"` //更新时间
+        User *UserCore `json:"user,optional"`//获取用户类型返回
+    }
+    DataAreaIndexResp  {
+        PageResp
+        List  []*DataAreaDetail `json:"list"`    //用户数据权限列表
+    }
+)
+
+
+//用户级权限控制
+type (
+    UserAreaApplyIndexReq {
+        Page *PageInfo `json:"page,optional"`        //进行数据分页（不传默认2000相当于全部）
+        AuthTypes []int64 `json:"authTypes,optional"` //权限类型 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+        AreaID  int64 `json:"areaID,string,optional"` //项目id
+        WithAreaInfo bool `json:"withAreaInfo,optional"`//把区域信息附带上
+        WithUserInfo bool  `json:"withUserInfo,optional"`//把用户信息带上
+    }
+    UserAreaApplyIndexResp{
+        List []*UserAreaApplyInfo `json:"list"`
+        PageResp
+    }
+    UserAreaApplyInfo{
+        ID  int64 `json:"id"` //项目id
+        UserID   int64 `json:"userID,string"`    //用户ID
+        AreaID  int64 `json:"areaID,string"` //项目id
+        AuthType  int64 `json:"authType"`// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+        CreatedTime  int64 `json:"createdTime"`
+        AreaInfo *AreaInfo `json:"areaInfo"`
+        UserInfo *UserInfo `json:"userInfo"`
+    }
+    UserAreaApplyDealReq{
+        IsApprove bool `json:"isApprove"` //是否同意
+        IDs     []int64 `json:"ids"`          //权限数据IDs
+    }
+
+)

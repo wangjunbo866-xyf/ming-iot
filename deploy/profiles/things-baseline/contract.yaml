@@ -1,0 +1,67 @@
+schemaVersion: 1
+profile: things-baseline
+projectName: ming-iot-things-baseline
+database:
+  requiredName: ming_iot_things_baseline
+  forbiddenNames:
+    - iThings
+roles:
+  - id: sys
+    module: saas
+    binary: syssvr
+    image: ming-iot-sys:baseline
+    dockerfile: deploy/images/Dockerfile.sys
+    config: deploy/profiles/things-baseline/config/saas/sys.yaml
+    endpoint: sys:9180
+  - id: timedjob
+    module: saas
+    binary: timedjobsvr
+    image: ming-iot-timedjob:baseline
+    dockerfile: deploy/images/Dockerfile.timedjob
+    config: deploy/profiles/things-baseline/config/saas/timedjob.yaml
+    endpoint: timedjob:3256
+  - id: dm
+    module: things
+    binary: dmsvr
+    image: ming-iot-dm:baseline
+    dockerfile: deploy/images/Dockerfile.dm
+    config: deploy/profiles/things-baseline/config/things/dm.yaml
+    endpoint: dm:9081
+  - id: dg
+    module: things
+    binary: dgsvr
+    image: ming-iot-dg:baseline
+    dockerfile: deploy/images/Dockerfile.dg
+    config: deploy/profiles/things-baseline/config/things/dg.yaml
+    endpoint: dg:6166
+  - id: api
+    module: things
+    binary: thingsvr
+    image: ming-iot-api:baseline
+    dockerfile: deploy/images/Dockerfile.api
+    config: deploy/profiles/things-baseline/config/things/api.yaml
+    endpoint: api:7788
+stages:
+  - id: PRECHECK
+    components: [docker, compose, contract, secrets, postgres]
+  - id: DATABASE_BOOTSTRAP
+    components: [postgres]
+  - id: INFRA_READY
+    components: [redis, etcd, nats, tdengine, emqx]
+  - id: TIMEDJOB_READY
+    components: [timedjob]
+  - id: SYS_READY
+    components: [sys]
+  - id: DM_READY
+    components: [dm]
+  - id: DG_PROCESS_READY
+    components: [dg]
+  - id: DG_LINK_READY
+    components: [emqx, dg.rpc]
+  - id: API_READY
+    components: [api]
+  - id: VERIFIED
+    components: [all]
+timeouts:
+  probeSeconds: 90
+  totalSeconds: 900

@@ -1,0 +1,404 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+
+import "deviceManage.proto";
+import "dmShare.proto";
+service DeviceMsg {
+  //获取设备sdk调试日志
+  rpc sdkLogIndex(SdkLogIndexReq) returns (SdkLogIndexResp);
+  //获取设备调试信息记录登入登出,操作
+  rpc hubLogIndex(HubLogIndexReq)   returns (HubLogIndexResp);
+  rpc sendLogIndex(SendLogIndexReq) returns(SendLogIndexResp);
+  rpc statusLogIndex(StatusLogIndexReq) returns(StatusLogIndexResp);
+
+  rpc abnormalLogIndex(AbnormalLogIndexReq) returns(AbnormalLogIndexResp);
+  rpc abnormalLogCreate(AbnormalLogInfo) returns(Empty);
+
+  //获取设备数据信息
+  rpc propertyLatestIndex(PropertyLatestIndexReq)     returns (PropertyLogIndexResp);
+  rpc propertyLatestIndex2(PropertyLatestIndex2Req)     returns (PropertyLogIndexResp);
+  rpc propertyLatestAggIndex(PropertyLatestAggIndexReq)     returns (PropertyLatestAggIndexResp);
+
+  //获取设备数据信息
+  rpc propertyLogIndex(PropertyLogIndexReq)     returns (PropertyLogIndexResp);
+  rpc propertyLogAggIndex(PropertyAggIndexReq)     returns (PropertyLogAggIndexResp);
+  rpc propertyLogAggByDeviceIndex(PropertyLogAggByDeviceIndexReq)     returns (PropertyLogAggIndexResp);
+
+  //获取设备数据信息
+  rpc eventLogIndex(EventLogIndexReq)     returns (EventLogIndexResp);
+  //获取设备影子列表
+  rpc shadowIndex(PropertyLatestIndexReq)     returns (ShadowIndexResp);
+
+  //获取网关可以绑定的子设备列表
+  rpc gatewayCanBindIndex(GatewayCanBindIndexReq)returns(GatewayCanBindIndexResp);
+}
+
+message ShadowIndexResp{
+  repeated ShadowIndex  list = 1;
+}
+
+message ShadowIndex{
+  string dataID = 1;//属性id
+  string value = 2;//获取到的值
+  int64 updatedDeviceTime = 3;//更新到设备的时间
+}
+
+message PropertyLogIndexReq{
+  PageInfo page = 1;//使用了聚合函数及间隔的时候无效
+  string tenantCode = 21;//租户号,只有管理员有权限
+  int64 projectID =20;//只有管理员有权限
+  int64 areaID =14;//只有管理员有权限
+  string areaIDPath =15;//只有管理员有权限
+  repeated int64 areaIDs =16;//只有管理员有权限
+  int64  productCategoryID = 17;//产品品类id
+  map<string,IDsInfo> BelongGroup =18;//key是group的purpose, value是里面包含的分组id
+
+  string deviceName=2;//设备ID
+  repeated string deviceNames=3;
+  string productID = 4; //产品id (必填)
+  string dataID = 5; //获取的具体标识符的数据(必填)
+  int64 timeStart = 6;//获取时间的开始(毫秒时间戳)
+  int64 timeEnd = 7;//时间的结束(毫秒时间戳)
+  int64 interval = 8;//间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+  string intervalUnit = 12;//间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)
+  string argFunc = 9;//聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考:https://docs.taosdata.com/reference/taos-sql/function
+  //  /*
+  //  FILL 语句指定某一窗口区间数据缺失的情况下的填充模式。填充模式包括以下几种：
+  //    不进行填充：NONE（默认填充模式）。
+  //    VALUE 填充：固定值填充，此时需要指定填充的数值。例如：FILL(VALUE, 1.23)。
+  //    PREV 填充：使用前一个非 NULL 值填充数据。例如：FILL(PREV)。
+  //    NULL 填充：使用 NULL 填充数据。例如：FILL(NULL)。
+  //    LINEAR 填充：根据前后距离最近的非 NULL 值做线性插值填充。例如：FILL(LINEAR)。
+  //    NEXT 填充：使用下一个非 NULL 值填充数据。例如：FILL(NEXT)。
+  //  */
+  string fill = 10; //填充模式 参考:https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+  int64 order = 11; //时间排序 1:aes(默认,从久到近排序) 2:desc(时间从近到久排序)
+  string partitionBy =13;//切分数据,可以填写deviceName
+  bool noFirstTs =22;//时间戳填充不填充最早的值,聚合模式使用
+}
+
+message PropertyAgg{
+  string dataID = 1; //获取的具体标识符的数据(必填)
+  repeated string argFuncs = 2;//聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考:https://docs.taosdata.com/reference/taos-sql/function
+  string fill = 3; //填充模式 参考:https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+  bool noFirstTs =4;//时间戳填充不填充最早的值,聚合模式使用
+}
+
+message PropertyAggByDevice{
+  DeviceCore device =1;//多设备获取
+  string dataID = 2; //获取的具体标识符的数据(必填)
+  repeated string argFuncs = 3;//聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考:https://docs.taosdata.com/reference/taos-sql/function
+  string fill = 4; //填充模式 参考:https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+  bool noFirstTs =5;//时间戳填充不填充最早的值,聚合模式使用
+}
+
+message PropertyAggIndexReq{
+  string tenantCode = 21;//租户号,只有管理员有权限
+  int64 projectID =20;//只有管理员有权限
+  int64 areaID =14;//只有管理员有权限
+  string areaIDPath =15;//只有管理员有权限
+  repeated int64 areaIDs =16;//只有管理员有权限
+  int64  productCategoryID = 17;//产品品类id
+  map<string,IDsInfo> BelongGroup =18;//key是group的purpose, value是里面包含的分组id
+  string deviceName=2;//设备ID
+  repeated string deviceNames=3;
+  string productID = 4; //产品id (必填)
+  int64 timeStart = 6;//获取时间的开始(毫秒时间戳)
+  int64 timeEnd = 7;//时间的结束(毫秒时间戳)
+  int64 interval = 8;//间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+  string intervalUnit = 12;//间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)
+  int64 order = 11; //时间排序 1:aes(默认,从久到近排序) 2:desc(时间从近到久排序)
+  string partitionBy =13;//切分数据,可以填写deviceName
+  repeated PropertyAgg aggs =10;// 聚合参数
+}
+
+message PropertyLogAggByDeviceIndexReq{
+  int64 timeStart = 6;//获取时间的开始(毫秒时间戳)
+  int64 timeEnd = 7;//时间的结束(毫秒时间戳)
+  int64 interval = 8;//间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+  string intervalUnit = 12;//间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)
+  int64 order = 11; //时间排序 1:aes(默认,从久到近排序) 2:desc(时间从近到久排序)
+  string partitionBy =13;//切分数据,可以填写deviceName
+  repeated PropertyAggByDevice aggs =10;// 聚合参数
+}
+
+message PropertyLogAggIndexResp{
+  repeated PropertyLogAggResp list = 2;
+}
+
+message PropertyLogAggResp{
+  string productID = 5;//产品名称
+  string deviceName = 2;//设备名称
+  repeated PropertyLogAggRespDetail values = 4;//获取到的值
+  string tenantCode = 7;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 projectID = 8;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 areaID =9;//租户号,只有partitionBy 传该参数的时候才会返回
+  string areaIDPath =10;//租户号,只有partitionBy 传该参数的时候才会返回
+  map<string,IDsInfo> belongGroup =18;//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+
+}
+
+message PropertyLogAggRespDetail{
+  string dataID = 1;//属性id
+  string dataName =3;//属性名称
+  int64 timeWindow = 2;//发生时间戳(毫秒时间戳)
+  map<string,PropertyLogAggRespDataDetail> values = 4;//key是聚合函数
+}
+
+message PropertyLogAggRespDataDetail{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  string value = 4;//获取到的值
+}
+
+message PropertyLatestAggIndexReq{
+  string tenantCode = 21;//租户号,只有管理员有权限
+  int64 projectID =20;//只有管理员有权限
+  int64 areaID =14;//只有管理员有权限
+  string areaIDPath =15;//只有管理员有权限
+  repeated int64 areaIDs =16;//只有管理员有权限
+  int64  productCategoryID = 17;//产品品类id
+  map<string,IDsInfo> BelongGroup =18;//key是group的purpose, value是里面包含的分组id
+  string deviceName=2;//设备ID
+  repeated string deviceNames=3;
+  string productID = 4; //产品id (必填)
+  string partitionBy =13;//切分数据,可以填写deviceName
+  repeated PropertyAggCore aggs =10;// 聚合参数
+}
+
+message PropertyLatestAggIndexResp{
+  repeated PropertyLatestAggResp list = 2;
+}
+
+message PropertyLatestAggResp{
+  string productID = 5;//产品名称
+  string deviceName = 2;//设备名称
+  repeated PropertyLatestAggRespDetail values = 4;//获取到的值
+  string tenantCode = 7;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 projectID = 8;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 areaID =9;//租户号,只有partitionBy 传该参数的时候才会返回
+  string areaIDPath =10;//租户号,只有partitionBy 传该参数的时候才会返回
+  map<string,IDsInfo> belongGroup =18;//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+
+}
+
+message PropertyLatestAggRespDetail{
+  string dataID = 1;//属性id
+  string dataName =3;//属性名称
+  map<string,string> values = 4;//key是聚合函数,value是值
+}
+
+message PropertyAggCore{
+  string dataID = 1; //获取的具体标识符的数据(必填)
+  repeated string argFuncs = 2;//聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考:https://docs.taosdata.com/reference/taos-sql/function
+}
+
+message PropertyLatestIndexReq{
+  string productID = 2; //产品id (必填)
+  string deviceName = 1; //设备名(必填)
+  repeated string dataIDs = 3; //获取的具体标识符的数据 如果不指定则获取所有属性数据,一个属性一条,如果没有获取到的不会返回值
+  bool ignoreEmpty = 5;// 设备属性是否忽略空值,空值是否返回
+}
+
+message PropertyLatestIndex2Req{
+  repeated DeviceData devices = 4;//
+}
+
+message PropertyLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  string productID = 5;//产品名称
+  string deviceName = 2;//设备名称
+  string dataID = 3;//属性id
+  string value = 4;//获取到的值
+  string dataName =6;//属性名称
+  string tenantCode = 7;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 projectID = 8;//租户号,只有partitionBy 传该参数的时候才会返回
+  int64 areaID =9;//租户号,只有partitionBy 传该参数的时候才会返回
+  string areaIDPath =10;//租户号,只有partitionBy 传该参数的时候才会返回
+  map<string,IDsInfo> belongGroup =18;//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+
+}
+
+message PropertyLogIndexResp{
+  int64 total = 1; //总数
+  repeated PropertyLogInfo list = 2;
+}
+
+message EventLogIndexReq{
+  PageInfo page = 1;//使用了聚合函数及间隔的时候无效
+  string productID = 2; //产品id (必填)
+  string deviceName = 3; //设备名(不填获取产品下所有设备)
+  repeated string deviceNames = 8; //废弃
+  string dataID = 4; //获取的具体标识符的数据(必填)
+  int64 timeStart = 5;//获取时间的开始(毫秒时间戳)
+  int64 timeEnd = 6;//时间的结束(毫秒时间戳)
+  repeated string types = 7; //类型 事件类型: 信息:info  告警alert  故障:fault
+}
+
+message EventLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  string type = 2 ;// 事件类型: 信息:info  告警alert  故障:fault
+  string dataID = 3;//属性id
+  string params = 4;//获取到的值
+  string deviceName = 5; //设备名(不填获取产品下所有设备)
+}
+
+message EventLogIndexResp{
+  int64 total = 1; //总数
+  repeated EventLogInfo list = 2;
+}
+
+message HubLogIndexReq{
+  string  productID = 1; //产品id
+  string  deviceName = 2; //设备名
+  int64   timeStart = 3;//获取时间的开始(毫秒时间戳)
+  int64   timeEnd = 4;//时间的结束(毫秒时间戳)
+  PageInfo   page = 5;//分页信息
+  repeated string actions = 6;//过滤操作类型 connected:上线 disconnected:下线  property:属性 event:事件 action:操作 thing:物模型提交的操作为匹配的日志
+  repeated string topics = 7;//过滤主题
+  string content = 8;//过滤内容
+  string requestID = 9;//过滤请求ID
+}
+
+message HubLogIndexResp{
+  int64 total = 1; //总数
+  repeated HubLogInfo list = 2;
+}
+
+message HubLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  string action = 2 ;//操作类型;connected:上线 disconnected:下线  property:属性 event:事件 action:操作 thing:物模型提交的操作为匹配的日志
+  string requestID = 3;//请求ID
+  string traceID = 4;//服务器端事务id
+  string topic = 5;//主题
+  string content = 6;//具体内容
+  int64 resultCode = 7;//请求结果状态
+  string respPayload =8;//返回的内容
+}
+
+message StatusLogIndexReq{
+  string  productID = 1; //产品id
+  string  deviceName = 2; //设备名
+  int64   timeStart = 3;//获取时间的开始(毫秒时间戳)
+  int64   timeEnd = 4;//时间的结束(毫秒时间戳)
+  PageInfo   page = 5;//分页信息
+  int64 status = 9;//在线状态
+}
+
+message StatusLogIndexResp{
+  int64 total = 1; //总数
+  repeated StatusLogInfo list = 2;
+}
+
+message StatusLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  int64 status = 2;//设备状态
+  string  productID = 3; //产品id
+  string  deviceName = 4; //设备名
+}
+
+message SendLogIndexReq{
+  int64 projectID =13;//只有管理员有权限
+  int64 areaID =14;//只有管理员有权限
+  string areaIDPath =15;//只有管理员有权限
+ repeated int64 areaIDs =16;//只有管理员有权限
+  map<string,IDsInfo> BelongGroup =17;//key是group的purpose, value是里面包含的分组id
+
+  int64  productCategoryID = 11;//产品品类id
+  string  productID = 1; //产品id
+  string  deviceName = 2; //设备名
+  int64   timeStart = 3;//获取时间的开始(毫秒时间戳)
+  int64   timeEnd = 4;//时间的结束(毫秒时间戳)
+  PageInfo   page = 5;//分页信息
+  int64 userID = 9;
+  repeated string actions =10;
+  int64 resultCode = 12;//请求结果状态,200为成功
+  string dataID = 8;//identify
+  repeated string dataIDs =7;
+}
+
+message SendLogIndexResp{
+  int64 total = 1; //总数
+  repeated SendLogInfo list = 2;
+}
+
+message SendLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  string account = 2;//账号
+  int64 userID = 4;//
+  string productID = 5;//
+  string deviceName = 6;//
+  string action = 7;//操作类型 propertySend:属性控制 actionSend:操作控制 propertyGetReportSend:获取最新属性请求
+  string dataID = 8;//identify
+  string traceID = 9;//服务器端事务id
+  string content = 10;//操作的内容
+  int64 resultCode = 11;//请求结果状态,200为成功
+}
+
+message AbnormalLogIndexReq{
+  int64 projectID =13;//只有管理员有权限
+  int64 areaID =14;//只有管理员有权限
+  string areaIDPath =15;//只有管理员有权限
+  repeated int64 areaIDs =16;//只有管理员有权限
+  int64  productCategoryID = 17;//产品品类id
+  map<string,IDsInfo> BelongGroup =18;//key是group的purpose, value是里面包含的分组id
+  string  productID = 1; //产品id
+  string  deviceName = 2; //设备名
+  int64   timeStart = 3;//获取时间的开始(毫秒时间戳)
+  int64   timeEnd = 4;//时间的结束(毫秒时间戳)
+  PageInfo   page = 5;//分页信息
+  int64 userID = 9;
+  int64 action =10;
+  string type =11;//异常类型
+  int64 resultCode = 12;//请求结果状态,200为成功
+}
+
+message AbnormalLogIndexResp{
+  int64 total = 1; //总数
+  repeated AbnormalLogInfo list = 2;
+}
+
+message AbnormalLogInfo{
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  int64 action = 2;//触发1还是解除2
+  string type = 4;//异常类型
+  string productID = 5;//
+  string deviceName = 6;//
+  string Reason = 7;//原因
+  string traceID = 9;//服务器端事务id
+}
+
+message SdkLogIndexReq {
+  string  productID = 1; //产品id
+  string  deviceName = 2; //设备名
+  int64   timeStart = 3;//获取时间的开始
+  int64   timeEnd = 4;//时间的结束
+  int64   logLevel = 5; //日志等级
+  PageInfo page = 6;//分页信息 只获取一个则不填
+}
+
+message SdkLogIndexResp {
+  int64 total = 1; //总数
+  repeated SdkLogInfo list = 2;
+}
+
+message SdkLogInfo {
+  int64 timestamp = 1;//发生时间戳(毫秒时间戳)
+  int64 loglevel = 2 ;//操作类型;显示相应的操作名称、API名称、服务的method
+  string content = 3;//具体内容
+}
+
+message GatewayCanBindIndexReq{
+  DeviceCore gateway = 1;
+}
+
+message GatewayCanBindIndexResp{
+  repeated DeviceCore subDevices = 1;
+  int64 updatedTime =2;//更新时间
+}
+
+message DeviceData{
+  string productID = 1; //产品id
+  string deviceName = 2; //设备名称
+  string dataID = 3;//属性id
+}

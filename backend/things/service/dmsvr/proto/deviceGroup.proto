@@ -1,0 +1,110 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+
+import "dmShare.proto";
+service DeviceGroup {
+  //创建分组
+  rpc groupInfoCreate(GroupInfo)     returns (WithID);
+  rpc groupInfoMultiCreate(GroupInfoMultiCreateReq)     returns (Empty);
+
+  //获取分组信息列表
+  rpc groupInfoIndex(GroupInfoIndexReq)     returns (GroupInfoIndexResp);
+  //获取分组信息详情
+  rpc groupInfoRead(GroupInfoReadReq)     returns (GroupInfo);
+  //更新分组
+  rpc groupInfoUpdate(GroupInfo)     returns (Empty);
+  //删除分组
+  rpc groupInfoDelete(WithID)     returns (Empty);
+  //创建分组设备
+  rpc groupDeviceMultiCreate(GroupDeviceMultiSaveReq)     returns (Empty);
+  //更新分组设备
+  rpc groupDeviceMultiUpdate(GroupDeviceMultiSaveReq)     returns (Empty);
+  //删除分组设备
+  rpc groupDeviceMultiDelete(GroupDeviceMultiDeleteReq)     returns (Empty);
+}
+
+message GroupInfoMultiCreateReq{
+  repeated GroupInfo groups=1;
+}
+
+message GroupInfo{
+  string purpose =15;//用途 不填默认为default
+  int64 areaID = 10;//分组可以属于某个区域下
+  int64 projectID = 3;
+  int64 id = 1;
+  int64 parentID = 2;
+  string idPath =17;
+  string name = 4;
+  string desc = 5;
+  int64 createdTime = 6;
+  map<string, string> tags = 7;
+  string productID = 8;
+  string productName = 9;
+  repeated DeviceCore devices =11;//withDevices=true时返回分组下设备核心信息
+  int64 deviceCount = 12;
+  int64 isLeaf =13;
+  map<string,string> files =16;//key 是用途, value是 是文件的路径,如果要更新该文件, 传filePath即可
+  repeated GroupInfo children =14;
+//  DeviceInfoCount deviceInfoCount =11;
+}
+
+message GroupCore{
+  int64 id = 1;
+  int64 parentID = 2;
+  string name = 4;
+}
+
+message GroupInfoCreateReq{
+  string purpose =6;//用途 不填默认为default
+  int64 areaID = 5;//分组可以属于某个区域下
+  string name = 1;
+  int64 parentID = 2;
+  string productID = 3;
+  string desc = 4;
+}
+
+message  GroupInfoReadReq{
+  int64 id =1;         // id
+  bool withChildren =2;
+  string purpose =15;//用途 不填默认为default
+  bool withDevices =16;//true时返回devices设备核心信息
+}
+
+message GroupInfoIndexReq{
+  int64 areaID = 5;//分组可以属于某个区域下
+  PageInfo page = 1;
+  string name = 2;
+  repeated string names =6;
+  int64 parentID = 3;
+  map<string, string> tags = 4;
+  string purpose =15;//用途 不填默认为default
+  repeated string purposes =16;//用途
+   DeviceCore hasDevice=17;
+   bool withDevices =18;//true时返回list[].devices设备核心信息
+}
+
+message GroupInfoIndexResp{
+  repeated GroupInfo list = 1;
+  int64 total = 2;
+ // repeated GroupInfo listAll = 3;
+}
+
+message GroupInfoUpdateReq{
+  int64 id = 1;
+  string name = 2;
+  string desc = 3;
+  map<string, string> tags = 4;
+  string productID = 5;
+}
+
+message GroupDeviceMultiSaveReq{
+  int64 groupID = 1;
+  repeated DeviceCore list = 2;
+}
+
+message GroupDeviceMultiDeleteReq{
+  int64 groupID = 1;
+  string purpose =2;//用途 不填默认为default
+  repeated DeviceCore list = 3;
+}

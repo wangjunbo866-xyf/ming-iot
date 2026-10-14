@@ -1,0 +1,39 @@
+package project
+
+import (
+	"context"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/types"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/share/utils"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+func ToProjectApis(ctx context.Context, svcCtx *svc.ServiceContext, in []*sys.DataProject) (ret []*types.DataProject) {
+	if in == nil {
+		return
+	}
+	for _, v := range in {
+		var ui *types.UserCore
+		if svcCtx != nil {
+			u, err := svcCtx.UserCache.GetData(ctx, v.TargetID)
+			if err != nil {
+				logx.WithContext(ctx).Errorf("ToProjectApis skip stale user targetID=%d projectID=%d err=%v", v.TargetID, v.ProjectID, err)
+				continue
+			}
+			ui = utils.Copy[types.UserCore](u)
+		}
+		ret = append(ret, &types.DataProject{ProjectID: v.ProjectID, AuthType: v.AuthType, TargetID: v.TargetID, UpdatedTime: v.UpdatedTime, User: ui})
+	}
+	return
+}
+
+func ToProjectPbs(in []*types.DataProject) (ret []*sys.DataProject) {
+	if in == nil {
+		return
+	}
+	for _, v := range in {
+		ret = append(ret, &sys.DataProject{ProjectID: v.ProjectID, AuthType: v.AuthType})
+	}
+	return
+}

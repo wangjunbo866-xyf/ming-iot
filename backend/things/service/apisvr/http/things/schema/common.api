@@ -1,0 +1,157 @@
+info(
+    title: "产品管理模块"
+    desc: "产品管理模块"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+import "info.api"
+@server(
+    group: things/schema/common
+    prefix: /api/v1/things/schema/common
+    accessCodePrefix: "thingsSchemaCommon"
+    accessNamePrefix: "通用物模型"
+    accessGroup: "通用物模型"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+    //物联网平台通过定义一种物的描述语言来描述物模型模块和功能，称为TSL（Thing Specification Language）
+service api {
+    @doc(
+        summary: "初始化通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler init
+    post /init () returns ()
+    @doc(
+        summary: "更新通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler update
+    post /update (CommonSchemaInfo) returns ()
+    @doc(
+        summary: "新增通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler create
+    post /create (CommonSchemaInfo) returns ()
+    @doc(
+        summary: "删除通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler delete
+    post /delete (CommonSchemaDeleteReq) returns ()
+    @doc "获取通用物模型列表"
+    @handler index
+    post /index (CommonSchemaIndexReq) returns (CommonSchemaIndexResp)
+
+    @doc(
+        summary: "批量导入通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler multiIimport
+    post /multi-import (CommonSchemaImportReq) returns (ImportResp)
+    @doc(
+        summary: "批量导出通用物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler multiExport
+    post /multi-export (CommonSchemaExportReq) returns (CommonSchemaExportResp)
+}
+
+type (
+    CommonSchemaImportReq{
+        Schemas string  `json:"schemas"`
+    }
+    CommonSchemaExportReq{
+        Identifiers []string `json:"identifiers,optional"`
+    }
+    CommonSchemaExportResp{
+        Schemas string  `json:"schemas"`
+    }
+    CommonSchemaDeleteReq {
+        ID int64 `json:"id"`         //产品id
+    }
+    CommonSchemaIndexReq {
+        Page *PageInfo `json:"page,optional"`                              //分页信息,只获取一个则不填
+        Type int64 `json:"type,optional"`                                  //物模型类型 1:property属性 2:event事件 3:action行为
+        Types []int64 `json:"types,optional"`
+        Identifiers []string `json:"identifiers,optional"`                 //过滤标识符列表
+        ProductIDs []string `json:"productIDs,optional"`//提取产品共有的物模型
+        Name string  `json:"name,optional"`
+        productCategoryID int64 `json:"productCategoryID,optional"`
+        productCategoryWithFather bool `json:"productCategoryWithFather,optional"`
+        IsCanSceneLinkage int64  `json:"isCanSceneLinkage,optional"` //是否可以场景联动
+        FuncGroup int64 `json:"funcGroup,optional"`// 功能分类: 1:普通功能 2:系统功能
+        UserPerm int64 `json:"userPerm,optional"`//用户权限操作: 1:r(只读) 3:rw(可读可写)
+        GroupID int64 `json:"groupID,optional"`
+        GroupIDs []int64 `json:"groupIDs,optional"`
+        ProjectID int64 `json:"projectID,optional,string"`//过滤项目下共有的物模型
+        AreaID int64 `json:"areaID,optional,string"`
+        AreaIDPath string `json:"areaIDPath,optional"` //过滤区域id路径下有设备的产品
+        PropertyMode string  `json:"propertyMode,optional"`//属性类型可用 读写类型: r(只读) rw(可读可写)
+        ControlMode int64 `json:"controlMode,optional"`//控制模式: 1: 可以群控,可以单控  2:只能单控
+        ProductSceneMode string `json:"productSceneMode,optional"`//产品场景模式 读写类型: r(只读) rw(可读可写) none(不参与场景)
+        Identifier string `json:"identifier,optional"`                //标识符模糊过滤
+    }
+    CommonSchemaIndexResp {
+        List []*CommonSchemaInfo `json:"list"`           //分页信息,只获取一个则不填
+        PageResp
+    }
+)
+
+
+type (
+/*物模型条目*/
+    CommonSchemaInfo  {
+        ID int64 `json:"id,optional"`         //产品id
+        Type int64 `json:"type,optional"`                             //物模型类型 1:property属性 2:event事件 3:action行为
+        Identifier string `json:"identifier,optional"`                //标识符
+        ExtendConfig string    `json:"extendConfig,optional"`//拓展参数
+        Name *string `json:"name,optional"`                           //功能名称
+        Desc *string `json:"desc,optional"`                           //描述
+        Required int64 `json:"required,optional"`                     //是否必须 1:是 2:否
+        /*
+        Affordance 各功能类型的详细参数定义(JSON)。由字段 Type 决定其结构:
+
+        1) Type=1 PropertyAffordance (属性能力)
+           - isUseShadow: bool  是否使用设备影子。true: 设备离线写影子，在线直发
+           - isNoRecord:  bool  是否不存储历史记录。true: 不落库，仅保留最新
+           - define:      object 数据定义(Define)。描述数据类型、取值范围/枚举、单位、步进等
+           - mode:        int    读写类型(PropertyMode)。1: r(只读) 2: rw(可读可写)
+           - JSON 示例: {"isUseShadow":true,"isNoRecord":false,"define":{"type":"int","min":0,"max":100,"unit":"%"},"mode":2}
+
+        2) Type=2 EventAffordance (事件能力)
+           - type:   string  事件类型(EventType)。info/alert/fault
+           - params: object  事件参数(Params)。键为参数名，值为参数定义(同 Define)
+           - JSON 示例: {"type":"alert","params":{"code":{"type":"string"},"level":{"type":"enum","enum":["L1","L2","L3"]}}}
+
+        3) Type=3 ActionAffordance (行为能力)
+           - dir:    string  调用方向(ActionDir)。如 up/down
+           - input:  object  调用入参(Params)。键为参数名，值为参数定义(同 Define)
+           - output: object  返回出参(Params)。键为参数名，值为参数定义(同 Define)
+           - JSON 示例: {"dir":"down","input":{"switch":{"type":"bool"}},"output":{"result":{"type":"int","enum":[0,1]}}}
+
+        参考: things/share/domain/schema/affordance.go
+        */
+        Affordance *string `json:"affordance,optional"`
+        IsCanSceneLinkage int64  `json:"isCanSceneLinkage,optional"` //是否可以场景联动
+        FuncGroup int64 `json:"funcGroup,optional"`// 功能分类: 1:普通功能 2:系统功能
+        UserPerm int64 `json:"userPerm,optional"`//用户权限操作: 1:r(只读) 3:rw(可读可写)
+        RecordMode int64 `json:"recordMode,optional"`// 1(默认) 记录历史记录 2 只记录差异值 3 不记录历史记录
+        IsPassword int64 `json:"isPassword,optional"` //是否是密码类型,密码类型需要加掩码
+        Order int64 `json:"order,optional"`// 排序
+        ControlMode int64 `json:"controlMode,optional"`//控制模式: 1: 可以群控,可以单控  2:只能单控
+
+        //        Event *SchemaEvent `json:"event,optional"`           //事件参数定义
+//        Property *SchemaProperty `json:"property,optional"`  //属性参数定义
+//        Action *SchemaAction `json:"action,optional"`        //行为参数定义
+    }
+
+)

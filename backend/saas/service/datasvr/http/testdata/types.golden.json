@@ -1,0 +1,267 @@
+[
+  {
+    "name": "Aggregation",
+    "fields": [
+      {
+        "name": "Func",
+        "type": "string",
+        "tag": "`json:\"argFunc,optional\"`"
+      },
+      {
+        "name": "Column",
+        "type": "string",
+        "tag": "`json:\"column,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataStatisticsManage",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "IsFilterTenant",
+        "type": "int64",
+        "tag": "`json:\"isFilterTenant\"`"
+      },
+      {
+        "name": "IsFilterProject",
+        "type": "int64",
+        "tag": "`json:\"isFilterProject\"`"
+      },
+      {
+        "name": "IsFilterArea",
+        "type": "int64",
+        "tag": "`json:\"isFilterArea\"`"
+      },
+      {
+        "name": "IsSoftDelete",
+        "type": "int64",
+        "tag": "`json:\"isSoftDelete\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "Table",
+        "type": "string",
+        "tag": "`json:\"table\"`"
+      },
+      {
+        "name": "Omits",
+        "type": "string",
+        "tag": "`json:\"omits\"`"
+      },
+      {
+        "name": "IsToHump",
+        "type": "int64",
+        "tag": "`json:\"isToHump\"`"
+      },
+      {
+        "name": "Sql",
+        "type": "string",
+        "tag": "`json:\"sql\"`"
+      },
+      {
+        "name": "OrderBy",
+        "type": "string",
+        "tag": "`json:\"orderBy\"`"
+      },
+      {
+        "name": "Filter",
+        "type": "map[string]FilterKeywords",
+        "tag": "`json:\"filter\"`"
+      },
+      {
+        "name": "FilterSlotCode",
+        "type": "string",
+        "tag": "`json:\"filterSlotCode\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataStatisticsManageIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataStatisticsManageIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DataStatisticsManage",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "FilterKeywords",
+    "fields": [
+      {
+        "name": "Sql",
+        "type": "string",
+        "tag": "`json:\"sql\"`"
+      },
+      {
+        "name": "ValNum",
+        "type": "int64",
+        "tag": "`json:\"valNum\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      }
+    ]
+  },
+  {
+    "name": "OrderBy",
+    "fields": [
+      {
+        "name": "Field",
+        "type": "string",
+        "tag": "`json:\"field,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageInfo",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\" form:\"page,optional\"`"
+      },
+      {
+        "name": "Size",
+        "type": "int64",
+        "tag": "`json:\"size,optional\" form:\"size,optional\"`"
+      },
+      {
+        "name": "Orders",
+        "type": "[]*OrderBy",
+        "tag": "`json:\"orders,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageResp",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "PageSize",
+        "type": "int64",
+        "tag": "`json:\"pageSize,optional\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      }
+    ]
+  },
+  {
+    "name": "StaticsticsInfoIndexReq",
+    "fields": [
+      {
+        "name": "Finds",
+        "type": "[]*StaticsticsInfoReadReq",
+        "tag": "`json:\"finds\"`"
+      }
+    ]
+  },
+  {
+    "name": "StaticsticsInfoIndexResp",
+    "fields": [
+      {
+        "name": "Lists",
+        "type": "[][]map[string]interface{}",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "StaticsticsInfoReadReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Filter",
+        "type": "map[string]interface{}",
+        "tag": "`json:\"filter,optional\"`"
+      },
+      {
+        "name": "Aggregations",
+        "type": "[]Aggregation",
+        "tag": "`json:\"aggregations,optional\"`"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string",
+        "tag": "`json:\"groupBy,optional\"`"
+      },
+      {
+        "name": "Columns",
+        "type": "string",
+        "tag": "`json:\"columns,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "StaticsticsInfoReadResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]map[string]interface{}",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithID",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1963 @@
+
+†
+google/protobuf/wrappers.protogoogle.protobuf"#
+DoubleValue
+value (Rvalue""
+
+FloatValue
+value (Rvalue""
+
+Int64Value
+value (Rvalue"#
+UInt64Value
+value (Rvalue""
+
+Int32Value
+value (Rvalue"#
+UInt32Value
+value (Rvalue"!
+	BoolValue
+value (Rvalue"#
+StringValue
+value (	Rvalue""
+
+BytesValue
+value (RvalueBƒ
+com.google.protobufBWrappersProtoPZ1google.golang.org/protobuf/types/known/wrapperspbø¢GPBªGoogle.Protobuf.WellKnownTypesbproto3
+ÒŒ
+	sys.protosysgoogle/protobuf/wrappers.proto"€
+
+SendOption$
+timeoutToFail (RtimeoutToFail&
+requestTimeout (RrequestTimeout$
+retryInterval (RretryInterval"\
+ThirdAppConfig
+appID (	RappID
+appKey (	RappKey
+	appSecret (	R	appSecret"Ž
+ThirdApp
+version (	Rversion 
+versionDesc (	RversionDesc
+filePath (	RfilePath*
+isUpdateFilePath (RisUpdateFilePath"–
+AppleAppConfig
+appID (	RappID
+teamID (	RteamID
+keyID (	RkeyID
+
+privateKey (	R
+privateKey 
+redirectURI (	RredirectURI"
+IDList
+ids (Rids"„
+
+Attachment
+id (Rid
+fileName (	RfileName
+fileUrl (	RfileUrl
+filePath (	RfilePath
+useBy (	RuseBy"Ä
+NotifyConfig
+id (Rid
+group (	Rgroup
+code (	Rcode
+name (	Rname"
+supportTypes (	RsupportTypes 
+enableTypes (	RenableTypes
+desc (	Rdesc
+isRecord (RisRecord5
+params (2.sys.NotifyConfig.ParamsEntryRparams9
+ParamsEntry
+key (	Rkey
+value (	Rvalue:8"w
+NotifyConfigIndexReq!
+page (2.sys.PageInfoRpage
+group (	Rgroup
+code (	Rcode
+name (	Rname"T
+NotifyConfigIndexResp%
+list (2.sys.NotifyConfigRlist
+total (Rtotal"Ö
+NotifyTemplate
+id (Rid
+
+tenantCode (	R
+tenantCode
+name (	Rname
+
+notifyCode (	R
+notifyCode
+type (	Rtype"
+templateCode (	RtemplateCode
+signName (	RsignName
+subject (	Rsubject
+body	 (	Rbody
+desc
+ (	Rdesc
+	channelID (R	channelID,
+Channel (2.sys.NotifyChannelRChannel"þ
+NotifyChannel
+id (Rid
+name (	Rname
+type (	Rtype
+desc (	Rdesc
+webhook (	Rwebhook%
+email (2.sys.ThirdEmailRemail%
+app (2.sys.ThirdAppConfigRapp
+sms (2.sys.ThirdSmsRsms
+appCode	 (	RappCode"b
+NotifyChannelIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+type (	Rtype"V
+NotifyChannelIndexResp&
+list (2.sys.NotifyChannelRlist
+total (Rtotal"’
+
+ThirdEmail
+From (	RFrom
+Host (	RHost
+Secret (	RSecret
+Nickname (	RNickname
+Port (RPort
+IsSSL (RIsSSL"˜
+ThirdSms
+type (	Rtype 
+accessKeyID (	RaccessKeyID(
+accessKeySecret (	RaccessKeySecret
+appID (	RappID
+appKey (	RappKey"ƒ
+NotifyTemplateIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+
+notifyCode (	R
+notifyCode
+type (	Rtype"X
+NotifyTemplateIndexResp'
+list (2.sys.NotifyTemplateRlist
+total (Rtotal"n
+MessageInfoIndexReq!
+page (2.sys.PageInfoRpage
+group (	Rgroup
+
+notifyCode (	R
+notifyCode"R
+MessageInfoIndexResp$
+list (2.sys.MessageInfoRlist
+total (Rtotal"Š
+MessageInfoSendReq
+userIDs (RuserIDs
+isGlobal (RisGlobal
+
+notifyCode (	R
+notifyCode
+subject (	Rsubject
+body (	Rbody
+str1 (	Rstr1
+str2 (	Rstr2
+str3	 (	Rstr3
+	withTypes
+ (	R	withTypes;
+params (2#.sys.MessageInfoSendReq.ParamsEntryRparams
+
+NotifyTime (R
+NotifyTime9
+ParamsEntry
+key (	Rkey
+value (	Rvalue:8"„
+MessageTriggerUser
+userId (RuserId
+nickName (	RnickName
+account (	Raccount 
+triggerType (	RtriggerType"–
+MessageInfo
+id
+ (Rid
+group (	Rgroup
+
+notifyCode (	R
+notifyCode
+
+notifyType (	R
+notifyType
+
+notifyName (	R
+notifyName
+subject (	Rsubject
+body (	Rbody
+str1 (	Rstr1
+str2 (	Rstr2
+str3 (	Rstr3
+isGlobal (RisGlobal 
+createdTime	 (RcreatedTime
+
+notifyTime (R
+notifyTime9
+triggerUser (2.sys.MessageTriggerUserRtriggerUser"S
+NotifyConfigTemplateDeleteReq
+
+notifyCode (	R
+notifyCode
+type (	Rtype"R
+NotifyConfigTemplateIndexReq
+
+notifyCode (	R
+notifyCode
+type (	Rtype"N
+NotifyConfigTemplateIndexResp-
+list (2.sys.NotifyConfigTemplateRlist"z
+NotifyConfigTemplate
+id (Rid
+
+notifyCode (	R
+notifyCode
+type (	Rtype
+
+templateID (R
+templateID"y
+TenantAgreement
+id (Rid
+code (	Rcode
+name (	Rname
+title (	Rtitle
+content (	Rcontent"<
+TenantAgreementIndexReq!
+page (2.sys.PageInfoRpage"Z
+TenantAgreementIndexResp(
+list (2.sys.TenantAgreementRlist
+total (Rtotal"?
+TenantOpenCheckTokenReq
+token (	Rtoken
+ip (	Rip"ˆ
+TenantOpenCheckTokenResp
+userID (RuserID
+
+tenantCode (	R
+tenantCode
+isAdmin (RisAdmin
+userName (	RuserName"Ž
+TenantOpenWebHook
+id (Rid
+
+tenantCode (	R
+tenantCode
+code (	Rcode
+uri (	Ruri
+hosts (	Rhosts
+desc (	Rdesc=
+handler (2#.sys.TenantOpenWebHook.HandlerEntryRhandler:
+HandlerEntry
+key (	Rkey
+value (	Rvalue:8"º
+
+OpenAccess
+id (Rid
+
+tenantCode (	R
+tenantCode
+code (	Rcode
+userID (RuserID"
+accessSecret (	RaccessSecret
+ipRange (	RipRange
+desc (	Rdesc"ƒ
+OpenAccessIndexReq!
+page (2.sys.PageInfoRpage
+
+tenantCode (	R
+tenantCode
+code (	Rcode
+userID (RuserID"P
+OpenAccessIndexResp
+total (Rtotal#
+list (2.sys.OpenAccessRlist"T
+UserDataProjectIndexReq!
+page (2.sys.PageInfoRpage
+userID (RuserID"V
+UserDataProjectIndexResp
+total (Rtotal$
+list (2.sys.DataProjectRlist"o
+UserDataAreaIndexReq!
+page (2.sys.PageInfoRpage
+	projectID (R	projectID
+userID (RuserID"P
+UserDataAreaIndexResp
+total (Rtotal!
+list (2.sys.DataAreaRlist"
+UserPushClientReportReq"
+pushClientId (	RpushClientId
+platform (	Rplatform
+appId (	RappId
+
+appVersion (	R
+appVersion"9
+UserProfile
+code (	Rcode
+params (	Rparams"+
+UserProfileIndexReq
+codes (	Rcodes"D
+UserProfileIndexResp,
+profiles (2.sys.UserProfileRprofiles"y
+UserMessage
+id (Rid
+userID (RuserID
+isRead (RisRead*
+message (2.sys.MessageInfoRmessage"K
+UserMessageStatisticsResp.
+list (2.sys.UserMessageStatisticsRlist"C
+UserMessageStatistics
+group (	Rgroup
+count (Rcount"”
+UserMessageIndexReq!
+page (2.sys.PageInfoRpage
+group (	Rgroup
+
+notifyCode (	R
+notifyCode
+isRead (RisRead
+str1 (	Rstr1
+str2 (	Rstr2
+str3 (	Rstr30
+createdTime (2.sys.TimeRangeRcreatedTime
+
+notifyType	 (	R
+notifyType"R
+UserMessageIndexResp
+total (Rtotal$
+list (2.sys.UserMessageRlist"Ô
+NotifyConfigSendReq
+userIDs (RuserIDs
+accounts (	Raccounts
+
+notifyCode (	R
+notifyCode
+type (	Rtype<
+params (2$.sys.NotifyConfigSendReq.ParamsEntryRparams
+str1 (	Rstr1
+str2 (	Rstr2
+str3	 (	Rstr3
+
+templateID
+ (R
+templateID9
+ParamsEntry
+key (	Rkey
+value (	Rvalue:8"o
+TenantInfoCreateReq#
+info (2.sys.TenantInfoRinfo3
+adminUserInfo (2.sys.UserInfoRadminUserInfo"¾
+
+TenantInfo
+id (Rid
+name (	Rname
+code (	Rcode 
+adminUserID (RadminUserID 
+adminRoleID (RadminRoleID0
+desc (2.google.protobuf.StringValueRdesc*
+defaultProjectID (RdefaultProjectID$
+defaultAreaID (RdefaultAreaID$
+backgroundImg	 (	RbackgroundImg4
+isUpdateBackgroundImg
+ (RisUpdateBackgroundImg*
+backgroundColour (	RbackgroundColourD
+backgroundDesc (2.google.protobuf.StringValueRbackgroundDesc
+logoImg (	RlogoImg(
+isUpdateLogoImg (RisUpdateLogoImg
+title (	Rtitle
+titleEn (	RtitleEn 
+createdTime (RcreatedTime
+status (Rstatus
+footer (	Rfooter
+	userCount (R	userCount"‘
+TenantInfoIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+code (	Rcode
+status (Rstatus
+appCode (	RappCode"P
+TenantInfoIndexResp#
+list (2.sys.TenantInfoRlist
+total (Rtotal"É
+TenantConfig
+id (Rid
+name (	Rname
+
+tenantCode (	R
+tenantCode&
+registerRoleID (RregisterRoleID
+
+weatherKey (	R
+weatherKey
+isSsl (RisSsl(
+checkUserDelete (RcheckUserDelete=
+deviceLimit (2.google.protobuf.Int64ValueRdeviceLimith
+registerAutoCreateProject (2*.sys.TenantConfigRegisterAutoCreateProjectRregisterAutoCreateProject4
+feedbackNotifyUserIDs	 (RfeedbackNotifyUserIDsE
+operLogKeepDays
+ (2.google.protobuf.Int64ValueRoperLogKeepDaysG
+loginLogKeepDays (2.google.protobuf.Int64ValueRloginLogKeepDays"¼
+%TenantConfigRegisterAutoCreateProject
+id (Rid 
+projectName (	RprojectName"
+isSysCreated (RisSysCreated=
+areas (2'.sys.TenantConfigRegisterAutoCreateAreaRareas"¸
+"TenantConfigRegisterAutoCreateArea
+id (Rid
+areaName (	RareaName
+areaImg (	RareaImg"
+isSysCreated (RisSysCreated(
+isUpdateAreaImg (RisUpdateAreaImg"P
+TenantAccessMultiSaveReq
+code (	Rcode 
+accessCodes (	RaccessCodes"*
+TenantAccessIndexReq
+code (	Rcode"9
+TenantAccessIndexResp 
+accessCodes (	RaccessCodes"Ã
+TenantAppInfo
+id (Rid
+code (	Rcode
+appCode (	RappCode.
+modules (2.sys.TenantAppModuleRmodules/
+dingMini (2.sys.ThirdAppConfigRdingMini+
+wxMini (2.sys.ThirdAppConfigRwxMini+
+wxOpen (2.sys.ThirdAppConfigRwxOpen'
+android
+ (2.sys.ThirdAppRandroid+
+huawei (2.sys.ThirdAppConfigRhuawei+
+google (2.sys.ThirdAppConfigRgoogle+
+github (2.sys.ThirdAppConfigRgithub)
+apple (2.sys.AppleAppConfigRapple
+
+LoginTypes (	R
+LoginTypes&
+isAutoRegister	 (RisAutoRegister
+config (	Rconfig"U
+TenantAppWithIDOrCode
+code (	Rcode
+appCode (	RappCode
+id (Rid"?
+TenantAppModule
+code (	Rcode
+menuIDs (RmenuIDs"ª
+TenantAppIndexReq!
+page (2.sys.PageInfoRpage
+code (	Rcode
+appCodes (	RappCodes
+type (	Rtype
+subType (	RsubType
+appID (	RappID"R
+TenantAppIndexResp
+total (Rtotal&
+list (2.sys.TenantAppInfoRlist"I
+TenantAppMultiUpdateReq
+code (	Rcode
+appCodes (	RappCodes"‰
+TenantModuleIndexReq!
+page (2.sys.PageInfoRpage
+code (	Rcode
+appCode (	RappCode 
+moduleCodes (	RmoduleCodes"<
+TenantModuleIndexResp#
+list (2.sys.ModuleInfoRlist"Ü
+TenantAppMenuIndexReq!
+page (2.sys.PageInfoRpage
+code (	Rcode
+appCode (	RappCode
+
+moduleCode (	R
+moduleCode
+	isRetTree (R	isRetTree
+menuIDs (RmenuIDs
+isCommon (RisCommon"@
+TenantAppMenuIndexResp&
+list (2.sys.TenantAppMenuRlist"°
+TenantAppMenu
+
+templateID (R
+templateID
+code (	Rcode
+appCode (	RappCode!
+info (2.sys.MenuInfoRinfo.
+children (2.sys.TenantAppMenuRchildren"
+TenantModuleCreateReq
+code (	Rcode
+appCode (	RappCode
+
+moduleCode (	R
+moduleCode
+menuIDs (RmenuIDs"x
+TenantModuleWithIDOrCode
+code (	Rcode
+appCode (	RappCode
+
+moduleCode (	R
+moduleCode
+id (Rid"A
+Point
+	longitude (R	longitude
+latitude (Rlatitude"
+Empty"–
+PageInfo
+page (Rpage
+size (Rsize-
+orders (2.sys.PageInfo.OrderByRorders3
+OrderBy
+field (	Rfield
+sort (Rsort"Q
+Compare
+CmpType (	RCmpType
+value (	Rvalue
+castTo (	RcastTo"?
+CompareString
+CmpType (	RCmpType
+value (	Rvalue">
+CompareInt64
+CmpType (	RCmpType
+value (Rvalue"
+WithID
+id (Rid"0
+
+WithIDCode
+id (Rid
+code (	Rcode"
+WithCode
+code (	Rcode"M
+WithAppCodeID
+id (Rid
+appCode (	RappCode
+code (	Rcode"Ù
+ProjectCrudIndexReq!
+page (2.sys.PageInfoRpage
+purpose (	Rpurpose<
+params (2$.sys.ProjectCrudIndexReq.ParamsEntryRparamsG
+ParamsEntry
+key (	Rkey"
+value (2.sys.CompareRvalue:8"†
+ProjectCrud
+id (Rid
+purpose (	Rpurpose
+params (	Rparams
+sort (Rsort!
+created_time (RcreatedTime"R
+ProjectCrudIndexResp
+total (Rtotal$
+list (2.sys.ProjectCrudRlist"Q
+ProjectWithID
+	projectID (R	projectID"
+withTopAreas (RwithTopAreas"å
+ProjectInfo
+
+tenantCode (	R
+tenantCode 
+createdTime (RcreatedTime
+	projectID (R	projectID 
+projectName (	RprojectName 
+adminUserID (RadminUserID&
+Position (2
+.sys.PointRPosition/
+area (2.google.protobuf.FloatValueRarea
+ppsm
+ (Rppsm0
+desc (2.google.protobuf.StringValueRdesc6
+address (2.google.protobuf.StringValueRaddress=
+deviceCount (2.google.protobuf.Int64ValueRdeviceCountI
+deviceOnlineCount (2.google.protobuf.Int64ValueRdeviceOnlineCount 
+alarmStatus (RalarmStatus
+status (Rstatus
+type (	Rtype
+	areaCount	 (R	areaCount
+	userCount (R	userCount
+
+projectImg (	R
+projectImg.
+isUpdateProjectImg (RisUpdateProjectImg"
+isSysCreated (RisSysCreated#
+areas (2.sys.AreaInfoRareas.
+tags (2.sys.ProjectInfo.TagsEntryRtags
+sort (Rsort1
+attachments (2.sys.AttachmentRattachments7
+	TagsEntry
+key (	Rkey
+value (	Rvalue:8"<
+ProjectProfile
+code (	Rcode
+params (	Rparams"+
+ProjectProfileReadReq
+code (	Rcode".
+ProjectProfileIndexReq
+codes (	Rcodes"J
+ProjectProfileIndexResp/
+profiles (2.sys.ProjectProfileRprofiles"¨
+ProjectInfoIndexReq!
+page (2.sys.PageInfoRpage 
+projectName (	RprojectName
+isGetAll (RisGetAll
+
+projectIDs (R
+projectIDs"
+withTopAreas (RwithTopAreas
+
+tenantCode (	R
+tenantCode 
+alarmStatus (RalarmStatus
+status (Rstatus
+type (	Rtype"R
+ProjectInfoIndexResp
+total (Rtotal$
+list (2.sys.ProjectInfoRlist"î
+AreaInfo
+
+tenantCode (	R
+tenantCode 
+createdTime (RcreatedTime
+areaID (RareaID"
+parentAreaID (RparentAreaID
+	projectID (R	projectID
+areaName (	RareaName&
+Position (2
+.sys.PointRPosition0
+desc (2.google.protobuf.StringValueRdesc)
+children (2.sys.AreaInfoRchildren
+
+areaIDPath	 (	R
+areaIDPath"
+areaNamePath
+ (	RareaNamePath(
+lowerLevelCount (RlowerLevelCount(
+childrenAreaIDs (RchildrenAreaIDs
+isLeaf (RisLeaf
+useBy (	RuseBy
+areaImg (	RareaImg(
+isUpdateAreaImg (RisUpdateAreaImg=
+deviceCount (2.google.protobuf.Int64ValueRdeviceCount;
+
+groupCount (2.google.protobuf.Int64ValueR
+groupCount"
+isSysCreated (RisSysCreated
+
+configFile (	R
+configFile.
+isUpdateConfigFile (RisUpdateConfigFile+
+tags (2.sys.AreaInfo.TagsEntryRtags
+sort (Rsort1
+attachments (2.sys.AttachmentRattachments7
+	TagsEntry
+key (	Rkey
+value (	Rvalue:8"$
+
+AreaWithID
+areaID (RareaID"Q
+AreaProfile
+areaID (RareaID
+code (	Rcode
+params (	Rparams"@
+AreaProfileReadReq
+areaID (RareaID
+code (	Rcode"C
+AreaProfileIndexReq
+areaID (RareaID
+codes (	Rcodes"D
+AreaProfileIndexResp,
+profiles (2.sys.AreaProfileRprofiles"‹
+AreaInfoReadReq
+	projectID (R	projectID
+areaID (RareaID"
+withChildren (RwithChildren
+
+tenantCode
+ (	R
+tenantCode"×
+AreaInfoIndexReq!
+page (2.sys.PageInfoRpage
+	projectID (R	projectID"
+parentAreaID (RparentAreaID
+areaIDs (RareaIDs$
+isRetTopLevel (RisRetTopLevel
+isLeaf (RisLeaf3
+deviceCount (2.sys.CompareInt64RdeviceCount1
+
+groupCount	 (2.sys.CompareInt64R
+groupCount
+
+tenantCode
+ (	R
+tenantCode"L
+AreaInfoIndexResp
+total (Rtotal!
+list (2.sys.AreaInfoRlist"§
+ServiceInfo
+code (	Rcode
+name (	Rname
+version (	Rversion
+desc (	Rdesc 
+createdTime (RcreatedTime 
+updatedTime (RupdatedTime"Ú
+SlotInfo
+id (Rid
+code (	Rcode
+subCode (	RsubCode
+slotCode (	RslotCode
+method (	Rmethod
+uri (	Ruri
+hosts (	Rhosts
+body (	Rbody4
+handler	 (2.sys.SlotInfo.HandlerEntryRhandler
+authType
+ (	RauthType
+desc (	Rdesc:
+HandlerEntry
+key (	Rkey
+value (	Rvalue:8"Ø
+
+WeatherAir
+aqi (	Raqi
+level (	Rlevel
+category (	Rcategory
+primary (	Rprimary
+pm10 (	Rpm10
+pm2p5 (	Rpm2p5
+no2 (	Rno2
+so2 (	Rso2
+co	 (	Rco
+o3
+ (	Ro3"V
+WeatherReadReq&
+position (2
+.sys.PointRposition
+	ProjectID (R	ProjectID"¢
+WeatherReadResp
+obsTime (	RobsTime
+temp (	Rtemp
+	feelsLike (	R	feelsLike
+icon (	Ricon
+text (	Rtext
+wind360 (	Rwind360
+windDir (	RwindDir
+	windScale (	R	windScale
+	windSpeed	 (	R	windSpeed
+humidity
+ (	Rhumidity
+precip (	Rprecip
+pressure (	Rpressure
+vis (	Rvis
+cloud (	Rcloud
+dew (	Rdew!
+air (2.sys.WeatherAirRair"Y
+QRCodeReadReq
+page (	Rpage
+scene (	Rscene
+
+envVersion (	R
+envVersion"(
+QRCodeReadResp
+buffer (Rbuffer";
+SlotInfoMultiCreateReq!
+list (2.sys.SlotInfoRlist"c
+SlotInfoIndexReq
+code (	Rcode
+subCode (	RsubCode!
+page (2.sys.PageInfoRpage"L
+SlotInfoIndexResp!
+list (2.sys.SlotInfoRlist
+total (Rtotal";
+AuthApiInfo
+route (	Rroute
+method (	Rmethod"L
+RoleAccessMultiUpdateReq
+id (Rid 
+accessCodes (	RaccessCodes"6
+RoleAccessIndexReq
+ids (Rids
+id (Rid"M
+RoleAccessIndexResp
+total (Rtotal 
+accessCodes (	RaccessCodes"n
+RoleMenuIndexReq
+ids (Rids
+id (Rid
+appCode (	RappCode
+
+moduleCode (	R
+moduleCode"C
+RoleMenuIndexResp
+total (Rtotal
+menuIDs (RmenuIDs"3
+RoleAppIndexReq
+ids (Rids
+id (Rid"D
+RoleAppIndexResp
+total (Rtotal
+appCodes (	RappCodes"P
+RoleModuleIndexReq
+ids (Rids
+id (Rid
+appCode (	RappCode"M
+RoleModuleIndexResp
+total (Rtotal 
+moduleCodes (	RmoduleCodes"3
+	DateRange
+start (	Rstart
+end (	Rend"3
+	TimeRange
+start (Rstart
+end (Rend"ù
+LoginLogIndexReq!
+page (2.sys.PageInfoRpage
+appCode (	RappCode
+ipAddr (	RipAddr$
+loginLocation (	RloginLocation"
+date (2.sys.DateRangeRdate
+userID (RuserID
+userName (	RuserName
+code (Rcode"Œ
+LoginLogInfo
+userID (RuserID
+userName (	RuserName
+ipAddr (	RipAddr$
+loginLocation (	RloginLocation
+browser (	Rbrowser
+os (	Ros
+code (Rcode
+msg (	Rmsg 
+createdTime	 (RcreatedTime
+appCode
+ (	RappCode"P
+LoginLogIndexResp%
+list (2.sys.LoginLogInfoRlist
+total (Rtotal"æ
+OperLogIndexReq!
+page (2.sys.PageInfoRpage
+operName (	RoperName"
+operUserName (	RoperUserName"
+businessType (RbusinessType
+appCode (	RappCode
+code (Rcode
+
+operUserID (R
+operUserID"ç
+OperLogInfo
+userID (RuserID"
+operUserName (	RoperUserName
+operName (	RoperName"
+businessType (RbusinessType
+uri (	Ruri
+
+operIpAddr (	R
+operIpAddr"
+operLocation (	RoperLocation
+req (	Rreq
+resp	 (	Rresp
+code
+ (Rcode
+msg (	Rmsg 
+createdTime (RcreatedTime
+appCode (	RappCode"N
+OperLogIndexResp$
+list (2.sys.OperLogInfoRlist
+total (Rtotal"ï
+LoginLogCreateReq
+userID (RuserID
+userName (	RuserName
+ipAddr (	RipAddr$
+loginLocation (	RloginLocation
+browser (	Rbrowser
+os (	Ros
+code (Rcode
+msg (	Rmsg
+appCode	 (	RappCode"à
+OperLogCreateReq
+userID (RuserID"
+operUserName (	RoperUserName
+operName (	RoperName"
+businessType (RbusinessType
+uri (	Ruri
+route (	Rroute
+
+operIpAddr (	R
+operIpAddr"
+operLocation (	RoperLocation
+req	 (	Rreq
+resp
+ (	Rresp
+code (Rcode
+msg (	Rmsg
+appCode (	RappCode"ð
+UserInfo
+
+tenantCode (	R
+tenantCode
+userID (RuserID
+userName (	RuserName
+password (	Rpassword2
+email (2.google.protobuf.StringValueRemail2
+phone (2.google.protobuf.StringValueRphone$
+wechatUnionID (	RwechatUnionID"
+wechatOpenID (	RwechatOpenID&
+dingTalkUserID (	RdingTalkUserID(
+dingTalkUnionID (	RdingTalkUnionID"
+huaweiOpenID (	RhuaweiOpenID$
+huaweiUnionID  (	RhuaweiUnionID
+lastIP (	RlastIP 
+lastTokenID (	RlastTokenID
+regIP (	RregIP
+nickName	 (	RnickName
+city
+ (	Rcity
+country (	Rcountry
+province (	Rprovince
+language (	Rlanguage 
+createdTime (RcreatedTime
+role (Rrole
+sex (Rsex
+	isAllData (R	isAllData
+headImg (	RheadImg(
+isUpdateHeadImg (RisUpdateHeadImg
+status (Rstatus+
+tags (2.sys.UserInfo.TagsEntryRtags4
+pubTags (2.sys.UserInfo.PubTagsEntryRpubTags
+deptIDs (RdeptIDs 
+deviceCount (RdeviceCount7
+	TagsEntry
+key (	Rkey
+value (	Rvalue:8:
+PubTagsEntry
+key (	Rkey
+value (	Rvalue:8"(
+UserCreateResp
+userID (RuserID"%
+UserLogoutReq
+token (	Rtoken"‹
+UserCheckTokenReq
+token (	Rtoken
+ip (	Rip
+appCode (	RappCode
+authType (	RauthType
+deviceID (	RdeviceID"Ø
+UserCheckTokenResp
+token (	Rtoken
+userID (RuserID
+roleIDs (RroleIDs
+	roleCodes (	R	roleCodes
+	isAllData (R	isAllData
+
+tenantCode (	R
+tenantCode
+isAdmin (RisAdmin"
+isSuperAdmin (RisSuperAdmin
+appCode	 (	RappCode
+account
+ (	RaccountJ
+projectAuth (2(.sys.UserCheckTokenResp.ProjectAuthEntryRprojectAuthA
+deptAuth (2%.sys.UserCheckTokenResp.DeptAuthEntryRdeptAuthM
+deptPathAuth (2).sys.UserCheckTokenResp.DeptPathAuthEntryRdeptPathAuthP
+ProjectAuthEntry
+key (Rkey&
+value (2.sys.ProjectAuthRvalue:8;
+DeptAuthEntry
+key (Rkey
+value (Rvalue:8?
+DeptPathAuthEntry
+key (	Rkey
+value (Rvalue:8"‹
+ProjectAuth.
+area (2.sys.ProjectAuth.AreaEntryRarea:
+areaPath (2.sys.ProjectAuth.AreaPathEntryRareaPath
+AuthType (RAuthType7
+	AreaEntry
+key (Rkey
+value (Rvalue:8;
+AreaPathEntry
+key (	Rkey
+value (Rvalue:8"C
+RoleAppMultiUpdateReq
+id (Rid
+appCodes (	RappCodes"f
+RoleModuleMultiUpdateReq
+id (Rid
+appCode (	RappCode 
+moduleCodes (	RmoduleCodes"|
+RoleMenuMultiUpdateReq
+id (Rid
+appCode (	RappCode
+
+moduleCode (	R
+moduleCode
+menuIDs (RmenuIDs"<
+RoleApiAuthReq
+path (	Rpath
+method (	Rmethod"o
+RoleApiAuthResp"
+businessType (RbusinessType
+name (	Rname$
+recordLogMode (RrecordLogMode"P
+UserInfoCreateReq!
+info (2.sys.UserInfoRinfo
+roleIDs (RroleIDs"Þ
+UserInfoIndexReq!
+page (2.sys.PageInfoRpage
+userName (	RuserName
+phone (	Rphone
+email (	Remail
+userIDs (RuserIDs
+account (	Raccount&
+hasAccessAreas (RhasAccessAreas
+roleCode (	RroleCode3
+updatedTime	 (2.sys.CompareInt64RupdatedTime
+deptID
+ (RdeptID
+nickName (	RnickName"L
+UserInfoIndexResp!
+list (2.sys.UserInfoRlist
+total (Rtotal"R
+userInfoUpdateReq!
+info (2.sys.UserInfoRinfo
+WithRoot (RWithRoot")
+UserInfoReadReq
+userID (RuserID"+
+UserInfoDeleteReq
+userID (RuserID"t
+JwtToken 
+accessToken (	RaccessToken"
+accessExpire (RaccessExpire"
+refreshAfter (RrefreshAfter"Œ
+UserCaptchaReq
+account (	Raccount
+type (	Rtype
+use (	Ruse
+codeID (	RcodeID
+code (	Rcode
+ip (	Rip"U
+UserCaptchaResp
+codeID (	RcodeID
+code (	Rcode
+expire (Rexpire"ˆ
+UserForgetPwdReq
+account (	Raccount
+type (	Rtype
+password (	Rpassword
+code (	Rcode
+codeID (	RcodeID"G
+UserCodeToUserIDReq
+	loginType (	R	loginType
+code (	Rcode"H
+UserCodeToUserIDResp
+openID (	RopenID
+unionID (	RunionID"
+UserChangePwdReq
+type (	Rtype 
+oldPassword (	RoldPassword
+password (	Rpassword
+code (	Rcode
+codeID (	RcodeID"Ô
+UserLoginReq
+account (	Raccount
+pwdType (RpwdType
+password (	Rpassword
+	loginType (	R	loginType
+code (	Rcode
+codeID (	RcodeID
+ip (	Rip
+deviceID (	RdeviceID"W
+UserLoginResp!
+info (2.sys.UserInfoRinfo#
+token (2.sys.JwtTokenRtoken"ã
+UserRegisterReq
+regType (	RregType
+account (	Raccount
+code (	Rcode
+codeID (	RcodeID
+password (	Rpassword!
+info (2.sys.UserInfoRinfo8
+expand (2 .sys.UserRegisterReq.ExpandEntryRexpand
+deviceID (	RdeviceID 
+isWithLogin	 (RisWithLogin9
+ExpandEntry
+key (	Rkey
+value (	Rvalue:8"n
+UserBindAccountReq
+type (	Rtype
+account (	Raccount
+code (	Rcode
+codeID (	RcodeID"*
+UserRoleIndexReq
+userID (RuserID"L
+UserRoleIndexResp
+total (Rtotal!
+list (2.sys.RoleInfoRlist"h
+UserRoleMultiUpdateReq
+userID (RuserID
+roleIDs (RroleIDs
+	roleCodes (	R	roleCodes"*
+UserDeptIndexReq
+userID (RuserID"L
+UserDeptIndexResp
+total (Rtotal!
+list (2.sys.DeptInfoRlist"H
+UserDeptMultiSaveReq
+userID (RuserID
+deptIDs (RdeptIDs"M
+DeptUserIndexReq!
+page (2.sys.PageInfoRpage
+deptID (RdeptID"L
+DeptUserIndexResp
+total (Rtotal!
+list (2.sys.DeptUserRlist"®
+DeptUser
+id (Rid
+userID (RuserID
+deptID (RdeptID
+
+deptIDPath (	R
+deptIDPath
+authType (RauthType&
+isAuthChildren (RisAuthChildren"B
+DeptUserMultiDeleteReq
+deptID (RdeptID
+ids (Rids"Ž
+DeptUserMultiCreateReq
+deptID (RdeptID
+userIDs (RuserIDs
+authType (RauthType&
+isAuthChildren (RisAuthChildren"*
+DeptRoleIndexReq
+deptID (RdeptID"L
+DeptRoleIndexResp
+total (Rtotal!
+list (2.sys.RoleInfoRlist"H
+DeptRoleMultiSaveReq
+deptID (RdeptID
+roleIDs (RroleIDs"…
+DataProject
+	projectID (R	projectID
+authType (RauthType
+targetID (RtargetID 
+updatedTime (RupdatedTime"p
+DataProjectDeleteReq
+targetID (RtargetID
+
+targetType (	R
+targetType
+	projectID (R	projectID"w
+DataProjectMultiDeleteReq
+	targetIDs (R	targetIDs
+
+targetType (	R
+targetType
+	projectID (R	projectID"Š
+DataProjectSaveReq
+targetID (RtargetID
+
+targetType (	R
+targetType
+	projectID (R	projectID
+authType (RauthType"‘
+DataProjectMultiSaveReq
+	targetIDs (R	targetIDs
+
+targetType (	R
+targetType
+	projectID (R	projectID
+authType (RauthType"®
+DataProjectIndexReq!
+page (2.sys.PageInfoRpage
+	projectID (R	projectID
+targetID (RtargetID
+
+targetType (	R
+targetType
+authType (RauthType"R
+DataProjectIndexResp
+total (Rtotal$
+list (2.sys.DataProjectRlist"ä
+DataArea
+areaID (RareaID
+authType (RauthType&
+isAuthChildren (RisAuthChildren
+
+areaIDPath (R
+areaIDPath
+targetID (RtargetID
+
+targetType (	R
+targetType 
+updatedTime (RupdatedTime"—
+DataAreaMultiUpdateReq
+targetID (RtargetID
+
+targetType (	R
+targetType
+	projectID (R	projectID#
+areas (2.sys.DataAreaRareas"
+DataAreaIndexReq!
+page (2.sys.PageInfoRpage
+	projectID (R	projectID
+targetID (RtargetID
+
+targetType (	R
+targetType"L
+DataAreaIndexResp
+total (Rtotal!
+list (2.sys.DataAreaRlist"Œ
+DataAreaMultiDeleteReq
+	projectID (R	projectID
+targetID (RtargetID
+
+targetType (	R
+targetType
+areaIDs (RareaIDs"L
+UserAreaApplyCreateReq
+areaID (RareaID
+authType (RauthType"p
+UserAreaApplyIndexReq!
+page (2.sys.PageInfoRpage
+areaID (RareaID
+	authTypes (R	authTypes"‘
+UserAreaApplyInfo
+id (Rid
+userID (RuserID
+areaID (RareaID
+authType (RauthType 
+createdTime (RcreatedTime"Z
+UserAreaApplyIndexResp
+total (Rtotal*
+list (2.sys.UserAreaApplyInfoRlist"F
+UserAreaApplyDealReq
+	isApprove (R	isApprove
+ids (Rids"Ü
+DictInfo
+id (Rid
+group (	Rgroup
+name (	Rname
+code (	Rcode0
+desc (2.google.protobuf.StringValueRdesc0
+body (2.google.protobuf.StringValueRbody
+
+structType (R
+structType"5
+DictInfoReadReq
+id (Rid
+code (	Rcode"_
+DictInfoIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+group (	Rgroup"L
+DictInfoIndexResp!
+list (2.sys.DictInfoRlist
+total (Rtotal"™
+DictDetailReadReq
+id (Rid
+dictCode (	RdictCode
+value (	Rvalue
+
+withFather (R
+withFather"
+withChildren (RwithChildren"*
+DictMultiImportReq
+dicts (	Rdicts"‡
+DictMultiImportResp
+total (Rtotal
+errCount (RerrCount 
+ignoreCount (RignoreCount
+	succCount (R	succCount"2
+DictMultiExportReq
+	dictCodes (	R	dictCodes"+
+DictMultiExportResp
+dicts (	Rdicts"þ
+
+DictDetail
+id (Rid
+dictCode (	RdictCode
+label (	Rlabel
+value (	Rvalue
+sort (Rsort0
+desc (2.google.protobuf.StringValueRdesc
+status (Rstatus0
+body	 (2.google.protobuf.StringValueRbody
+idPath
+ (	RidPath
+parentID (RparentID'
+parent (2.sys.DictDetailRparent+
+children (2.sys.DictDetailRchildren"Ë
+DictDetailIndexReq!
+page (2.sys.PageInfoRpage
+dictCode (	RdictCode
+parentID (RparentID
+status (Rstatus
+label (	Rlabel
+value (	Rvalue
+values (	Rvalues"P
+DictDetailIndexResp#
+list (2.sys.DictDetailRlist
+total (Rtotal"[
+DictDetailMultiCreateReq
+dictCode (	RdictCode#
+list (2.sys.DictDetailRlist"$
+DeptSyncJobReadReq
+id (Rid"‡
+DeptSyncJob
+id (Rid
+	direction (R	direction
+	thirdType (	R	thirdType5
+thirdConfig (2.sys.ThirdAppConfigRthirdConfig:
+fieldMap (2.sys.DeptSyncJob.FieldMapEntryRfieldMap 
+syncDeptIDs (RsyncDeptIDs
+	isAddSync (R	isAddSync
+syncMode (RsyncMode 
+createdTime	 (RcreatedTime;
+FieldMapEntry
+key (	Rkey
+value (	Rvalue:8"
+DeptSyncJobIndexReq!
+page (2.sys.PageInfoRpage
+	direction (R	direction
+	thirdType (	R	thirdType
+syncMode (RsyncMode"R
+DeptSyncJobIndexResp$
+list (2.sys.DeptSyncJobRlist
+total (Rtotal"…
+DeptInfoReadReq
+id (Rid
+
+withFather (R
+withFather"
+withChildren (RwithChildren
+
+tenantCode
+ (	R
+tenantCode"-
+DeptSyncJobExecuteReq
+jobID (RjobID"
+DeptSyncJobExecuteResp"«
+ThirdDeptInfoIndexReq!
+page (2.sys.PageInfoRpage
+parentID (RparentID
+	thirdType (	R	thirdType5
+thirdConfig (2.sys.ThirdAppConfigRthirdConfig"¿
+ThirdDeptInfoReadReq
+id (Rid
+
+withFather (R
+withFather"
+withChildren (RwithChildren
+	thirdType (	R	thirdType5
+thirdConfig (2.sys.ThirdAppConfigRthirdConfig"ò
+DeptInfo
+id (Rid
+name (	Rname0
+desc (2.google.protobuf.StringValueRdesc
+status (Rstatus
+parentID (RparentID%
+parent (2.sys.DeptInfoRparent)
+children (2.sys.DeptInfoRchildren
+sort (Rsort
+idPath	 (	RidPath
+	userCount
+ (R	userCount
+
+dingTalkID (R
+dingTalkID 
+adminUserID (RadminUserID"¿
+DeptInfoIndexReq!
+page (2.sys.PageInfoRpage
+parentID (RparentID
+status (Rstatus
+name (	Rname
+
+tenantCode
+ (	R
+tenantCode 
+dingTalkIDs (RdingTalkIDs"L
+DeptInfoIndexResp!
+list (2.sys.DeptInfoRlist
+total (Rtotal"’
+
+ModuleInfo
+id (Rid
+name (	Rname
+code (	Rcode0
+desc (2.google.protobuf.StringValueRdesc
+type (Rtype
+subType (RsubType
+path (	Rpath
+url (	Rurl
+icon (	Ricon
+order	 (Rorder
+
+hideInMenu
+ (R
+hideInMenu0
+body (2.google.protobuf.StringValueRbody
+tag (Rtag
+purpose (Rpurpose
+
+homeMenuID (R
+homeMenuID"Ù
+ModuleInfoIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+code (	Rcode
+codes (	Rcodes
+appCode (	RappCode
+type (Rtype
+purpose (Rpurpose
+purposes (Rpurposes"P
+ModuleInfoIndexResp#
+list (2.sys.ModuleInfoRlist
+total (Rtotal"¡
+AppInfo
+id (Rid
+name (	Rname
+type (	Rtype
+subType
+ (	RsubType
+code (	Rcode0
+desc (2.google.protobuf.StringValueRdesc"r
+AppInfoIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+code (	Rcode
+codes (	Rcodes"J
+AppInfoIndexResp 
+list (2.sys.AppInfoRlist
+total (Rtotal"O
+AppModuleMultiUpdateReq
+code (	Rcode 
+moduleCodes (	RmoduleCodes"'
+AppModuleIndexReq
+code (	Rcode"6
+AppModuleIndexResp 
+moduleCodes (	RmoduleCodes"‰
+RoleInfoIndexReq!
+page (2.sys.PageInfoRpage
+name (	Rname
+status (Rstatus
+ids (Rids
+codes (	Rcodes"L
+RoleInfoIndexResp!
+list (2.sys.RoleInfoRlist
+total (Rtotal"®
+RoleInfo
+id (Rid
+name (	Rname0
+desc (2.google.protobuf.StringValueRdesc 
+createdTime (RcreatedTime
+status (Rstatus
+code (	Rcode">
+RoleAppUpdateReq
+id (Rid
+appCodes (	RappCodes"0
+ModuleMultiImportReq
+modules (	Rmodules"‰
+ModuleMultiImportResp
+total (Rtotal
+errCount (RerrCount 
+ignoreCount (RignoreCount
+	succCount (R	succCount"8
+ModuleMultiExportReq 
+moduleCodes (	RmoduleCodes"1
+ModuleMultiExportResp
+modules (	Rmodules"\
+MenuMultiImportReq
+
+moduleCode (	R
+moduleCode
+mode (Rmode
+menu (	Rmenu"‡
+MenuMultiImportResp
+total (Rtotal
+errCount (RerrCount 
+ignoreCount (RignoreCount
+	succCount (R	succCount"4
+MenuMultiExportReq
+
+moduleCode (	R
+moduleCode")
+MenuMultiExportResp
+menu (	Rmenu"¨
+MenuInfoIndexReq
+
+moduleCode (	R
+moduleCode
+menuIDs (RmenuIDs
+	isRetTree (R	isRetTree
+isCommon (RisCommon 
+isAllTenant (RisAllTenant"Ó
+MenuInfo
+
+moduleCode (	R
+moduleCode
+id (Rid
+name (	Rname
+parentID (RparentID
+type (Rtype
+path (	Rpath
+	component (	R	component
+icon (	Ricon
+redirect (	Rredirect 
+createdTime	 (RcreatedTime
+order
+ (Rorder
+
+hideInMenu (R
+hideInMenu
+isCommon (RisCommon 
+isAllTenant (RisAllTenant0
+body (2.google.protobuf.StringValueRbody)
+children (2.sys.MenuInfoRchildren"6
+MenuInfoIndexResp!
+list (2.sys.MenuInfoRlist"[
+Map
+mode (	Rmode
+	accessKey (	R	accessKey"
+accessSecret (	RaccessSecret"(
+
+configResp
+map (2.sys.MapRmap"Ê
+ApiInfoIndexReq!
+page (2.sys.PageInfoRpage
+route (	Rroute
+method (	Rmethod
+name (	Rname
+authType (RauthType
+apiIDs (RapiIDs
+
+accessCode (	R
+accessCode"Ù
+ApiInfo
+
+accessCode (	R
+accessCode
+id (Rid
+route (	Rroute
+method (	Rmethod
+name (	Rname"
+businessType (RbusinessType$
+recordLogMode (RrecordLogMode
+desc	 (	Rdesc"J
+ApiInfoIndexResp 
+list (2.sys.ApiInfoRlist
+total (Rtotal"J
+AccessInfoMultiImportReq
+module (	Rmodule
+access (	Raccess"
+AccessInfoMultiImportResp
+total (Rtotal
+errCount (RerrCount 
+ignoreCount (RignoreCount
+	succCount (R	succCount"ý
+AccessInfoIndexReq!
+page (2.sys.PageInfoRpage
+module (	Rmodule
+group (	Rgroup
+code (	Rcode
+codes (	Rcodes
+name (	Rname
+
+isNeedAuth	 (R
+isNeedAuth
+	authTypes
+ (R	authTypes
+WithApis (RWithApis"ä
+
+AccessInfo
+id (Rid
+module (	Rmodule
+group (	Rgroup
+code (	Rcode
+name (	Rname
+
+isNeedAuth (R
+isNeedAuth
+authType (RauthType
+desc (	Rdesc 
+Apis	 (2.sys.ApiInfoRApis"P
+AccessInfoIndexResp#
+list (2.sys.AccessInfoRlist
+total (Rtotal"’
+OpsWorkOrder
+id (Rid
+number (	Rnumber 
+raiseUserID (RraiseUserID
+areaID (RareaID
+type (	Rtype5
+params (2.sys.OpsWorkOrder.ParamsEntryRparams
+	issueDesc (	R	issueDesc
+status
+ (Rstatus 
+createdTime (RcreatedTime
+
+handleTime (R
+handleTime"
+finishedTime (RfinishedTime9
+ParamsEntry
+key (	Rkey
+value (	Rvalue:8"•
+OpsWorkOrderIndexReq!
+page (2.sys.PageInfoRpage
+status (Rstatus
+areaID (RareaID
+type (	Rtype
+number (	Rnumber"T
+OpsWorkOrderIndexResp%
+list (2.sys.OpsWorkOrderRlist
+total (Rtotal"™
+OpsFeedback
+id (Rid
+
+tenantCode (	R
+tenantCode 
+raiseUserID (RraiseUserID
+	projectID (R	projectID
+type (	Rtype.
+contactInformation (	RcontactInformation
+	issueDesc (	R	issueDesc 
+createdTime (RcreatedTime
+status	 (Rstatus"Ä
+OpsFeedbackIndexReq!
+page (2.sys.PageInfoRpage
+	projectID (R	projectID
+type (	Rtype 
+isAllTenant (RisAllTenant
+
+tenantCode (	R
+tenantCode
+status (Rstatus"R
+OpsFeedbackIndexResp$
+list (2.sys.OpsFeedbackRlist
+total (Rtotal2¾
+
+UserManage=
+userInfoCreate.sys.UserInfoCreateReq.sys.UserCreateResp>
+userInfoIndex.sys.UserInfoIndexReq.sys.UserInfoIndexResp4
+userInfoUpdate.sys.userInfoUpdateReq
+.sys.Empty3
+userInfoRead.sys.UserInfoReadReq.sys.UserInfo4
+userInfoDelete.sys.UserInfoDeleteReq
+.sys.Empty2
+	userLogin.sys.UserLoginReq.sys.UserLoginResp,
+
+userLogout.sys.UserLogoutReq
+.sys.Empty2
+userForgetPwd.sys.UserForgetPwdReq
+.sys.Empty8
+userCaptcha.sys.UserCaptchaReq.sys.UserCaptchaRespA
+userCheckToken.sys.UserCheckTokenReq.sys.UserCheckTokenResp8
+userRegister.sys.UserRegisterReq.sys.UserLoginResp2
+userChangePwd.sys.UserChangePwdReq
+.sys.EmptyG
+userCodeToUserID.sys.UserCodeToUserIDReq.sys.UserCodeToUserIDResp6
+userBindAccount.sys.UserBindAccountReq
+.sys.Empty>
+userRoleIndex.sys.UserRoleIndexReq.sys.UserRoleIndexResp>
+userRoleMultiUpdate.sys.UserRoleMultiUpdateReq
+.sys.Empty>
+userRoleMultiCreate.sys.UserRoleMultiUpdateReq
+.sys.Empty>
+userDeptIndex.sys.UserDeptIndexReq.sys.UserDeptIndexResp<
+userDeptMultiDelete.sys.UserDeptMultiSaveReq
+.sys.Empty<
+userDeptMultiCreate.sys.UserDeptMultiSaveReq
+.sys.Empty>
+userAreaApplyCreate.sys.UserAreaApplyCreateReq
+.sys.Empty1
+userMessageMultiIsRead.sys.IDList
+.sys.EmptyG
+userMessageIndex.sys.UserMessageIndexReq.sys.UserMessageIndexRespC
+userMessageStatistics
+.sys.Empty.sys.UserMessageStatisticsResp@
+userPushClientReport.sys.UserPushClientReportReq
+.sys.Empty2
+userProfileRead.sys.WithCode.sys.UserProfile1
+userProfileUpdate.sys.UserProfile
+.sys.EmptyG
+userProfileIndex.sys.UserProfileIndexReq.sys.UserProfileIndexRespS
+userDataProjectIndex.sys.UserDataProjectIndexReq.sys.UserDataProjectIndexRespJ
+userDataAreaIndex.sys.UserDataAreaIndexReq.sys.UserDataAreaIndexResp2º
+
+DataManage8
+dataProjectCreate.sys.DataProjectSaveReq
+.sys.EmptyB
+dataProjectMultiCreate.sys.DataProjectMultiSaveReq
+.sys.Empty:
+dataProjectDelete.sys.DataProjectDeleteReq
+.sys.EmptyD
+dataProjectMultiDelete.sys.DataProjectMultiDeleteReq
+.sys.EmptyG
+dataProjectIndex.sys.DataProjectIndexReq.sys.DataProjectIndexResp>
+dataAreaMultiUpdate.sys.DataAreaMultiUpdateReq
+.sys.Empty>
+dataAreaIndex.sys.DataAreaIndexReq.sys.DataAreaIndexResp>
+dataAreaMultiDelete.sys.DataAreaMultiDeleteReq
+.sys.EmptyM
+userAreaApplyIndex.sys.UserAreaApplyIndexReq.sys.UserAreaApplyIndexResp:
+userAreaApplyDeal.sys.UserAreaApplyDealReq
+.sys.EmptyH
+dataOpenAccessIndex.sys.OpenAccessIndexReq.sys.OpenAccessIndexResp2
+dataOpenAccessRead.sys.WithID.sys.OpenAccess3
+dataOpenAccessUpdate.sys.OpenAccess
+.sys.Empty4
+dataOpenAccessCreate.sys.OpenAccess.sys.WithID/
+dataOpenAccessDelete.sys.WithID
+.sys.Empty2’
+NotifyManage7
+messageInfoSend.sys.MessageInfoSendReq.sys.WithIDG
+messageInfoIndex.sys.MessageInfoIndexReq.sys.MessageInfoIndexResp1
+messageInfoUpdate.sys.MessageInfo
+.sys.Empty,
+messageInfoDelete.sys.WithID
+.sys.Empty6
+notifyConfigRead.sys.WithIDCode.sys.NotifyConfig4
+notifyConfigCreate.sys.NotifyConfig.sys.WithID3
+notifyConfigUpdate.sys.NotifyConfig
+.sys.EmptyJ
+notifyConfigIndex.sys.NotifyConfigIndexReq.sys.NotifyConfigIndexResp-
+notifyConfigDelete.sys.WithID
+.sys.Empty8
+notifyConfigSend.sys.NotifyConfigSendReq
+.sys.Empty6
+notifyTemplateRead.sys.WithID.sys.NotifyTemplate8
+notifyTemplateCreate.sys.NotifyTemplate.sys.WithID7
+notifyTemplateUpdate.sys.NotifyTemplate
+.sys.EmptyP
+notifyTemplateIndex.sys.NotifyTemplateIndexReq.sys.NotifyTemplateIndexResp/
+notifyTemplateDelete.sys.WithID
+.sys.EmptyC
+notifyConfigTemplateUpdate.sys.NotifyConfigTemplate
+.sys.EmptyL
+notifyConfigTemplateDelete".sys.NotifyConfigTemplateDeleteReq
+.sys.Emptyb
+notifyConfigTemplateIndex!.sys.NotifyConfigTemplateIndexReq".sys.NotifyConfigTemplateIndexResp4
+notifyChannelRead.sys.WithID.sys.NotifyChannel6
+notifyChannelCreate.sys.NotifyChannel.sys.WithID5
+notifyChannelUpdate.sys.NotifyChannel
+.sys.EmptyM
+notifyChannelIndex.sys.NotifyChannelIndexReq.sys.NotifyChannelIndexResp.
+notifyChannelDelete.sys.WithID
+.sys.Empty2ú
+AccessManage*
+apiInfoCreate.sys.ApiInfo.sys.WithID;
+apiInfoIndex.sys.ApiInfoIndexReq.sys.ApiInfoIndexResp)
+apiInfoUpdate.sys.ApiInfo
+.sys.Empty(
+apiInfoDelete.sys.WithID
+.sys.EmptyV
+accessInfoMultiImport.sys.AccessInfoMultiImportReq.sys.AccessInfoMultiImportResp0
+accessInfoCreate.sys.AccessInfo.sys.WithIDD
+accessInfoIndex.sys.AccessInfoIndexReq.sys.AccessInfoIndexResp/
+accessInfoUpdate.sys.AccessInfo
+.sys.Empty+
+accessInfoDelete.sys.WithID
+.sys.Empty2›
+
+RoleManage,
+roleInfoCreate.sys.RoleInfo.sys.WithID>
+roleInfoIndex.sys.RoleInfoIndexReq.sys.RoleInfoIndexResp+
+roleInfoUpdate.sys.RoleInfo
+.sys.Empty)
+roleInfoDelete.sys.WithID
+.sys.Empty>
+roleMenuIndex.sys.RoleMenuIndexReq.sys.RoleMenuIndexResp>
+roleMenuMultiUpdate.sys.RoleMenuMultiUpdateReq
+.sys.Empty;
+roleAppIndex.sys.RoleAppIndexReq.sys.RoleAppIndexResp<
+roleAppMultiUpdate.sys.RoleAppMultiUpdateReq
+.sys.EmptyD
+roleModuleIndex.sys.RoleModuleIndexReq.sys.RoleModuleIndexRespB
+roleModuleMultiUpdate.sys.RoleModuleMultiUpdateReq
+.sys.Empty8
+roleApiAuth.sys.RoleApiAuthReq.sys.RoleApiAuthRespB
+roleAccessMultiUpdate.sys.RoleAccessMultiUpdateReq
+.sys.EmptyD
+roleAccessIndex.sys.RoleAccessIndexReq.sys.RoleAccessIndexResp2€
+	AppManage*
+appInfoCreate.sys.AppInfo.sys.WithID;
+appInfoIndex.sys.AppInfoIndexReq.sys.AppInfoIndexResp)
+appInfoUpdate.sys.AppInfo
+.sys.Empty,
+appInfoDelete.sys.WithIDCode
+.sys.Empty,
+appInfoRead.sys.WithIDCode.sys.AppInfoA
+appModuleIndex.sys.AppModuleIndexReq.sys.AppModuleIndexResp@
+appModuleMultiUpdate.sys.AppModuleMultiUpdateReq
+.sys.Empty2š
+ModuleManage0
+moduleInfoCreate.sys.ModuleInfo.sys.WithIDD
+moduleInfoIndex.sys.ModuleInfoIndexReq.sys.ModuleInfoIndexResp/
+moduleInfoUpdate.sys.ModuleInfo
+.sys.Empty/
+moduleInfoDelete.sys.WithIDCode
+.sys.Empty2
+moduleInfoRead.sys.WithIDCode.sys.ModuleInfoJ
+moduleMultiImport.sys.ModuleMultiImportReq.sys.ModuleMultiImportRespJ
+moduleMultiExport.sys.ModuleMultiExportReq.sys.ModuleMultiExportResp.
+moduleMenuCreate.sys.MenuInfo.sys.WithID@
+moduleMenuIndex.sys.MenuInfoIndexReq.sys.MenuInfoIndexResp-
+moduleMenuUpdate.sys.MenuInfo
+.sys.Empty+
+moduleMenuDelete.sys.WithID
+.sys.EmptyJ
+moduleMenuMultiImport.sys.MenuMultiImportReq.sys.MenuMultiImportRespJ
+moduleMenuMultiExport.sys.MenuMultiExportReq.sys.MenuMultiExportResp2è
+
+DictManage,
+dictInfoCreate.sys.DictInfo.sys.WithID>
+dictInfoIndex.sys.DictInfoIndexReq.sys.DictInfoIndexResp+
+dictInfoUpdate.sys.DictInfo
+.sys.Empty)
+dictInfoDelete.sys.WithID
+.sys.Empty3
+dictInfoRead.sys.DictInfoReadReq.sys.DictInfo9
+dictDetailRead.sys.DictDetailReadReq.sys.DictDetail0
+dictDetailCreate.sys.DictDetail.sys.WithIDB
+dictDetailMultiCreate.sys.DictDetailMultiCreateReq
+.sys.EmptyD
+dictDetailIndex.sys.DictDetailIndexReq.sys.DictDetailIndexResp/
+dictDetailUpdate.sys.DictDetail
+.sys.Empty+
+dictDetailDelete.sys.WithID
+.sys.EmptyD
+dictMultiImport.sys.DictMultiImportReq.sys.DictMultiImportRespD
+dictMultiExport.sys.DictMultiExportReq.sys.DictMultiExportResp2ô
+DepartmentManage3
+deptInfoRead.sys.DeptInfoReadReq.sys.DeptInfo,
+deptInfoCreate.sys.DeptInfo.sys.WithID>
+deptInfoIndex.sys.DeptInfoIndexReq.sys.DeptInfoIndexResp+
+deptInfoUpdate.sys.DeptInfo
+.sys.Empty)
+deptInfoDelete.sys.WithID
+.sys.Empty>
+deptUserIndex.sys.DeptUserIndexReq.sys.DeptUserIndexResp>
+deptUserMultiDelete.sys.DeptUserMultiDeleteReq
+.sys.Empty>
+deptUserMultiCreate.sys.DeptUserMultiCreateReq
+.sys.Empty>
+deptRoleIndex.sys.DeptRoleIndexReq.sys.DeptRoleIndexResp<
+deptRoleMultiDelete.sys.DeptRoleMultiSaveReq
+.sys.Empty<
+deptRoleMultiCreate.sys.DeptRoleMultiSaveReq
+.sys.EmptyM
+deptSyncJobExecute.sys.DeptSyncJobExecuteReq.sys.DeptSyncJobExecuteResp<
+deptSyncJobRead.sys.DeptSyncJobReadReq.sys.DeptSyncJob2
+deptSyncJobCreate.sys.DeptSyncJob.sys.WithIDG
+deptSyncJobIndex.sys.DeptSyncJobIndexReq.sys.DeptSyncJobIndexResp1
+deptSyncJobUpdate.sys.DeptSyncJob
+.sys.Empty,
+deptSyncJobDelete.sys.WithID
+.sys.Empty2º
+Common%
+config
+.sys.Empty.sys.configResp5
+
+qrCodeRead.sys.QRCodeReadReq.sys.QRCodeReadResp8
+weatherRead.sys.WeatherReadReq.sys.WeatherReadResp>
+slotInfoIndex.sys.SlotInfoIndexReq.sys.SlotInfoIndexResp,
+slotInfoCreate.sys.SlotInfo.sys.WithID>
+slotInfoMultiCreate.sys.SlotInfoMultiCreateReq
+.sys.Empty+
+slotInfoUpdate.sys.SlotInfo
+.sys.Empty)
+slotInfoDelete.sys.WithID
+.sys.Empty*
+slotInfoRead.sys.WithID.sys.SlotInfo2
+serviceInfoRead.sys.WithCode.sys.ServiceInfo1
+serviceInfoUpdate.sys.ServiceInfo
+.sys.Empty9
+thirdDeptRead.sys.ThirdDeptInfoReadReq.sys.DeptInfoD
+thirdDeptIndex.sys.ThirdDeptInfoIndexReq.sys.DeptInfoIndexResp2ì
+Log>
+loginLogIndex.sys.LoginLogIndexReq.sys.LoginLogIndexResp;
+operLogIndex.sys.OperLogIndexReq.sys.OperLogIndexResp4
+loginLogCreate.sys.LoginLogCreateReq
+.sys.Empty2
+operLogCreate.sys.OperLogCreateReq
+.sys.Empty2–
+ProjectManage9
+projectInfoCreate.sys.ProjectInfo.sys.ProjectWithID1
+projectInfoUpdate.sys.ProjectInfo
+.sys.Empty3
+projectInfoDelete.sys.ProjectWithID
+.sys.Empty7
+projectInfoRead.sys.ProjectWithID.sys.ProjectInfoG
+projectInfoIndex.sys.ProjectInfoIndexReq.sys.ProjectInfoIndexRespE
+projectProfileRead.sys.ProjectProfileReadReq.sys.ProjectProfile7
+projectProfileUpdate.sys.ProjectProfile
+.sys.EmptyP
+projectProfileIndex.sys.ProjectProfileIndexReq.sys.ProjectProfileIndexResp2
+projectCrudCreate.sys.ProjectCrud.sys.WithID1
+projectCrudUpdate.sys.ProjectCrud
+.sys.Empty,
+projectCrudDelete.sys.WithID
+.sys.Empty0
+projectCrudRead.sys.WithID.sys.ProjectCrudG
+projectCrudIndex.sys.ProjectCrudIndexReq.sys.ProjectCrudIndexResp2É
+
+AreaManage0
+areaInfoCreate.sys.AreaInfo.sys.AreaWithID+
+areaInfoUpdate.sys.AreaInfo
+.sys.Empty-
+areaInfoDelete.sys.AreaWithID
+.sys.Empty3
+areaInfoRead.sys.AreaInfoReadReq.sys.AreaInfo>
+areaInfoIndex.sys.AreaInfoIndexReq.sys.AreaInfoIndexResp<
+areaProfileRead.sys.AreaProfileReadReq.sys.AreaProfile1
+areaProfileUpdate.sys.AreaProfile
+.sys.EmptyG
+areaProfileIndex.sys.AreaProfileIndexReq.sys.AreaProfileIndexResp2§
+TenantManage9
+tenantInfoCreate.sys.TenantInfoCreateReq.sys.WithID/
+tenantInfoUpdate.sys.TenantInfo
+.sys.Empty/
+tenantInfoDelete.sys.WithIDCode
+.sys.Empty2
+tenantInfoRead.sys.WithIDCode.sys.TenantInfoD
+tenantInfoIndex.sys.TenantInfoIndexReq.sys.TenantInfoIndexResp3
+tenantConfigUpdate.sys.TenantConfig
+.sys.Empty4
+tenantConfigRead.sys.WithCode.sys.TenantConfigD
+tenantAccessMultiDelete.sys.TenantAccessMultiSaveReq
+.sys.EmptyD
+tenantAccessMultiCreate.sys.TenantAccessMultiSaveReq
+.sys.EmptyD
+tenantAccessMultiUpdate.sys.TenantAccessMultiSaveReq
+.sys.EmptyJ
+tenantAccessIndex.sys.TenantAccessIndexReq.sys.TenantAccessIndexRespA
+tenantAppIndex.sys.TenantAppIndexReq.sys.TenantAppIndexResp1
+tenantAppCreate.sys.TenantAppInfo
+.sys.Empty?
+tenantAppRead.sys.TenantAppWithIDOrCode.sys.TenantAppInfo1
+tenantAppUpdate.sys.TenantAppInfo
+.sys.Empty9
+tenantAppDelete.sys.TenantAppWithIDOrCode
+.sys.Empty<
+tenantAppModuleMultiCreate.sys.TenantAppInfo
+.sys.Empty?
+tenantAppModuleCreate.sys.TenantModuleCreateReq
+.sys.EmptyM
+tenantAppModuleIndex.sys.TenantModuleIndexReq.sys.TenantModuleIndexRespB
+tenantAppModuleDelete.sys.TenantModuleWithIDOrCode
+.sys.Empty6
+tenantAppMenuCreate.sys.TenantAppMenu.sys.WithIDM
+tenantAppMenuIndex.sys.TenantAppMenuIndexReq.sys.TenantAppMenuIndexResp5
+tenantAppMenuUpdate.sys.TenantAppMenu
+.sys.Empty5
+tenantAppMenuDelete.sys.WithAppCodeID
+.sys.EmptyS
+tenantOpenCheckToken.sys.TenantOpenCheckTokenReq.sys.TenantOpenCheckTokenResp:
+tenantOpenWebHook.sys.WithCode.sys.TenantOpenWebHookS
+tenantAgreementIndex.sys.TenantAgreementIndexReq.sys.TenantAgreementIndexResp9
+tenantAgreementUpdate.sys.TenantAgreement
+.sys.Empty:
+tenantAgreementCreate.sys.TenantAgreement.sys.WithID<
+tenantAgreementRead.sys.WithIDCode.sys.TenantAgreement0
+tenantAgreementDelete.sys.WithID
+.sys.Empty2ì
+ops4
+opsWorkOrderCreate.sys.OpsWorkOrder.sys.WithID3
+opsWorkOrderUpdate.sys.OpsWorkOrder
+.sys.EmptyJ
+opsWorkOrderIndex.sys.OpsWorkOrderIndexReq.sys.OpsWorkOrderIndexResp2
+opsFeedbackCreate.sys.OpsFeedback.sys.WithID1
+opsFeedbackUpdate.sys.OpsFeedback
+.sys.EmptyG
+opsFeedbackIndex.sys.OpsFeedbackIndexReq.sys.OpsFeedbackIndexRespBZpb/sysbproto3

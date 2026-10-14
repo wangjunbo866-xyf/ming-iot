@@ -1,0 +1,416 @@
+info(
+    title: "数据交互"
+    desc: "数据交互"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+@server(
+    group: things/device/msg
+    prefix: /api/v1/things/device/msg
+    middleware:  CheckTokenWare,InitCtxsWare
+    accessCodePrefix: "thingsDeviceMsg"
+    accessNamePrefix: "设备消息"
+    accessGroup: "设备消息"
+)
+service api {
+    @doc "获取云端诊断日志"
+    @handler hubLogIndex
+    post /hub-log/index (DeviceMsgHubLogIndexReq) returns (DeviceMsgHubLogIndexResp)
+    @doc "获取设备状态日志"
+    @handler statusLogIndex
+    post /status-log/index (DeviceMsgStatusLogIndexReq) returns (DeviceMsgStatusLogIndexResp)
+    @doc "获取设备命令日志"
+    @handler sendLogIndex
+    post /send-log/index (DeviceMsgSendLogIndexReq) returns (DeviceMsgSendLogIndexResp)
+    @doc "获取设备异常日志"
+    @handler abnormalLogIndex
+    post /abnormal-log/index (DeviceMsgAbnormalLogIndexReq) returns (DeviceMsgAbnormalLogIndexResp)
+    @doc "获取设备sdk日志"
+    @handler sdkLogIndex
+    post /sdk-log/index (DeviceMsgSdkLogIndexReq) returns (DeviceMsgSdkIndexResp)
+    @doc "获取单个id属性历史记录"
+    @handler propertyLogIndex
+    post /property-log/index (DeviceMsgPropertyLogIndexReq) returns (DeviceMsgPropertyIndexResp)
+    @doc "弃用"
+    @handler propertyAggIndex
+    post /property-agg/index (DeviceMsgPropertyLogAggIndexReq) returns (DeviceMsgPropertyLogAggIndexResp)
+    @doc "弃用"
+    @handler propertyAggByDeviceIndex
+    post /property-agg/by-device/index (DeviceMsgPropertyAggByDeviceIndexReq) returns (DeviceMsgPropertyLogAggIndexResp)
+
+    @doc "聚合属性历史记录"
+    @handler propertyLogAggIndex
+    post /property-log-agg/index (DeviceMsgPropertyLogAggIndexReq) returns (DeviceMsgPropertyLogAggIndexResp)
+    @doc "聚合属性历史记录,设备维度"
+    @handler propertyLogAggByDeviceIndex
+    post /property-log-agg/by-device/index (DeviceMsgPropertyAggByDeviceIndexReq) returns (DeviceMsgPropertyLogAggIndexResp)
+
+    @doc "聚合属性最新值"
+    @handler propertyLatestAggIndex
+    post /property-latest-agg/index (DeviceMsgPropertyLatestAggIndexReq) returns (DeviceMsgPropertyLatestAggIndexResp)
+
+
+    @doc "批量获取单个id属性历史记录"
+    @handler propertyLogMultiIndex
+    post /property-log/multi-index (DeviceMsgPropertyLogMultiIndexReq) returns (DeviceMsgPropertyMultiIndexResp)
+    @doc "弃用"
+    @handler propertyLogLatestIndex
+    post /property-log-latest/index (DeviceMsgPropertyLatestIndexReq) returns (DeviceMsgPropertyIndexResp)
+
+    @doc "获取最新属性记录"
+    @handler propertyLatestIndex
+    post /property-latest/index (DeviceMsgPropertyLatestIndexReq) returns (DeviceMsgPropertyIndexResp)
+
+    @doc "获取事件历史记录"
+    @handler eventLogIndex
+    post /event-log/index (DeviceMsgEventLogIndexReq) returns (DeviceMsgEventLogIndexResp)
+    @doc "获取设备影子列表"
+    @handler shadowIndex
+    post /shadow/index (DeviceMsgPropertyLatestIndexReq) returns (DeviceMsgShadowIndexResp)
+
+    @doc "获取网关可以绑定的子设备列表"
+    @handler gatewayCanBindIndex
+    post /gateway-can-bind-index (GatewayCanBindIndexReq) returns (GatewayCanBindIndexResp)
+
+}
+type (
+    GatewayCanBindIndexReq{
+        Gateway       *DeviceCore `json:"gateway"` //如果是不同的产品,则传这个字段,上面两个参数填了优先使用
+    }
+    GatewayCanBindIndexResp{
+        SubDevices       []*DeviceCore `json:"subDevices"` //如果是不同的产品,则传这个字段,上面两个参数填了优先使用
+        UpdatedTime int64   `json:"updatedTime"`//
+    }
+
+    DeviceMsgShadowIndex  {
+        DataID string `json:"dataID"` //属性id
+        Value string `json:"value"` //获取到的值
+        UpdatedDeviceTime int64 `json:"updatedDeviceTime"` //更新到设备的时间
+    }
+    DeviceMsgShadowIndexResp {
+        List []*DeviceMsgShadowIndex `json:"list"`
+    }
+
+    DeviceMsgHubLogIndexReq  {
+        DeviceName string `json:"deviceName,optional,omitempty"`                       //设备名
+        ProductID string `json:"productID,optional,omitempty"`                         //产品id 获取产品id下的所有设备信息
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        Page *PageInfo `json:"page,optional"`           //分页信息
+        Actions    []string  `json:"actions,optional"`       //过滤操作类型 connected:上线 disconnected:下线  property:属性 event:事件 action:操作 thing:物模型提交的操作为匹配的日志
+        Topics      []string  `json:"topics,optional"`           //过滤主题
+        Content    string    `json:"content,optional"`       //过滤内容
+        RequestID  string    `json:"requestID,optional"`   //过滤请求ID
+    }
+    DeviceMsgHubLogIndexResp  {
+        List []*DeviceMsgHubLogInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgHubLogInfo  {
+        Timestamp int64 `json:"timestamp,string"`//发生时间戳(毫秒时间戳)
+        Action string `json:"action"` //connected:上线 disconnected:下线  property:属性 event:事件 action:操作 thing:物模型提交的操作为匹配的日志
+        RequestID string `json:"requestID"`
+        TraceID string `json:"traceID"`
+        Topic string `json:"topic"`
+        Content string `json:"content"`
+        ResultCode int64 `json:"resultCode,string"`
+        RespPayload string  `json:"respPayload"`
+    }
+
+
+    DeviceMsgSendLogIndexReq  {
+        ProductCategoryID int64 `json:"productCategoryID,optional"`//只有管理员有权限
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有管理员有权限
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有管理员有权限
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有管理员有权限
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有管理员有权限
+        GroupIDPaths []string    `json:"groupIDPaths,optional,omitempty"`   //只有管理员有权限
+        GroupIDs    []int64   `json:"groupIDs,optional,omitempty"` //只有管理员有权限
+        ProductID  string    `json:"productID,optional"`     //产品id
+        DeviceName string    `json:"deviceName,optional"`   //设备名
+        TimeStart  int64     `json:"timeStart,string,optional"`    //获取时间的开始(毫秒时间戳)
+        TimeEnd    int64     `json:"timeEnd,string,optional"`        //时间的结束(毫秒时间戳)
+        Page       *PageInfo `json:"page,optional"`               //分页信息
+        UserID     int64     `json:"userID,string,optional"`
+        Actions    []string  `json:"actions,optional"`
+        ResultCode int64     `json:"resultCode,optional"` //请求结果状态,200为成功
+        DataID string  `json:"dataID,optional"` //模糊查询
+        DataIDs []string `json:"dataIDs,optional"` //精确查询
+        WithUser bool  `json:"withUser,optional"`  //同时返回用户信息
+    }
+    DeviceMsgSendLogIndexResp  {
+        List []*DeviceMsgSendLogInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgSendLogInfo  {
+        Timestamp  int64  `json:"timestamp,string,optional"` //发生时间戳(毫秒时间戳)
+        Account string  `json:"account,optional"`
+        UserID     int64  `json:"userID,string,optional"`          //
+        ProductID  string `json:"productID,optional"`     //
+        DeviceName string `json:"deviceName,optional"`   //
+        Action     string `json:"action,optional"`           //操作类型 propertySend:属性控制 actionSend:操作控制 propertyGetReportSend:获取最新属性请求
+        DataID     string `json:"dataID,optional"`           //identify
+        TraceID    string `json:"traceID,optional"`         //服务器端事务id
+        Content    string `json:"content,optional"`        //操作的内容
+        ResultCode int64  `json:"resultCode,optional"` //请求结果状态,200为成功
+        User *UserCore `json:"user,optional,omitempty"`
+    }
+
+
+    DeviceMsgAbnormalLogIndexReq  {
+        ProductCategoryID int64 `json:"productCategoryID,optional"`//只有管理员有权限
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有管理员有权限
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有管理员有权限
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有管理员有权限
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有管理员有权限
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        ProductID  string    `json:"productID,optional"`     //产品id
+        DeviceName string    `json:"deviceName,optional"`   //设备名
+        TimeStart  int64     `json:"timeStart,string,optional"`    //获取时间的开始(毫秒时间戳)
+        TimeEnd    int64     `json:"timeEnd,string,optional"`        //时间的结束(毫秒时间戳)
+        Page       *PageInfo `json:"page,optional"`               //分页信息
+        Type     string     `json:"type,optional"` //异常类型
+        Action     int64  `json:"action,optional"` //触发1 还是解除2
+    }
+    DeviceMsgAbnormalLogIndexResp  {
+        List []*DeviceMsgAbnormalLogInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgAbnormalLogInfo  {
+        Timestamp  int64  `json:"timestamp,string,optional"` //发生时间戳(毫秒时间戳)
+        ProductID  string `json:"productID,optional"`     //
+        DeviceName string `json:"deviceName,optional"`   //
+        Action    int64  `json:"action,optional"` //触发1 还是解除2
+        Type     string     `json:"type,optional"` //异常类型
+        TraceID    string `json:"traceID,optional"`         //服务器端事务id
+        Reason string     `json:"reason,optional"` //原因
+    }
+
+
+    DeviceMsgStatusLogIndexReq  {
+        ProductID  string    `json:"productID,optional"`     //产品id
+        DeviceName string    `json:"deviceName,optional"`   //设备名
+        TimeStart  int64     `json:"timeStart,string,optional"`    //获取时间的开始(毫秒时间戳)
+        TimeEnd    int64     `json:"timeEnd,string,optional"`        //时间的结束(毫秒时间戳)
+        Page       *PageInfo `json:"page,optional"`               //分页信息
+        Status     int64     `json:"status,optional"`          //在线状态
+    }
+
+    DeviceMsgStatusLogIndexResp  {
+        List []*DeviceMsgStatusLogInfo `json:"list"`//数据
+        PageResp
+    }
+
+    DeviceMsgStatusLogInfo  {
+        Timestamp int64 `json:"timestamp,optional,string"` //发生时间戳(毫秒时间戳)
+        Status    int64 `json:"status,optional"`       //过滤请求ID
+        DeviceName string `json:"deviceName,omitempty"`
+        ProductID string `json:"productID,omitempty"`
+    }
+
+
+)
+type (
+    DeviceMsgSdkLogIndexReq {
+        DeviceName string `json:"deviceName,omitempty"`                       //设备名
+        ProductID string `json:"productID,omitempty"`                         //产品id 获取产品id下的所有设备信息
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        LogLevel int `json:"logLevel,optional"`  //等级
+        Page *PageInfo `json:"page,optional"`           //分页信息
+    }
+    DeviceMsgSdkIndexResp {
+        List []*DeviceMsgSdkInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgSdkInfo {
+        Timestamp int64 `json:"timestamp,string"`             //发生时间戳(毫秒时间戳)
+        Loglevel int64  `json:"loglevel"`               //日志级别 1)关闭 2)错误 3)告警 4)信息 5)调试
+        Content string    `json:"content"`               //具体内容
+    }
+)
+type (
+
+    DeviceMsgPropertyLatestAggIndexReq{
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有管理员有权限
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有管理员有权限
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有管理员有权限
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有管理员有权限
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有管理员有权限
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        DeviceName string `json:"deviceName,optional,omitempty"`                       //设备名(不填获取产品下所有设备)
+        DeviceNames []string `json:"deviceNames,optional,omitempty"`                       //设备名(不填获取产品下所有设备,只有管理员有权限)
+        ProductID string `json:"productID,omitempty,optional"`                         //产品id 获取产品id下的所有设备信息
+        ProductCategoryID int64  `json:"productCategoryID,optional"`//产品品类id,通用物模型有效
+        PartitionBy string `json:"partitionBy,optional"`//切分数据,可以填写deviceName
+        Aggs []*DeviceMsgPropertyAgg `json:"aggs"` //聚合对象
+    }
+    DeviceMsgPropertyAggCore{
+        DataID string `json:"dataID,omitempty"`                      //获取的具体标识符的数据
+        ArgFuncs []string `json:"argFuncs"`           //聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考: https://docs.taosdata.com/reference/taos-sql/function/#apercentile
+    }
+    DeviceMsgPropertyLatestAggIndexResp{
+        List []*DeviceMsgPropertyLatestAggResp `json:"list"`
+    }
+    DeviceMsgPropertyLatestAggResp{
+        ProductID string  `json:"productID,omitempty"`
+        DeviceName string `json:"deviceName,omitempty"` //设备名称
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有partitionBy 传该参数的时候才会返回
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有partitionBy 传该参数的时候才会返回
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有partitionBy 传该参数的时候才会返回
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有partitionBy 传该参数的时候才会返回
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有partitionBy 传该参数的时候才会返回
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        Values []*DeviceMsgPropertyLatestAggRespDetail `json:"values"`
+    }
+    DeviceMsgPropertyLatestAggRespDetail{
+        DataID string `json:"dataID"`                           //属性ID
+        DataName string `json:"dataName"`                           //属性名称
+        values map[string]string `json:"values"` //key是聚合函数
+    }
+
+    DeviceMsgPropertyLogAggIndexReq{
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有管理员有权限
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有管理员有权限
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有管理员有权限
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有管理员有权限
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有管理员有权限
+        Interval int64 `json:"interval"`           //间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+        IntervalUnit string `json:"intervalUnit,optional"`           //间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)  则时间的开始和结束必须有效及聚合函数不应该为空
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        DeviceName string `json:"deviceName,optional,omitempty"`                       //设备名(不填获取产品下所有设备)
+        DeviceNames []string `json:"deviceNames,optional,omitempty"`                       //设备名(不填获取产品下所有设备,只有管理员有权限)
+        ProductID string `json:"productID,omitempty,optional"`                         //产品id 获取产品id下的所有设备信息
+        ProductCategoryID int64  `json:"productCategoryID,optional"`//产品品类id,通用物模型有效
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        PartitionBy string `json:"partitionBy,optional"`//切分数据,可以填写deviceName
+        Aggs []*DeviceMsgPropertyAgg `json:"aggs"` //聚合对象
+    }
+    DeviceMsgPropertyAgg{
+        DataID string `json:"dataID,omitempty"`                      //获取的具体标识符的数据
+        ArgFuncs []string `json:"argFuncs"`           //聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考: https://docs.taosdata.com/reference/taos-sql/function/#apercentile
+        Fill string `json:"fill,optional"`          //指定窗口区间数据缺失的情况下的填充模式 参考: https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+        NoFirstTs bool `json:"noFirstTs,optional"` //时间戳填充不填充最早的值,聚合模式使用
+    }
+    DeviceMsgPropertyAggByDeviceIndexReq{
+        Interval int64 `json:"interval,optional"`           //间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+        IntervalUnit string `json:"intervalUnit,optional"`           //间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)  则时间的开始和结束必须有效及聚合函数不应该为空
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        PartitionBy string `json:"partitionBy,optional"`//切分数据,可以填写deviceName
+        Aggs []*DeviceMsgPropertyAggByDevice `json:"aggs"` //聚合对象
+    }
+    DeviceMsgPropertyAggByDevice{
+        Device DeviceCore `json:"device"` //设备信息
+        DataID string `json:"dataID,omitempty"`                      //获取的具体标识符的数据
+        ArgFuncs []string `json:"argFuncs"`           //聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考: https://docs.taosdata.com/reference/taos-sql/function/#apercentile
+        Fill string `json:"fill,optional"`          //指定窗口区间数据缺失的情况下的填充模式 参考: https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+        NoFirstTs bool `json:"noFirstTs,optional"` //时间戳填充不填充最早的值,聚合模式使用
+    }
+    DeviceMsgPropertyLogAggIndexResp{
+        List []*DeviceMsgPropertyLogAggResp `json:"list"`
+    }
+    DeviceMsgPropertyLogAggResp{
+        ProductID string  `json:"productID,omitempty"`
+        DeviceName string `json:"deviceName,omitempty"` //设备名称
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有partitionBy 传该参数的时候才会返回
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有partitionBy 传该参数的时候才会返回
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有partitionBy 传该参数的时候才会返回
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有partitionBy 传该参数的时候才会返回
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有partitionBy 传该参数的时候才会返回
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        Values []*DeviceMsgPropertyLogAggRespDetail `json:"values"`
+    }
+    DeviceMsgPropertyLogAggRespDetail{
+        DataID string `json:"dataID"`                           //属性ID
+        DataName string `json:"dataName"`                           //属性名称
+        TimeWindow int64 `json:"timeWindow,string"`               //发生时间窗口
+        values map[string]*DeviceMsgPropertyLogAggRespDataDetail `json:"values"` //key是聚合函数
+    }
+    DeviceMsgPropertyLogAggRespDataDetail{
+        Timestamp int64 `json:"timestamp,omitempty,string"`              //发生时间戳(毫秒时间戳)
+        Value string `json:"value,omitempty"`             //获取到的值
+    }
+    DeviceMsgPropertyLogIndexReq  {
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有管理员有权限
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有管理员有权限
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有管理员有权限
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有管理员有权限
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有管理员有权限
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+        DeviceName string `json:"deviceName,optional,omitempty"`                       //设备名(不填获取产品下所有设备)
+        DeviceNames []string `json:"deviceNames,optional,omitempty"`                       //设备名(不填获取产品下所有设备,只有管理员有权限)
+        ProductID string `json:"productID,omitempty,optional"`                         //产品id 获取产品id下的所有设备信息
+        ProductCategoryID int64  `json:"productCategoryID,optional"`//产品品类id,通用物模型有效
+        DataID string `json:"dataID,omitempty"`                      //获取的具体标识符的数据
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        Page *PageInfo `json:"page,optional"`           //分页信息
+        Interval int64 `json:"interval,optional"`           //间隔 如果这个值不为零值 则时间的开始和结束必须有效及聚合函数不应该为空
+        IntervalUnit string `json:"intervalUnit,optional"`           //间隔单位 a (毫秒,默认), d (天), h (小时), m (分钟), n (月), s (秒), u (微秒), w (周), y (年)  则时间的开始和结束必须有效及聚合函数不应该为空
+        ArgFunc string `json:"argFunc,optional"`           //聚合函数 avg:平均值 first:第一个参数 last:最后一个参数 count:总数 twa: 时间加权平均函数 参考: https://docs.taosdata.com/reference/taos-sql/function/#apercentile
+        Fill string `json:"fill,optional"`          //指定窗口区间数据缺失的情况下的填充模式 参考: https://docs.taosdata.com/reference/taos-sql/distinguished/#fill-%E5%AD%90%E5%8F%A5
+        Order int64 `json:"order,optional"`    //时间排序 1:aes(默认,从久到近排序) 2:desc(时间从近到久排序)
+        PartitionBy string `json:"partitionBy,optional"`//切分数据,可以填写deviceName
+        NoFirstTs bool `json:"noFirstTs,optional"` //时间戳填充不填充最早的值,聚合模式使用
+    }
+
+    DeviceMsgPropertyLatestIndexReq  {
+        DeviceName string `json:"deviceName,omitempty"`                       //设备名
+        ProductID string `json:"productID,omitempty"`                         //产品id 获取产品id下的所有设备信息
+        DataIDs []string `json:"dataIDs,optional,omitempty"`                      //获取的具体标识符的数据 如果不指定则获取所有属性数据,一个属性一条,如果没有获取到的不会返回值
+        IgnoreEmpty bool `json:"ignoreEmpty,optional"`// 设备属性是否忽略空值,空值是否返回
+    }
+
+    //设备的日志数据
+    DeviceMsgPropertyIndexResp  {
+        List []*DeviceMsgPropertyLogInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgPropertyLogMultiIndexReq{
+        Reqs []*DeviceMsgPropertyLogIndexReq `json:"reqs"`
+    }
+    DeviceMsgPropertyMultiIndexResp  {
+        Lists [][]*DeviceMsgPropertyLogInfo `json:"lists"`//数据
+    }
+
+    DeviceMsgPropertyLogInfo {
+        Timestamp int64 `json:"timestamp,string"`              //发生时间戳(毫秒时间戳)
+        DeviceName string `json:"deviceName,omitempty"` //设备名称
+        DataID string `json:"dataID"`                           //属性ID
+        DataName string `json:"dataName"`                           //属性名称
+        Value string `json:"value,omitempty"`             //获取到的值
+
+        TenantCode string  `json:"tenantCode,optional,omitempty"`//只有partitionBy 传该参数的时候才会返回
+        ProjectID  int64     `json:"projectID,string,optional,omitempty"`    //只有partitionBy 传该参数的时候才会返回
+        AreaID     int64     `json:"areaID,string,optional,omitempty"`          //只有partitionBy 传该参数的时候才会返回
+        AreaIDPath string    `json:"areaIDPath,optional,omitempty"`   //只有partitionBy 传该参数的时候才会返回
+        AreaIDs    []int64   `json:"areaIDs,string,optional,omitempty"` //只有partitionBy 传该参数的时候才会返回
+        BelongGroup map[string]IDsInfo `json:"belongGroup,optional,omitempty"`//key是group的purpose, value是里面包含的分组id 只有partitionBy 传该参数的时候才会返回
+
+    }
+    DeviceMsgEventLogIndexReq  {
+        DeviceNames []string `json:"deviceNames,optional"`                       //设备名(不填获取产品下所有设备)
+        ProductID string `json:"productID,optional"`                         //产品id 获取产品id下的所有设备信息
+        DataID string `json:"dataID,optional,omitempty"`                      //获取的具体标识符的数据 如果不指定则获取所有属性数据,一个属性一条,如果没有获取到的不会返回值
+        TimeStart int64 `json:"timeStart,string,optional,omitempty"`          //获取时间的开始(毫秒时间戳)
+        TimeEnd int64 `json:"timeEnd,string,optional,omitempty"`              //时间的结束(毫秒时间戳)
+        Page *PageInfo `json:"page,optional"`           //分页信息
+        Types []string `json:"types,optional"`                     //类型 事件类型: 信息:info  告警alert  故障:fault
+
+    }
+
+        //设备的日志数据
+    DeviceMsgEventLogIndexResp  {
+        List []*DeviceMsgEventLogInfo `json:"list"`//数据
+        PageResp
+    }
+    DeviceMsgEventLogInfo {
+        Timestamp int64 `json:"timestamp,string"`               //发生时间戳(毫秒时间戳)
+        Type string `json:"type,omitempty"`                     //类型 事件类型: 信息:info  告警alert  故障:fault
+        DataID string `json:"dataID"`                           //获取的具体属性值
+        Params string `json:"params,omitempty"`             //获取到的值
+    }
+)

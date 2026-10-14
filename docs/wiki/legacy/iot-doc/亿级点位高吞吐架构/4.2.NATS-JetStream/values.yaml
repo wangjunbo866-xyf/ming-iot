@@ -1,0 +1,143 @@
+# ============================================================================
+# NATS JetStream 三节点集群 —— 设备 Modbus 原始报文接入层
+# 基于官方 Helm Chart: https://github.com/nats-io/k8s/tree/main/helm/charts/nats
+#
+# 业务负载假设（按样例消息约 5KB/条）：
+#   - 100 万台设备，常规 5 分钟/次，每天 12 小时
+#       => 1.44 亿条/天，平均 3,333 msg/s，约 16.7 MB/s
+#   - 偶尔集中上报 1 分钟/次
+#       => 峰值 16,667 msg/s，约 83 MB/s
+#   - JetStream 保留 3 天用于重放验证（约 2.16TB 逻辑数据，R3 每节点全量副本）
+#   - 长期分析由下游消费者导出 Parquet（本清单之外）
+#
+# 部署前提：
+#   1. 集群中存在名为 ssd-sc 的 SSD StorageClass（见下方 TODO）
+#   2. 3 个 K8S 工作节点分布在不同故障域，节点间网络建议 >= 10GbE
+#   3. 修改下方所有 CHANGE_ME 密码
+# ============================================================================
+
+nameOverride: nats
+
+config:
+  cluster:
+    enabled: true
+    replicas: 3
+    routeURLs:
+      # 集群内部路由也加认证，防止伪造节点加入集群
+      user: nats-route
+      password: CHANGE_ME_ROUTE_PASSWORD
+
+  jetstream:
+    enabled: true
+    fileStore:
+      enabled: true
+      dir: /data
+      maxSize: 3Ti            # 与 PVC 大小对齐
+      pvc:
+        enabled: true
+        size: 3Ti             # 每节点存全量 R3 副本：约 2.16TB + 余量
+        storageClassName: ssd-sc   # TODO: kubectl get sc 查实际 SSD StorageClass
+    memoryStore:
+      enabled: false          # 本场景全部走文件存储
+
+  # 合并进原生 nats.conf 的配置
+  merge:
+    max_payload: << 4MB >>            # 单条报文约 5KB，留足余量
+    lame_duck_duration: << 120s >>    # 滚动更新时优雅下线
+    jetstream:
+      write_deadline: << 60s >>       # 磁盘抖动时容忍更长写延迟
+    # 仅集群内使用，不开 TLS，但保留账号认证 + NetworkPolicy（见 README）
+    authorization:
+      users:
+        - user: iot
+          password: CHANGE_ME_IOT_PASSWORD
+
+container:
+  image:
+    tag: 2.12.6-alpine        # 锁定版本，升级时显式修改
+  resources:
+    # requests == limits（Guaranteed QoS）：
+    # ACK 节点池费用在购买节点时已确定，requests 不影响账单；
+    # NATS 是有状态、延迟敏感的基础设施且独占节点，设相等可避免：
+    #   1. 节点资源紧张时被驱逐（保护 JetStream R3 quorum）
+    #   2. 集中上报峰值冲到 limit 后被 CPU throttle，写入延迟毛刺
+    # 数值按峰值需求预留，可用 nats bench 实测后整体下调，但保持 requests == limits
+    requests:
+      cpu: "8"
+      memory: 16Gi
+    limits:
+      cpu: "8"
+      memory: 16Gi
+
+podTemplate:
+  # 三个副本强制分散到不同 K8S 节点
+  topologySpreadConstraints:
+    kubernetes.io/hostname:
+      maxSkew: 1
+
+podDisruptionBudget:
+  enabled: true               # 默认 maxUnavailable=1，滚动更新不丢 R3 quorum
+
+natsBox:
+  enabled: true               # 附带 nats CLI 工具箱，便于运维
+  contexts:
+    default:
+      merge:
+        user: iot
+        password: CHANGE_ME_IOT_PASSWORD
+
+# ----------------------------------------------------------------------------
+# 随 chart 一起部署的额外资源：设备原始报文 Stream + 初始化 Job
+# ----------------------------------------------------------------------------
+extraResources:
+  # DEVICE_RAW Stream：R3、保留 3 天、S2 压缩、2 分钟去重窗口
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: device-raw-stream
+    data:
+      stream.json: |
+        {
+          "name": "DEVICE_RAW",
+          "subjects": ["device.raw.>"],
+          "retention": "limits",
+          "max_age": 259200000000000,
+          "max_bytes": 2638827906662,
+          "max_msgs_per_subject": -1,
+          "storage": "file",
+          "num_replicas": 3,
+          "discard": "old",
+          "duplicate_window": 120000000000,
+          "compression": "s2"
+        }
+
+  # 集群就绪后幂等创建 Stream（已存在则跳过）
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: nats-init-stream
+    spec:
+      backoffLimit: 10
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: nats-cli
+              image: natsio/nats-box:0.19.3
+              command: ["sh", "-c"]
+              args:
+                - |
+                  until nats --server nats://iot:CHANGE_ME_IOT_PASSWORD@nats:4222 server check jetstream; do
+                    echo "waiting for jetstream..."; sleep 3;
+                  done
+                  nats --server nats://iot:CHANGE_ME_IOT_PASSWORD@nats:4222 stream info DEVICE_RAW >/dev/null 2>&1 \
+                    || nats --server nats://iot:CHANGE_ME_IOT_PASSWORD@nats:4222 stream add --config /streams/stream.json
+                  nats --server nats://iot:CHANGE_ME_IOT_PASSWORD@nats:4222 stream info DEVICE_RAW
+              volumeMounts:
+                - name: streams
+                  mountPath: /streams
+                  readOnly: true
+          volumes:
+            - name: streams
+              configMap:
+                name: device-raw-stream

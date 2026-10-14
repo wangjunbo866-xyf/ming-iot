@@ -1,0 +1,137 @@
+info(
+    title: "公共结构体定义"
+    desc: "公共结构体定义"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+type(
+    PageInfo{
+        Page     int64 `json:"page,optional" form:"page,optional"`         // 页码
+        Size int64 `json:"size,optional" form:"size,optional"` // 每页大小
+        Orders []*OrderBy `json:"orders,optional"` //排序
+    }
+    PageResp{
+        Page     int64 `json:"page,optional"`         // 页码
+        PageSize int64 `json:"pageSize,optional"` // 每页大小
+        Total int64 `json:"total"`
+    }
+    OrderBy{
+        Field string `json:"field,optional"` ////排序的字段名
+        Sort int64 `json:"sort,optional"`//排序方式：1 从小到大, 2 从大到小
+    }
+    CommonResp{
+        ID int64 `json:"id,optional"`         // id
+    }
+    WithID{
+        ID int64 `json:"id,optional"`         // id
+    }
+    WithIDStr{
+        ID int64 `json:"id,string,optional"`         // id
+    }
+    WithIDChildren{
+        ID int64 `json:"id,optional"`         // id
+        WithChildren bool `json:"withChildren,optional"`
+    }
+    WithIDOrCode{
+        ID int64 `json:"id,optional"`         // id
+        Code string `json:"code,optional"`
+    }
+    Tag  {
+        Key string `json:"key"`
+        Value string `json:"value"`
+    }
+
+    Point {
+        Longitude float64 `json:"longitude,range=[0:180]"`                           //经度
+        Latitude  float64 `json:"latitude,range=[0:90]"`                            //纬度
+    }
+
+    DateRange {
+        Start string `json:"start,optional"`       //开始时间 格式：yyyy-mm-dd
+        End string `json:"end,optional"`           //结束时间 格式：yyyy-mm-dd
+    }
+    TimeRange  {
+        Start int64 `json:"start,optional"`       //开始时间 unix时间戳
+        End int64 `json:"end,optional"`           //结束时间 unix时间戳
+    }
+    IDsInfo{
+        IDs []string `json:"ids,optional,omitempty"`
+        IDPaths []string `json:"idPaths,optional,omitempty"`
+    }
+    SendOption  {
+        TimeoutToFail  int64 `json:"timeoutToFail,optional"`   //超时失败时间
+        RequestTimeout int64 `json:"requestTimeout,optional"` //请求超时,超时后会进行重试
+        RetryInterval  int64 `json:"retryInterval,optional"`   //重试间隔
+    }
+    CodeReq {
+        Code string `json:"code"`
+    }
+    DeviceCore {
+        ProductID string `json:"productID"`      //产品ID
+        ProductName string `json:"productName,optional,omitempty"`
+        DeviceName string `json:"deviceName"`    //设备名称
+    }
+
+    UserCore {
+        UserID         int64  `json:"userID,string,optional"`        // 用户id
+        UserName    string `json:"userName,optional"`          // 用户名(唯一)
+        Email       string `json:"email,optional"`             // 邮箱
+        Phone       string `json:"phone,optional"`             // 手机号
+        LastIP      string `json:"lastIP,optional"`            // 最后登录ip
+        RegIP       string `json:"regIP,optional"`             // 注册ip
+        NickName    string `json:"nickName,optional"`          // 用户的昵称
+        HeadImg  string `json:"headImg,optional"`        // 用户头像
+        CreatedTime int64  `json:"createdTime,string,optional"`// 创建时间
+    }
+    IDPath{
+        ID int64 `json:"id,optional"`
+        IDPath string  `json:"idPath,optional"`
+    }
+    DeviceError  {
+        ProductID  string `json:"productID,omitempty"`   //产品id
+        DeviceName string `json:"deviceName,omitempty"` //设备名称
+        Code       int64  `json:"code,omitempty"`
+        Msg        string `json:"msg,omitempty"`
+    }
+    CompareInt64{
+        CmpType string `json:"cmpType"`//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+        Value int64 `json:"value,string"`
+    }
+    CompareString{
+        CmpType string `json:"cmpType,optional"`//默认为=,"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+        Value string `json:"value"`
+    }
+    AreaInfo  {
+        ProjectID int64 `json:"projectID,string,optional"`       //项目id（只读）
+        AreaID int64 `json:"areaID,string,optional"`             //项目区域id（只读）
+        AreaName string `json:"areaName,optional"`               //项目区域名称（读写）
+    }
+
+    PublishMsg  { //发布消息结构体
+        Handle       string `json:"handle,optional"` //对应 mqtt topic的第一个 thing ota config 等等
+        Type         string `json:"type,optional"`   //操作类型 从topic中提取 物模型下就是   property属性 event事件 action行为
+        Payload      []byte `json:"payload,optional"`
+        Timestamp    int64  `json:"timestamp,string,optional"` //毫秒时间戳
+        ProductID    string `json:"productID,optional"`
+        DeviceName   string `json:"deviceName,optional"`
+        Explain      string `json:"explain,optional"`      //内部使用的拓展字段
+        ProtocolCode string `json:"protocolCode,optional"` //如果有该字段则回复的时候也会带上该字段
+    }
+    FileCore {
+        Path string  `json:"path,optional,omitempty"` //文件的路径
+        IsUpdate bool  `json:"isUpdate,optional,omitempty"` //如果要更新该文件,则需要将该参数置为true
+    }
+    Compare{
+        CmpTYpe string `json:"cmpType"`//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询,只有string类型可以使用
+        Value string `json:"value"`
+        CastTo string  `json:"castTo"` //参数的类型(填写了会进行数据类型的转换): int float string
+    }
+    ImportResp{
+        Total  int64 `json:"total"`      //导入总接口数
+        ErrCount  int64 `json:"errCount"` //失败数
+        IgnoreCount  int64 `json:"ignoreCount"` //忽略数
+        SuccCount  int64 `json:"succCount"` //成功数
+    }
+)

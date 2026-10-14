@@ -1,0 +1,274 @@
+package devicemanagelogic
+
+import (
+	"context"
+	"database/sql"
+	"time"
+
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/saas/service/syssvr/sysExport"
+	"gitee.com/ming-iot/saas/share/dataType"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/product"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/logic"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/thingsSlot"
+	"gitee.com/ming-iot/things/share/topics"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type DeviceInfoBindLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+// legacyBroadcastBleNetType 表示老广播蓝牙产品的网络类型。
+const legacyBroadcastBleNetType int64 = 10
+
+// canDirectlyRebindOwnedDevice 判断设备是否符合本人跨项目直接重绑的窄策略。
+func canDirectlyRebindOwnedDevice(ownership deviceBindOwnership, netType, bindLevel int64) bool {
+	return ownership == deviceBindOwnershipCurrentUserOwned &&
+		netType == legacyBroadcastBleNetType &&
+		bindLevel == product.BindLeveWeak3
+}
+
+func NewDeviceInfoBindLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeviceInfoBindLogic {
+	return &DeviceInfoBindLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func isAllowedChar(c rune) bool {
+	return (c >= 'a' && c <= 'z') ||
+		(c >= 'A' && c <= 'Z') ||
+		(c >= '0' && c <= '9') ||
+		c == '_' ||
+		c == '-'
+}
+
+func filterAllowedChars(input string) string {
+	var result []rune
+	for _, c := range input {
+		if isAllowedChar(c) {
+			result = append(result, c)
+		}
+	}
+	return string(result)
+}
+
+func (l *DeviceInfoBindLogic) DeviceInfoBind(in *dm.DeviceInfoBindReq) (*dm.Empty, error) {
+	uc := ctxs.GetUserCtxNoNil(l.ctx)
+	projectI, err := l.svcCtx.ProjectCache.GetData(l.ctx, uc.ProjectID)
+	if err != nil {
+		l.Error(err)
+		return nil, err
+	}
+	if !uc.IsAdmin && (uc.ProjectAuth == nil || uc.ProjectAuth[uc.ProjectID] == nil) {
+		return nil, errors.Permissions.AddMsg("无权限")
+	}
+	diDB := relationDB.NewDeviceInfoRepo(l.ctx)
+	pi, err := l.svcCtx.ProductCache.GetData(l.ctx, in.Device.ProductID)
+	if err != nil {
+		l.Error(err)
+		return nil, err
+	}
+	di, err := diDB.FindOneByFilter(ctxs.WithRoot(l.ctx), relationDB.DeviceFilter{
+		ProductID:   in.Device.ProductID,
+		DeviceNames: []string{in.Device.DeviceName},
+	})
+	if err != nil && !errors.Cmp(err, errors.NotFind) {
+		l.Error(err)
+		return nil, err
+	}
+	directProjectRebind := false
+	if di == nil {
+		if !(((pi.NetType == def.NetBle || pi.NetType == legacyBroadcastBleNetType) && pi.AutoRegister == def.AutoRegAuto) || (pi.AutoRegister == def.AutoRegBind)) {
+			di, err = relationDB.NewDeviceInfoRepo(l.ctx).FindOneByFilter(ctxs.WithRoot(l.ctx), relationDB.DeviceFilter{
+				DeviceNames: []string{in.Device.DeviceName, filterAllowedChars(in.Device.DeviceName)}, //兼容打印错误
+			})
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			_, err = NewDeviceInfoCreateLogic(ctxs.WithProjectID(ctxs.WithAdmin(l.ctx), def.NotClassified), l.svcCtx).
+				DeviceInfoCreate(&dm.DeviceInfo{ProductID: in.Device.ProductID, DeviceName: in.Device.DeviceName, IsOnline: def.True})
+			if err != nil {
+				return nil, err
+			}
+			di, err = relationDB.NewDeviceInfoRepo(l.ctx).FindOneByFilter(ctxs.WithRoot(l.ctx), relationDB.DeviceFilter{
+				ProductID:   in.Device.ProductID,
+				DeviceNames: []string{in.Device.DeviceName},
+			})
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	if string(di.TenantCode) == uc.TenantCode &&
+		int64(di.ProjectID) == uc.ProjectID { //如果已经绑定到自己名下则不允许重复绑定
+		if pi.BindLevel == product.BindLeveHard1 {
+			return nil, errors.DeviceBound.WithMsg("设备已存在，请返回设备列表查看该设备")
+		} else {
+			return &dm.Empty{}, nil
+		}
+	}
+	if !in.IsIgnoreSlot && !in.IsIgnoreOffline && pi.BindLevel < 3 && di.IsOnline != def.True { //如果是中绑定和强绑定,如果设备不在线,不允许绑定
+		return nil, errors.NotOnline
+	}
+
+	dpi, err := l.svcCtx.TenantCache.GetData(l.ctx, def.TenantCodeDefault)
+	if err != nil {
+		l.Error(err)
+		return nil, err
+	}
+	//是否可以绑定校验
+	if pi.BindLevel == product.BindLeveMiddle2 && in.Token != "" {
+		tk, err := l.svcCtx.DeviceBindToken.GetData(l.ctx, in.Token)
+		if err != nil {
+			return nil, errors.NotFind.AddMsg("未发现配网token").AddDetail(err)
+		}
+		if tk.UserID != uc.UserID {
+			return nil, errors.Permissions.AddMsg("配网和绑定的用户不一致")
+		}
+	} else {
+		ownership, err := classifyDeviceBindOwnership(l.ctx, l.svcCtx.ProjectM, l.svcCtx.UserM,
+			string(di.TenantCode), int64(di.ProjectID), uc, int64(dpi.DefaultProjectID))
+		if err != nil {
+			return nil, err
+		}
+		if ownership == deviceBindOwnershipBlocked { //如果在其他租户下 则已经被绑定 或 在本租户下,但是不在一个项目下也不允许绑定
+			l.Infof("DeviceCantBound di:%v uc:%v", utils.Fmt(di), utils.Fmt(uc))
+			return nil, errors.DeviceCantBound.WithMsg("设备已被其他用户绑定。如需解绑，请按照相关流程操作。")
+		}
+		if ownership == deviceBindOwnershipCurrentUserBound {
+			return nil, errors.DeviceBound.WithMsg("设备已存在，请返回设备列表查看该设备")
+		}
+		directProjectRebind = canDirectlyRebindOwnedDevice(ownership, pi.NetType, pi.BindLevel)
+		if ownership == deviceBindOwnershipCurrentUserOwned && !directProjectRebind {
+			return nil, errors.DeviceBound.WithMsg("设备已存在，请返回设备列表查看该设备")
+		}
+		// 老广播蓝牙弱绑定设备属于当前用户管理的其它项目时继续绑定流程，直接迁入本次请求的项目。
+		if ownership == deviceBindOwnershipStale {
+			err = cleanupStaleDeviceBindArtifacts(l.ctx, devices.Core{ProductID: di.ProductID, DeviceName: di.DeviceName})
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	if !in.IsIgnoreSlot {
+		tt, _ := l.svcCtx.Slot.GetData(l.ctx, sysExport.GenSlotCacheKey(thingsSlot.CodeDeviceBind, pi.ProtocolCode))
+		if tt != nil {
+			err := tt.Request(l.ctx, in, nil)
+			if err != nil {
+				l.Error(err)
+				return nil, err
+			}
+		}
+	}
+
+	oldProjectID := int64(di.ProjectID)
+	oldAreaID := int64(di.AreaID)
+	di.TenantCode = dataType.TenantCode(uc.TenantCode)
+	di.ProjectID = dataType.ProjectID(uc.ProjectID)
+	di.UserID = projectI.AdminUserID
+	if in.AreaID == 0 {
+		in.AreaID = def.NotClassified
+	}
+	di.AreaID = dataType.AreaID(in.AreaID)
+	ai, err := l.svcCtx.AreaCache.GetData(l.ctx, in.AreaID)
+	if err != nil {
+		return nil, err
+	}
+	var oldArea *sys.AreaInfo
+	if directProjectRebind && oldAreaID > def.NotClassified {
+		oldArea, err = l.svcCtx.AreaCache.GetData(l.ctx, oldAreaID)
+		if err != nil {
+			l.Error(err)
+		}
+	} else if !directProjectRebind && di.AreaID > def.NotClassified {
+		oldArea, err = l.svcCtx.AreaCache.GetData(l.ctx, in.AreaID)
+		if err != nil {
+			l.Error(err)
+		}
+	}
+	di.AreaIDPath = dataType.AreaIDPath(ai.AreaIDPath)
+
+	if !di.FirstBind.Valid { //没有绑定过需要绑定
+		di.FirstBind = sql.NullTime{Time: time.Now(), Valid: true}
+	}
+	di.LastBind = sql.NullTime{Time: time.Now(), Valid: true}
+	pc, err := l.svcCtx.ProductCache.GetData(l.ctx, di.ProductID)
+	if err != nil && !errors.Cmp(err, errors.NotFind) {
+		l.Error(err)
+		return nil, err
+	}
+	if pc.TrialTime.GetValue() != 0 && !di.ExpTime.Valid {
+		di.ExpTime = sql.NullTime{
+			Time:  time.Now().Add(time.Hour * 24 * time.Duration(pc.TrialTime.GetValue())),
+			Valid: true,
+		}
+	}
+	if pc.NetType == def.NetBle || pi.NetType == legacyBroadcastBleNetType || pi.OnlineHandle == product.OnlineHandleAlways { //蓝牙绑定了就是上线
+		di.IsOnline = def.True
+		di.Status = def.DeviceStatusOnline
+	}
+	normalizeDeviceLifecycleStatus(di, time.Now())
+	err = diDB.Update(ctxs.WithRoot(l.ctx), di)
+	if err != nil {
+		l.Error(err)
+		return nil, err
+	}
+	err = logic.UpdateDevice(l.ctx, l.svcCtx, []*devices.Core{
+		{ProductID: di.ProductID, DeviceName: di.DeviceName}}, devices.Affiliation{TenantCode: string(di.TenantCode),
+		ProjectID: int64(di.ProjectID), AreaID: int64(di.AreaID), AreaIDPath: string(di.AreaIDPath)})
+	if err != nil {
+		l.Error(err)
+	}
+
+	l.svcCtx.DeviceCache.SetData(l.ctx, devices.Core{
+		ProductID:  di.ProductID,
+		DeviceName: di.DeviceName,
+	}, nil)
+	{ //清除之前的日志
+		err = l.svcCtx.SendRepo.DeleteDevice(l.ctx, di.ProductID, di.DeviceName)
+		if err != nil {
+			l.Error(err)
+		}
+		err = l.svcCtx.StatusRepo.DeleteDevice(l.ctx, di.ProductID, di.DeviceName)
+		if err != nil {
+			l.Error(err)
+		}
+	}
+	logic.FillAreaDeviceCount(l.ctx, l.svcCtx, ai)
+	if oldArea != nil {
+		logic.FillAreaDeviceCount(l.ctx, l.svcCtx, oldArea)
+	}
+	logic.FillProjectDeviceCount(l.ctx, l.svcCtx, int64(di.ProjectID))
+	if directProjectRebind && oldProjectID > def.NotClassified && oldProjectID != int64(di.ProjectID) {
+		logic.FillProjectDeviceCount(l.ctx, l.svcCtx, oldProjectID)
+	}
+	dev := devices.Core{ProductID: di.ProductID, DeviceName: di.DeviceName}
+	er := l.svcCtx.FastEvent.Publish(l.ctx, topics.DmDeviceInfoUpdate, &dev)
+	if er != nil {
+		l.Error(er)
+	}
+	er = l.svcCtx.FastEvent.Publish(l.ctx, topics.DmDeviceInfoBind, &dev)
+	if er != nil {
+		l.Error(er)
+	}
+	BindChange(l.ctx, l.svcCtx, pi, dev, int64(di.ProjectID))
+	return &dm.Empty{}, err
+}

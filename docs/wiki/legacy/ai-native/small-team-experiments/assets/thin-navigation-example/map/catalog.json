@@ -1,0 +1,20 @@
+{
+  "root_id": "iot-example",
+  "domains": {"data": "数据服务"},
+  "capabilities": [
+    {
+      "id": "telemetry-ingest",
+      "title": "遥测上报",
+      "domain": "data",
+      "summary": "定位设备遥测接收与校验的规格；查询行为另见遥测查询。",
+      "links": [{"title": "实现与运行资料入口", "path": "context/telemetry.md"}]
+    },
+    {
+      "id": "telemetry-query",
+      "title": "遥测查询",
+      "domain": "data",
+      "summary": "定位遥测查询的规格，复用上报链路产生的数据。",
+      "links": [{"title": "实现与运行资料入口", "path": "context/telemetry.md"}]
+    }
+  ]
+}

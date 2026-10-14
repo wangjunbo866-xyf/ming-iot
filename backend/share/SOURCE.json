@@ -1,0 +1,16 @@
+{
+  "schema_version": "ming_iot_local_share_source_v1",
+  "source_repository": "gitee:unitedrhino/share",
+  "source_tag": "v1.6.4",
+  "commit": "ece02ca9d6defd63356931a59e653950f27ac572",
+  "tree": "21bdb52ed508152cf440b8d8a3b3ae3943a4b84a",
+  "tracked_file_count": 255,
+  "archive_sha256": "8c90b2b3853ad86b422f9929d801d617645bac3dbf68f600e3736b3a32505acf",
+  "archive_format": "git-archive-tar",
+  "archive_command": "git archive --format=tar v1.6.4",
+  "normalized_tree_sha256": "edc6dfc450f14d4602b118a2f676fcee78b63a8f0c597cfafd39be9db4e4cfc0",
+  "license": "Apache-2.0",
+  "authorization_route": "rights_holder_or_authorized_company_owner",
+  "authorization_date": "2026-08-27",
+  "third_party_notices_preserved": true
+}

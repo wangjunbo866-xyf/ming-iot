@@ -1,0 +1,145 @@
+info(
+    desc: "字典信息"
+	author: "yl"
+	email: "603785348@qq.com"
+)
+
+@server(
+    group: system/dict/info
+    prefix: /api/v1/system/dict/info
+    accessCodePrefix: "systemDictManage"
+    accessNamePrefix: "字典管理"
+    accessGroup: "字典管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "添加字典信息"
+        description: "新建一个字典定义，含名称、分组、编码、结构类型与自定义字段"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "create"
+        group: "system/dict/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DictInfo) returns (WithID)
+
+    @doc(
+        summary: "获取字典信息列表"
+        description: "按名称、分组或状态分页查询字典定义清单"
+        authType: "all"
+        resource: "dict"
+        action: "view"
+        group: "system/dict/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DictInfoIndexReq) returns (DictInfoIndexResp)
+
+    @doc(
+        summary: "更新字典信息"
+        description: "修改指定字典定义的名称、分组、描述与自定义字段"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "update"
+        group: "system/dict/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (DictInfo) returns ()
+
+    @doc(
+        summary: "获取字典信息详情"
+        description: "按编号或编码读取单条字典定义的完整信息"
+        authType: "all"
+        resource: "dict"
+        action: "view"
+        group: "system/dict/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (DictInfoReadReq) returns (DictInfo)
+
+    @doc(
+        summary: "删除字典信息"
+        description: "按主键删除字典定义，其下字典项将一并清理"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "delete"
+        group: "system/dict/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+    @doc(
+        summary: "批量导入字典信息"
+        description: "解析字典 JSON 批量新增或更新字典定义及其字典项，返回成功失败计数"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "import"
+        group: "system/dict/info"
+        recordLogMode: "2"
+    )
+    @handler multiImport
+    post /multi-import (DictInfoMultImportReq) returns (DictInfoMultImportResp)
+
+    @doc(
+        summary: "批量导出字典信息"
+        description: "按字典编码集合导出字典定义及字典项 JSON，用于跨环境同步"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "export"
+        group: "system/dict/info"
+        recordLogMode: "2"
+    )
+    @handler multiExport
+    post /multi-export (DictInfoMultExportReq) returns (DictInfoMultExportResp)
+}
+type (
+    DictInfoMultImportReq{
+        Dicts string  `json:"dicts"`
+    }
+    DictInfoMultImportResp{
+        Total int64 `json:"total"`                                 //导入总接口数
+        ErrCount int64  `json:"errCount"` //失败数
+        IgnoreCount int64  `json:"ignoreCount"` //忽略数
+        SuccCount int64  `json:"succCount"` //成功数
+    }
+    DictInfoMultExportReq{
+        DictCodes []string `json:"dictCodes,optional"`
+    }
+    DictInfoMultExportResp{
+        Dicts string  `json:"dicts"`
+    }
+    DictInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Status int64 `json:"status,optional"`
+        Name string `json:"name,optional"` // 名称
+        Group string `json:"group,optional"`
+    }
+    DictInfoReadReq{
+        ID int64 `json:"id"`                                  // 编号
+        Code string `json:"code,optional"` // 编码
+    }
+
+    DictInfoIndexResp  {
+        PageResp
+        List []*DictInfo `json:"list"` //菜单列表
+    }
+    DictInfo{
+        ID int64 `json:"id,optional"`                                  // 编号
+        Name string `json:"name,optional"`                             // 名称
+        Group string `json:"group,optional"`                     // 分组
+        Code string `json:"code,optional"`                     // 编码
+        Desc *string `json:"desc,optional"`          // 页面
+        Body *string  `json:"body,optional"` //前端自定义字段
+        StructType int64 `json:"structType,optional"` //结构类型(不可修改) 1:列表(默认) 2:树型
+    }
+)

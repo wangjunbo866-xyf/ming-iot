@@ -1,0 +1,4 @@
+# 上游 UnitedRhino 编排参考，依赖私有镜像（docker.unitedrhino.com），
+# 非 ming-iot 最小运行环境。保留在本地供参考但不纳入版本管理。
+# 本环境的主入口是 ../docker-compose.yml。
+/docker/run-all/

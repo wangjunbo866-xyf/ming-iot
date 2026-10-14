@@ -1,0 +1,13 @@
+FROM alpine:3.20
+RUN apk add --no-cache ca-certificates tzdata
+ARG VCS_REF
+ARG BINARY_SHA256
+LABEL org.opencontainers.image.revision=$VCS_REF \
+      io.ming-iot.binary.sha256=$BINARY_SHA256 \
+      io.ming-iot.role=dg
+ENV TZ=Asia/Shanghai
+WORKDIR /app
+COPY bin/dgsvr /app/dgsvr
+COPY etc /app/etc
+RUN mkdir -p /app/oss && chmod 0755 /app/dgsvr
+ENTRYPOINT ["/app/dgsvr"]

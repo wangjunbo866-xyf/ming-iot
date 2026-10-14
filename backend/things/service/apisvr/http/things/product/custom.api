@@ -1,0 +1,42 @@
+info(
+    title: "产品管理模块"
+    desc: "产品管理模块"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+
+@server(
+    group: things/product/custom
+    prefix: /api/v1/things/product/custom
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc "更新产品自定义信息"
+    @handler update
+    post /update (ProductCustom) returns ()
+    @doc "获取产品自定义信息详情"
+    @handler read
+    post /read (ProductCustomReadReq) returns (ProductCustom)
+}
+
+type (
+
+     ProductCustom  {
+        ProductID string    `json:"productID"`
+        TransformScript *string  `json:"transformScript,optional"` //协议转换脚本
+        LoginAuthScript *string  `json:"loginAuthScript,optional"` //登录认证脚本
+        ScriptLang      int64    `json:"scriptLang,optional"` //脚本语言类型（默认JavaScript） 1:JavaScript 2:lua 3:python
+        CustomTopics     []*ProductCustomTopic `json:"customTopics,optional"` //自定义topic数组
+    }
+
+    ProductCustomReadReq  {
+        ProductID string `json:"productID"`                            //产品id 只读
+    }
+
+     ProductCustomTopic  {
+        Topic     string `json:"topic"`          //自定义主题需要以$custom 并包含设备名称{deviceName}及产品名称{productID}
+        Direction int64  `json:"direction"` //1:上行 2:下行 3:双向
+    }
+)

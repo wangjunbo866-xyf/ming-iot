@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "google/protobuf/wrappers.proto";
+
+service AppManage{
+  rpc appInfoCreate(AppInfo) returns(WithID); //添加角色
+  rpc appInfoIndex(AppInfoIndexReq) returns(AppInfoIndexResp); //获取角色列表
+  rpc appInfoUpdate(AppInfo) returns(Empty); //更新角色
+  rpc appInfoDelete(WithIDCode) returns(Empty); //删除角色
+  rpc appInfoRead(WithIDCode) returns(AppInfo);   //获取详情接口
+
+  rpc appModuleIndex(AppModuleIndexReq) returns (AppModuleIndexResp); //获取角色API权限列表
+  rpc appModuleMultiUpdate(AppModuleMultiUpdateReq) returns (Empty);  //更新角色API权限
+}
+
+message AppInfo{
+  int64 id = 1;
+  string name= 2;          // 应用名称
+  string type=7;//应用类型 web:web页面  app:应用  mini:小程序
+  string subType=10;//子类型  wx:微信小程序  ding:钉钉小程序
+  string code = 3;          // 应用编码
+  google.protobuf.StringValue desc = 4;        // 应用描述
+}
+
+message AppInfoIndexReq{
+  PageInfo page = 1;//分页信息
+  string name = 2;
+  string code = 3;
+  repeated string codes =4;
+}
+
+message AppInfoIndexResp{
+  repeated  AppInfo list =1;
+  int64 total = 2;
+}
+
+message AppModuleMultiUpdateReq{
+  string code = 1;//应用code
+  repeated string moduleCodes = 3;
+}
+
+message AppModuleIndexReq{
+  string code = 1;//应用code
+}
+
+message AppModuleIndexResp{
+  repeated string moduleCodes = 3;
+}
+

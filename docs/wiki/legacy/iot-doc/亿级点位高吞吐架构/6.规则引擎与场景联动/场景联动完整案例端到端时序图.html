@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景联动完整案例 — 端到端时序图</title>
+  <style>
+    :root {
+      --message-size: 13px;
+      --participant-size: 14px;
+      --helper-size: 11px;
+      --ink: #172033;
+      --muted: #526174;
+      --line: #94a3b8;
+      --ingress: #64748b;
+      --stream: #334155;
+      --fact: #0f766e;
+      --scene: #2563eb;
+      --command: #16a34a;
+      --command-strong: #166534;
+      --reply: #7c3aed;
+      --failure: #dc2626;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #ffffff;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .page-header {
+      margin-bottom: 16px;
+    }
+
+    h1,
+    h2 {
+      line-height: 1.25;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 17px;
+    }
+
+    .scenario {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .scenario-note {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stage-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 8px;
+      margin: 12px 0 14px;
+    }
+
+    .stage-nav a {
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: #fff;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .stage-nav a:hover,
+    .stage-nav a:focus-visible {
+      border-color: var(--scene);
+      color: var(--scene);
+      outline: none;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      align-items: center;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      list-style: none;
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .legend li {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      background: var(--legend-color);
+    }
+
+    .diagram-card {
+      margin: 14px 0;
+      padding: 14px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+
+    .diagram-scroll {
+      width: 100%;
+      overflow-x: hidden;
+      padding: 4px 0 8px;
+      overscroll-behavior-x: contain;
+    }
+
+    .diagram-scroll:focus-visible {
+      outline: 3px solid var(--scene);
+      outline-offset: 3px;
+    }
+
+    .diagram-scroll svg {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: auto;
+    }
+
+    .diagram-scroll svg.intrinsic-diagram {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .svg-fill-line { fill: var(--line); }
+    .svg-fill-ingress { fill: var(--ingress); }
+    .svg-fill-stream { fill: var(--stream); }
+    .svg-fill-fact { fill: var(--fact); }
+    .svg-fill-scene { fill: var(--scene); }
+    .svg-fill-command-strong { fill: var(--command-strong); }
+    .svg-fill-reply { fill: var(--reply); }
+    .svg-stroke-line { stroke: var(--line); }
+    .svg-stroke-stream { stroke: var(--stream); }
+    .svg-stroke-scene { stroke: var(--scene); }
+    .svg-stroke-command { stroke: var(--command); }
+    .svg-stroke-reply { stroke: var(--reply); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .participant-title {
+      font-size: var(--participant-size);
+      font-weight: 700;
+    }
+
+    .message {
+      font-size: var(--message-size);
+      fill: var(--ink);
+    }
+
+    .helper {
+      font-size: var(--helper-size);
+      fill: var(--muted);
+    }
+
+    .lifeline {
+      stroke: var(--line);
+      stroke-width: 2;
+      stroke-dasharray: 7 7;
+    }
+
+    .message-line {
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .participant-box {
+      fill: #f8fafc;
+      fill-opacity: 0.7;
+      stroke: #cbd5e1;
+      stroke-width: 2;
+    }
+
+    .sequence-box {
+      fill: #f8fafc;
+      fill-opacity: 0.7;
+      stroke: #94a3b8;
+      stroke-width: 2;
+    }
+
+    .sequence-box-success {
+      fill: #f0fdf4;
+      fill-opacity: 0.7;
+      stroke: var(--command);
+      stroke-width: 2;
+    }
+
+    .sequence-box-failure {
+      fill: #fef2f2;
+      fill-opacity: 0.7;
+      stroke: var(--failure);
+      stroke-width: 2;
+    }
+
+    .alt-divider {
+      stroke: #94a3b8;
+      stroke-width: 2;
+      stroke-dasharray: 9 6;
+    }
+
+    .meaning-card {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .meaning-card > div {
+      min-width: 0;
+      padding: 12px 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .meaning-card h3 {
+      margin: 0 0 5px;
+      font-size: 13.5px;
+    }
+
+    .meaning-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+
+    .diagram-card > .helper {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 16px;
+      }
+
+      .page {
+        padding: 0;
+      }
+
+      .diagram-card {
+        padding: 12px;
+      }
+
+      .diagram-scroll {
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .meaning-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header id="top" class="page-header">
+      <h1>场景联动完整案例 — 端到端时序图</h1>
+      <p class="scenario">R1 DURATION_2M(AVG(temp-01/02/03, 5m) &gt; 30°C AND door-01=CLOSED) THEN start fan-01/02 + Webhook</p>
+      <p class="scenario-note">只有 Reducer 接受的合法风机回复状态变更才会成为 AcceptedStateTransition，并可重新进入 Scene。</p>
+    </header>
+    <p id="diagram-scroll-help" class="sr-only">图表已缩放至页面宽度，可在当前视口内完整查看。</p>
+
+    <nav class="stage-nav" aria-label="阶段导航">
+      <a href="#overview">总览</a>
+      <a href="#phase-1">阶段 1：设备上报与 Durable Canonical</a>
+      <a href="#phase-2">阶段 2：共享计算、投影与 Admission</a>
+      <a href="#phase-3">阶段 3：Scene 求值与持续复核</a>
+      <a href="#phase-4">阶段 4：动作接受与投递</a>
+      <a href="#phase-5">阶段 5：回复归并与状态联动</a>
+    </nav>
+
+    <ul class="legend" aria-label="颜色图例">
+      <li><span class="legend-swatch" style="--legend-color: var(--ingress)"></span>设备 / 接入</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--stream)"></span>流处理</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--fact)"></span>事实</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--scene)"></span>场景</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--command)"></span>命令</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--reply)"></span>回执</li>
+      <li><span class="legend-swatch" style="--legend-color: var(--failure)"></span>失败</li>
+    </ul>
+
+    <section id="overview" class="diagram-card" data-diagram="overview" aria-labelledby="overview-title">
+      <h2 id="overview-title">全链路总览</h2>
+      <p class="helper" aria-label="总览路径摘要">Canonical → Current Fact → Scene → Command，最终由 Reducer 提交 AcceptedStateTransition。</p>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="overview-title" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1380px" viewBox="0 0 1380 330" role="img" aria-labelledby="overview-svg-title overview-svg-desc">
+          <title id="overview-svg-title">场景联动六阶段端到端总览</title>
+          <desc id="overview-svg-desc">从设备接入，经 Raw 与 Canonical、Flink 与 Current Fact、Scene Admission 与 Runtime、PG Action Outbox 与 Command Runtime，到 Reducer 与 AcceptedStateTransition；标出三处持久化边界。</desc>
+          <defs>
+            <marker id="overview-arrowhead-v1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path class="svg-fill-line" d="M 0 0 L 10 5 L 0 10 z"></path>
+            </marker>
+          </defs>
+
+          <g class="svg-stroke-line" fill="none" stroke-width="3" marker-end="url(#overview-arrowhead-v1)">
+            <path d="M 210 150 H 246"></path>
+            <path d="M 430 150 H 466"></path>
+            <path d="M 650 150 H 686"></path>
+            <path d="M 870 150 H 906"></path>
+            <path d="M 1090 150 H 1126"></path>
+          </g>
+
+          <g>
+            <rect class="svg-fill-ingress" x="30" y="102" width="180" height="96" rx="14"></rect>
+            <text x="120" y="143" text-anchor="middle" fill="#fff" class="participant-title">设备/接入</text>
+
+            <rect class="svg-fill-stream" x="250" y="102" width="180" height="96" rx="14"></rect>
+            <text x="340" y="137" text-anchor="middle" fill="#fff" class="participant-title">Raw +</text>
+            <text x="340" y="165" text-anchor="middle" fill="#fff" class="participant-title">Canonical</text>
+
+            <rect class="svg-fill-fact" x="470" y="102" width="180" height="96" rx="14"></rect>
+            <text x="560" y="137" text-anchor="middle" fill="#fff" class="participant-title">Flink +</text>
+            <text x="560" y="165" text-anchor="middle" fill="#fff" class="participant-title">Current Fact</text>
+
+            <rect class="svg-fill-scene" x="690" y="102" width="180" height="96" rx="14"></rect>
+            <text x="780" y="137" text-anchor="middle" fill="#fff" class="participant-title">Scene Admission +</text>
+            <text x="780" y="165" text-anchor="middle" fill="#fff" class="participant-title">Runtime</text>
+
+            <rect class="svg-fill-command-strong" x="910" y="102" width="180" height="96" rx="14"></rect>
+            <text x="1000" y="132" text-anchor="middle" fill="#fff" class="participant-title">PG Action Outbox +</text>
+            <text x="1000" y="162" text-anchor="middle" fill="#fff" class="participant-title">Command Runtime</text>
+
+            <rect class="svg-fill-reply" x="1130" y="102" width="220" height="96" rx="14"></rect>
+            <text x="1240" y="137" text-anchor="middle" fill="#fff" class="participant-title">Reducer +</text>
+            <text x="1240" y="165" text-anchor="middle" fill="#fff" class="participant-title">AcceptedStateTransition</text>
+          </g>
+
+          <g text-anchor="middle">
+            <path class="svg-stroke-stream" d="M 340 198 V 240" stroke-width="2" stroke-dasharray="5 5"></path>
+            <circle class="svg-fill-stream" cx="340" cy="240" r="5"></circle>
+            <text x="340" y="270" class="message">Canonical transaction</text>
+
+            <path class="svg-stroke-command" d="M 1000 198 V 240" stroke-width="2" stroke-dasharray="5 5"></path>
+            <circle class="svg-fill-command-strong" cx="1000" cy="240" r="5"></circle>
+            <text x="1000" y="270" class="message">PG action acceptance</text>
+
+            <path class="svg-stroke-reply" d="M 1240 198 V 240" stroke-width="2" stroke-dasharray="5 5"></path>
+            <circle class="svg-fill-reply" cx="1240" cy="240" r="5"></circle>
+            <text x="1240" y="270" class="message">Reducer terminal commit</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="phase-1" class="diagram-card" data-diagram="phase-1" aria-labelledby="phase-1-heading">
+      <h2 id="phase-1-heading">阶段 1：设备上报与 Durable Canonical</h2>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="phase-1-heading" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1380px" viewBox="0 0 1380 850" role="img" aria-labelledby="phase-1-svg-title phase-1-svg-desc">
+          <title id="phase-1-svg-title">设备上报并形成持久化 Canonical 事件</title>
+          <desc id="phase-1-svg-desc">温度与门状态并行上报，接入层写 RawRecord；ProtocolApplication 在 Kafka 事务中写 Canonical 并提交消费位点，失败时由 Kafka 重投。</desc>
+          <defs><marker id="phase-1-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="svg-fill-line" d="M0 0L10 5L0 10z"></path></marker></defs>
+          <g text-anchor="middle">
+            <rect class="participant-box" x="20" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="130" y="48">temp-01/02/03</text><text class="participant-title" x="130" y="72">+ door-01</text>
+            <rect class="participant-box" x="300" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="410" y="48">Access Adapter</text><text class="participant-title" x="410" y="72">/ EMQX</text>
+            <rect class="participant-box" x="580" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="690" y="60">Raw Topic</text>
+            <rect class="participant-box" x="860" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="970" y="48">ProtocolApplication</text>
+            <rect class="participant-box" x="1140" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="1250" y="60">Canonical Topics</text>
+          </g>
+          <g><path class="lifeline" d="M130 84V810"></path><path class="lifeline" d="M410 84V810"></path><path class="lifeline" d="M690 84V810"></path><path class="lifeline" d="M970 84V810"></path><path class="lifeline" d="M1250 84V810"></path></g>
+          <g marker-end="url(#phase-1-arrowhead)">
+            <path class="message-line svg-stroke-stream" d="M130 140H405"></path><text class="message" x="268" y="128" text-anchor="middle">parallel: temp-01/02/03 reports</text>
+            <path class="message-line svg-stroke-stream" d="M130 200H405"></path><text class="message" x="268" y="188" text-anchor="middle">parallel: door-01=CLOSED</text>
+            <path class="message-line svg-stroke-stream" d="M410 270H685"></path><text class="message" x="548" y="246" text-anchor="middle"><tspan x="548">produce RawRecord</tspan><tspan x="548" dy="20">acks=all</tspan></text>
+          </g>
+          <rect class="sequence-box" x="555" y="310" width="820" height="398" rx="12"></rect><text class="helper" x="575" y="336">loop · Kafka redelivery until transaction commits</text>
+          <g marker-end="url(#phase-1-arrowhead)">
+            <path class="message-line svg-stroke-stream" d="M690 375H965"></path><text class="message" x="828" y="363" text-anchor="middle">Raw poll</text>
+            <path class="message-line svg-stroke-stream" d="M970 458H1245"></path><text class="message" x="1108" y="434" text-anchor="middle"><tspan x="1108">Kafka transaction: telemetry</tspan><tspan x="1108" dy="20">PropertyReport</tspan></text>
+            <path class="message-line svg-stroke-stream" d="M970 535H1245"></path><text class="message" x="1108" y="511" text-anchor="middle"><tspan x="1108">Kafka transaction: door</tspan><tspan x="1108" dy="20">PropertyReport</tspan></text>
+            <path class="message-line svg-stroke-stream" d="M970 612H695"></path><text class="message" x="833" y="588" text-anchor="middle"><tspan x="833">sendOffsetsToTransaction</tspan><tspan x="833" dy="20">(nextOffset)</tspan></text>
+          </g>
+          <path class="message-line svg-stroke-command" d="M970 658h130v34H970" marker-end="url(#phase-1-arrowhead)"></path><text class="message" x="1110" y="680">commit transaction</text>
+          <text class="helper" x="855" y="744"><tspan x="855">失败：Canonical 与 nextOffset 都不可见，Raw 会重投。</tspan><tspan x="855" dy="20">重试：复用确定性事件身份，直到事务原子提交。</tspan></text>
+        </svg>
+      </div>
+      <div class="meaning-card">
+        <div><h3>本阶段成功意味着</h3><p>RawRecord 已可靠接收，Canonical PropertyReport 与 nextOffset 已在同一 Kafka 事务中持久化。</p></div>
+        <div><h3>本阶段成功不意味着</h3><p>不代表 Current Fact 已投影、Scene 已求值，也不代表任何设备动作已经接受或完成。</p></div>
+      </div>
+    </section>
+    <section id="phase-2" class="diagram-card" data-diagram="phase-2" aria-labelledby="phase-2-heading">
+      <h2 id="phase-2-heading">阶段 2：共享计算、投影与 Admission</h2>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="phase-2-heading" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1680px" viewBox="0 0 1680 1030" role="img" aria-labelledby="phase-2-svg-title phase-2-svg-desc">
+          <title id="phase-2-svg-title">共享计算、事实投影与 Scene Admission</title>
+          <desc id="phase-2-svg-desc">三个独立消费者组分别物化时序数据、计算五分钟平均值、投影当前事实并准入场景事件；平均温度与门状态都属于持续谓词，任一变化都可触发候选场景。</desc>
+          <defs><marker id="phase-2-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="svg-fill-line" d="M0 0L10 5L0 10z"></path></marker></defs>
+          <g text-anchor="middle">
+            <rect class="participant-box" x="10" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="115" y="60">Canonical Topics</text>
+            <rect class="participant-box" x="250" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="355" y="48">Timeseries</text><text class="participant-title" x="355" y="72">Materializer</text>
+            <rect class="participant-box" x="490" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="595" y="48">Flink Metric</text><text class="participant-title" x="595" y="72">Runtime</text>
+            <rect class="participant-box" x="730" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="835" y="48">Derived Fact</text><text class="participant-title" x="835" y="72">Streams</text>
+            <rect class="participant-box" x="970" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1075" y="48">Metric CurrentFact</text><text class="participant-title" x="1075" y="72">Projector</text>
+            <rect class="participant-box" x="1210" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1315" y="48">Scene Current</text><text class="participant-title" x="1315" y="72">Fact</text>
+            <rect class="participant-box" x="1450" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="1560" y="48">Scene Admission</text><text class="participant-title" x="1560" y="72">/ scene_event</text>
+          </g>
+          <g><path class="lifeline" d="M115 84V960"></path><path class="lifeline" d="M355 84V960"></path><path class="lifeline" d="M595 84V960"></path><path class="lifeline" d="M835 84V960"></path><path class="lifeline" d="M1075 84V960"></path><path class="lifeline" d="M1315 84V960"></path><path class="lifeline" d="M1560 84V960"></path></g>
+          <rect class="sequence-box" x="20" y="112" width="1420" height="210" rx="12"></rect><text class="helper" x="40" y="140">consumer group · timeseries-materializer（独立推进）</text>
+          <g marker-end="url(#phase-2-arrowhead)"><path class="message-line svg-stroke-stream" d="M115 185H350"></path><text class="message" x="232" y="173" text-anchor="middle">consume temp + door</text><path class="message-line svg-stroke-command" d="M355 250H1310"></path><text class="message" x="833" y="226" text-anchor="middle"><tspan x="833">write PROPERTY Current Fact</tspan><tspan x="833" dy="20">door-01=CLOSED</tspan></text></g>
+          <rect class="sequence-box" x="20" y="342" width="920" height="240" rx="12"></rect><text class="helper" x="40" y="370">consumer group · flink-metric-runtime（独立推进）</text>
+          <g marker-end="url(#phase-2-arrowhead)"><path class="message-line svg-stroke-stream" d="M115 420H590"></path><text class="message" x="352" y="396" text-anchor="middle"><tspan x="352">consume temp-01/02/03</tspan><tspan x="352" dy="20">window = 5m</tspan></text><path class="message-line svg-stroke-stream" d="M595 515H830"></path><text class="message" x="712" y="481" text-anchor="middle"><tspan x="712">ComputedMetricUpdated</tspan><tspan x="712" dy="20">AVG · FINAL production + LIVE</tspan></text></g>
+          <rect class="sequence-box" x="720" y="602" width="720" height="170" rx="12"></rect><text class="helper" x="740" y="630">consumer group · metric-current-fact-projector（独立推进）</text>
+          <g marker-end="url(#phase-2-arrowhead)"><path class="message-line svg-stroke-stream" d="M835 678H1070"></path><text class="message" x="952" y="666" text-anchor="middle">consume computed fact</text><path class="message-line svg-stroke-command" d="M1075 730H1310"></path><text class="message" x="1192" y="706" text-anchor="middle"><tspan x="1192">CAS write COMPUTED_METRIC</tspan><tspan x="1192" dy="20">Current Fact</tspan></text></g>
+          <rect class="sequence-box" x="10" y="792" width="1660" height="168" rx="12"></rect><text class="helper" x="30" y="820">Scene Admission · 两类 SourceDelta 都是 Duration predicate 的精确 TRIGGER</text>
+          <g marker-end="url(#phase-2-arrowhead)"><path class="message-line svg-stroke-scene" d="M115 862H1555"></path><text class="message" x="835" y="838" text-anchor="middle"><tspan x="835">door PropertyReport → PROPERTY trigger SourceDelta</tspan><tspan x="835" dy="20">door change may fan out / cancel duration</tspan></text><path class="message-line svg-stroke-scene" d="M835 930H1555"></path><text class="message" x="1198" y="906" text-anchor="middle"><tspan x="1198">ComputedMetricUpdated → COMPUTED_METRIC trigger SourceDelta</tspan><tspan x="1198" dy="20">AVG change may fan out / arm or cancel duration</tspan></text></g>
+          <text class="helper" x="30" y="988">明确保证：以上 consumer groups progress independently；任何组的位点都不充当其他组的完成屏障。</text>
+        </svg>
+      </div>
+      <div class="meaning-card">
+        <div><h3>本阶段成功意味着</h3><p>各消费者组可以独立完成时序物化、共享指标计算、Current Fact 投影或 Scene Admission。</p></div>
+        <div><h3>本阶段成功不意味着</h3><p>某一个 consumer group 完成，不代表其他组已经完成，更不构成跨组读取屏障。</p></div>
+      </div>
+    </section>
+    <section id="phase-3" class="diagram-card" data-diagram="phase-3" aria-labelledby="phase-3-heading">
+      <h2 id="phase-3-heading">阶段 3：Scene 求值与持续复核</h2>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="phase-3-heading" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1380px" viewBox="0 0 1380 1400" role="img" aria-labelledby="phase-3-svg-title phase-3-svg-desc">
+          <title id="phase-3-svg-title">Scene 首次求值、持续计时与到期复核</title>
+          <desc id="phase-3-svg-desc">运行时匹配 Binding，以固定读屏障叠加触发事实和当前事实；平均温度或门状态任一后续变化都重新求值并可立即取消持续期，到期回调再次验证后才进入动作阶段。</desc>
+          <defs><marker id="phase-3-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="svg-fill-line" d="M0 0L10 5L0 10z"></path></marker></defs>
+          <g text-anchor="middle">
+            <rect class="participant-box" x="20" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="130" y="60">scene_event</text>
+            <rect class="participant-box" x="300" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="410" y="60">Scene Runtime</text>
+            <rect class="participant-box" x="580" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="690" y="48">Scene Current</text><text class="participant-title" x="690" y="72">Fact</text>
+            <rect class="participant-box" x="860" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="970" y="60">scene_state</text>
+            <rect class="participant-box" x="1140" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="1250" y="60">Timer callback</text>
+          </g>
+          <g><path class="lifeline" d="M130 84V1360"></path><path class="lifeline" d="M410 84V1360"></path><path class="lifeline" d="M690 84V1360"></path><path class="lifeline" d="M970 84V1360"></path><path class="lifeline" d="M1250 84V1360"></path></g>
+          <g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-scene" d="M130 135H405"></path><text class="message" x="268" y="123" text-anchor="middle">poll AVG or door SourceDelta</text></g>
+          <path class="message-line svg-stroke-scene" d="M410 175h135v42H415" marker-end="url(#phase-3-arrowhead)"></path><text class="message" x="555" y="190">match Binding</text><text class="message" x="555" y="211">determine required args</text>
+          <rect class="sequence-box" x="285" y="240" width="540" height="480" rx="12"></rect><text class="helper" x="305" y="268">fixed read-barrier overlay · 同一 evaluation subject</text>
+          <g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-command" d="M410 318H685"></path><text class="message" x="548" y="294" text-anchor="middle"><tspan x="548">read AVG temperature</tspan><tspan x="548" dy="20">+ door current facts</tspan></text></g>
+          <rect class="sequence-box" x="300" y="365" width="510" height="320" rx="10"></rect><text class="helper" x="320" y="393">alt · mutually exclusive read result</text>
+          <text class="helper" x="320" y="432">NOT_CAUGHT_UP</text><g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-command" d="M690 455H415"></path></g><text class="message" x="552" y="481" text-anchor="middle">wait/retry without evaluating</text>
+          <path class="alt-divider" d="M300 520H810"></path>
+          <text class="helper" x="320" y="550">READY + coverage evidence</text><g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-command" d="M690 580H415"></path></g>
+          <path class="message-line svg-stroke-scene" d="M410 620h135v48H415" marker-end="url(#phase-3-arrowhead)"></path><text class="message" x="555" y="636">evaluate AVG&gt;30</text><text class="message" x="555" y="657">AND door=CLOSED</text>
+          <g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-scene" d="M410 780H1245"></path><text class="message" x="830" y="746" text-anchor="middle"><tspan x="830">Runtime arms/schedules correctness-critical timer</tspan><tspan x="830" dy="20">dueAt=triggerTime+2m · Timer callback facility</tspan></text><!-- rg compatibility: dueAt=triggerTime2m --><path class="message-line svg-stroke-scene" d="M410 870H965"></path><text class="message" x="688" y="836" text-anchor="middle"><tspan x="688">async best-effort full SceneBindingState projection</tspan><tspan x="688" dy="20">non-authoritative scene_state</tspan></text></g>
+          <text class="helper" x="305" y="915">期间 AVG 或 door 的后续 TRIGGER 都回到本 lane；predicate=false 立即 cancel 当前 duration。</text>
+          <rect class="sequence-box" x="285" y="930" width="1090" height="270" rx="12"></rect><text class="helper" x="305" y="958">after 2m · callback returns to same evaluation-subject Runtime lane</text>
+          <g marker-end="url(#phase-3-arrowhead)"><path class="message-line svg-stroke-scene" d="M1250 1015H415"></path><text class="message" x="832" y="981" text-anchor="middle"><tspan x="832">validate context / generation / Binding</tspan><tspan x="832" dy="20">+ current timer</tspan></text><path class="message-line svg-stroke-command" d="M410 1085H685"></path><text class="message" x="548" y="1073" text-anchor="middle">re-read and overlay facts</text></g>
+          <path class="message-line svg-stroke-scene" d="M410 1120h155v46H415" marker-end="url(#phase-3-arrowhead)"></path><text class="message" x="575" y="1136">evaluate missing / freshness</text><text class="message" x="575" y="1157">/ predicate again</text>
+          <rect class="sequence-box-failure" x="285" y="1240" width="520" height="92" rx="12"></rect><text class="helper" x="305" y="1267">false or NOT_READY</text><text class="message" x="305" y="1296">explicit policy: cancel / keep; no action</text>
+          <rect class="sequence-box-success" x="850" y="1240" width="510" height="92" rx="12"></rect><text class="helper" x="870" y="1267">true after continuous re-check</text><text class="message" x="870" y="1296">continue to phase 4 → action acceptance</text>
+        </svg>
+      </div>
+      <div class="meaning-card">
+        <div><h3>本阶段成功意味着</h3><p>Scene 在一致的读屏障下获得 READY 事实，并在持续时间到期时重新验证上下文、身份和谓词。</p></div>
+        <div><h3>本阶段成功不意味着</h3><p>timer expiry 只表示到了复核时刻，不证明条件仍为 true，也不会绕过 missing 或 freshness 策略。</p></div>
+      </div>
+    </section>
+    <section id="phase-4" class="diagram-card" data-diagram="phase-4" aria-labelledby="phase-4-heading">
+      <h2 id="phase-4-heading">阶段 4：动作接受与投递</h2>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="phase-4-heading" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1680px" viewBox="0 0 1680 1160" role="img" aria-labelledby="phase-4-svg-title phase-4-svg-desc">
+          <title id="phase-4-svg-title">动作在 PostgreSQL 中原子接受并独立投递</title>
+          <desc id="phase-4-svg-desc">Scene Runtime 原子写入效果集、两个设备命令和 Webhook；提交成功后命令运行时按效果身份创建执行与发件箱，编码不可变 MQTT 消息并以 QoS 1 投递，Webhook 由独立 dispatcher 投递。</desc>
+          <defs><marker id="phase-4-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="svg-fill-line" d="M0 0L10 5L0 10z"></path></marker></defs>
+          <g text-anchor="middle">
+            <rect class="participant-box" x="10" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="115" y="60">Scene Runtime</text>
+            <rect class="participant-box" x="250" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="355" y="60">PostgreSQL</text>
+            <rect class="participant-box" x="490" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="595" y="48">Command</text><text class="participant-title" x="595" y="72">Runtime</text>
+            <rect class="participant-box" x="730" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="835" y="48">Protocol</text><text class="participant-title" x="835" y="72">Application</text>
+            <rect class="participant-box" x="970" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1075" y="48">Access Adapter</text><text class="participant-title" x="1075" y="72">/ EMQX</text>
+            <rect class="participant-box" x="1210" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1315" y="60">fan-01/02</text>
+            <rect class="participant-box" x="1450" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="1560" y="48">Webhook</text><text class="participant-title" x="1560" y="72">dispatcher</text>
+          </g>
+          <g><path class="lifeline" d="M115 84V1120"></path><path class="lifeline" d="M355 84V1120"></path><path class="lifeline" d="M595 84V1120"></path><path class="lifeline" d="M835 84V1120"></path><path class="lifeline" d="M1075 84V1120"></path><path class="lifeline" d="M1315 84V1120"></path><path class="lifeline" d="M1560 84V1120"></path></g>
+          <rect class="sequence-box" x="10" y="115" width="470" height="285" rx="12"></rect><text class="helper" x="30" y="143">PostgreSQL transaction · deterministic effect identities</text>
+          <g marker-end="url(#phase-4-arrowhead)"><path class="message-line svg-stroke-command" d="M115 210H350"></path><text class="message" x="232" y="176" text-anchor="middle"><tspan x="232">write EffectSetReceipt</tspan><tspan x="232" dy="20">+ DeviceCommand(fan-01)</tspan></text><path class="message-line svg-stroke-command" d="M115 290H350"></path><text class="message" x="232" y="256" text-anchor="middle"><tspan x="232">DeviceCommand(fan-02)</tspan><tspan x="232" dy="20">+ Webhook</tspan></text></g>
+          <rect class="sequence-box" x="10" y="420" width="1660" height="700" rx="12"></rect>
+          <text class="helper" x="30" y="450">alt · commit fails</text>
+          <text class="message" x="30" y="483">rollback; discard tentative state</text><text class="message" x="30" y="512">retry same trigger/effect identities</text>
+          <text class="helper" x="30" y="540">branch terminates here · no command or Webhook delivery</text>
+          <path class="alt-divider" d="M10 570H1670"></path>
+          <text class="helper" x="30" y="600">alt · commit succeeds</text>
+          <text class="message" x="30" y="630">acceptedAt recorded · action accepted</text>
+          <g marker-end="url(#phase-4-arrowhead)"><path class="message-line svg-stroke-command" d="M355 690H590"></path><text class="message" x="472" y="656" text-anchor="middle"><tspan x="472">claim by effectId</tspan><tspan x="472" dy="20">idempotently</tspan></text></g>
+          <rect class="sequence-box-success" x="475" y="720" width="480" height="190" rx="12"></rect><text class="helper" x="495" y="748">Command Runtime · durable delivery intent</text>
+          <g marker-end="url(#phase-4-arrowhead)"><path class="message-line svg-stroke-command" d="M595 800H350"></path><text class="message" x="472" y="766" text-anchor="middle"><tspan x="472">create CommandExecution</tspan><tspan x="472" dy="20">+ CommandOutbox</tspan></text><path class="message-line svg-stroke-command" d="M595 875H830"></path><text class="message" x="712" y="841" text-anchor="middle"><tspan x="712">encode immutable MQTT</tspan><tspan x="712" dy="20">topic / payload</tspan></text></g>
+          <g marker-end="url(#phase-4-arrowhead)"><path class="message-line svg-stroke-command" d="M835 950H1070"></path><text class="message" x="952" y="938" text-anchor="middle">publish QoS 1</text><path class="message-line svg-stroke-command" d="M1075 1015H1310"></path><text class="message" x="1192" y="991" text-anchor="middle"><tspan x="1192">deliver fan-01</tspan><tspan x="1192" dy="20">deliver fan-02</tspan></text><path class="message-line svg-stroke-command" d="M355 1080H1555"></path><text class="message" x="955" y="1056" text-anchor="middle"><tspan x="955">independent Webhook Outbox dispatch</tspan><tspan x="955" dy="20">same effectId idempotency</tspan></text></g>
+        </svg>
+      </div>
+      <div class="meaning-card">
+        <div><h3>本阶段成功意味着</h3><p>PostgreSQL commit 已原子记录整组动作及 acceptedAt，后续投递可按 effectId 幂等恢复。</p></div>
+        <div><h3>本阶段成功不意味着</h3><p>PG commit 仅表示 action accepted，不表示 fan-01、fan-02 已执行，也不表示 Webhook 已完成。</p></div>
+      </div>
+    </section>
+    <section id="phase-5" class="diagram-card" data-diagram="phase-5" aria-labelledby="phase-5-heading">
+      <h2 id="phase-5-heading">阶段 5：回复归并与状态联动</h2>
+      <div class="diagram-scroll" tabindex="0" role="region" aria-labelledby="phase-5-heading" aria-describedby="diagram-scroll-help">
+        <svg class="intrinsic-diagram" style="--diagram-width: 1680px" viewBox="0 0 1680 1680" role="img" aria-labelledby="phase-5-svg-title phase-5-svg-desc">
+          <title id="phase-5-svg-title">设备回复归并为合法状态变更并重新准入 Scene</title>
+          <desc id="phase-5-svg-desc">风机回复经 Raw 和 Canonical 观察事务进入命令归并器；归并器先提交终态再推进连续位点，异常观察仅持久化结果，合法单调状态变更额外产生发件箱并发布 AcceptedStateTransition，准入层只为感兴趣的 Binding 产生场景事件。</desc>
+          <defs><marker id="phase-5-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path class="svg-fill-line" d="M0 0L10 5L0 10z"></path></marker></defs>
+          <g text-anchor="middle">
+            <rect class="participant-box" x="10" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="115" y="60">fan-01/02</text>
+            <rect class="participant-box" x="250" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="355" y="48">Access Adapter</text><text class="participant-title" x="355" y="72">+ Raw</text>
+            <rect class="participant-box" x="490" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="595" y="48">ProtocolApplication</text><text class="participant-title" x="595" y="72">+ Canonical</text>
+            <rect class="participant-box" x="730" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="835" y="60">Command reducer</text>
+            <rect class="participant-box" x="970" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1075" y="60">PostgreSQL</text>
+            <rect class="participant-box" x="1210" y="20" width="210" height="64" rx="10"></rect><text class="participant-title" x="1315" y="60">Derived stream</text>
+            <rect class="participant-box" x="1450" y="20" width="220" height="64" rx="10"></rect><text class="participant-title" x="1560" y="48">Scene Admission</text><text class="participant-title" x="1560" y="72">+ scene_event</text>
+          </g>
+          <g><path class="lifeline" d="M115 84V1640"></path><path class="lifeline" d="M355 84V1640"></path><path class="lifeline" d="M595 84V1640"></path><path class="lifeline" d="M835 84V1640"></path><path class="lifeline" d="M1075 84V1640"></path><path class="lifeline" d="M1315 84V1640"></path><path class="lifeline" d="M1560 84V1640"></path></g>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M115 150H350"></path><text class="message" x="232" y="116" text-anchor="middle"><tspan x="232">reply: commandId / correlationId</tspan><tspan x="232" dy="20">/ attemptNo</tspan></text><path class="message-line svg-stroke-reply" d="M355 235H590"></path><text class="message" x="472" y="201" text-anchor="middle"><tspan x="472">reply RawRecord</tspan><tspan x="472" dy="20">acks=all</tspan></text></g>
+          <rect class="sequence-box" x="475" y="275" width="480" height="300" rx="12"></rect><text class="helper" x="495" y="303">ProtocolApplication Raw transaction</text>
+          <path class="message-line svg-stroke-reply" d="M595 350h130v42H600" marker-end="url(#phase-5-arrowhead)"></path><text class="message" x="735" y="346"><tspan x="735">produce Canonical CommandReply observation</tspan><tspan x="735" dy="20">to Canonical topic</tspan></text><g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M595 445H360"></path><text class="message" x="478" y="421" text-anchor="middle"><tspan x="478">sendOffsetsToTransaction(raw nextOffset)</tspan></text></g>
+          <path class="message-line svg-stroke-reply" d="M595 490h130v42H600" marker-end="url(#phase-5-arrowhead)"></path><text class="message" x="735" y="516">commit Raw transaction</text>
+          <rect class="sequence-box" x="710" y="610" width="960" height="720" rx="12"></rect><text class="helper" x="730" y="638">reducer group · one terminal PG transaction + continuous Canonical offset</text>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M595 690H830"></path><text class="message" x="712" y="678" text-anchor="middle">consume CommandReply</text></g>
+          <path class="message-line svg-stroke-reply" d="M835 720h130v42H840" marker-end="url(#phase-5-arrowhead)"></path><text class="message" x="975" y="746">classify observation</text>
+          <rect class="sequence-box" x="725" y="790" width="930" height="330" rx="10"></rect>
+          <text class="helper" x="745" y="820">alt · duplicate / stale / conflict / unmatched</text>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M835 880H1070"></path><text class="message" x="952" y="846" text-anchor="middle"><tspan x="952">write durable terminal outcome</tspan><tspan x="952" dy="20">WITHOUT accepted-transition Outbox</tspan></text></g>
+          <text class="helper" x="1095" y="900">no derived publication</text>
+          <path class="alt-divider" d="M725 940H1655"></path>
+          <text class="helper" x="745" y="970">alt · legal monotonic state transition</text>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M835 1040H1070"></path><text class="message" x="952" y="1006" text-anchor="middle"><tspan x="952">write command state/outcome</tspan><tspan x="952" dy="20">PLUS accepted-transition Outbox</tspan></text></g>
+          <text class="helper" x="730" y="1155">end alt · branches merge</text>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M1075 1210H830"></path><text class="message" x="952" y="1198" text-anchor="middle">terminal PG commit</text></g>
+          <path class="message-line svg-stroke-reply" d="M835 1250h130v42H840" marker-end="url(#phase-5-arrowhead)"></path><text class="message" x="975" y="1266"><tspan x="975">advance reducer continuous Canonical next-offset</tspan><tspan x="975" dy="20">only after terminal PG commit</tspan></text>
+          <rect class="sequence-box-success" x="950" y="1360" width="720" height="260" rx="12"></rect><text class="helper" x="970" y="1388">opt · accepted-transition Outbox row exists (legal branch only)</text>
+          <g marker-end="url(#phase-5-arrowhead)"><path class="message-line svg-stroke-reply" d="M1075 1470H1310"></path><text class="message" x="1192" y="1436" text-anchor="middle"><tspan x="1192">independent dispatcher</tspan><tspan x="1192" dy="20">publish AcceptedStateTransition</tspan></text><path class="message-line svg-stroke-scene" d="M1315 1560H1555"></path><text class="message" x="1435" y="1526" text-anchor="middle"><tspan x="1435">STATE_TRANSITION SourceDelta</tspan><tspan x="1435" dy="20">only interested Bindings trigger</tspan></text></g>
+        </svg>
+      </div>
+      <div class="meaning-card">
+        <div><h3>本阶段成功意味着</h3><p>Reducer 已持久化回复观察；只有合法单调状态变化会产生 AcceptedStateTransition，并由感兴趣的 Binding 重新进入 Scene。</p></div>
+        <div><h3>本阶段成功不意味着</h3><p>CommandReply 等 observations 不能直接触发 Scene；只有 reducer 接受的 state change 才可以触发。</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

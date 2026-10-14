@@ -1,0 +1,48 @@
+version: 1
+updated_at: 2026-09-06
+purpose: ming-iot 项目长期研发资料入口
+status_definitions:
+  current: 当前实施与决策依据
+  historical: 仅用于理解历史约束
+default_entry_docs:
+  - README.md
+topic_authority:
+  raw_log_deployment_profiles_rfc: rfcs/2026-09-06-raw-log-deployment-profiles-and-reliable-v1.md
+  raw_log_feasibility_candidate: proposals/2026-09-05-raw-log-feasibility-reassessment.md
+  raw_log_industry_practices: references/raw-log/2026-09-05-industry-practices.md
+  raw_log_production_case_comparison: references/raw-log/2026-09-05-production-case-comparison.md
+  raw_log_industrial_case_evidence: references/raw-log/2026-09-05-industrial-case-evidence.md
+  todo_gate_handoff_repair_review: reviews/2026-09-07-todo-gate-handoff-repair-review.md
+  development_control_plane: specs/2026-08-24-ming-iot-direct-loopx-harness-retirement-design.md
+  rd_docs_dual_repository_worktree_governance: specs/2026-08-30-ming-iot-dual-repository-and-rd-docs-worktree-cutover-design.md
+  first_delivery_decision: proposals/2026-08-23-first-real-delivery-loop.md
+  legacy_graph_retirement: specs/2026-08-23-ming-iot-rd-docs-archive-and-legacy-graph-retirement-design.md
+  local_share_migration: proposals/2026-08-25-ming-iot-local-share-migration.md
+  local_share_migration_activation: specs/2026-08-27-ming-iot-local-share-migration-activation-design.md
+  local_share_migration_implementation: plans/2026-08-27-ming-iot-local-share-migration.md
+  local_share_migration_evidence: evidence/2026-08-27-ming-iot-local-share-migration/evidence.md
+  local_share_migration_review: reviews/2026-08-28-ming-iot-local-share-migration-review.md
+  kafka_foundation_activation: specs/2026-08-28-kafka-foundation-contract-sdk-activation-design.md
+  kafka_foundation_implementation: plans/2026-08-28-kafka-foundation-contract-sdk.md
+  dmsvr_proto_domain_split: proposals/2026-08-25-dmsvr-proto-domain-split.md
+  dmsvr_proto_domain_split_activation_candidate: specs/2026-08-28-dmsvr-proto-domain-split-activation-design.md
+  dmsvr_proto_domain_split_activation: specs/2026-08-28-dmsvr-proto-domain-split-activation-design.md
+  dmsvr_proto_domain_split_implementation: plans/2026-08-28-dmsvr-proto-domain-split.md
+  ota_model_module_code_disambiguation: proposals/2026-09-04-ota-model-module-code-disambiguation.md
+  ota_model_module_code_disambiguation_review: reviews/2026-09-04-ota-model-module-code-disambiguation-review.md
+  ota_model_module_code_disambiguation_activation: specs/2026-09-05-ota-model-module-code-disambiguation-activation-design.md
+  ota_model_module_code_disambiguation_implementation: plans/2026-09-05-ota-model-module-code-disambiguation.md
+  ota_model_module_code_disambiguation_implementation_review: reviews/2026-09-05-ota-model-module-code-disambiguation-implementation-review.md
+  ota_model_module_code_disambiguation_implementation_evidence: evidence/2026-09-05-ota-model-module-code-disambiguation/evidence.md
+  things_reproducible_startup_baseline: specs/2026-08-26-things-reproducible-startup-dependency-contract-baseline-design.md
+  engineering_organization_reference: references/unitedrhino-tech-arch-02.md
+  loopx_agents_policy_reference: references/loopx/2026-09-02-loopx-agents-policy-reference.md
+  gitee_delivery_verification_profile: specs/2026-09-03-ming-iot-gitee-delivery-and-verification-profile-design.md
+  gitee_delivery_verification_implementation: plans/2026-09-03-ming-iot-gitee-delivery-and-verification-profile.md
+  gitee_delivery_verification_review: reviews/2026-09-03-ming-iot-gitee-delivery-and-verification-profile-review.md
+  gitee_delivery_verification_evidence: evidence/2026-09-03-ming-iot-gitee-delivery-and-verification-profile/evidence.md
+  gitee_delivery_workflow: specs/2026-09-04-gitee-draft-pr-automation-and-rd-docs-authorization-alignment-design.md
+  gitee_draft_pr_automation_and_rd_docs_authorization: specs/2026-09-04-gitee-draft-pr-automation-and-rd-docs-authorization-alignment-design.md
+  gitee_draft_pr_automation_and_rd_docs_authorization_implementation: plans/2026-09-04-gitee-draft-pr-automation-and-rd-docs-authorization-alignment.md
+  proto_generation_historical_reference: archives/snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-07-23-core-goctl-migration-design.md
+  project_doc_registry: meta/DOC_REGISTRY.yaml

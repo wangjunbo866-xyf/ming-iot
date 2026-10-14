@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+message ThirdAppConfig {
+  string appID =1;
+  string appKey=2;//微信小程序无需填写
+  string appSecret=3;
+}
+
+message IDList{
+  repeated int64 ids=1;
+}
+
+message Attachment{
+  int64 id = 1; // 附件ID,前端自己生成,不重复即可
+  string fileName = 3; // 只读:文件名
+  string fileUrl = 5; // 只读:访问url
+  string filePath = 6;//更新的时候传
+  string useBy =7;//用途,选填
+}
+
+message Point{
+  double  longitude = 1;//经度
+  double  latitude = 2;//纬度
+}
+
+message Empty {
+}
+
+message PageInfo {
+    int64 page = 1;
+    int64 size = 2;
+    //排序信息
+    repeated OrderBy orders = 3;
+    message OrderBy {
+        //排序的字段名
+        string field = 1;
+        //排序方式：0 aes, 1 desc
+        int64 sort = 2;
+    }
+}
+
+message Compare{
+  string CmpType =1;//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+  string value =2;//值
+  string castTo =3; //参数的类型(填写了会进行数据类型的转换): int float string
+}
+
+message CompareString{
+  string CmpType =1;//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+  string value =2;//值
+}
+
+message CompareInt64{
+  string CmpType =1;//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+  int64 value =2;//值
+}
+
+message WithID{
+  int64 id = 1;
+}
+
+message WithIDCode{
+  int64 id = 1;
+  string code=2;
+}
+
+message WithCode{
+  string code=1;
+}
+
+message WithAppCodeID{
+  int64 id = 1;
+  string appCode=2;
+  string code =3;//租户code
+}
+

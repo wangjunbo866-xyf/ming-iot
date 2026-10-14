@@ -1,0 +1,122 @@
+info(
+    desc: "菜单权限"
+	author: "lbs"
+	email: "174805676@qq.com"
+)
+
+@server(
+    group: system/module/menu
+    prefix: /api/v1/system/module/menu
+    accessCodePrefix: "systemModuleMenu"
+    accessNamePrefix: "模块菜单"
+    accessGroup: "模块管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "添加菜单"
+        description: "在指定模块下新建菜单项，含名称、路径、图标与是否常用等展示属性"
+        authType: "supper"
+        resource: "module"
+        action: "create"
+        group: "system/module/menu"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (MenuInfo) returns (WithID)
+
+    @doc(
+        summary: "获取菜单列表"
+        description: "按模块、名称、路径查询菜单项，可选返回树形结构与常用菜单"
+        authType: "all"
+        resource: "module"
+        action: "view"
+        group: "system/module/menu"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (MenuInfoIndexReq) returns (MenuInfoIndexResp)
+
+    @doc(
+        summary: "更新菜单"
+        description: "修改指定菜单的名称、路径、图标及常用标记等展示属性"
+        authType: "supper"
+        resource: "module"
+        action: "update"
+        group: "system/module/menu"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (MenuInfo) returns ()
+
+    @doc(
+        summary: "删除菜单"
+        description: "按编号删除菜单项，子菜单与角色菜单引用将一并清理"
+        authType: "supper"
+        resource: "module"
+        action: "delete"
+        group: "system/module/menu"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+
+    @doc(
+        summary: "批量导入菜单"
+        description: "按同步模式解析菜单 JSON 批量新增、修改或清理模块菜单，返回成功失败计数"
+        authType: "supper"
+        resource: "module"
+        action: "import"
+        group: "system/module/menu"
+        recordLogMode: "2"
+    )
+    @handler multiImport
+    post /multi-import (MenuMultiImportReq) returns (MenuMultiImportResp)
+
+    @doc(
+        summary: "批量导出菜单"
+        description: "按模块编号导出菜单 JSON，用于跨环境同步或菜单备份"
+        authType: "supper"
+        resource: "module"
+        action: "export"
+        group: "system/module/menu"
+        recordLogMode: "2"
+    )
+    @handler multiExport
+    post /multi-export (MenuMultiExportReq) returns (MenuMultiExportResp)
+}
+type (
+
+    MenuMultiImportReq {
+        ModuleCode string `json:"moduleCode,optional"`                               // 应用编号
+        Mode int64 `json:"mode,optional"`//同步模式, 1 只新增,不修改(默认) 2 新增并修改 3 新增修改及删除不存在的
+        Menu string `json:"menu"` //菜单json
+    }
+    MenuMultiImportResp {
+        Total int64 `json:"total"`                                 //导入总接口数
+        ErrCount int64  `json:"errCount"` //失败数
+        IgnoreCount int64  `json:"ignoreCount"` //忽略数
+        SuccCount int64  `json:"succCount"` //成功数
+    }
+
+    MenuMultiExportReq {
+        ModuleCode string `json:"moduleCode,optional"`                               // 应用编号
+    }
+    MenuMultiExportResp {
+       Menu string `json:"menu"` //菜单json
+    }
+
+    MenuInfoIndexReq  {
+        ModuleCode string `json:"moduleCode,optional"`                               // 应用编号
+        Name string `json:"name,optional"` // 按菜单名称筛选
+        Path string `json:"path,optional"` // 按菜单路径筛选
+        IsRetTree bool `json:"isRetTree,optional"` // 是否返回树形结构
+        IsCommon   int64 `json:"isCommon,optional"`  // 是否常用菜单 1-是 2-否
+    }
+
+    MenuInfoIndexResp  {
+        List []*MenuInfo `json:"list"` //菜单列表
+    }
+
+)

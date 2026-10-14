@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "publication_status": "hold",
+  "scope": "Local M4 preparation only. No GitHub push, publication, source deletion or live credential rotation authorized.",
+  "history_strategy": "New isolated history from attribution assembly plus approved 25-file scope. Original complete histories, candidates and backups remain private; never push their refs wholesale.",
+  "source_head": "302170043c6ce8dd81ff2a9826156d941ea7deb7",
+  "source_tree": "7acc3768b9d5b8aa1ba60048db16e3ab767a4635",
+  "retained_notices": [
+    {
+      "path": "backend/saas/LICENSE",
+      "sha256": "20b067f86de375aae6db0f283ab2e65de24d537733b89bd58432c101259d84cf"
+    },
+    {
+      "path": "backend/saas/NOTICE",
+      "sha256": "d83940b66d37df5da022c8cb6355988e56418873ff6b46bcf1658be27c61a5d5"
+    },
+    {
+      "path": "backend/share/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "backend/share/SOURCE.json",
+      "sha256": "6bc6b7002e202bb5120a024b5537a2ca09bc24b854cdbb9f75aff9045640a68f"
+    },
+    {
+      "path": "backend/things/LICENSE",
+      "sha256": "20b067f86de375aae6db0f283ab2e65de24d537733b89bd58432c101259d84cf"
+    },
+    {
+      "path": "backend/things/NOTICE",
+      "sha256": "c48e64d04d303d5c3c56cd16fc2a7672a6d2bb4ad4fe6944d948d6a770c6cfbb"
+    },
+    {
+      "path": "backend/things/PROVENANCE.yaml",
+      "sha256": "abae9145ddb177d85af85d9e087d9d051efe8b38faba1ea9a960d4955aaa9563"
+    },
+    {
+      "path": "backend/tools/templates/things-baseline/NOTICE",
+      "sha256": "8a17d4995a8247b1c1bfc2addfacef94e8a30b1f6d192f6082ff42ab51e2ffbb"
+    },
+    {
+      "path": "tooling/experiments/r-doc-v3/LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    },
+    {
+      "path": "tooling/experiments/r-doc-v3/skills/r-doc/UPSTREAM-LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    },
+    {
+      "path": "tooling/experiments/r-doc-v4/LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    },
+    {
+      "path": "tooling/experiments/r-doc-v4/skills/r-doc/UPSTREAM-LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    }
+  ],
+  "pending_decisions": [
+    {
+      "id": "PUBLICATION-AUTHORIZATION",
+      "title": "Future remote action must be explicitly authorized for the verified candidate; current task is local only.",
+      "paths": [],
+      "resolution": "本地最终候选验证和独立复审后，依据用户明确授权再实施远程操作；本轮不推送。"
+    }
+  ],
+  "limitations": [
+    "Pattern scanning is not proof of absence of every secret or personal datum. Media rights/content and transitive runtime compliance are not certified.",
+    "Local-address and historical workstation path references remain source context, not active configuration or permission to connect.",
+    "No production, device, human handoff, hosted GitHub Actions or branch-protection verification performed.",
+    "Historical coverage remains bounded:85 priority files read;86 full,1 partial,407 unread unique bodies overall. Not complete factual or rights certification.",
+    "Jison Lex complete native license text was not located in the bounded evidence search; known MIT label and author retained.",
+    "Scope decision does not license third-party material or certify every transitive runtime obligation."
+  ],
+  "scope_decisions": [
+    {
+      "id": "LIC-01",
+      "status": "approved_scope_applied",
+      "evidence": "docs/meta/PUBLIC_SCOPE.json",
+      "result": "External article replaced by original summary; six images excluded from reachable candidate history."
+    },
+    {
+      "id": "LIC-02",
+      "status": "approved_bounded_scope_applied",
+      "evidence": "docs/meta/PUBLIC_SCOPE.md",
+      "result": "18 selected historical originals private only; known snippets and templates attributed. Remaining mixed material is not declared wholly original or fully rights-certified."
+    },
+    {
+      "id": "LIC-03",
+      "status": "retain_with_recorded_limit",
+      "evidence": "docs/vendor/mermaid/README.md",
+      "result": "User selected retention with assembled original notices and known Jison Lex full-native-text gap. No complete regeneration or universal compliance claim."
+    },
+    {
+      "id": "LIC-04",
+      "status": "no_new_license_grant",
+      "evidence": "LICENSES.md",
+      "result": "No new project-wide open-source license. Preserve existing component licenses and third-party exceptions; this scope choice is not a blanket ownership representation."
+    }
+  ]
+}

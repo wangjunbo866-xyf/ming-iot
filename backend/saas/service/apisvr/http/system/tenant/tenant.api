@@ -1,0 +1,405 @@
+info(
+	title: "租户管理模块"
+	desc: "租户管理"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+	group: system/tenant/info
+	prefix: /api/v1/system/tenant/info
+    accessCodePrefix: "systemTenantManage"
+    accessNamePrefix: "租户管理"
+    accessGroup: "租户管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加租户"
+        description: "创建租户并同时初始化管理员账号与默认配置，仅系统超管可调用"
+        authType: "supper"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (TenantInfoCreateReq) returns (WithID)
+
+    @doc(
+        summary: "获取租户列表"
+        description: "分页查询租户清单，可按名称、编号、状态过滤并附带管理员与默认项目信息"
+        authType: "supper"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantInfoIndexReq) returns (TenantInfoIndexResp)
+    @doc(
+        summary: "获取租户详情"
+        description: "按编号或主键读取单个租户完整信息，并附带其管理员用户资料"
+        authType: "admin"
+        accessCode: "systemTenantManageReadOne"
+        accessName: "获取租户信息"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (TenantInfo)
+
+    @doc(
+        summary: "更新租户"
+        description: "修改租户名称、状态等基本信息，仅系统超管可执行"
+        authType: "admin"
+        accessCode: "systemTenantManageUpdateOne"
+        accessName: "更新租户信息"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (TenantInfo) returns ()
+
+    @doc(
+        summary: "删除租户"
+        description: "按编号或主键删除租户及其关联数据，仅系统超管可执行"
+        authType: "supper"
+        resource: "tenant"
+        action: "delete"
+        group: "system/tenant/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDOrCode) returns ()
+}
+
+@server (
+    group: system/tenant/config
+    prefix: /api/v1/system/tenant/config
+    accessNamePrefix: "租户配置"
+    accessGroup: "租户管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "更新租户配置"
+        description: "覆盖租户级配置项，含日志保留、单会话登录、设备限制与各端登录方式"
+        authType: "admin"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/config"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (TenantConfig) returns ()
+    @doc(
+        summary: "获取租户配置"
+        description: "读取租户级配置并合并当前应用的多端登录方式与第三方登录配置"
+        authType: "admin"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/config"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithCode) returns (TenantConfig)
+}
+
+@server (
+    group: system/tenant/core
+    prefix: /api/v1/system/tenant/core
+    accessCodePrefix: "systemTenantCore"
+    accessNamePrefix: "租户配置"
+    accessGroup: "租户管理"
+    middleware:  InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "获取租户信息"
+        description: "按编号或主键以超管上下文读取租户核心信息，用于登录前展示租户概要"
+        authType: "all"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/core"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (TenantCore)
+    @doc(
+        summary: "搜索租户信息"
+        description: "按名称、编号或绑定应用分页搜索已启用租户，返回租户核心信息"
+        authType: "all"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/core"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantCoreIndexReq) returns (TenantCoreIndexResp)
+}
+
+
+@server (
+    group: system/tenant/access/info
+    prefix: /api/v1/system/tenant/access/info
+    accessCodePrefix: "systemTenantAccess"
+    accessNamePrefix: "租户授权"
+    accessGroup: "租户管理"
+    defaultNeedAuth: "true"
+    defaultAuthType: "admin"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取租户操作权限树"
+        description: "按租户编号汇聚其已授权操作权限点并以模块树结构返回"
+        authType: "admin"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/access/info"
+        recordLogMode: "1"
+    )
+    @handler tree
+    post /tree (WithCode) returns (TenantAccessInfoTreeResp)
+    @doc(
+        summary: "获取租户操作权限列表"
+        description: "返回指定租户当前已授予的操作权限点编号集合"
+        authType: "admin"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/access/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (WithCode) returns (TenantAccessInfo)
+    @doc(
+        summary: "批量更新租户操作权限"
+        description: "整体覆盖租户被授予的操作权限点编号集合，影响该租户用户可执行操作"
+        authType: "admin"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/access/info"
+        recordLogMode: "2"
+    )
+    @handler multiUpdate
+    post /multi-update (TenantAccessInfo) returns ()
+    @doc(
+        summary: "批量创建租户操作权限"
+        description: "为租户新增一批操作权限点授权，仅追加不覆盖原有授权"
+        authType: "admin"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/access/info"
+        recordLogMode: "2"
+    )
+    @handler multiCreate
+    post /multi-create (TenantAccessInfo) returns ()
+    @doc(
+        summary: "批量删除租户操作权限"
+        description: "移除租户已授予的指定操作权限点，对应操作将不再可用"
+        authType: "admin"
+        resource: "tenant"
+        action: "delete"
+        group: "system/tenant/access/info"
+        recordLogMode: "2"
+    )
+    @handler multiDelete
+    post /multi-delete (TenantAccessInfo) returns ()
+}
+
+
+@server (
+    group: system/tenant/agreement
+    prefix: /api/v1/system/tenant/agreement
+    accessNamePrefix: "租户协议"
+    accessGroup: "租户协议"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加协议"
+        description: "新建一份租户协议，含名称、标题与正文内容，供注册或登录时展示"
+        authType: "admin"
+        resource: "tenant"
+        action: "create"
+        group: "system/tenant/agreement"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (TenantAgreement) returns (WithID)
+
+    @doc(
+        summary: "获取协议列表"
+        description: "分页查询租户协议清单，返回名称、标题等概要信息"
+        authType: "all"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/agreement"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (TenantAgreementIndexReq) returns (TenantAgreementIndexResp)
+
+    @doc(
+        summary: "更新协议"
+        description: "修改指定租户协议的名称、标题与正文内容"
+        authType: "admin"
+        resource: "tenant"
+        action: "update"
+        group: "system/tenant/agreement"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (TenantAgreement) returns ()
+
+    @doc(
+        summary: "删除协议"
+        description: "按主键删除租户协议，删除后前端不再展示该协议"
+        authType: "admin"
+        resource: "tenant"
+        action: "delete"
+        group: "system/tenant/agreement"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+}
+
+@server (
+    group: system/tenant/agreement
+    prefix: /api/v1/system/tenant/agreement
+    middleware:  InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取协议详情"
+        description: "按编号或主键读取租户协议完整内容，用于注册或登录前的协议展示"
+        authType: "all"
+        resource: "tenant"
+        action: "view"
+        group: "system/tenant/agreement"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (TenantAgreement)
+}
+
+type (
+    TenantCoreIndexReq{
+        Page *PageInfo `json:"page,optional"`                   // 分页信息
+        AppCode string `json:"appCode,optional"` //过滤绑定了指定app的租户
+        Code string `json:"code,optional"`                               // 编号
+        Name string `json:"name,optional"`                                 // 协议名称
+    }
+    TenantCoreIndexResp{
+        List []*TenantCore `json:"list"`            // 列表数据
+        PageResp
+    }
+)
+
+type (
+    TenantAgreement{
+        ID int64 `json:"id,optional"`                                      // 编号
+        Code string `json:"code,optional"`                               // 编号
+        Name string `json:"name,optional"`                                 // 协议名称
+        Title string `json:"title,optional"`//协议标题
+        Content string `json:"content,optional"`//协议内容(只有详情会返回)
+    }
+    TenantAgreementIndexReq{
+        Page *PageInfo `json:"page,optional"`                   // 分页信息
+    }
+    TenantAgreementIndexResp{
+        List []*TenantAgreement `json:"list"`            // 列表数据
+        PageResp
+    }
+)
+
+type(
+    TenantAccessInfo{
+        Code string `json:"code"`                     // 租户编号
+        AccessCodes []string `json:"accessCodes"`                               // 模块编号
+    }
+    TenantAccessInfoTreeResp{
+        List []*AccessModuleInfo `json:"list"`
+        PageResp
+    }
+)
+
+type (
+
+    TenantInfoCreateReq{
+        Info *TenantInfo `json:"info"`
+        AdminUserInfo *UserInfo `json:"adminUserInfo"`
+    }
+
+    TenantInfoCreateResp{
+        Code string `json:"code"`
+    }
+
+    TenantInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Name string `json:"name,optional"`                     // 租户名称
+        Code string `json:"code,optional"`                     // 租户编号
+        Status int64  `json:"status,optional"` //租户状态
+        WithAdminUser bool `json:"withAdminUser,optional"` //同时获取管理员核心信息
+        WithDefaultProject bool `json:"withDefaultProject,optional"` //同时获取默认项目信息
+    }
+
+    TenantInfoIndexResp  {
+        List []*TenantInfo `json:"list"`            // 租户列表数据
+        PageResp
+    }
+    TenantConfig{
+        TenantCode                string                                   `json:"tenantCode,optional"`  // 租户编码
+        RegisterRoleID            int64                                    `json:"registerRoleID,optional"`  //注册分配的角色id
+        WeatherKey                string `json:"weatherKey,optional"`//和风天气秘钥 参考: https://dev.qweather.com/
+        OperLogKeepDays           *int64  `json:"operLogKeepDays,optional"`                         //操作日志保留时间,如果为0则为永久
+        LoginLogKeepDays          *int64  `json:"loginLogKeepDays,optional"`                         //登录日志保留时间,如果为0则为永久
+        CheckUserDelete           int64                                    `json:"checkUserDelete,optional"`  //是否检查用户注销 1(禁止项目管理员注销账号) 2(不禁止项目管理员注销账号)
+        IsSsl int64  `json:"isSsl,optional"` //是否单会话登录(默认为2) Single Session Login
+        DeviceLimit *int64 `json:"deviceLimit,optional"`   //租户下的设备数量限制,0为不限制
+        FeedbackNotifyUserIDs []string  `json:"feedbackNotifyUserIDs,optional"`//产生问题反馈通知的用户ID列表
+        RegisterAutoCreateProject []*TenantConfigRegisterAutoCreateProject `json:"registerAutoCreateProject,optional"` //注册自动创建项目和区域
+        AppCode string `json:"appCode,optional"` // 应用编码（登录配置归属的应用，不填则取当前登录应用）
+        DingMini *ThirdAppConfig `json:"dingMini,optional"`//钉钉小程序
+        WxOpen *ThirdAppConfig `json:"wxOpen,optional"`//微信开放平台
+        WxMini *ThirdAppConfig `json:"wxMini,optional"`//微信小程序
+        Huawei *ThirdAppConfig `json:"huawei,optional"`//华为应用
+        Google *ThirdAppConfig `json:"google,optional"`//Google登录
+        GoogleConfig *ThirdAppConfig `json:"googleConfig,optional"`//Google登录（前端字段名）
+        Github *ThirdAppConfig `json:"github,optional"`//GitHub登录
+        GithubConfig *ThirdAppConfig `json:"githubConfig,optional"`//GitHub登录（前端字段名）
+        Apple *AppleAppConfig `json:"apple,optional"`//Apple登录
+        AppleConfig *AppleAppConfig `json:"appleConfig,optional"`//Apple登录（前端字段名）
+        LoginTypes []string `json:"loginTypes,optional"`//支持的登录类型
+        IsAutoRegister int64 `json:"isAutoRegister,optional"` //登录未注册是否自动注册
+    }
+    TenantConfigRegisterAutoCreateProject  {
+        ID int64 `json:"id,optional"`
+        ProjectName  string                                   `json:"projectName"`
+        IsSysCreated int64                                    `json:"isSysCreated"` //是否是系统创建的,系统创建的只有管理员可以删除
+        Areas        []*TenantConfigRegisterAutoCreateArea `json:"areas,optional"`
+    }
+    TenantConfigRegisterAutoCreateArea  {
+        ID int64 `json:"id,optional"`
+        AreaName     string `json:"areaName"`
+        AreaImg      string `json:"areaImg,optional"`
+        IsUpdateAreaImg bool   `json:"isUpdateAreaImg,omitempty,optional"`
+        IsSysCreated int64  `json:"isSysCreated"` //是否是系统创建的,系统创建的只有管理员可以删除
+    }
+)

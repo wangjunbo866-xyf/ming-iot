@@ -1,0 +1,265 @@
+info(
+    title: "产品物模型属性模块"
+    desc: "管理租户内可复用的属性模块及产品绑定"
+    author: "ming-iot"
+    version: "v1"
+)
+
+@server(
+    group: things/product/modelModule
+    prefix: /api/v1/things/product/model-module
+    accessCodePrefix: "thingsProductModelModule"
+    accessNamePrefix: "产品物模型属性模块"
+    accessGroup: "产品管理"
+    middleware: CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "创建属性模块"
+        description: "在当前租户内创建一个可复用的产品属性模块"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "model-module"
+        action: "create"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModuleCreate
+    post /create (ModelModuleCreateReq) returns (ModelModuleInfo)
+
+    @doc(
+        summary: "更新属性模块"
+        description: "更新当前租户属性模块的编码名称及描述信息"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "model-module"
+        action: "update"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModuleUpdate
+    post /update (ModelModuleUpdateReq) returns ()
+
+    @doc(
+        summary: "删除属性模块"
+        description: "删除当前租户内尚未被任何产品绑定的属性模块"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "model-module"
+        action: "delete"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModuleDelete
+    post /delete (ModelModuleDeleteReq) returns ()
+
+    @doc(
+        summary: "查询属性模块"
+        description: "分页查询当前租户可使用的产品属性模块清单"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "model-module"
+        action: "view"
+        group: "things/product/modelModule"
+        recordLogMode: "1"
+    )
+    @handler modelModuleIndex
+    post /index (ModelModuleIndexReq) returns (ModelModuleIndexResp)
+
+    @doc(
+        summary: "绑定产品模块"
+        description: "把同一租户的属性模块显式绑定到指定产品"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "other"
+        resource: "product-model-module"
+        action: "bind"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler productModelModuleBind
+    post /bind (ProductModelModuleBindReq) returns ()
+
+    @doc(
+        summary: "解绑产品模块"
+        description: "解除指定产品与属性模块之间的显式绑定关系"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "other"
+        resource: "product-model-module"
+        action: "unbind"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler productModelModuleUnbind
+    post /unbind (ProductModelModuleUnbindReq) returns ()
+
+    @doc(
+        summary: "查询产品模块绑定"
+        description: "分页查询指定产品当前绑定的全部属性模块"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "find"
+        resource: "product-model-module"
+        action: "view"
+        group: "things/product/modelModule"
+        recordLogMode: "1"
+    )
+    @handler productModelModuleIndex
+    post /binding-index (ProductModelModuleIndexReq) returns (ProductModelModuleIndexResp)
+
+    @doc(
+        summary: "创建模块属性"
+        description: "在指定属性模块中创建一个新的物模型属性定义"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "add"
+        resource: "model-module-property"
+        action: "create"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModulePropertyCreate
+    post /property/create (ModelModulePropertyCreateReq) returns (ModelModulePropertyInfo)
+
+    @doc(
+        summary: "更新模块属性"
+        description: "更新指定模块属性中允许调整的展示和业务配置"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "modify"
+        resource: "model-module-property"
+        action: "update"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModulePropertyUpdate
+    post /property/update (ModelModulePropertyUpdateReq) returns ()
+
+    @doc(
+        summary: "删除模块属性"
+        description: "从指定属性模块草稿中逻辑删除目标属性定义"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "delete"
+        resource: "model-module-property"
+        action: "delete"
+        group: "things/product/modelModule"
+        recordLogMode: "2"
+    )
+    @handler modelModulePropertyDelete
+    post /property/delete (ModelModulePropertyDeleteReq) returns ()
+
+    @doc(
+        summary: "查询模块属性"
+        description: "分页查询指定属性模块中的全部属性草稿定义"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "find"
+        resource: "model-module-property"
+        action: "view"
+        group: "things/product/modelModule"
+        recordLogMode: "1"
+    )
+    @handler modelModulePropertyIndex
+    post /property/index (ModelModulePropertyIndexReq) returns (ModelModulePropertyIndexResp)
+}
+
+type (
+    ModelModuleInfo {
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        ModelModuleCode string `json:"modelModuleCode"`
+        Name string `json:"name"`
+        Description string `json:"description,optional"`
+    }
+    ModelModuleCreateReq {
+        ModelModuleCode string `json:"modelModuleCode"`
+        Name string `json:"name"`
+        Description string `json:"description,optional"`
+    }
+    ModelModuleUpdateReq {
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        ModelModuleCode string `json:"modelModuleCode"`
+        Name string `json:"name"`
+        Description string `json:"description,optional"`
+    }
+    ModelModuleDeleteReq {
+        ModelModuleID int64 `json:"modelModuleID,string"`
+    }
+    ModelModuleIndexReq {
+        Page *PageInfo `json:"page,optional"`
+        ModelModuleIDs []int64 `json:"modelModuleIDs,optional"`
+        ModelModuleCode string `json:"modelModuleCode,optional"`
+    }
+    ModelModuleIndexResp {
+        List []*ModelModuleInfo `json:"list"`
+        PageResp
+    }
+)
+
+type (
+    ProductModelModuleInfo {
+        BindingID int64 `json:"bindingID,string"`
+        ProductID string `json:"productID"`
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        Order int64 `json:"order,optional"`
+        ModelModule *ModelModuleInfo `json:"modelModule,optional"`
+    }
+    ProductModelModuleBindReq {
+        ProductID string `json:"productID"`
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        Order int64 `json:"order,optional"`
+    }
+    ProductModelModuleUnbindReq {
+        ProductID string `json:"productID"`
+        ModelModuleID int64 `json:"modelModuleID,string"`
+    }
+    ProductModelModuleIndexReq {
+        Page *PageInfo `json:"page,optional"`
+        ProductID string `json:"productID"`
+    }
+    ProductModelModuleIndexResp {
+        List []*ProductModelModuleInfo `json:"list"`
+        PageResp
+    }
+)
+
+type (
+    ModelModulePropertyInfo {
+        ModelModulePropertyID int64 `json:"modelModulePropertyID,string,optional"`
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        Identifier string `json:"identifier"`
+        Name string `json:"name"`
+        Description string `json:"description,optional"`
+        Tag int64 `json:"tag,optional"`
+        Required int64 `json:"required,optional"`
+        IsCanSceneLinkage int64 `json:"isCanSceneLinkage,optional"`
+        FuncGroup int64 `json:"funcGroup,optional"`
+        UserPerm int64 `json:"userPerm,optional"`
+        ControlMode int64 `json:"controlMode,optional"`
+        RecordMode int64 `json:"recordMode,optional"`
+        IsPassword int64 `json:"isPassword,optional"`
+        Affordance string `json:"affordance"`
+        ExtendConfig string `json:"extendConfig,optional"`
+        Order int64 `json:"order,optional"`
+    }
+    ModelModulePropertyCreateReq {
+        *ModelModulePropertyInfo
+    }
+    ModelModulePropertyUpdateReq {
+        *ModelModulePropertyInfo
+    }
+    ModelModulePropertyDeleteReq {
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        ModelModulePropertyID int64 `json:"modelModulePropertyID,string"`
+    }
+    ModelModulePropertyIndexReq {
+        Page *PageInfo `json:"page,optional"`
+        ModelModuleID int64 `json:"modelModuleID,string"`
+        Identifiers []string `json:"identifiers,optional"`
+    }
+    ModelModulePropertyIndexResp {
+        List []*ModelModulePropertyInfo `json:"list"`
+        PageResp
+    }
+)

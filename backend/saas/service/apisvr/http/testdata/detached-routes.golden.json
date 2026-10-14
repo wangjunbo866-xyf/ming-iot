@@ -1,0 +1,16 @@
+[
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/open/oss/download",
+    "handler": "downLoad",
+    "requestType": "DownloadReq"
+  },
+  {
+    "service": "apisvr",
+    "method": "PUT",
+    "fullPath": "/open/oss/upload",
+    "handler": "upload",
+    "requestType": "UploadReq"
+  }
+]

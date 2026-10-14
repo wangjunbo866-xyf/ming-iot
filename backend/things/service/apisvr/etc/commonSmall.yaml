@@ -1,0 +1,80 @@
+Host: 0.0.0.0
+CpuThreshold: 0
+Timeout: 1000000
+MaxBytes: 1000000000
+Log:
+  Encoding: plain
+  #Mode: file
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+Middlewares:
+  Prometheus: false
+Database:
+  DBType: mysql
+  DSN: ${THINGS_DB_DSN}
+#  DBType: pgsql
+#  DSN: ${THINGS_DB_DSN}
+DevServer:
+  Enabled: true
+  Port: 7065
+TSDB:
+#  Driver: taosRestful
+#  DSN: ${THINGS_TSDB_DSN}
+#  DSN: ${THINGS_TSDB_DSN}
+#  Driver: taosSql
+#  DSN: ${THINGS_TSDB_DSN}
+  DBType: mysql
+  DSN: ${THINGS_TSDB_DSN}
+
+DgRpc:
+  Enable: true
+  Mode: direct
+  Conf:
+    Timeout: 1000000
+DmRpc:
+  Enable: true
+  Mode: direct
+  Conf:
+    Timeout: 1000000
+    Etcd:
+      key: dm.rpc
+UdRpc:
+  Enable: true
+  Mode: direct
+  Conf:
+    Timeout: 1000000
+SysRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Endpoints:
+      - localhost:9180
+TimedJobRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Endpoints:
+      - localhost:3256
+
+OssConf:
+  OssType: local
+  PublicBucketName: ithings-public
+  PrivateBucketName: ithings-private
+  TemporaryBucketName: ithings-temporary
+
+Event:
+  Nats:
+    Url: nats://127.0.0.1:4222
+#Telemetry:
+#  Name: thingsvr
+#  Endpoint: http://localhost:14268/api/traces
+#  Sampler: 1.0
+#  Batcher: jaeger
+#Prometheus:
+#  Host: 0.0.0.0
+#  Port: 17788
+#  Path: /metrics

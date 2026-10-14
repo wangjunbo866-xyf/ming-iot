@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "entrypoints": {
+    "knowledge": "docs/README.md",
+    "specs": "docs/specs/README.md",
+    "rules": "docs/runbook/team-development.md",
+    "migration": "docs/architecture/monorepo-migration.md",
+    "source_registry": "docs/meta/DOC_REGISTRY.yaml",
+    "preflight": ".agents/skills/ming-specs/scripts/preflight.py"
+  },
+  "maintained_documents": [
+    "README.md",
+    "AGENTS.md",
+    "docs/README.md",
+    "tooling/README.md",
+    "tooling/experiments/README.md",
+    "docs/specs/README.md",
+    "docs/runbook/team-development.md",
+    "docs/wiki/team-development-outline.md",
+    "docs/architecture/monorepo-migration.md",
+    "docs/wiki/legacy/README.md",
+    "docs/wiki/legacy/core/README.md",
+    "docs/wiki/legacy/things/README.md",
+    "docs/rd/README.md",
+    "backend/saas/doc/\u5f00\u53d1\u8bf4\u660e/\u672c\u5730\u8054\u8c03\u73af\u5883.md",
+    ".agents/skills/ming-specs/SKILL.md",
+    ".agents/skills/ming-specs/references/templates.md",
+    ".agents/skills/ming-specs/references/pilot-regressions.md",
+    "LICENSES.md",
+    "docs/runbook/monorepo-ci.md"
+  ],
+  "discovered_skills": [
+    ".agents/skills/ming-specs/SKILL.md"
+  ],
+  "excluded_reference_directories": [
+    "third_party/airmq",
+    "third_party/thingsboard",
+    "AirMQ",
+    "thingsboard"
+  ]
+}

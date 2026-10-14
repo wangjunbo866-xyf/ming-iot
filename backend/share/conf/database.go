@@ -1,0 +1,25 @@
+package conf
+
+const (
+	Mysql    = "mysql"
+	Pgsql    = "pgsql"
+	Sqlite   = "sqlite"
+	Tdengine = "tdengine"
+)
+
+type Database struct {
+	DBType string `json:",default=mysql,env=dbType,options=mysql|pgsql|sqlite"` //
+	//IsInitTable bool   `json:",default=false"`
+	IsInitTable  bool   `json:",env=dbIsInitTable,default=true"`
+	DSN          string `json:",env=dbDSN"` //dsn
+	ReadDSN      []string `json:",env=dbReadDSN,optional"` //dsn(读库) 支持多个
+	MaxIdleConns int    `json:",default=10"`
+	MaxOpenConns int    `json:",default=20"`
+}
+
+// 时序数据库（Time Series Database）
+type TSDB struct {
+	DBType string `json:",default=tdengine,env=tsDBType,options=tdengine|mysql|pgsql|sqlite"` //
+	Driver string `json:",default=taosWS,env=tsDBDriver,options=taosRestful|taosWS|taosSql"`  //
+	DSN    string `json:",env=tsDBDSN"`                                                       //dsn
+}

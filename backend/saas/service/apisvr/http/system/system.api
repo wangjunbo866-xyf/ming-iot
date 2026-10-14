@@ -1,0 +1,204 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+
+type (
+    TenantInfo  {
+        ID int64 `json:"id,optional"`                                      // 接口编号
+        Code string `json:"code"`                               // 应用编号
+        Name string `json:"name,optional"`                                 // 接口名称
+        AdminUserID int64   `json:"adminUserID,optional,string"`
+        AdminRoleID int64   `json:"adminRoleID,optional"`
+        Desc *string `json:"desc,optional"`                       // 备注
+        DefaultProjectID      int64 `json:"defaultProjectID,optional"`
+        BackgroundColour string  `json:"backgroundColour,optional"`
+        BackgroundDesc string  `json:"backgroundDesc,optional,omitempty"`
+        BackgroundImg         string `json:"backgroundImg,optional"`
+        Footer string  `json:"footer,optional"`//页尾
+        IsUpdateBackgroundImg bool `json:"isUpdateBackgroundImg,optional,omitempty"`
+        LogoImg               string `json:"logoImg,optional"`
+        IsUpdateLogoImg       bool `json:"isUpdateLogoImg,optional,omitempty"`
+        Title                 string `json:"title,optional"`
+        TitleEn               string `json:"titleEn,optional"`
+        CreatedTime int64  `json:"createdTime,string,optional"`// 创建时间
+        Status int64  `json:"status,optional"`
+        UserCount int64  `json:"userCount,optional"` //租户下的用户统计
+        AdminUserInfo *UserCore `json:"adminUserInfo,optional,omitempty"` //管理员信息
+        DefaultProject *ProjectInfo `json:"defaultProject,optional,omitempty"`
+    }
+    TenantCore  {
+        Code string `json:"code"`                               // 应用编号
+        Name string `json:"name,optional"`                                 // 接口名称
+        Desc *string `json:"desc,optional"`                       // 备注
+        BackgroundImg         string `json:"backgroundImg,optional"`
+        LogoImg               string `json:"logoImg,optional"`
+        Title                 string `json:"title,optional"`
+        TitleEn               string `json:"titleEn,optional"`
+        BackgroundColour string  `json:"backgroundColour,optional"`
+        BackgroundDesc *string  `json:"backgroundDesc,optional,omitempty"`
+        Footer string  `json:"footer,optional"`//页尾
+    }
+    UserCore {
+        UserID         int64  `json:"userID,string,optional"`        // 用户id
+        UserName    string `json:"userName,optional"`          // 用户名(唯一)
+        Email       string `json:"email,optional"`             // 邮箱
+        Phone       string `json:"phone,optional"`             // 手机号
+        LastIP      string `json:"lastIP,optional"`            // 最后登录ip
+        RegIP       string `json:"regIP,optional"`             // 注册ip
+        NickName    string `json:"nickName,optional"`          // 用户的昵称
+        HeadImg  string `json:"headImg,optional"`        // 用户头像
+        Tags    map[string]string       `json:"tags,optional,omitempty"` //标签对象
+        CreatedTime int64  `json:"createdTime,string,optional"`// 创建时间
+    }
+
+    AppInfo  {
+        ID int64 `json:"id,optional"`                                      // 编号
+        Code string `json:"code"`                               // 应用编码
+        Type string `json:"type"` //应用类型 web:web页面  app:应用  mini:小程序
+        SubType string `json:"subType,optional"`//子类型  小程序(wx:微信小程序  ding:钉钉小程序) app(android,ios)
+        Name string `json:"name,optional"`                                 // 应用名称
+        Desc *string `json:"desc,optional"`                       // 备注
+    }
+    MenuInfo  {
+        ID int64 `json:"id,optional"`                                  // 编号
+        ModuleCode string `json:"moduleCode"`                               // 模块编号
+        Name string `json:"name,optional"`                             // 菜单名称
+        ParentID int64 `json:"parentID,optional"`                      // 父菜单ID，一级菜单为1
+        Type int64 `json:"type,optional"`                     // 类型   1. 内部页面   2，iframe内嵌  3，外部链接跳转 4，微前端
+        Path string `json:"path,optional"`                    // 系统的path
+        Component string `json:"component,optional"`          // 页面
+        Icon string `json:"icon,optional"`                    // 菜单图标
+        Redirect string `json:"redirect,optional"`            // 路由重定向
+        Order int64 `json:"order,optional"`                            // 左侧table排序序号
+        HideInMenu int64 `json:"hideInMenu,optional"`         // 菜单是否隐藏 1：是 2：否
+        IsCommon   int64 `json:"isCommon,optional"`  // 是否常用菜单 1-是 2-否
+        IsAllTenant int64 `json:"isAllTenant,optional"` //菜单是否提供给所有租户 1-是 2-否
+        Body *string  `json:"body,optional"` //前端自定义字段
+        CreatedTime int64 `json:"createdTime,string,optional"`           // 创建时间
+        Children []*MenuInfo `json:"children,optional,omitempty"` //子节点
+    }
+    ModuleInfo  {
+        ID int64 `json:"id,optional"`                                  // 编号
+        Code string `json:"code"`                               // 应用编号
+        Name string `json:"name,optional"`                             // 菜单名称
+        Type int64 `json:"type,optional"`                     // 类型   1. 内部页面   2，iframe内嵌  3，外部链接跳转 4，微前端
+        SubType int64 `json:"subType,optional"`                     // 子类型   1. 内部页面   2，iframe内嵌  3，外部链接跳转 4，微前端
+        Path string `json:"path,optional"`                    // 系统的path
+        Desc *string `json:"desc,optional"`          // 页面
+        Icon string `json:"icon,optional"`                    // 菜单图标
+        Url string `json:"url,optional"`            // 路由重定向
+        Order int64 `json:"order,optional"`                            // 左侧table排序序号
+        HideInMenu int64 `json:"hideInMenu,optional"`         // 菜单是否隐藏 1：是 2：否
+        Purpose int64 `json:"purpose,optional"`                             //normal普通:1(默认) platformo平台:2(那么只有default租户可以看,然后平台模块http头里不用传租户号)  project 项目:3(需要选择项目,默认选择第一个)
+        HomeMenuID int64         `json:"homeMenuID,optional"`                              // 模块首页全屏菜单,点击应用左上角的logo会跳出这个页面及首次进入该模块的时候,如果为1 则是没有
+        Home *MenuInfo `json:"home,optional,omitempty"` //首页,如果没有返回则没有,首页不限菜单权限控制
+        Body *string  `json:"body,optional"` //前端自定义字段
+    }
+    TenantModuleInfo{
+        ModuleInfo
+        Menus []*TenantAppMenu `json:"menus,optional,omitempty"` //菜单列表
+    }
+
+    ProjectInfo  {
+        CreatedTime int64 `json:"createdTime,optional,string"` //创建时间（只读）
+        ProjectID int64 `json:"projectID,string,optional"`     //项目id（只读）
+        ProjectName string `json:"projectName,optional"`       //项目名称（读写）
+       // CompanyName *string `json:"companyName,optional"`      //项目所属公司名称（读写）
+        AdminUserID         int64  `json:"adminUserID,string,optional"`  // 管理员用户id（读写）
+        Position *Point `json:"position,optional"`               //项目定位
+//        Region *string `json:"region,optional"`                //项目省市区县（读写）
+        Address *string `json:"address,optional"`              //项目详细地址（读写）
+        ProjectImg string  `json:"projectImg,optional"`
+        IsSysCreated int64 `json:"isSysCreated,optional"` //是否是系统创建的,系统创建的只有管理员可以删除
+        IsUpdateProjectImg bool  `json:"isUpdateProjectImg,optional"`
+        Desc *string `json:"desc,optional"`                    //项目备注（读写）
+        Tags map[string ]string `json:"tags,optional,omitempty"` //自定义标签
+        AreaCount int64 `json:"areaCount,optional"` //项目下的区域统计(只读)
+        UserCount int64 `json:"userCount,optional"` //项目下的用户统计(只读)
+        DeviceCount int64 `json:"deviceCount,optional"` //项目下的设备统计(只读)
+        DeviceOnlineCount int64 `json:"deviceOnlineCount,optional"` //项目下的设备在线统计(只读)
+        AlarmStatus  int64  `json:"alarmStatus,optional,omitempty"`//报警状态(只读) （1正常 2提醒 3一般 4严重 5紧急 6超紧急）
+        Status  int64  `json:"status,optional,omitempty"`//项目状态  1 正常，2-禁用，3-过期
+        Type  string  `json:"type,optional,omitempty"`//项目类型
+        Ppsm int64  `json:"ppsm,optional,omitempty"`//w.h/m2 每平方米功耗 建筑定额能耗 Power per square meter
+        Area *float32  `json:"area,optional,omitempty"`//建筑面积(单位平米)
+        AdminUser *UserCore `json:"adminUser,optional,omitempty"` //管理员信息
+        Areas []*AreaInfo `json:"areas,optional,omitempty"`
+        Sort   int64                   `json:"sort,optional"`     // 排序标记,默认为1
+        Attachments []*Attachment `json:"attachments,optional,omitempty"` //附件
+    }
+    AreaInfo  {
+        CreatedTime int64 `json:"createdTime,optional,string"`   //创建时间（只读）
+        ProjectID int64 `json:"projectID,string,optional"`       //项目id（只读）
+        AreaID int64 `json:"areaID,string,optional"`             //项目区域id（只读）
+        ParentAreaID int64 `json:"parentAreaID,string,optional"` //上级项目区域id（只读）
+        AreaName string `json:"areaName,optional"`               //项目区域名称（读写）
+        Position *Point `json:"position,optional"`               //项目区域定位，默认高德坐标系（读写）
+        Desc *string `json:"desc,optional"`                      //项目区域备注（读写）
+        Tags map[string ]string `json:"tags,optional,omitempty"` //自定义标签
+        LowerLevelCount int64 `json:"lowerLevelCount,optional"` //下级的数量统计（只读）
+        DeviceCount int64  `json:"deviceCount,optional"` //设备数量统计(只读)
+        GroupCount int64  `json:"groupCount,optional"` //分组数量统计(只读)
+        UseBy string `json:"useBy,optional"`//用途: commonSpace default
+        IsLeaf int64 `json:"isLeaf,optional"` //是否是子节点（只读）
+        Sort   int64                   `json:"sort,optional"`     // 排序标记,默认为1
+        IsSysCreated int64 `json:"isSysCreated,optional"` //是否是系统创建的,系统创建的只有管理员可以删除
+        AreaIDPath string `json:"areaIDPath,optional"`          //项目区域ids（只读）
+        AreaNamePath string `json:"areaNamePath,optional"`//（只读）
+        AreaImg string  `json:"areaImg,optional"`
+        IsUpdateAreaImg bool  `json:"isUpdateAreaImg,optional"`
+        ConfigFile string  `json:"configFile,optional"` //区域配置文件
+        IsUpdateConfigFile bool  `json:"isUpdateConfigFile,optional"`
+        Children []*AreaInfo `json:"children,optional"`          //下级项目区域列表（只读）
+    }
+
+    ApiInfo  {
+        ID int64 `json:"id,optional"`                                      // 接口编号
+        AccessCode string `json:"accessCode"`                               // 模块编号
+        Route string `json:"route,optional"`                               // 接口路由
+        Method string `json:"method,optional"`                  // 接口请求方式: （1 GET 2 POST 3 HEAD 4 OPTIONS 5 PUT 6 DELETE 7 TRACE 8 CONNECT 9 其它）
+        Name string `json:"name,optional"`                                 // 接口名称
+        BusinessType int64 `json:"businessType,optional,range=[1:5]"`      // 业务类型（1新增 2修改 3删除 4查询 5其它)
+        RecordLogMode int64 `json:"recordLogMode,optional,range=[0:3]"`        //   1为自动模式(读取类型忽略,其他类型记录日志) 2全部记录 3不记录
+        Desc string `json:"desc,optional"`                       // 备注
+    }
+    AccessGroupInfo  {
+        ID string `json:"id,optional"`                               // id
+        Code string `json:"code,optional"`                               // 分组编码
+        name  string `json:"name,optional"`                               // 分组名称
+        Children []*AccessInfo `json:"children,omitempty"`            // 列表数据
+    }
+    AccessModuleInfo{
+        ID string `json:"id,optional"`                               // id
+        Code string `json:"code,optional"`                               // 编码
+        name  string `json:"name,optional"`                               // 模块名称
+        Children []*AccessGroupInfo `json:"children,omitempty"`            // 列表数据
+    }
+    AccessInfo  {
+        ID int64 `json:"id,optional"`                                      // 编号
+        Code string `json:"code"`
+        Module string `json:"module,optional"` //模块
+        Group string `json:"group,optional"`                  // 分组
+        Name string `json:"name,optional"`                                 // 名称
+        IsNeedAuth int64 `json:"isNeedAuth,optional,range=[1:2]"`        // 是否需要认证（ 1需要 2不需要）
+        AuthType int64 `json:"authType,optional,range=[0:3]"`        //   1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+        Desc string `json:"desc,optional"`                       // 备注
+        Apis []*ApiInfo `json:"apis,optional,omitempty"` //接口信息
+    }
+
+
+    Attachment{
+        ID       int64  `json:"id"`            // 附件ID,前端自己生成,不重复即可
+        FileName string `json:"fileName,optional"` // 只读:文件名
+        FileUrl  string `json:"fileUrl,optional"`   // 只读:访问url
+        FilePath string `json:"filePath,optional,omitempty"` //更新的时候传
+        UseBy    string `json:"useBy,optional,omitempty"`       //用途,选填
+    }
+)

@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "exceptions": [
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/securecontrol/protocol_test.go",
+      "sha256": "d7ba3c8970299aa7b149d8eb7a50aa2691788d5d073726052c0964a31f7d6838",
+      "rule": "generic-api-key",
+      "line": 18,
+      "reason": "Deterministic cryptographic test vector: base64 encoding of bytes 1 through 32; no live credential."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/securecontrol/protocol_test.go",
+      "sha256": "d7ba3c8970299aa7b149d8eb7a50aa2691788d5d073726052c0964a31f7d6838",
+      "rule": "generic-api-key",
+      "line": 34,
+      "reason": "Deterministic cryptographic test vector: base64 encoding of bytes 1 through 32; no live credential."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/securecontrol/protocol_test.go",
+      "sha256": "d7ba3c8970299aa7b149d8eb7a50aa2691788d5d073726052c0964a31f7d6838",
+      "rule": "generic-api-key",
+      "line": 46,
+      "reason": "Deterministic cryptographic test vector: base64 encoding of bytes 1 through 32; no live credential."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/securecontrol/protocol_test.go",
+      "sha256": "d7ba3c8970299aa7b149d8eb7a50aa2691788d5d073726052c0964a31f7d6838",
+      "rule": "generic-api-key",
+      "line": 84,
+      "reason": "Deterministic cryptographic test vector: base64 encoding of bytes 1 through 32; no live credential."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/pair/protocol_test.go",
+      "sha256": "7d3fd93a5c3dd5f1f3a8acb53cc007189facc3e7fc60591fa6b942d115a467de",
+      "rule": "generic-api-key",
+      "line": 21,
+      "reason": "Sequential hexadecimal-looking ASCII test input; verifies first-16-byte semantics."
+    },
+    {
+      "path": "backend/tools/things-baseline.lock",
+      "sha256": "536e2cfdc3d1d2ebba5918e348f135e55e023580d558c1c3119c5770915e3970",
+      "rule": "generic-api-key",
+      "line": 42,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "backend/tools/things-baseline.lock",
+      "sha256": "536e2cfdc3d1d2ebba5918e348f135e55e023580d558c1c3119c5770915e3970",
+      "rule": "generic-api-key",
+      "line": 48,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "backend/tools/things-baseline.lock",
+      "sha256": "536e2cfdc3d1d2ebba5918e348f135e55e023580d558c1c3119c5770915e3970",
+      "rule": "generic-api-key",
+      "line": 49,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "backend/tools/things-baseline.lock",
+      "sha256": "536e2cfdc3d1d2ebba5918e348f135e55e023580d558c1c3119c5770915e3970",
+      "rule": "generic-api-key",
+      "line": 50,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "backend/tools/things-baseline.lock",
+      "sha256": "536e2cfdc3d1d2ebba5918e348f135e55e023580d558c1c3119c5770915e3970",
+      "rule": "generic-api-key",
+      "line": 51,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "docs/rd/archives/snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md",
+      "sha256": "d7ecacf16245a702c6afec7239c75ff0572efc02c28ef4feb2575c2bdc55704a",
+      "rule": "generic-api-key",
+      "line": 161,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "docs/rd/archives/snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md",
+      "sha256": "d7ecacf16245a702c6afec7239c75ff0572efc02c28ef4feb2575c2bdc55704a",
+      "rule": "generic-api-key",
+      "line": 162,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "docs/rd/archives/snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md",
+      "sha256": "d7ecacf16245a702c6afec7239c75ff0572efc02c28ef4feb2575c2bdc55704a",
+      "rule": "generic-api-key",
+      "line": 163,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "docs/rd/archives/snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md",
+      "sha256": "d7ecacf16245a702c6afec7239c75ff0572efc02c28ef4feb2575c2bdc55704a",
+      "rule": "generic-api-key",
+      "line": 164,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "docs/rd/archives/snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-14-l0-things-compilation-migration-baseline.md",
+      "sha256": "7f089afe4bdf69051898b4e6750c82ce4188f063b452da98b2b97852f8c0611c",
+      "rule": "generic-api-key",
+      "line": 160,
+      "reason": "SHA-256 provenance digest for source keys/templates, not private key material."
+    },
+    {
+      "path": "backend/tools/cmd/thingsstartbaseline/production_test.go",
+      "sha256": "d5e426d676943a2a01fa65c17f27a1eae43917168e440b520d02d3c791bf2850",
+      "rule": "generic-api-key",
+      "line": 990,
+      "reason": "Inert runtime environment fixture with descriptive test-only values; no connection is performed."
+    },
+    {
+      "path": "docs/wiki/legacy/iot-doc/docs/superpowers/plans/2026-08-09-scene-runtime-scheduling-partition-failover-chapter-implementation.md",
+      "sha256": "276a10e09e431ec953883f254f7cc2e26b257517dccd173f148e7e3e7f03eb53",
+      "rule": "generic-api-key",
+      "line": 236,
+      "reason": "Architecture prose naming partition-generation and state keys; no credential assignment."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 34,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 62,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 70,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 365,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 614,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 768,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/saas/go.sum",
+      "sha256": "5f7116ccfd894ce0bf6022d500cec795a2a2bb94d07bfdce55bf2f74963c7555",
+      "rule": "generic-api-key",
+      "line": 770,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 36,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 64,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 73,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 406,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 699,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 898,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/share/go.sum",
+      "sha256": "369c53b0c9dc9857e311eab186e3554aebb65a0fc98de4c2c0a77639e91cef63",
+      "rule": "generic-api-key",
+      "line": 900,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 752,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 783,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 797,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 1227,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 1621,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 2082,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/things/go.sum",
+      "sha256": "746ff83f6e95976d559ef749ae75683af6a295b04f0aa6f65aaeeb65b3ce2595",
+      "rule": "generic-api-key",
+      "line": 2084,
+      "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    }
+  ]
+}

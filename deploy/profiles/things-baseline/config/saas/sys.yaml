@@ -1,0 +1,17 @@
+Name: sys.rpc
+ListenOn: 0.0.0.0:9180
+Mode: dev
+Log:
+  Encoding: plain
+Etcd: {Hosts: [etcd:2379], Key: sys.rpc}
+Database: {DBType: pgsql, IsInitTable: true, DSN: "${CORE_DB_DSN}"}
+CacheRedis: [{Host: "redis:6379", Type: node}]
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: syssvr}}
+OssConf: {OssType: local, StorePath: /app/oss}
+UserToken: {AccessSecret: "${CORE_USER_TOKEN_SECRET}", AccessExpire: 3600000}
+Map: {Mode: gaode, AccessKey: baseline-disabled, AccessSecret: baseline-disabled}
+Sms: {Enable: false}
+TimedJobRpc:
+  Enable: true
+  Mode: grpc
+  Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: timedjob.rpc}}

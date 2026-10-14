@@ -1,0 +1,43 @@
+schema_version: 1
+kafka_version: "4.3.1"
+timestamp_type: LogAppendTime
+deployment_profiles:
+  local: {local_only: true, replication_factor: 1, min_isr: 1}
+  production: {minimum_brokers: 3, replication_factor: 3, min_isr: 2, auto_create: false}
+raw_topic_template:
+  logical_name: iot.data.raw.v1.<protocolKey>
+  physical_name: iot.data.raw.v1.<protocolKey>.g01
+  generation: 1
+  plane: data
+  fact_kind: raw
+  schema_major: 1
+  partitions: 12
+  key_codec: transport-identity-v1
+  cleanup_policy: delete
+  retention_ms: 259200000
+  timestamp_type: LogAppendTime
+  producer_owner: protocol-adapter
+  consumer_owners: [normalizer]
+  acl_profile: data-plane-raw
+  replication_factor: 3
+  min_isr: 2
+  auto_create: false
+probe_topic: {physical_name: iot.data.contract.probe.v1.g01, partitions: 1, retention_ms: 3600000, timestamp_type: LogAppendTime}
+managed_topics:
+  - logical_name: iot.data.tenant.telemetry.v1
+    physical_name: iot.data.tenant.telemetry.v1.*.g01
+    generation: 1
+    plane: data
+    fact_kind: canonical-telemetry
+    schema_major: 1
+    partitions: 12
+    key_codec: internal-device-id-v1
+    cleanup_policy: delete
+    retention_ms: 604800000
+    timestamp_type: LogAppendTime
+    producer_owner: normalizer
+    consumer_owners: [telemetry-writer]
+    acl_profile: data-plane-canonical
+    replication_factor: 3
+    min_isr: 2
+    auto_create: false

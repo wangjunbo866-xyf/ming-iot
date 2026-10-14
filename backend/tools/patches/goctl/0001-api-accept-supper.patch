@@ -1,0 +1,88 @@
+diff --git a/tools/goctl/api/spec/validate.go b/tools/goctl/api/spec/validate.go
+index ab8497db..9a692cb8 100644
+--- a/tools/goctl/api/spec/validate.go
++++ b/tools/goctl/api/spec/validate.go
+@@ -28,6 +28,7 @@ var ValidAuthTypes = map[string]bool{
+ 	"all":      true,
+ 	"public":   true,
+ 	"device":   true, // 设备认证（IoT设备调用）
++	"supper":   true, // 超级管理员鉴权（联犀历史契约，旧业务 API 保留）
+ }
+ 
+ var ValidActions = map[string]bool{
+diff --git a/tools/goctl/api/spec/validate_test.go b/tools/goctl/api/spec/validate_test.go
+new file mode 100644
+index 00000000..2e15585f
+--- /dev/null
++++ b/tools/goctl/api/spec/validate_test.go
+@@ -0,0 +1,70 @@
++package spec
++
++import (
++	"strings"
++	"testing"
++)
++
++// validRouteForAuth builds a Route whose @doc carries the seven required
++// metadata fields, varying only authType. This isolates authType validation
++// from the rest of Validate().
++func validRouteForAuth(authType string) Route {
++	return Route{
++		Method:  "get",
++		Path:    "/api/v1/example",
++		Handler: "ExampleHandler",
++		AtDoc: AtDoc{
++			Properties: map[string]string{
++				"summary":       "示例接口",
++				"description":  "示例描述",
++				"authType":      authType,
++				"resource":      "example",
++				"action":        "view",
++				"group":         "example/group",
++				"recordLogMode": "1",
++			},
++		},
++	}
++}
++
++func specWithRoutes(routes ...Route) *ApiSpec {
++	return &ApiSpec{
++		Service: Service{
++			Name: "ExampleApi",
++			Groups: []Group{
++				{Annotation: Annotation{}, Routes: routes},
++			},
++		},
++	}
++}
++
++// TestValidateAuthTypeSupper 断言 authType="supper" 通过校验。
++// 联犀历史契约里 supper 表示超级管理员鉴权，旧业务 API 大量使用，必须保留。
++func TestValidateAuthTypeSupper(t *testing.T) {
++	s := specWithRoutes(validRouteForAuth("supper"))
++	if err := s.Validate(); err != nil {
++		t.Fatalf("authType=supper must be accepted, got error: %v", err)
++	}
++}
++
++// TestValidateAuthTypeKnown 断言已有的 platform/admin/all/public/device 仍通过。
++func TestValidateAuthTypeKnown(t *testing.T) {
++	for _, auth := range []string{"platform", "admin", "all", "public", "device"} {
++		s := specWithRoutes(validRouteForAuth(auth))
++		if err := s.Validate(); err != nil {
++			t.Errorf("authType=%s must be accepted, got error: %v", auth, err)
++		}
++	}
++}
++
++// TestValidateAuthTypeUnknown 断言未知 authType 仍被拒绝并返回 ErrInvalidAuthType。
++func TestValidateAuthTypeUnknown(t *testing.T) {
++	s := specWithRoutes(validRouteForAuth("unknown"))
++	err := s.Validate()
++	if err == nil {
++		t.Fatalf("authType=unknown must be rejected, got nil error")
++	}
++	if !strings.Contains(err.Error(), ErrInvalidAuthType.Error()) {
++		t.Fatalf("expected ErrInvalidAuthType, got: %v", err)
++	}
++}

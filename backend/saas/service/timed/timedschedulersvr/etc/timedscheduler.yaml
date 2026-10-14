@@ -1,0 +1,23 @@
+Name: timedscheduler.rpc
+ListenOn: 0.0.0.0:9284
+Etcd:
+  Hosts:
+    - localhost:2379
+  Key: timedscheduler.rpc
+Event:
+  
+CacheRedis:
+  - Host: localhost:6379
+    Pass:
+    Type: node
+TimedJobRpc:
+  Enable: true
+  Conf:
+    Timeout: 1000000
+#Database:
+#  DBType: pgsql
+#  DSN: ${CORE_DB_DSN}
+Database:
+  IsInitTable: true
+  DBType: mysql
+  DSN: ${CORE_DB_DSN}

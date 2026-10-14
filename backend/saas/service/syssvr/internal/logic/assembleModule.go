@@ -1,0 +1,62 @@
+package logic
+
+import (
+	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/saas/share/dataType"
+	"gitee.com/ming-iot/share/utils"
+)
+
+func ToModuleInfoPo(in *sys.ModuleInfo) *relationDB.SysModuleInfo {
+	return utils.Copy[relationDB.SysModuleInfo](in)
+}
+
+func ToModuleInfoPb(in *relationDB.SysModuleInfo) *sys.ModuleInfo {
+	return utils.Copy[sys.ModuleInfo](in)
+}
+
+func ToModuleInfosPb(in []*relationDB.SysModuleInfo) (ret []*sys.ModuleInfo) {
+	for _, v := range in {
+		ret = append(ret, ToModuleInfoPb(v))
+	}
+	return
+}
+
+//func ToTenantApiInfoPo(in *sys.TenantApiInfo) *relationDB.SysTenantAppApi {
+//	if in == nil || in.Info == nil {
+//		return nil
+//	}
+//	return &relationDB.SysTenantAppApi{
+//		TempLateID:   in.TemplateID,
+//		TenantCode:   stores.TenantCode(in.TemplateCode),
+//		AppCode:      in.AppCode,
+//		SysModuleApi: *ToApiInfoPo(in.Info),
+//	}
+//}
+
+func ToTenantAppMenuPo(in *sys.TenantAppMenu) *relationDB.SysTenantAppMenu {
+	if in == nil || in.Info == nil {
+		return nil
+	}
+	po := utils.Copy[relationDB.SysTenantAppMenu](in)
+	po.TempLateID = in.TemplateID
+	po.TenantCode = dataType.TenantCode(in.Code)
+	po.AppCode = in.AppCode
+	return po
+}
+
+func ToMenuInfoPb(in *relationDB.SysModuleMenu) *sys.MenuInfo {
+	return utils.Copy[sys.MenuInfo](in)
+}
+
+func ToTenantAppMenuInfoPb(in *relationDB.SysTenantAppMenu) *sys.TenantAppMenu {
+	if in == nil {
+		return nil
+	}
+	return &sys.TenantAppMenu{
+		TemplateID: in.TempLateID,
+		Code:       string(in.TenantCode),
+		AppCode:    in.AppCode,
+		Info:       utils.Copy[sys.MenuInfo](in),
+	}
+}

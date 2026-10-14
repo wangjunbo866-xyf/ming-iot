@@ -1,0 +1,114 @@
+info(
+    title: "通知模版管理模块"
+    desc: "通知模版管理"
+    author: "L"
+    email: "174805676@qq.com"
+    version: "v0.1.0"
+)
+
+@server (
+    group: system/notify/template
+    prefix: /api/v1/system/notify/template
+    accessCodePrefix: "systemNotifyTemplate"
+    accessNamePrefix: "通知模版"
+    accessGroup: "通知管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加通知模版"
+        description: "为指定通知与通道新建消息模板，含第三方模板编码、签名与默认正文"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "template"
+        action: "create"
+        group: "system/notify/template"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (NotifyTemplate) returns (WithID)
+
+    @doc(
+        summary: "获取通知模版列表"
+        description: "按名称、通知编码或通道类型分页查询消息模板清单"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "template"
+        action: "view"
+        group: "system/notify/template"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (NotifyTemplateIndexReq) returns (NotifyTemplateIndexResp)
+
+    @doc(
+        summary: "获取通知模版详情"
+        description: "按主键读取单条消息模板的完整内容与所属通道信息"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "template"
+        action: "view"
+        group: "system/notify/template"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithID) returns (NotifyTemplate)
+
+    @doc(
+        summary: "更新通知模版"
+        description: "修改指定消息模板的编码、签名、默认主题与正文等内容"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "template"
+        action: "update"
+        group: "system/notify/template"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (NotifyTemplate) returns ()
+
+    @doc(
+        summary: "删除通知模版"
+        description: "按主键删除消息模板，引用该模板的通知绑定将失去模板来源"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "template"
+        action: "delete"
+        group: "system/notify/template"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+}
+
+type (
+
+    NotifyTemplateIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Name string `json:"name,optional"`                     //
+        NotifyCode string `json:"notifyCode,optional"`                     // 应用编号
+        Type string  `json:"type,optional"` //对应的配置类型 sms email
+    }
+
+
+    NotifyTemplateIndexResp  {
+        List []*NotifyTemplate `json:"list"`            // 通知模版列表数据
+        PageResp
+    }
+
+    NotifyTemplate{
+         ID int64 `json:"id,optional"`  // id编号
+         Name string `json:"name,optional"`  //通知的命名
+         NotifyCode string `json:"notifyCode,optional"`  //对应的配置Code
+         Type string `json:"type,optional"`  //对应的配置类型 sms email
+         TemplateCode string `json:"templateCode,optional"`  // 通知类型编码
+         SignName string `json:"signName,optional"`  //签名(短信)
+         Subject string `json:"subject,optional"`  //默认消息主题
+         Body string `json:"body,optional"`  //默认模版内容
+         Desc string `json:"desc,optional"`  // 备注
+         ChannelID int64 `json:"channelID,optional"`
+         Channel *NotifyChannel `json:"channel,optional"`
+    }
+)

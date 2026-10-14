@@ -1,0 +1,14 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+import "user/info.api" //用户相关功能
+import "user/self.api" //用户相关功能
+import "user/dept.api" //用户相关功能
+import "user/role.api" //用户数据权限相关功能
+import "user/data.api" //用户数据权限相关功能

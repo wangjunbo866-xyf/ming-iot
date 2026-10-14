@@ -1,0 +1,59 @@
+package user
+
+import (
+	"gitee.com/ming-iot/saas/service/apisvr/internal/logic/system"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/logic/system/role"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/types"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/share/utils"
+	"github.com/golang/protobuf/ptypes/wrappers"
+)
+
+func GetNullVal(val *wrappers.StringValue) *string {
+	if val == nil {
+		return nil
+	}
+	return &val.Value
+}
+
+type UserOpt struct {
+	Roles  []*sys.RoleInfo
+	Tenant *sys.TenantInfo
+	Depts  []*sys.DeptInfo
+}
+
+func UserInfoToApi(ui *sys.UserInfo, opt UserOpt) *types.UserInfo {
+	if ui == nil {
+		return nil
+	}
+	ret := utils.Copy[types.UserInfo](ui)
+	if len(ret.Password) != 0 {
+		ret.Password = "xxxx"
+	}
+	ret.BindThird = map[string]string{}
+	if ui.WechatOpenID != "" {
+		ret.BindThird["wx"] = ui.WechatOpenID
+	}
+	if ret.BindThird["wx"] == "" && ui.WechatUnionID != "" {
+		ret.BindThird["wx"] = ui.WechatUnionID
+	}
+	if ui.DingTalkUserID != "" {
+		ret.BindThird["ding"] = ui.DingTalkUserID
+	}
+	if ret.BindThird["ding"] == "" && ui.DingTalkUnionID != "" {
+		ret.BindThird["ding"] = ui.DingTalkUnionID
+	}
+	if ui.HuaweiOpenID != "" {
+		ret.BindThird["huawei"] = ui.HuaweiOpenID
+	}
+	if ret.BindThird["huawei"] == "" && ui.HuaweiUnionID != "" {
+		ret.BindThird["huawei"] = ui.HuaweiUnionID
+	}
+	ret.Roles = role.ToRoleInfosTypes(opt.Roles)
+	ret.Tenant = system.ToTenantInfoTypes(opt.Tenant, nil, nil)
+	ret.Depts = utils.CopySlice[types.DeptInfo](opt.Depts)
+	return ret
+}
+func UserInfoToRpc(ui *types.UserInfo) *sys.UserInfo {
+	return utils.Copy[sys.UserInfo](ui)
+}

@@ -1,0 +1,221 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+
+service NotifyManage {
+  //站内信
+  rpc messageInfoSend(MessageInfoSendReq)returns(WithID);//发送站内信给用户
+  rpc messageInfoIndex(MessageInfoIndexReq)returns(MessageInfoIndexResp);//获取全局站内信列表
+  rpc messageInfoUpdate(MessageInfo)returns(Empty);//更新站内信
+  rpc messageInfoDelete(WithID)returns(Empty);//删除站内信
+
+  //通知配置信息
+  rpc notifyConfigRead(WithIDCode)returns(NotifyConfig);
+  rpc notifyConfigCreate(NotifyConfig)returns(WithID);
+  rpc notifyConfigUpdate(NotifyConfig)returns(Empty);
+  rpc notifyConfigIndex(NotifyConfigIndexReq)returns(NotifyConfigIndexResp);
+  rpc notifyConfigDelete(WithID)returns(Empty);
+  rpc notifyConfigSend(NotifyConfigSendReq)returns(Empty);//发送消息通知(短信,邮箱,钉钉推送,微信推送,app推送)
+
+  //通知模版
+  rpc notifyTemplateRead(WithID)returns(NotifyTemplate);
+  rpc notifyTemplateCreate(NotifyTemplate)returns(WithID);
+  rpc notifyTemplateUpdate(NotifyTemplate)returns(Empty);
+  rpc notifyTemplateIndex(NotifyTemplateIndexReq)returns(NotifyTemplateIndexResp);
+  rpc notifyTemplateDelete(WithID)returns(Empty);
+
+  //租户通知配置
+  rpc notifyConfigTemplateUpdate(NotifyConfigTemplate)returns(Empty);
+  rpc notifyConfigTemplateDelete(NotifyConfigTemplateDeleteReq)returns(Empty);
+  rpc notifyConfigTemplateIndex(NotifyConfigTemplateIndexReq)returns(NotifyConfigTemplateIndexResp);
+  rpc notifyChannelRead(WithID)returns(NotifyChannel);
+  rpc notifyChannelCreate(NotifyChannel)returns(WithID);
+  rpc notifyChannelUpdate(NotifyChannel)returns(Empty);
+  rpc notifyChannelIndex(NotifyChannelIndexReq)returns(NotifyChannelIndexResp);
+  rpc notifyChannelDelete(WithID)returns(Empty);
+}
+
+message SendOption {
+  int64  timeoutToFail = 1;//超时失败时间
+  int64  requestTimeout = 2;//请求超时,超时后会进行重试
+  int64  retryInterval = 3;//重试间隔
+}
+
+message NotifyConfig{
+  int64 id =1; // id编号
+  string group =2; //分组
+  string code =3; // 通知类型编码
+  string name =4; //通知的命名
+  repeated string supportTypes =5; //支持的通知类型
+  repeated string enableTypes =8; //启用的通知类型
+  string desc =6; // 项目备注
+  int64 isRecord =7; //是否记录该消息,是的情况下会将消息存一份到消息中心
+  map<string,string> params =12; //变量属性 key是参数,value是描述
+}
+
+message NotifyConfigIndexReq{
+  PageInfo page =1;
+  string group =2; //分组
+  string code =3; // 通知类型编码
+  string name =4; //通知的命名
+}
+
+message NotifyConfigIndexResp{
+  repeated NotifyConfig list =1;
+  int64 total= 2;
+}
+
+message NotifyTemplate{
+  int64 id =1;  // id编号
+  string tenantCode =2;  //限定租户,不填是通用的
+  string name =3;  //通知的命名
+  string notifyCode =4;  //对应的配置Code
+  string type =5;  //对应的配置类型 sms email
+  string templateCode =6;  // 通知类型编码
+  string signName =7;  //签名(短信)
+  string subject =8;  //默认消息主题
+  string body =9;  //默认模版内容
+  string desc =10;  // 备注
+  int64 channelID =11;//通道ID
+  NotifyChannel Channel =12;
+}
+
+message NotifyChannel{
+  int64 id =1;  // id编号
+  string name =2;  //通知的命名
+  string type =3;  //对应的配置类型 sms email
+  string desc =4;  // 备注
+  string webhook =5;//钉钉webhook及企微webhook
+  ThirdEmail email =6;//邮箱配置
+  ThirdAppConfig app =7;//第三方应用配置
+  ThirdSms sms =8;//短信配置
+  string appCode =9;//微信小程序推送关联的组织应用编码
+}
+
+message NotifyChannelIndexReq{
+  PageInfo page =1;
+  string name =3;  //通知的命名
+  string type =2;  //对应的配置类型 sms email
+}
+
+message NotifyChannelIndexResp{
+  repeated NotifyChannel list =1;
+  int64 total= 2;
+}
+
+message ThirdEmail {
+  string From    =1;// 发件人  你自己要发邮件的邮箱
+  string Host    =2;// 服务器地址 例如 smtp.qq.com  请前往QQ或者你要发邮件的邮箱查看其smtp协议
+  string Secret  =3;// 密钥    用于登录的密钥 最好不要用邮箱密码 去邮箱smtp申请一个用于登录的密钥
+  string Nickname=4;// 昵称    发件人昵称 通常为自己的邮箱
+  int64 Port     =5;// 端口     请前往QQ或者你要发邮件的邮箱查看其smtp协议 大多为 465
+  int64 IsSSL    =6;// 是否SSL   是否开启SSL
+}
+
+message ThirdSms {
+  string type =1;//ali|tencent
+  string accessKeyID =2;
+  string accessKeySecret =3;
+  string appID = 4;
+  string appKey = 5;
+}
+
+message NotifyTemplateIndexReq{
+  PageInfo page =1;
+  string name =3;  //通知的命名
+  string notifyCode =4;  //对应的配置Code
+  string type =5;  //对应的配置类型 sms email
+}
+
+message NotifyTemplateIndexResp{
+  repeated NotifyTemplate list =1;
+  int64 total= 2;
+}
+
+message MessageInfoIndexReq{
+  PageInfo page =1;
+  string group =2; //分组
+  string notifyCode  =4;
+}
+
+message MessageInfoIndexResp{
+  repeated MessageInfo list=1;
+  int64 total = 2;
+}
+
+message MessageInfoSendReq{
+  repeated int64 userIDs     =1; //指定用户ID
+  int64 isGlobal =2;//全局消息
+  string notifyCode  =4;         //通知的code
+  string subject     =5; //通知主题
+  string body        =6;
+  string str1        =7;
+  string str2        =8;
+  string str3        =9;
+  repeated string withTypes =10;  //同时推送指定方式 sms email
+  map<string,string> params =12;//
+  int64 NotifyTime = 11;//通知时间,不传为立刻通知
+}
+
+message MessageTriggerUser {
+  int64 userId = 1;
+  string nickName = 2;
+  string account = 3;
+  string triggerType = 4; // manual | auto
+}
+
+message MessageInfo {
+  int64 id=10;
+  string group =1;
+  string notifyCode =2;
+  string notifyType =14; // 通知渠道：message / systemNotice 等
+  string notifyName =12;
+  string subject=3;
+  string body=4;
+  string str1=5;
+  string str2=6;
+  string str3=7;
+  int64 isGlobal =8;
+  int64 createdTime=9;
+  int64 notifyTime = 11;//通知时间,不传为立刻通知
+  MessageTriggerUser triggerUser = 13;
+}
+
+message NotifyConfigTemplateDeleteReq{
+  string notifyCode =2;
+  string type =3;
+}
+
+message NotifyConfigTemplateIndexReq{
+  string notifyCode =2;
+  string type =3;
+}
+
+message NotifyConfigTemplateIndexResp{
+  repeated NotifyConfigTemplate list =1;
+}
+
+message NotifyConfigTemplate{
+  int64 id =1;
+  string notifyCode =2;
+  string type =3;
+  int64 templateID =4;
+}
+
+message NotifyConfigSendReq{
+      repeated int64 userIDs     =1; //只有填写了用户ID才会记录
+      repeated string accounts    =2;
+//      string accountType =3;
+      string notifyCode  =4;         //通知的code
+      string type        =5; //通知类型
+      map<string,string> params      =6;
+      string str1        =7;
+      string str2        =8;
+      string str3        =9;
+      int64 templateID =10;//指定模版
+}
+

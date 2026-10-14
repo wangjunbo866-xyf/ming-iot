@@ -1,0 +1,56 @@
+#设备管理模块-dmsvr
+Name: dm.rpc
+ListenOn: 127.0.0.1:9081
+CpuThreshold: 0
+Timeout: 1000000
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: dm.rpc
+Database:
+  DBType: mysql
+  DSN: ${THINGS_DB_DSN}
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+TSDB:
+  DSN: ${THINGS_TSDB_DSN}
+AuthWhite:
+  Users:
+    - UserName: dgsvr
+      Password: ${THINGS_INTERNAL_AUTH_PASSWORD}
+    - UserName: pwumeisvr
+      Password: ${THINGS_INTERNAL_AUTH_PASSWORD}
+  IpRange:
+    - 127.0.0.1
+    - 172.18.0.1
+    - 172.20.0.1
+    - 192.168.1.1
+    - 172.20.0.0/16
+Event:
+  
+  Nats:
+    Url: nats://127.0.0.1:4222
+    Consumer: dmsvr
+Telemetry:
+  Name: dm.rpc
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+TimedJobRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Etcd:
+      Key: timedjob.rpc
+SysRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Etcd:
+      Hosts:
+        - 127.0.0.1:2379
+      Key: sys.rpc

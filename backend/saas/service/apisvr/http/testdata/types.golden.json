@@ -1,0 +1,7336 @@
+[
+  {
+    "name": "AccessGroupInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "string",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*AccessInfo",
+        "tag": "`json:\"children,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Module",
+        "type": "string",
+        "tag": "`json:\"module,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "IsNeedAuth",
+        "type": "int64",
+        "tag": "`json:\"isNeedAuth,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "AuthTypes",
+        "type": "[]int64",
+        "tag": "`json:\"authTypes,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "WithApis",
+        "type": "bool",
+        "tag": "`json:\"withApis,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*AccessInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "AccessInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Module",
+        "type": "string",
+        "tag": "`json:\"module,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "IsNeedAuth",
+        "type": "int64",
+        "tag": "`json:\"isNeedAuth,optional,range=[1:2]\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Apis",
+        "type": "[]*ApiInfo",
+        "tag": "`json:\"apis,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessModuleInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "string",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*AccessGroupInfo",
+        "tag": "`json:\"children,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessMultiImportReq",
+    "fields": [
+      {
+        "name": "Module",
+        "type": "string",
+        "tag": "`form:\"module,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessMultiImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "AccessTreeResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*AccessModuleInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiBatchAggReq",
+    "fields": [
+      {
+        "name": "Reqs",
+        "type": "[]*ApiBatchAggReqOne",
+        "tag": "`json:\"reqs\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiBatchAggReqOne",
+    "fields": [
+      {
+        "name": "Uri",
+        "type": "string",
+        "tag": "`json:\"uri\"`"
+      },
+      {
+        "name": "Bodys",
+        "type": "[]map[string]interface{}",
+        "tag": "`json:\"body\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiBatchAggResp",
+    "fields": [
+      {
+        "name": "Lists",
+        "type": "[][]map[string]interface{}",
+        "tag": "`json:\"lists\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "AccessCode",
+        "type": "string",
+        "tag": "`json:\"accessCode\"`"
+      },
+      {
+        "name": "Route",
+        "type": "string",
+        "tag": "`json:\"route,optional\"`"
+      },
+      {
+        "name": "Method",
+        "type": "string",
+        "tag": "`json:\"method,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "BusinessType",
+        "type": "int64",
+        "tag": "`json:\"businessType,optional,range=[1:5]\"`"
+      },
+      {
+        "name": "RecordLogMode",
+        "type": "int64",
+        "tag": "`json:\"recordLogMode,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Route",
+        "type": "string",
+        "tag": "`json:\"route,optional\"`"
+      },
+      {
+        "name": "Method",
+        "type": "string",
+        "tag": "`json:\"method,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "AccessCode",
+        "type": "string",
+        "tag": "`json:\"accessCode,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional,range=[0:3]\"`"
+      }
+    ]
+  },
+  {
+    "name": "ApiInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ApiInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "AppCore",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "SubType",
+        "type": "string",
+        "tag": "`json:\"subType,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "LoginTypes",
+        "type": "[]string",
+        "tag": "`json:\"loginTypes,optional\"`"
+      },
+      {
+        "name": "WxOpen",
+        "type": "*ThirdMiniCore",
+        "tag": "`json:\"wxOpen,optional,omitempty\"`"
+      },
+      {
+        "name": "IsAutoRegister",
+        "type": "int64",
+        "tag": "`json:\"isAutoRegister,optional\"`"
+      },
+      {
+        "name": "Config",
+        "type": "string",
+        "tag": "`json:\"config,optional\"`"
+      },
+      {
+        "name": "Android",
+        "type": "*ThirdApp",
+        "tag": "`json:\"android,optional,omitempty\"`"
+      },
+      {
+        "name": "Huawei",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"huawei,optional,omitempty\"`"
+      },
+      {
+        "name": "Tenant",
+        "type": "*TenantCore",
+        "tag": "`json:\"tenant\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "SubType",
+        "type": "string",
+        "tag": "`json:\"subType,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*AppInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "AppModuleIndexReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppModuleIndexResp",
+    "fields": [
+      {
+        "name": "ModuleCodes",
+        "type": "[]string",
+        "tag": "`json:\"moduleCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppModuleMultiUpdateReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "ModuleCodes",
+        "type": "[]string",
+        "tag": "`json:\"moduleCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "AppleAppConfig",
+    "fields": [
+      {
+        "name": "AppID",
+        "type": "string",
+        "tag": "`json:\"appID,optional\"`"
+      },
+      {
+        "name": "BundleID",
+        "type": "string",
+        "tag": "`json:\"bundleID,optional\"`"
+      },
+      {
+        "name": "TeamID",
+        "type": "string",
+        "tag": "`json:\"teamID,optional\"`"
+      },
+      {
+        "name": "KeyID",
+        "type": "string",
+        "tag": "`json:\"keyID,optional\"`"
+      },
+      {
+        "name": "PrivateKey",
+        "type": "string",
+        "tag": "`json:\"privateKey,optional\"`"
+      },
+      {
+        "name": "RedirectURI",
+        "type": "string",
+        "tag": "`json:\"redirectURI,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaInfo",
+    "fields": [
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional,string\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "ParentAreaID",
+        "type": "int64",
+        "tag": "`json:\"parentAreaID,string,optional\"`"
+      },
+      {
+        "name": "AreaName",
+        "type": "string",
+        "tag": "`json:\"areaName,optional\"`"
+      },
+      {
+        "name": "Position",
+        "type": "*Point",
+        "tag": "`json:\"position,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "map[string]string",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "LowerLevelCount",
+        "type": "int64",
+        "tag": "`json:\"lowerLevelCount,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      },
+      {
+        "name": "GroupCount",
+        "type": "int64",
+        "tag": "`json:\"groupCount,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional\"`"
+      },
+      {
+        "name": "IsLeaf",
+        "type": "int64",
+        "tag": "`json:\"isLeaf,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      },
+      {
+        "name": "IsSysCreated",
+        "type": "int64",
+        "tag": "`json:\"isSysCreated,optional\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "AreaNamePath",
+        "type": "string",
+        "tag": "`json:\"areaNamePath,optional\"`"
+      },
+      {
+        "name": "AreaImg",
+        "type": "string",
+        "tag": "`json:\"areaImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateAreaImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateAreaImg,optional\"`"
+      },
+      {
+        "name": "ConfigFile",
+        "type": "string",
+        "tag": "`json:\"configFile,optional\"`"
+      },
+      {
+        "name": "IsUpdateConfigFile",
+        "type": "bool",
+        "tag": "`json:\"isUpdateConfigFile,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*AreaInfo",
+        "tag": "`json:\"children,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional\"`"
+      },
+      {
+        "name": "ParentAreaID",
+        "type": "int64",
+        "tag": "`json:\"parentAreaID,string,optional\"`"
+      },
+      {
+        "name": "IsRetTopLevel",
+        "type": "bool",
+        "tag": "`json:\"isRetTopLevel,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "*CompareInt64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      },
+      {
+        "name": "GroupCount",
+        "type": "*CompareInt64",
+        "tag": "`json:\"groupCount,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaInfoIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*AreaInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaInfoReadReq",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaProfile",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaProfileIndexReq",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaProfileIndexResp",
+    "fields": [
+      {
+        "name": "Profiles",
+        "type": "[]*AreaProfile",
+        "tag": "`json:\"profiles\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaProfileReadReq",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "AreaWithID",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "Attachment",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "FileName",
+        "type": "string",
+        "tag": "`json:\"fileName,optional\"`"
+      },
+      {
+        "name": "FileUrl",
+        "type": "string",
+        "tag": "`json:\"fileUrl,optional\"`"
+      },
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath,optional,omitempty\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "Compare",
+    "fields": [
+      {
+        "name": "CmpTYpe",
+        "type": "string",
+        "tag": "`json:\"cmpType\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value\"`"
+      },
+      {
+        "name": "CastTo",
+        "type": "string",
+        "tag": "`json:\"castTo\"`"
+      }
+    ]
+  },
+  {
+    "name": "CompareInt64",
+    "fields": [
+      {
+        "name": "CmpTYpe",
+        "type": "string",
+        "tag": "`json:\"cmpType\"`"
+      },
+      {
+        "name": "Value",
+        "type": "int64",
+        "tag": "`json:\"value,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ConfigResp",
+    "fields": [
+      {
+        "name": "Map",
+        "type": "Map",
+        "tag": "`json:\"map\"`"
+      },
+      {
+        "name": "Oss",
+        "type": "Oss",
+        "tag": "`json:\"oss\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataArea",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "IsAuthChildren",
+        "type": "int64",
+        "tag": "`json:\"isAuthChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataAreaDetail",
+    "fields": [
+      {
+        "name": "",
+        "type": "*AreaInfo",
+        "tag": ""
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "IsAuthChildren",
+        "type": "int64",
+        "tag": "`json:\"isAuthChildren,optional\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string,optional\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType,optional\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime,optional\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataAreaIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string,optional\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataAreaIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DataAreaDetail",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataAreaMultiDeleteReq",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataAreaMultiUpdateReq",
+    "fields": [
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "Areas",
+        "type": "[]*DataArea",
+        "tag": "`json:\"areas\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataOpenAccess",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "AccessSecret",
+        "type": "string",
+        "tag": "`json:\"accessSecret,optional\"`"
+      },
+      {
+        "name": "IpRange",
+        "type": "[]string",
+        "tag": "`json:\"ipRange,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataOpenAccessIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataOpenAccessIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DataOpenAccess",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProject",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string,optional\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime,optional\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectDeleteReq",
+    "fields": [
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string,optional\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DataProject",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectMultiDeleteReq",
+    "fields": [
+      {
+        "name": "TargetID",
+        "type": "[]int64",
+        "tag": "`json:\"targetIDs,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectMultiSaveReq",
+    "fields": [
+      {
+        "name": "TargetIDs",
+        "type": "[]int64",
+        "tag": "`json:\"targetID,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      }
+    ]
+  },
+  {
+    "name": "DataProjectSaveReq",
+    "fields": [
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string\"`"
+      },
+      {
+        "name": "TargetType",
+        "type": "string",
+        "tag": "`json:\"targetType\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      }
+    ]
+  },
+  {
+    "name": "DateRange",
+    "fields": [
+      {
+        "name": "Start",
+        "type": "string",
+        "tag": "`json:\"start,optional\"`"
+      },
+      {
+        "name": "End",
+        "type": "string",
+        "tag": "`json:\"end,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DebugResp",
+    "fields": [
+      {
+        "name": "RequestUri",
+        "type": "string",
+        "tag": "`json:\"requestUri\"`"
+      },
+      {
+        "name": "Headers",
+        "type": "map[string]string",
+        "tag": "`json:\"headers\"`"
+      },
+      {
+        "name": "Body",
+        "type": "string",
+        "tag": "`json:\"body,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "IDPath",
+        "type": "string",
+        "tag": "`json:\"idPath,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "UserCount",
+        "type": "int64",
+        "tag": "`json:\"userCount,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "DingTalkID",
+        "type": "int64",
+        "tag": "`json:\"dingTalkID,string,optional\"`"
+      },
+      {
+        "name": "Parent",
+        "type": "*DeptInfo",
+        "tag": "`json:\"parent,optional,omitempty\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*DeptInfo",
+        "tag": "`json:\"children,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,string,optional\"`"
+      },
+      {
+        "name": "DingTalkIDs",
+        "type": "[]string",
+        "tag": "`json:\"dingTalkIDs,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptInfoIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DeptInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptInfoReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,string\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "WithFather",
+        "type": "bool",
+        "tag": "`json:\"withFather,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptSyncJob",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      },
+      {
+        "name": "Direction",
+        "type": "int64",
+        "tag": "`json:\"direction,optional\"`"
+      },
+      {
+        "name": "ThirdType",
+        "type": "string",
+        "tag": "`json:\"thirdType,optional\"`"
+      },
+      {
+        "name": "ThirdConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"thirdConfig,optional\"`"
+      },
+      {
+        "name": "FieldMap",
+        "type": "map[string]string",
+        "tag": "`json:\"fieldMap,optional\"`"
+      },
+      {
+        "name": "SyncDeptIDs",
+        "type": "[]string",
+        "tag": "`json:\"syncDeptIDs,optional\"`"
+      },
+      {
+        "name": "IsAddSync",
+        "type": "int64",
+        "tag": "`json:\"isAddSync,optional\"`"
+      },
+      {
+        "name": "SyncMode",
+        "type": "int64",
+        "tag": "`json:\"syncMode,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptSyncJobExecuteReq",
+    "fields": [
+      {
+        "name": "JobID",
+        "type": "int64",
+        "tag": "`json:\"jobID,optional,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptSyncJobIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,string,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Direction",
+        "type": "int64",
+        "tag": "`json:\"direction,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptSyncJobIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DeptSyncJob",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptSyncJobReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,string\"`"
+      },
+      {
+        "name": "WithFather",
+        "type": "bool",
+        "tag": "`json:\"withFather,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptUser",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,string\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,optional,string\"`"
+      },
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,optional,string\"`"
+      },
+      {
+        "name": "DeptIDPath",
+        "type": "string",
+        "tag": "`json:\"deptIdPath,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "IsAuthChildren",
+        "type": "int64",
+        "tag": "`json:\"isAuthChildren,optional\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptUserIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,optional,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptUserIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DeptUser",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptUserMultiCreateReq",
+    "fields": [
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,optional,string\"`"
+      },
+      {
+        "name": "UserIDs",
+        "type": "[]int64",
+        "tag": "`json:\"userIDs,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "IsAuthChildren",
+        "type": "int64",
+        "tag": "`json:\"isAuthChildren\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeptUserMultiDeleteReq",
+    "fields": [
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,string\"`"
+      },
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictDetail",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "DictCode",
+        "type": "string",
+        "tag": "`json:\"dictCode\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional,omitempty\"`"
+      },
+      {
+        "name": "IDPath",
+        "type": "string",
+        "tag": "`json:\"idPath,optional\"`"
+      },
+      {
+        "name": "Label",
+        "type": "string",
+        "tag": "`json:\"label,optional\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Body",
+        "type": "*string",
+        "tag": "`json:\"body,optional,omitempty\"`"
+      },
+      {
+        "name": "Parent",
+        "type": "*DictDetail",
+        "tag": "`json:\"parent,optional,omitempty\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*DictDetail",
+        "tag": "`json:\"children,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictDetailIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "DictCode",
+        "type": "string",
+        "tag": "`json:\"dictCode\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Label",
+        "type": "string",
+        "tag": "`json:\"label,optional\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value,optional\"`"
+      },
+      {
+        "name": "Values",
+        "type": "[]string",
+        "tag": "`json:\"values,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictDetailIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DictDetail",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictDetailReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "DictCode",
+        "type": "string",
+        "tag": "`json:\"dictCode\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value,optional\"`"
+      },
+      {
+        "name": "WithFather",
+        "type": "bool",
+        "tag": "`json:\"withFather,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Body",
+        "type": "*string",
+        "tag": "`json:\"body,optional\"`"
+      },
+      {
+        "name": "StructType",
+        "type": "int64",
+        "tag": "`json:\"structType,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*DictInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoMultExportReq",
+    "fields": [
+      {
+        "name": "DictCodes",
+        "type": "[]string",
+        "tag": "`json:\"dictCodes,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoMultExportResp",
+    "fields": [
+      {
+        "name": "Dicts",
+        "type": "string",
+        "tag": "`json:\"dicts\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoMultImportReq",
+    "fields": [
+      {
+        "name": "Dicts",
+        "type": "string",
+        "tag": "`json:\"dicts\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoMultImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "DictInfoReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DownloadFileReq",
+    "fields": [
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`form:\"filePath\"`"
+      },
+      {
+        "name": "Sign",
+        "type": "string",
+        "tag": "`form:\"sign,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "Empty",
+    "fields": null
+  },
+  {
+    "name": "IDList",
+    "fields": [
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids\"`"
+      }
+    ]
+  },
+  {
+    "name": "JwtToken",
+    "fields": [
+      {
+        "name": "AccessToken",
+        "type": "string",
+        "tag": "`json:\"accessToken,omitempty\"`"
+      },
+      {
+        "name": "AccessExpire",
+        "type": "int64",
+        "tag": "`json:\"accessExpire,string,omitempty\"`"
+      },
+      {
+        "name": "RefreshAfter",
+        "type": "int64",
+        "tag": "`json:\"refreshAfter,string,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "Map",
+    "fields": [
+      {
+        "name": "Mode",
+        "type": "string",
+        "tag": "`json:\"mode,options=gaode\"`"
+      },
+      {
+        "name": "AccessKey",
+        "type": "string",
+        "tag": "`json:\"accessKey\"`"
+      },
+      {
+        "name": "AccessSecret",
+        "type": "string",
+        "tag": "`json:\"accessSecret\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Path",
+        "type": "string",
+        "tag": "`json:\"path,optional\"`"
+      },
+      {
+        "name": "Component",
+        "type": "string",
+        "tag": "`json:\"component,optional\"`"
+      },
+      {
+        "name": "Icon",
+        "type": "string",
+        "tag": "`json:\"icon,optional\"`"
+      },
+      {
+        "name": "Redirect",
+        "type": "string",
+        "tag": "`json:\"redirect,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "HideInMenu",
+        "type": "int64",
+        "tag": "`json:\"hideInMenu,optional\"`"
+      },
+      {
+        "name": "IsCommon",
+        "type": "int64",
+        "tag": "`json:\"isCommon,optional\"`"
+      },
+      {
+        "name": "IsAllTenant",
+        "type": "int64",
+        "tag": "`json:\"isAllTenant,optional\"`"
+      },
+      {
+        "name": "Body",
+        "type": "*string",
+        "tag": "`json:\"body,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*MenuInfo",
+        "tag": "`json:\"children,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuInfoIndexReq",
+    "fields": [
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Path",
+        "type": "string",
+        "tag": "`json:\"path,optional\"`"
+      },
+      {
+        "name": "IsRetTree",
+        "type": "bool",
+        "tag": "`json:\"isRetTree,optional\"`"
+      },
+      {
+        "name": "IsCommon",
+        "type": "int64",
+        "tag": "`json:\"isCommon,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*MenuInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuMultiExportReq",
+    "fields": [
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuMultiExportResp",
+    "fields": [
+      {
+        "name": "Menu",
+        "type": "string",
+        "tag": "`json:\"menu\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuMultiImportReq",
+    "fields": [
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode,optional\"`"
+      },
+      {
+        "name": "Mode",
+        "type": "int64",
+        "tag": "`json:\"mode,optional\"`"
+      },
+      {
+        "name": "Menu",
+        "type": "string",
+        "tag": "`json:\"menu\"`"
+      }
+    ]
+  },
+  {
+    "name": "MenuMultiImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "MessageInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode\"`"
+      },
+      {
+        "name": "NotifyType",
+        "type": "string",
+        "tag": "`json:\"notifyType,optional\"`"
+      },
+      {
+        "name": "NotifyName",
+        "type": "string",
+        "tag": "`json:\"notifyName,optional\"`"
+      },
+      {
+        "name": "Subject",
+        "type": "string",
+        "tag": "`json:\"subject\"`"
+      },
+      {
+        "name": "Body",
+        "type": "string",
+        "tag": "`json:\"body\"`"
+      },
+      {
+        "name": "Str1",
+        "type": "string",
+        "tag": "`json:\"str1\"`"
+      },
+      {
+        "name": "Str2",
+        "type": "string",
+        "tag": "`json:\"str2\"`"
+      },
+      {
+        "name": "Str3",
+        "type": "string",
+        "tag": "`json:\"str3\"`"
+      },
+      {
+        "name": "IsGlobal",
+        "type": "int64",
+        "tag": "`json:\"isGlobal\"`"
+      },
+      {
+        "name": "NotifyTime",
+        "type": "int64",
+        "tag": "`json:\"notifyTime\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      },
+      {
+        "name": "TriggerUser",
+        "type": "*MessageTriggerUser",
+        "tag": "`json:\"triggerUser,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "MessageInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "IsGlobal",
+        "type": "int64",
+        "tag": "`json:\"isGlobal,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "MessageInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*MessageInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "MessageInfoSendReq",
+    "fields": [
+      {
+        "name": "UserIDs",
+        "type": "[]int64",
+        "tag": "`json:\"userIDs,string,optional\"`"
+      },
+      {
+        "name": "IsGlobal",
+        "type": "int64",
+        "tag": "`json:\"isGlobal\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode\"`"
+      },
+      {
+        "name": "Subject",
+        "type": "string",
+        "tag": "`json:\"subject\"`"
+      },
+      {
+        "name": "Body",
+        "type": "string",
+        "tag": "`json:\"body\"`"
+      },
+      {
+        "name": "NotifyTime",
+        "type": "int64",
+        "tag": "`json:\"notifyTime,optional\"`"
+      },
+      {
+        "name": "Str1",
+        "type": "string",
+        "tag": "`json:\"str1,optional\"`"
+      },
+      {
+        "name": "Str2",
+        "type": "string",
+        "tag": "`json:\"str2,optional\"`"
+      },
+      {
+        "name": "Str3",
+        "type": "string",
+        "tag": "`json:\"str3,optional\"`"
+      },
+      {
+        "name": "WithTypes",
+        "type": "[]string",
+        "tag": "`json:\"withTypes,optional\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]string",
+        "tag": "`json:\"params,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "MessageTriggerUser",
+    "fields": [
+      {
+        "name": "UserId",
+        "type": "int64",
+        "tag": "`json:\"userId,string,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "TriggerType",
+        "type": "string",
+        "tag": "`json:\"triggerType,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "SubType",
+        "type": "int64",
+        "tag": "`json:\"subType,optional\"`"
+      },
+      {
+        "name": "Path",
+        "type": "string",
+        "tag": "`json:\"path,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Icon",
+        "type": "string",
+        "tag": "`json:\"icon,optional\"`"
+      },
+      {
+        "name": "Url",
+        "type": "string",
+        "tag": "`json:\"url,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "HideInMenu",
+        "type": "int64",
+        "tag": "`json:\"hideInMenu,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "int64",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "HomeMenuID",
+        "type": "int64",
+        "tag": "`json:\"homeMenuID,optional\"`"
+      },
+      {
+        "name": "Home",
+        "type": "*MenuInfo",
+        "tag": "`json:\"home,optional,omitempty\"`"
+      },
+      {
+        "name": "Body",
+        "type": "*string",
+        "tag": "`json:\"body,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "int64",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "Purposes",
+        "type": "[]int64",
+        "tag": "`json:\"purposes,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ModuleMultiExportReq",
+    "fields": [
+      {
+        "name": "ModuleCodes",
+        "type": "[]string",
+        "tag": "`json:\"moduleCodes,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleMultiExportResp",
+    "fields": [
+      {
+        "name": "Modules",
+        "type": "string",
+        "tag": "`json:\"modules\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleMultiImportReq",
+    "fields": [
+      {
+        "name": "Modules",
+        "type": "string",
+        "tag": "`json:\"modules\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModuleMultiImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyChannel",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "WebHook",
+        "type": "string",
+        "tag": "`json:\"webhook,optional\"`"
+      },
+      {
+        "name": "Email",
+        "type": "*ThirdEmailConfig",
+        "tag": "`json:\"email,optional\"`"
+      },
+      {
+        "name": "App",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"app,optional\"`"
+      },
+      {
+        "name": "Sms",
+        "type": "*ThirdSms",
+        "tag": "`json:\"sms,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyChannelIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyChannelIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*NotifyChannel",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfig",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "SupportTypes",
+        "type": "[]string",
+        "tag": "`json:\"supportTypes,optional\"`"
+      },
+      {
+        "name": "EnableTypes",
+        "type": "[]string",
+        "tag": "`json:\"enableTypes,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "IsRecord",
+        "type": "int64",
+        "tag": "`json:\"isRecord,optional\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]string",
+        "tag": "`json:\"params,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*NotifyConfig",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTemplate",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "TemplateID",
+        "type": "int64",
+        "tag": "`json:\"templateID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTemplateDeleteReq",
+    "fields": [
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTemplateIndexReq",
+    "fields": [
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTemplateIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*NotifyConfigTemplate",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTestSendReq",
+    "fields": [
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "UserIDs",
+        "type": "[]int64",
+        "tag": "`json:\"userIDs,string,optional\"`"
+      },
+      {
+        "name": "Accounts",
+        "type": "[]string",
+        "tag": "`json:\"accounts,optional\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]string",
+        "tag": "`json:\"params,optional\"`"
+      },
+      {
+        "name": "TemplateID",
+        "type": "int64",
+        "tag": "`json:\"templateID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyConfigTreeResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*NotifyGroupInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyGroupInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "string",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*NotifyConfig",
+        "tag": "`json:\"children,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyTemplate",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "TemplateCode",
+        "type": "string",
+        "tag": "`json:\"templateCode,optional\"`"
+      },
+      {
+        "name": "SignName",
+        "type": "string",
+        "tag": "`json:\"signName,optional\"`"
+      },
+      {
+        "name": "Subject",
+        "type": "string",
+        "tag": "`json:\"subject,optional\"`"
+      },
+      {
+        "name": "Body",
+        "type": "string",
+        "tag": "`json:\"body,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "ChannelID",
+        "type": "int64",
+        "tag": "`json:\"channelID,optional\"`"
+      },
+      {
+        "name": "Channel",
+        "type": "*NotifyChannel",
+        "tag": "`json:\"channel,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyTemplateIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "NotifyTemplateIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*NotifyTemplate",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "NtpReadReq",
+    "fields": [
+      {
+        "name": "DeviceSendTime",
+        "type": "int64",
+        "tag": "`json:\"deviceSendTime,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "NtpReadResp",
+    "fields": [
+      {
+        "name": "DeviceSendTime",
+        "type": "int64",
+        "tag": "`json:\"deviceSendTime,string\"`"
+      },
+      {
+        "name": "ServerSendTime",
+        "type": "int64",
+        "tag": "`json:\"serverSendTime,string\"`"
+      },
+      {
+        "name": "ServerRecvTime",
+        "type": "int64",
+        "tag": "`json:\"serverRecvTime,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "OpsFeedback",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "RaiseUserID",
+        "type": "int64",
+        "tag": "`json:\"raiseUserID,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "ContactInformation",
+        "type": "string",
+        "tag": "`json:\"contactInformation,optional\"`"
+      },
+      {
+        "name": "IssueDesc",
+        "type": "string",
+        "tag": "`json:\"issueDesc,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OpsFeedbackIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "string",
+        "tag": "`json:\"projectID,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "IsAllTenant",
+        "type": "bool",
+        "tag": "`json:\"isAllTenant,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OpsFeedbackIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*OpsFeedback",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "OpsWorkOrder",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Number",
+        "type": "string",
+        "tag": "`json:\"number,optional\"`"
+      },
+      {
+        "name": "RaiseUserID",
+        "type": "int64",
+        "tag": "`json:\"raiseUserID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional,options=[deviceMaintenance]\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]string",
+        "tag": "`json:\"params,optional\"`"
+      },
+      {
+        "name": "IssueDesc",
+        "type": "string",
+        "tag": "`json:\"issueDesc,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "HandleTime",
+        "type": "int64",
+        "tag": "`json:\"handleTime,optional\"`"
+      },
+      {
+        "name": "FinishedTime",
+        "type": "int64",
+        "tag": "`json:\"finishedTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OpsWorkOrderIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "Number",
+        "type": "string",
+        "tag": "`json:\"number,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OpsWorkOrderIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*OpsWorkOrder",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "OrderBy",
+    "fields": [
+      {
+        "name": "Field",
+        "type": "string",
+        "tag": "`json:\"field,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "Oss",
+    "fields": [
+      {
+        "name": "Host",
+        "type": "string",
+        "tag": "`json:\"host\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageInfo",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\" form:\"page,optional\"`"
+      },
+      {
+        "name": "Size",
+        "type": "int64",
+        "tag": "`json:\"size,optional\" form:\"size,optional\"`"
+      },
+      {
+        "name": "Orders",
+        "type": "[]*OrderBy",
+        "tag": "`json:\"orders,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageResp",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "PageSize",
+        "type": "int64",
+        "tag": "`json:\"pageSize,optional\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      }
+    ]
+  },
+  {
+    "name": "Point",
+    "fields": [
+      {
+        "name": "Longitude",
+        "type": "float64",
+        "tag": "`json:\"longitude,range=[0:180]\"`"
+      },
+      {
+        "name": "Latitude",
+        "type": "float64",
+        "tag": "`json:\"latitude,range=[0:90]\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectCrud",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectCrudIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]*Compare",
+        "tag": "`json:\"params,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectCrudIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*ProjectCrud",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectInfo",
+    "fields": [
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional,string\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "ProjectName",
+        "type": "string",
+        "tag": "`json:\"projectName,optional\"`"
+      },
+      {
+        "name": "AdminUserID",
+        "type": "int64",
+        "tag": "`json:\"adminUserID,string,optional\"`"
+      },
+      {
+        "name": "Position",
+        "type": "*Point",
+        "tag": "`json:\"position,optional\"`"
+      },
+      {
+        "name": "Address",
+        "type": "*string",
+        "tag": "`json:\"address,optional\"`"
+      },
+      {
+        "name": "ProjectImg",
+        "type": "string",
+        "tag": "`json:\"projectImg,optional\"`"
+      },
+      {
+        "name": "IsSysCreated",
+        "type": "int64",
+        "tag": "`json:\"isSysCreated,optional\"`"
+      },
+      {
+        "name": "IsUpdateProjectImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateProjectImg,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "map[string]string",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaCount",
+        "type": "int64",
+        "tag": "`json:\"areaCount,optional\"`"
+      },
+      {
+        "name": "UserCount",
+        "type": "int64",
+        "tag": "`json:\"userCount,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      },
+      {
+        "name": "DeviceOnlineCount",
+        "type": "int64",
+        "tag": "`json:\"deviceOnlineCount,optional\"`"
+      },
+      {
+        "name": "AlarmStatus",
+        "type": "int64",
+        "tag": "`json:\"alarmStatus,optional,omitempty\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,omitempty\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional,omitempty\"`"
+      },
+      {
+        "name": "Ppsm",
+        "type": "int64",
+        "tag": "`json:\"ppsm,optional,omitempty\"`"
+      },
+      {
+        "name": "Area",
+        "type": "*float32",
+        "tag": "`json:\"area,optional,omitempty\"`"
+      },
+      {
+        "name": "AdminUser",
+        "type": "*UserCore",
+        "tag": "`json:\"adminUser,optional,omitempty\"`"
+      },
+      {
+        "name": "Areas",
+        "type": "[]*AreaInfo",
+        "tag": "`json:\"areas,optional,omitempty\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      },
+      {
+        "name": "Attachments",
+        "type": "[]*Attachment",
+        "tag": "`json:\"attachments,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProjectName",
+        "type": "string",
+        "tag": "`json:\"projectName,optional\"`"
+      },
+      {
+        "name": "IsGetAll",
+        "type": "bool",
+        "tag": "`json:\"isGetAll,optional\"`"
+      },
+      {
+        "name": "ProjectIDs",
+        "type": "[]int64",
+        "tag": "`json:\"projectIDs,optional\"`"
+      },
+      {
+        "name": "WithTopAreas",
+        "type": "bool",
+        "tag": "`json:\"withTopAreas,optional\"`"
+      },
+      {
+        "name": "WithAdminUser",
+        "type": "bool",
+        "tag": "`json:\"withAdminUser,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "AlarmStatus",
+        "type": "int64",
+        "tag": "`json:\"alarmStatus,optional,omitempty\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,omitempty\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectInfoIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*ProjectInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectProfile",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectProfileIndexReq",
+    "fields": [
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectProfileIndexResp",
+    "fields": [
+      {
+        "name": "Profiles",
+        "type": "[]*ProjectProfile",
+        "tag": "`json:\"profiles\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProjectWithID",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string\"`"
+      },
+      {
+        "name": "WithAdminUser",
+        "type": "bool",
+        "tag": "`json:\"withAdminUser,optional\"`"
+      },
+      {
+        "name": "WithTopAreas",
+        "type": "bool",
+        "tag": "`json:\"withTopAreas,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "QRCodeReadReq",
+    "fields": [
+      {
+        "name": "page",
+        "type": "string",
+        "tag": "`json:\"page\"`"
+      },
+      {
+        "name": "scene",
+        "type": "string",
+        "tag": "`json:\"scene\"`"
+      },
+      {
+        "name": "envVersion",
+        "type": "string",
+        "tag": "`json:\"envVersion\"`"
+      }
+    ]
+  },
+  {
+    "name": "QRCodeReadResp",
+    "fields": [
+      {
+        "name": "Buffer",
+        "type": "[]byte",
+        "tag": "`json:\"buffer\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAccessIndexReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAccessIndexResp",
+    "fields": [
+      {
+        "name": "AccessCodes",
+        "type": "[]string",
+        "tag": "`json:\"accessCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAccessMultiUpdateReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AccessCodes",
+        "type": "[]string",
+        "tag": "`json:\"accessCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAppIndexReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAppIndexResp",
+    "fields": [
+      {
+        "name": "AppCodes",
+        "type": "[]string",
+        "tag": "`json:\"appCodes\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleAppMultiUpdateReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AppCodes",
+        "type": "[]string",
+        "tag": "`json:\"appCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes,optional\"`"
+      },
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*RoleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "RoleMenuIndexReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleMenuIndexResp",
+    "fields": [
+      {
+        "name": "MenuIDs",
+        "type": "[]int64",
+        "tag": "`json:\"menuIDs\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleMenuMultiUpdateReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode\"`"
+      },
+      {
+        "name": "MenuIDs",
+        "type": "[]int64",
+        "tag": "`json:\"menuIDs\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleModuleIndexReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleModuleIndexResp",
+    "fields": [
+      {
+        "name": "ModuleCodes",
+        "type": "[]string",
+        "tag": "`json:\"moduleCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "RoleModuleMultiUpdateReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ModuleCodes",
+        "type": "[]string",
+        "tag": "`json:\"moduleCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "SubCode",
+        "type": "string",
+        "tag": "`json:\"subCode\"`"
+      },
+      {
+        "name": "SlotCode",
+        "type": "string",
+        "tag": "`json:\"slotCode,optional\"`"
+      },
+      {
+        "name": "Method",
+        "type": "string",
+        "tag": "`json:\"method,optional\"`"
+      },
+      {
+        "name": "Uri",
+        "type": "string",
+        "tag": "`json:\"uri,optional\"`"
+      },
+      {
+        "name": "Hosts",
+        "type": "[]string",
+        "tag": "`json:\"hosts,optional\"`"
+      },
+      {
+        "name": "Body",
+        "type": "string",
+        "tag": "`json:\"body,optional\"`"
+      },
+      {
+        "name": "Handler",
+        "type": "map[string]string",
+        "tag": "`json:\"handler,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "string",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "SubCode",
+        "type": "string",
+        "tag": "`json:\"subCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotInfoIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*SlotInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "SysLogLoginIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "IpAddr",
+        "type": "string",
+        "tag": "`json:\"ipAddr,optional\"`"
+      },
+      {
+        "name": "LoginLocation",
+        "type": "string",
+        "tag": "`json:\"loginLocation,optional\"`"
+      },
+      {
+        "name": "DateRange",
+        "type": "DateRange",
+        "tag": "`json:\"dateRange,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SysLogLoginIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*SysLogLoginInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "SysLogLoginInfo",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName\"`"
+      },
+      {
+        "name": "IpAddr",
+        "type": "string",
+        "tag": "`json:\"ipAddr\"`"
+      },
+      {
+        "name": "LoginLocation",
+        "type": "string",
+        "tag": "`json:\"loginLocation\"`"
+      },
+      {
+        "name": "Browser",
+        "type": "string",
+        "tag": "`json:\"browser\"`"
+      },
+      {
+        "name": "Os",
+        "type": "string",
+        "tag": "`json:\"os\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code,string\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "SysLogOperIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "OperName",
+        "type": "string",
+        "tag": "`json:\"operName,optional\"`"
+      },
+      {
+        "name": "OperUserName",
+        "type": "string",
+        "tag": "`json:\"operUserName,optional\"`"
+      },
+      {
+        "name": "BusinessType",
+        "type": "int64",
+        "tag": "`json:\"businessType,string,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "OperUserID",
+        "type": "int64",
+        "tag": "`json:\"operUserID,string,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SysLogOperIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*SysLogOperInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "SysLogOperInfo",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "OperUserName",
+        "type": "string",
+        "tag": "`json:\"operUserName\"`"
+      },
+      {
+        "name": "OperName",
+        "type": "string",
+        "tag": "`json:\"operName\"`"
+      },
+      {
+        "name": "BusinessType",
+        "type": "int64",
+        "tag": "`json:\"businessType,string\"`"
+      },
+      {
+        "name": "Uri",
+        "type": "string",
+        "tag": "`json:\"uri\"`"
+      },
+      {
+        "name": "OperIpAddr",
+        "type": "string",
+        "tag": "`json:\"operIpAddr\"`"
+      },
+      {
+        "name": "OperLocation",
+        "type": "string",
+        "tag": "`json:\"operLocation\"`"
+      },
+      {
+        "name": "Req",
+        "type": "string",
+        "tag": "`json:\"req\"`"
+      },
+      {
+        "name": "Resp",
+        "type": "string",
+        "tag": "`json:\"resp\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code,string\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "TaskLogScript",
+    "fields": [
+      {
+        "name": "Level",
+        "type": "string",
+        "tag": "`json:\"level\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAccessInfo",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "AccessCodes",
+        "type": "[]string",
+        "tag": "`json:\"accessCodes\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAccessInfoTreeResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*AccessModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantAgreement",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "tag": "`json:\"title,optional\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAgreementIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAgreementIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantAgreement",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantApp",
+    "fields": [
+      {
+        "name": "",
+        "type": "AppInfo",
+        "tag": ""
+      },
+      {
+        "name": "DingMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"dingMini,optional\"`"
+      },
+      {
+        "name": "WxOpen",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxOpen,optional\"`"
+      },
+      {
+        "name": "WxMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxMini,optional\"`"
+      },
+      {
+        "name": "Android",
+        "type": "*ThirdApp",
+        "tag": "`json:\"android,optional\"`"
+      },
+      {
+        "name": "Huawei",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"huawei,optional\"`"
+      },
+      {
+        "name": "Google",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"google,optional\"`"
+      },
+      {
+        "name": "GoogleConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"googleConfig,optional\"`"
+      },
+      {
+        "name": "Github",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"github,optional\"`"
+      },
+      {
+        "name": "GithubConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"githubConfig,optional\"`"
+      },
+      {
+        "name": "Apple",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"apple,optional\"`"
+      },
+      {
+        "name": "AppleConfig",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"appleConfig,optional\"`"
+      },
+      {
+        "name": "LoginTypes",
+        "type": "[]string",
+        "tag": "`json:\"loginTypes,optional\"`"
+      },
+      {
+        "name": "IsAutoRegister",
+        "type": "int64",
+        "tag": "`json:\"isAutoRegister,optional\"`"
+      },
+      {
+        "name": "Config",
+        "type": "string",
+        "tag": "`json:\"config,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppIndexReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantApp",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantAppInfo",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "Modules",
+        "type": "[]*TenantAppModule",
+        "tag": "`json:\"modules\"`"
+      },
+      {
+        "name": "DingMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"dingMini,optional\"`"
+      },
+      {
+        "name": "WxOpen",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxOpen,optional\"`"
+      },
+      {
+        "name": "WxMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxMini,optional\"`"
+      },
+      {
+        "name": "Android",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"android,optional\"`"
+      },
+      {
+        "name": "Huawei",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"huawei,optional\"`"
+      },
+      {
+        "name": "Google",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"google,optional\"`"
+      },
+      {
+        "name": "GoogleConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"googleConfig,optional\"`"
+      },
+      {
+        "name": "Github",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"github,optional\"`"
+      },
+      {
+        "name": "GithubConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"githubConfig,optional\"`"
+      },
+      {
+        "name": "Apple",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"apple,optional\"`"
+      },
+      {
+        "name": "AppleConfig",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"appleConfig,optional\"`"
+      },
+      {
+        "name": "LoginTypes",
+        "type": "[]string",
+        "tag": "`json:\"loginTypes,optional\"`"
+      },
+      {
+        "name": "IsAutoRegister",
+        "type": "int64",
+        "tag": "`json:\"isAutoRegister,optional\"`"
+      },
+      {
+        "name": "Config",
+        "type": "string",
+        "tag": "`json:\"config,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppMenu",
+    "fields": [
+      {
+        "name": "TemplateID",
+        "type": "int64",
+        "tag": "`json:\"templateID,omit\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "",
+        "type": "MenuInfo",
+        "tag": ""
+      },
+      {
+        "name": "Children",
+        "type": "[]*TenantAppMenu",
+        "tag": "`json:\"children,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppMenuIndexReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode\"`"
+      },
+      {
+        "name": "IsRetTree",
+        "type": "bool",
+        "tag": "`json:\"isRetTree,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppMenuIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantAppMenu",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppModule",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "MenuIDs",
+        "type": "[]int64",
+        "tag": "`json:\"menuIDs,optional\"`"
+      },
+      {
+        "name": "ApiIDs",
+        "type": "[]int64",
+        "tag": "`json:\"apiIDs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppModuleMultiCreate",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "Modules",
+        "type": "[]*TenantAppModule",
+        "tag": "`json:\"modules\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantAppWithIDOrCode",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantConfig",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "RegisterRoleID",
+        "type": "int64",
+        "tag": "`json:\"registerRoleID,optional\"`"
+      },
+      {
+        "name": "WeatherKey",
+        "type": "string",
+        "tag": "`json:\"weatherKey,optional\"`"
+      },
+      {
+        "name": "OperLogKeepDays",
+        "type": "*int64",
+        "tag": "`json:\"operLogKeepDays,optional\"`"
+      },
+      {
+        "name": "LoginLogKeepDays",
+        "type": "*int64",
+        "tag": "`json:\"loginLogKeepDays,optional\"`"
+      },
+      {
+        "name": "CheckUserDelete",
+        "type": "int64",
+        "tag": "`json:\"checkUserDelete,optional\"`"
+      },
+      {
+        "name": "IsSsl",
+        "type": "int64",
+        "tag": "`json:\"isSsl,optional\"`"
+      },
+      {
+        "name": "DeviceLimit",
+        "type": "*int64",
+        "tag": "`json:\"deviceLimit,optional\"`"
+      },
+      {
+        "name": "FeedbackNotifyUserIDs",
+        "type": "[]string",
+        "tag": "`json:\"feedbackNotifyUserIDs,optional\"`"
+      },
+      {
+        "name": "RegisterAutoCreateProject",
+        "type": "[]*TenantConfigRegisterAutoCreateProject",
+        "tag": "`json:\"registerAutoCreateProject,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "DingMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"dingMini,optional\"`"
+      },
+      {
+        "name": "WxOpen",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxOpen,optional\"`"
+      },
+      {
+        "name": "WxMini",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"wxMini,optional\"`"
+      },
+      {
+        "name": "Huawei",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"huawei,optional\"`"
+      },
+      {
+        "name": "Google",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"google,optional\"`"
+      },
+      {
+        "name": "GoogleConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"googleConfig,optional\"`"
+      },
+      {
+        "name": "Github",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"github,optional\"`"
+      },
+      {
+        "name": "GithubConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"githubConfig,optional\"`"
+      },
+      {
+        "name": "Apple",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"apple,optional\"`"
+      },
+      {
+        "name": "AppleConfig",
+        "type": "*AppleAppConfig",
+        "tag": "`json:\"appleConfig,optional\"`"
+      },
+      {
+        "name": "LoginTypes",
+        "type": "[]string",
+        "tag": "`json:\"loginTypes,optional\"`"
+      },
+      {
+        "name": "IsAutoRegister",
+        "type": "int64",
+        "tag": "`json:\"isAutoRegister,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantConfigRegisterAutoCreateArea",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "AreaName",
+        "type": "string",
+        "tag": "`json:\"areaName\"`"
+      },
+      {
+        "name": "AreaImg",
+        "type": "string",
+        "tag": "`json:\"areaImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateAreaImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateAreaImg,omitempty,optional\"`"
+      },
+      {
+        "name": "IsSysCreated",
+        "type": "int64",
+        "tag": "`json:\"isSysCreated\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantConfigRegisterAutoCreateProject",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "ProjectName",
+        "type": "string",
+        "tag": "`json:\"projectName\"`"
+      },
+      {
+        "name": "IsSysCreated",
+        "type": "int64",
+        "tag": "`json:\"isSysCreated\"`"
+      },
+      {
+        "name": "Areas",
+        "type": "[]*TenantConfigRegisterAutoCreateArea",
+        "tag": "`json:\"areas,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantCore",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "BackgroundImg",
+        "type": "string",
+        "tag": "`json:\"backgroundImg,optional\"`"
+      },
+      {
+        "name": "LogoImg",
+        "type": "string",
+        "tag": "`json:\"logoImg,optional\"`"
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "tag": "`json:\"title,optional\"`"
+      },
+      {
+        "name": "TitleEn",
+        "type": "string",
+        "tag": "`json:\"titleEn,optional\"`"
+      },
+      {
+        "name": "BackgroundColour",
+        "type": "string",
+        "tag": "`json:\"backgroundColour,optional\"`"
+      },
+      {
+        "name": "BackgroundDesc",
+        "type": "*string",
+        "tag": "`json:\"backgroundDesc,optional,omitempty\"`"
+      },
+      {
+        "name": "Footer",
+        "type": "string",
+        "tag": "`json:\"footer,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantCoreIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantCoreIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantCore",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "AdminUserID",
+        "type": "int64",
+        "tag": "`json:\"adminUserID,optional,string\"`"
+      },
+      {
+        "name": "AdminRoleID",
+        "type": "int64",
+        "tag": "`json:\"adminRoleID,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "DefaultProjectID",
+        "type": "int64",
+        "tag": "`json:\"defaultProjectID,optional\"`"
+      },
+      {
+        "name": "BackgroundColour",
+        "type": "string",
+        "tag": "`json:\"backgroundColour,optional\"`"
+      },
+      {
+        "name": "BackgroundDesc",
+        "type": "string",
+        "tag": "`json:\"backgroundDesc,optional,omitempty\"`"
+      },
+      {
+        "name": "BackgroundImg",
+        "type": "string",
+        "tag": "`json:\"backgroundImg,optional\"`"
+      },
+      {
+        "name": "Footer",
+        "type": "string",
+        "tag": "`json:\"footer,optional\"`"
+      },
+      {
+        "name": "IsUpdateBackgroundImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateBackgroundImg,optional,omitempty\"`"
+      },
+      {
+        "name": "LogoImg",
+        "type": "string",
+        "tag": "`json:\"logoImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateLogoImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateLogoImg,optional,omitempty\"`"
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "tag": "`json:\"title,optional\"`"
+      },
+      {
+        "name": "TitleEn",
+        "type": "string",
+        "tag": "`json:\"titleEn,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "UserCount",
+        "type": "int64",
+        "tag": "`json:\"userCount,optional\"`"
+      },
+      {
+        "name": "AdminUserInfo",
+        "type": "*UserCore",
+        "tag": "`json:\"adminUserInfo,optional,omitempty\"`"
+      },
+      {
+        "name": "DefaultProject",
+        "type": "*ProjectInfo",
+        "tag": "`json:\"defaultProject,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantInfoCreateReq",
+    "fields": [
+      {
+        "name": "Info",
+        "type": "*TenantInfo",
+        "tag": "`json:\"info\"`"
+      },
+      {
+        "name": "AdminUserInfo",
+        "type": "*UserInfo",
+        "tag": "`json:\"adminUserInfo\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "WithAdminUser",
+        "type": "bool",
+        "tag": "`json:\"withAdminUser,optional\"`"
+      },
+      {
+        "name": "WithDefaultProject",
+        "type": "bool",
+        "tag": "`json:\"withDefaultProject,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleCreateReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode\"`"
+      },
+      {
+        "name": "MenuIDs",
+        "type": "[]int64",
+        "tag": "`json:\"menuIDs\"`"
+      },
+      {
+        "name": "ApiIDs",
+        "type": "[]int64",
+        "tag": "`json:\"apiIDs\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleIndexReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ModuleInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleInfo",
+    "fields": [
+      {
+        "name": "",
+        "type": "ModuleInfo",
+        "tag": ""
+      },
+      {
+        "name": "Menus",
+        "type": "[]*TenantAppMenu",
+        "tag": "`json:\"menus,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TenantModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TenantModuleWithIDOrCode",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode,optional\"`"
+      },
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdApp",
+    "fields": [
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version,optional\"`"
+      },
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath,optional\"`"
+      },
+      {
+        "name": "IsUpdateFilePath",
+        "type": "bool",
+        "tag": "`json:\"isUpdateFilePath,optional,omitempty\"`"
+      },
+      {
+        "name": "VersionDesc",
+        "type": "string",
+        "tag": "`json:\"versionDesc,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdAppConfig",
+    "fields": [
+      {
+        "name": "AppID",
+        "type": "string",
+        "tag": "`json:\"appID,optional\"`"
+      },
+      {
+        "name": "AppKey",
+        "type": "string",
+        "tag": "`json:\"appKey,optional\"`"
+      },
+      {
+        "name": "AppSecret",
+        "type": "string",
+        "tag": "`json:\"appSecret,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdDeptInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,string,optional\"`"
+      },
+      {
+        "name": "ThirdType",
+        "type": "string",
+        "tag": "`json:\"thirdType,optional\"`"
+      },
+      {
+        "name": "ThirdConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"thirdConfig\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdDeptInfoReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,string\"`"
+      },
+      {
+        "name": "WithFather",
+        "type": "bool",
+        "tag": "`json:\"withFather,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      },
+      {
+        "name": "ThirdType",
+        "type": "string",
+        "tag": "`json:\"thirdType,optional\"`"
+      },
+      {
+        "name": "ThirdConfig",
+        "type": "*ThirdAppConfig",
+        "tag": "`json:\"thirdConfig\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdEmailConfig",
+    "fields": [
+      {
+        "name": "From",
+        "type": "string",
+        "tag": "`json:\"from\"`"
+      },
+      {
+        "name": "Host",
+        "type": "string",
+        "tag": "`json:\"host\"`"
+      },
+      {
+        "name": "Secret",
+        "type": "string",
+        "tag": "`json:\"secret\"`"
+      },
+      {
+        "name": "Nickname",
+        "type": "string",
+        "tag": "`json:\"nickname\"`"
+      },
+      {
+        "name": "Port",
+        "type": "int64",
+        "tag": "`json:\"port\"`"
+      },
+      {
+        "name": "IsSSL",
+        "type": "int64",
+        "tag": "`json:\"isSsl\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdMiniCore",
+    "fields": [
+      {
+        "name": "AppID",
+        "type": "string",
+        "tag": "`json:\"appID,optional,omitempty\"`"
+      },
+      {
+        "name": "AppKey",
+        "type": "string",
+        "tag": "`json:\"appKey,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ThirdSms",
+    "fields": [
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "AccessKeyID",
+        "type": "string",
+        "tag": "`json:\"accessKeyID,optional\"`"
+      },
+      {
+        "name": "AccessKeySecret",
+        "type": "string",
+        "tag": "`json:\"accessKeySecret,optional\"`"
+      },
+      {
+        "name": "AppID",
+        "type": "string",
+        "tag": "`json:\"appID,optional\"`"
+      },
+      {
+        "name": "AppKey",
+        "type": "string",
+        "tag": "`json:\"appKey,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimeRange",
+    "fields": [
+      {
+        "name": "Start",
+        "type": "int64",
+        "tag": "`json:\"start,optional\"`"
+      },
+      {
+        "name": "End",
+        "type": "int64",
+        "tag": "`json:\"end,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskGroup",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "SubType",
+        "type": "string",
+        "tag": "`json:\"subType,optional\"`"
+      },
+      {
+        "name": "Priority",
+        "type": "int64",
+        "tag": "`json:\"priority,optional\"`"
+      },
+      {
+        "name": "Env",
+        "type": "map[string]string",
+        "tag": "`json:\"env,optional\"`"
+      },
+      {
+        "name": "Config",
+        "type": "string",
+        "tag": "`json:\"config,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskGroupIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskGroupIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TimedTaskGroup",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskInfo",
+    "fields": [
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params,optional\"`"
+      },
+      {
+        "name": "CronExpr",
+        "type": "string",
+        "tag": "`json:\"cronExpr,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Topics",
+        "type": "[]string",
+        "tag": "`json:\"topics,optional\"`"
+      },
+      {
+        "name": "Priority",
+        "type": "int64",
+        "tag": "`json:\"priority,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TimedTaskInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskLog",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode\"`"
+      },
+      {
+        "name": "TaskCode",
+        "type": "string",
+        "tag": "`json:\"taskCode\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      },
+      {
+        "name": "ResultCode",
+        "type": "int64",
+        "tag": "`json:\"resultCode\"`"
+      },
+      {
+        "name": "ResultMsg",
+        "type": "string",
+        "tag": "`json:\"resultMsg\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      },
+      {
+        "name": "Sql",
+        "type": "*TimedTaskLogSql",
+        "tag": "`json:\"sql,omitempty\"`"
+      },
+      {
+        "name": "Script",
+        "type": "*TimedTaskLogScript",
+        "tag": "`json:\"script,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskLogIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page\"`"
+      },
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode\"`"
+      },
+      {
+        "name": "TaskCode",
+        "type": "string",
+        "tag": "`json:\"taskCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*TimedTaskLog",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskLogScript",
+    "fields": [
+      {
+        "name": "ExecLog",
+        "type": "[]*TaskLogScript",
+        "tag": "`json:\"execLog\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskLogSql",
+    "fields": [
+      {
+        "name": "SelectNum",
+        "type": "int64",
+        "tag": "`json:\"selectNum\"`"
+      },
+      {
+        "name": "ExecNum",
+        "type": "int64",
+        "tag": "`json:\"execNum\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskOption",
+    "fields": [
+      {
+        "name": "Priority",
+        "type": "int64",
+        "tag": "`json:\"priority,optional\"`"
+      },
+      {
+        "name": "ProcessIn",
+        "type": "int64",
+        "tag": "`json:\"processIn,optional\"`"
+      },
+      {
+        "name": "ProcessAt",
+        "type": "int64",
+        "tag": "`json:\"processAt,optional\"`"
+      },
+      {
+        "name": "Timeout",
+        "type": "int64",
+        "tag": "`json:\"timeout,optional\"`"
+      },
+      {
+        "name": "Deadline",
+        "type": "int64",
+        "tag": "`json:\"deadline,optional\"`"
+      },
+      {
+        "name": "TaskID",
+        "type": "string",
+        "tag": "`json:\"taskID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskParamQueue",
+    "fields": [
+      {
+        "name": "Topic",
+        "type": "string",
+        "tag": "`json:\"topic\"`"
+      },
+      {
+        "name": "Payload",
+        "type": "string",
+        "tag": "`json:\"payload\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskParamScript",
+    "fields": [
+      {
+        "name": "Param",
+        "type": "map[string]string",
+        "tag": "`json:\"param\"`"
+      },
+      {
+        "name": "ExecContent",
+        "type": "string",
+        "tag": "`json:\"execContent\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskParamSql",
+    "fields": [
+      {
+        "name": "Sql",
+        "type": "string",
+        "tag": "`json:\"sql\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskSendReq",
+    "fields": [
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Option",
+        "type": "*TimedTaskOption",
+        "tag": "`json:\"option,optional\"`"
+      },
+      {
+        "name": "ParamQueue",
+        "type": "*TimedTaskParamQueue",
+        "tag": "`json:\"paramQueue,optional\"`"
+      },
+      {
+        "name": "ParamSql",
+        "type": "*TimedTaskParamSql",
+        "tag": "`json:\"paramSql,optional\"`"
+      },
+      {
+        "name": "ParamScript",
+        "type": "*TimedTaskParamScript",
+        "tag": "`json:\"paramScript,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "TimedTaskWithTaskID",
+    "fields": [
+      {
+        "name": "TaskID",
+        "type": "string",
+        "tag": "`json:\"taskID\"`"
+      }
+    ]
+  },
+  {
+    "name": "UploadFileResp",
+    "fields": [
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath\"`"
+      },
+      {
+        "name": "FileUri",
+        "type": "string",
+        "tag": "`json:\"fileUri\"`"
+      }
+    ]
+  },
+  {
+    "name": "UploadUrlCreateReq",
+    "fields": [
+      {
+        "name": "Business",
+        "type": "string",
+        "tag": "`json:\"business\"`"
+      },
+      {
+        "name": "Scene",
+        "type": "string",
+        "tag": "`json:\"scene\"`"
+      },
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath\"`"
+      },
+      {
+        "name": "Rename",
+        "type": "bool",
+        "tag": "`json:\"rename,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UploadUrlCreateResp",
+    "fields": [
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath\"`"
+      },
+      {
+        "name": "UploadUri",
+        "type": "string",
+        "tag": "`json:\"uploadUri\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserAreaApplyCreateReq",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserAreaApplyDealReq",
+    "fields": [
+      {
+        "name": "IsApprove",
+        "type": "bool",
+        "tag": "`json:\"isApprove\"`"
+      },
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserAreaApplyIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "AuthTypes",
+        "type": "[]int64",
+        "tag": "`json:\"authTypes,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "WithAreaInfo",
+        "type": "bool",
+        "tag": "`json:\"withAreaInfo,optional\"`"
+      },
+      {
+        "name": "WithUserInfo",
+        "type": "bool",
+        "tag": "`json:\"withUserInfo,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserAreaApplyIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*UserAreaApplyInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "UserAreaApplyInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      },
+      {
+        "name": "AreaInfo",
+        "type": "*AreaInfo",
+        "tag": "`json:\"areaInfo\"`"
+      },
+      {
+        "name": "UserInfo",
+        "type": "*UserInfo",
+        "tag": "`json:\"userInfo\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserBindAccountReq",
+    "fields": [
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,options=phone|email|wxOpen|wxIn|wxMiniP|dingApp|huawei|google|apple|github\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCaptchaReq",
+    "fields": [
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,options=phone|image|email\"`"
+      },
+      {
+        "name": "Use",
+        "type": "string",
+        "tag": "`json:\"use,options=login|register|changePwd|forgetPwd|bindAccount\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCaptchaResp",
+    "fields": [
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID\"`"
+      },
+      {
+        "name": "Url",
+        "type": "string",
+        "tag": "`json:\"url,optional\"`"
+      },
+      {
+        "name": "Expire",
+        "type": "int64",
+        "tag": "`json:\"expire\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserChangePwdReq",
+    "fields": [
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,options=phone|email|pwd\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional\"`"
+      },
+      {
+        "name": "OldPassword",
+        "type": "string",
+        "tag": "`json:\"oldPassword,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCore",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "tag": "`json:\"email,optional\"`"
+      },
+      {
+        "name": "Phone",
+        "type": "string",
+        "tag": "`json:\"phone,optional\"`"
+      },
+      {
+        "name": "LastIP",
+        "type": "string",
+        "tag": "`json:\"lastIP,optional\"`"
+      },
+      {
+        "name": "RegIP",
+        "type": "string",
+        "tag": "`json:\"regIP,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "HeadImg",
+        "type": "string",
+        "tag": "`json:\"headImg,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "map[string]string",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCreateResp",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDataAreaIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDataProject",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType\"`"
+      },
+      {
+        "name": "TargetID",
+        "type": "int64",
+        "tag": "`json:\"targetID,string,optional\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime,optional\"`"
+      },
+      {
+        "name": "Project",
+        "type": "*ProjectInfo",
+        "tag": "`json:\"project,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDataProjectIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDataProjectIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*UserDataProject",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeptMultiSaveReq",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      },
+      {
+        "name": "DeptIDs",
+        "type": "[]int64",
+        "tag": "`json:\"deptIDs,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserForgetPwdReq",
+    "fields": [
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,options=phone|email\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserInfo",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional,omitempty\"`"
+      },
+      {
+        "name": "Email",
+        "type": "*string",
+        "tag": "`json:\"email,optional\"`"
+      },
+      {
+        "name": "Phone",
+        "type": "*string",
+        "tag": "`json:\"phone,optional\"`"
+      },
+      {
+        "name": "LastIP",
+        "type": "string",
+        "tag": "`json:\"lastIP,optional\"`"
+      },
+      {
+        "name": "RegIP",
+        "type": "string",
+        "tag": "`json:\"regIP,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "City",
+        "type": "string",
+        "tag": "`json:\"city,optional\"`"
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "tag": "`json:\"country,optional\"`"
+      },
+      {
+        "name": "Province",
+        "type": "string",
+        "tag": "`json:\"province,optional\"`"
+      },
+      {
+        "name": "Language",
+        "type": "string",
+        "tag": "`json:\"language,optional\"`"
+      },
+      {
+        "name": "HeadImg",
+        "type": "string",
+        "tag": "`json:\"headImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateHeadImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateHeadImg,omitempty,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      },
+      {
+        "name": "Role",
+        "type": "int64",
+        "tag": "`json:\"role,optional\"`"
+      },
+      {
+        "name": "Sex",
+        "type": "int64",
+        "tag": "`json:\"sex,optional\"`"
+      },
+      {
+        "name": "IsAllData",
+        "type": "int64",
+        "tag": "`json:\"isAllData,optional,omitempty\"`"
+      },
+      {
+        "name": "DeptIDs",
+        "type": "[]string",
+        "tag": "`json:\"deptIDs,optional,omitempty\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "map[string]string",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "PubTags",
+        "type": "map[string]string",
+        "tag": "`json:\"pubTags,optional,omitempty\"`"
+      },
+      {
+        "name": "MessageNotRead",
+        "type": "map[string]int64",
+        "tag": "`json:\"messageNotRead,optional,omitempty\"`"
+      },
+      {
+        "name": "Roles",
+        "type": "[]*RoleInfo",
+        "tag": "`json:\"roles,optional,omitempty\"`"
+      },
+      {
+        "name": "Tenant",
+        "type": "*TenantInfo",
+        "tag": "`json:\"tenant,optional,omitempty\"`"
+      },
+      {
+        "name": "Projects",
+        "type": "[]*ProjectInfo",
+        "tag": "`json:\"projects,optional,omitempty\"`"
+      },
+      {
+        "name": "Depts",
+        "type": "[]*DeptInfo",
+        "tag": "`json:\"depts,optional,omitempty\"`"
+      },
+      {
+        "name": "BindThird",
+        "type": "map[string]string",
+        "tag": "`json:\"bindThird,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserInfoCreateReq",
+    "fields": [
+      {
+        "name": "Info",
+        "type": "*UserInfo",
+        "tag": "`json:\"info\"`"
+      },
+      {
+        "name": "RoleIDs",
+        "type": "[]int64",
+        "tag": "`json:\"roleIDs,optional,range=(0:120]\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserInfoDeleteReq",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "Phone",
+        "type": "string",
+        "tag": "`json:\"phone,optional\"`"
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "tag": "`json:\"email,optional\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "UserIDs",
+        "type": "[]int64",
+        "tag": "`json:\"userIDs,string,optional\"`"
+      },
+      {
+        "name": "HasAccessAreas",
+        "type": "[]int64",
+        "tag": "`json:\"hasAccessAreas,string,optional\"`"
+      },
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,string,optional\"`"
+      },
+      {
+        "name": "RoleCode",
+        "type": "string",
+        "tag": "`json:\"roleCode,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "WithRoles",
+        "type": "bool",
+        "tag": "`json:\"withRoles,optional\"`"
+      },
+      {
+        "name": "WithDepts",
+        "type": "bool",
+        "tag": "`json:\"withDepts,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*UserInfo",
+        "tag": "`json:\"list,omitempty\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "UserInfoReadReq",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "WithRoles",
+        "type": "bool",
+        "tag": "`json:\"withRoles,optional\"`"
+      },
+      {
+        "name": "WithTenant",
+        "type": "bool",
+        "tag": "`json:\"withTenant,optional\"`"
+      },
+      {
+        "name": "WithDepts",
+        "type": "bool",
+        "tag": "`json:\"withDepts,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserLoginReq",
+    "fields": [
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "PwdType",
+        "type": "int32",
+        "tag": "`json:\"pwdType,optional\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional\"`"
+      },
+      {
+        "name": "LoginType",
+        "type": "string",
+        "tag": "`json:\"loginType,options=phone|wxOpen|wxIn|wxMiniP|dingApp|pwd|email|huawei|jwt|google|apple|github\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserLoginResp",
+    "fields": [
+      {
+        "name": "Info",
+        "type": "UserInfo",
+        "tag": "`json:\"info\"`"
+      },
+      {
+        "name": "Roles",
+        "type": "[]*RoleInfo",
+        "tag": "`json:\"roles\"`"
+      },
+      {
+        "name": "Depts",
+        "type": "[]*DeptInfo",
+        "tag": "`json:\"depts,omitempty\"`"
+      },
+      {
+        "name": "Token",
+        "type": "JwtToken",
+        "tag": "`json:\"token\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserMenuIndexReq",
+    "fields": [
+      {
+        "name": "ModuleCode",
+        "type": "string",
+        "tag": "`json:\"moduleCode,optional\"`"
+      },
+      {
+        "name": "IsCommon",
+        "type": "int64",
+        "tag": "`json:\"isCommon,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserMessage",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      },
+      {
+        "name": "IsRead",
+        "type": "int64",
+        "tag": "`json:\"isRead\"`"
+      },
+      {
+        "name": "",
+        "type": "*MessageInfo",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "UserMessageIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group,optional\"`"
+      },
+      {
+        "name": "NotifyCode",
+        "type": "string",
+        "tag": "`json:\"notifyCode,optional\"`"
+      },
+      {
+        "name": "NotifyType",
+        "type": "string",
+        "tag": "`json:\"notifyType,optional\"`"
+      },
+      {
+        "name": "IsRead",
+        "type": "int64",
+        "tag": "`json:\"isRead,optional\"`"
+      },
+      {
+        "name": "Str1",
+        "type": "string",
+        "tag": "`json:\"str1,optional\"`"
+      },
+      {
+        "name": "Str2",
+        "type": "string",
+        "tag": "`json:\"str2,optional\"`"
+      },
+      {
+        "name": "Str3",
+        "type": "string",
+        "tag": "`json:\"str3,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "*TimeRange",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserMessageIndexResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      },
+      {
+        "name": "List",
+        "type": "[]*UserMessage",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserMessageStatistics",
+    "fields": [
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group\"`"
+      },
+      {
+        "name": "Count",
+        "type": "int64",
+        "tag": "`json:\"count\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserMessageStatisticsResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*UserMessageStatistics",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserModuleIndexReq",
+    "fields": [
+      {
+        "name": "WithMenus",
+        "type": "bool",
+        "tag": "`json:\"withMenus,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserProfile",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserProfileIndexReq",
+    "fields": [
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserProfileIndexResp",
+    "fields": [
+      {
+        "name": "Profiles",
+        "type": "[]*UserProfile",
+        "tag": "`json:\"profiles\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserProfileReadReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "WithProjects",
+        "type": "bool",
+        "tag": "`json:\"withProjects,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserProfileReadResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "UserProfile",
+        "tag": ""
+      },
+      {
+        "name": "Projects",
+        "type": "[]*ProjectInfo",
+        "tag": "`json:\"projects,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserPushClientReportReq",
+    "fields": [
+      {
+        "name": "PushClientId",
+        "type": "string",
+        "tag": "`json:\"pushClientId\"`"
+      },
+      {
+        "name": "Platform",
+        "type": "string",
+        "tag": "`json:\"platform,options=android|ios|harmony|harmonyos|unbind\"`"
+      },
+      {
+        "name": "AppId",
+        "type": "string",
+        "tag": "`json:\"appId,optional\"`"
+      },
+      {
+        "name": "AppVersion",
+        "type": "string",
+        "tag": "`json:\"appVersion,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserRegisterReq",
+    "fields": [
+      {
+        "name": "RegType",
+        "type": "string",
+        "tag": "`json:\"regType,options=phone|email|wxOpen|wxIn|wxMiniP|pwd|dingApp|huawei|jwt|google|apple|github\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "CodeID",
+        "type": "string",
+        "tag": "`json:\"codeID,optional\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional\"`"
+      },
+      {
+        "name": "Expand",
+        "type": "map[string]string",
+        "tag": "`json:\"expand,optional\"`"
+      },
+      {
+        "name": "Info",
+        "type": "*UserInfo",
+        "tag": "`json:\"info,optional\"`"
+      },
+      {
+        "name": "IsWithLogin",
+        "type": "bool",
+        "tag": "`json:\"isWithLogin,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserRoleIndexReq",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserRoleIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*RoleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "UserRoleMultiUpdateReq",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string\"`"
+      },
+      {
+        "name": "RoleIDs",
+        "type": "[]int64",
+        "tag": "`json:\"roleIDs\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserSearchReq",
+    "fields": [
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserSearchResp",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "HeadImg",
+        "type": "string",
+        "tag": "`json:\"headImg,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserSelfAppReadReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "AppID",
+        "type": "string",
+        "tag": "`json:\"appID,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "SubType",
+        "type": "string",
+        "tag": "`json:\"subType,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserSelfAppReadResp",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Config",
+        "type": "string",
+        "tag": "`json:\"config,optional\"`"
+      },
+      {
+        "name": "TenantCodes",
+        "type": "[]string",
+        "tag": "`json:\"tenantCodes,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserSelfReadReq",
+    "fields": [
+      {
+        "name": "WithRoles",
+        "type": "bool",
+        "tag": "`json:\"withRoles,optional\"`"
+      },
+      {
+        "name": "WithTenant",
+        "type": "bool",
+        "tag": "`json:\"withTenant,optional\"`"
+      },
+      {
+        "name": "WithProjects",
+        "type": "bool",
+        "tag": "`json:\"withProjects,optional\"`"
+      },
+      {
+        "name": "WithDepts",
+        "type": "bool",
+        "tag": "`json:\"withDepts,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WeatherAir",
+    "fields": [
+      {
+        "name": "Aqi",
+        "type": "string",
+        "tag": "`json:\"aqi\"`"
+      },
+      {
+        "name": "Level",
+        "type": "string",
+        "tag": "`json:\"level\"`"
+      },
+      {
+        "name": "Category",
+        "type": "string",
+        "tag": "`json:\"category\"`"
+      },
+      {
+        "name": "Primary",
+        "type": "string",
+        "tag": "`json:\"primary\"`"
+      },
+      {
+        "name": "Pm10",
+        "type": "string",
+        "tag": "`json:\"pm10\"`"
+      },
+      {
+        "name": "Pm2P5",
+        "type": "string",
+        "tag": "`json:\"pm2p5\"`"
+      },
+      {
+        "name": "No2",
+        "type": "string",
+        "tag": "`json:\"no2\"`"
+      },
+      {
+        "name": "So2",
+        "type": "string",
+        "tag": "`json:\"so2\"`"
+      },
+      {
+        "name": "Co",
+        "type": "string",
+        "tag": "`json:\"co\"`"
+      },
+      {
+        "name": "O3",
+        "type": "string",
+        "tag": "`json:\"o3\"`"
+      }
+    ]
+  },
+  {
+    "name": "WeatherReadReq",
+    "fields": [
+      {
+        "name": "Position",
+        "type": "Point",
+        "tag": "`json:\"position,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,optional,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "WeatherReadResp",
+    "fields": [
+      {
+        "name": "ObsTime",
+        "type": "string",
+        "tag": "`json:\"obsTime\"`"
+      },
+      {
+        "name": "Temp",
+        "type": "string",
+        "tag": "`json:\"temp\"`"
+      },
+      {
+        "name": "FeelsLike",
+        "type": "string",
+        "tag": "`json:\"feelsLike\"`"
+      },
+      {
+        "name": "Icon",
+        "type": "string",
+        "tag": "`json:\"icon\"`"
+      },
+      {
+        "name": "Text",
+        "type": "string",
+        "tag": "`json:\"text\"`"
+      },
+      {
+        "name": "Wind360",
+        "type": "string",
+        "tag": "`json:\"wind360\"`"
+      },
+      {
+        "name": "WindDir",
+        "type": "string",
+        "tag": "`json:\"windDir\"`"
+      },
+      {
+        "name": "WindScale",
+        "type": "string",
+        "tag": "`json:\"windScale\"`"
+      },
+      {
+        "name": "WindSpeed",
+        "type": "string",
+        "tag": "`json:\"windSpeed\"`"
+      },
+      {
+        "name": "Humidity",
+        "type": "string",
+        "tag": "`json:\"humidity\"`"
+      },
+      {
+        "name": "Precip",
+        "type": "string",
+        "tag": "`json:\"precip\"`"
+      },
+      {
+        "name": "Pressure",
+        "type": "string",
+        "tag": "`json:\"pressure\"`"
+      },
+      {
+        "name": "Vis",
+        "type": "string",
+        "tag": "`json:\"vis\"`"
+      },
+      {
+        "name": "Cloud",
+        "type": "string",
+        "tag": "`json:\"cloud\"`"
+      },
+      {
+        "name": "Dew",
+        "type": "string",
+        "tag": "`json:\"dew\"`"
+      },
+      {
+        "name": "Air",
+        "type": "WeatherAir",
+        "tag": "`json:\"air\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithAppCodeID",
+    "fields": [
+      {
+        "name": "AppCode",
+        "type": "string",
+        "tag": "`json:\"appCode\"`"
+      },
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithCode",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithGroupCode",
+    "fields": [
+      {
+        "name": "GroupCode",
+        "type": "string",
+        "tag": "`json:\"groupCode,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithID",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithIDOrCode",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithIDStr",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      }
+    ]
+  }
+]

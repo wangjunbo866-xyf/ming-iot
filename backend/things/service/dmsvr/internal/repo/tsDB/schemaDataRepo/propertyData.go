@@ -1,0 +1,639 @@
+package schemaDataRepo
+
+import (
+	"context"
+	"fmt"
+	"strings"
+	"time"
+
+	"gitee.com/ming-iot/saas/share/dataType"
+	"gitee.com/ming-iot/share/conf"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/tsDB"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg/msgThing"
+	"gitee.com/ming-iot/things/share/domain/schema"
+	"github.com/spf13/cast"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+func (d *DeviceDataRepo) InsertPropertyData(ctx context.Context, t *schema.Property, productID string, deviceName string,
+	property *msgThing.Param, timestamp time.Time, optional msgThing.Optional) error {
+	err := d.GenInsertPropertySql(ctx, t, productID, deviceName, property, timestamp, optional)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (d *DeviceDataRepo) GenInsertPropertySql(ctx context.Context, p *schema.Property, productID string, deviceName string,
+	property *msgThing.Param, timestamp time.Time, optional msgThing.Optional) (err error) {
+	var ars = map[string]any{}
+	switch property.Define.Type {
+	case schema.DataTypeArray:
+		genArrSql := func(Identifier string, num int, v any) error {
+			ars[schema.GenArray(Identifier, num)] = v
+			if property.Define.ArrayInfo.Type == schema.DataTypeStruct {
+				vv, ok := property.Value.(map[string]msgThing.Param)
+				if !ok {
+					return errors.Parameter.AddMsg("结构体类型传参错误")
+				}
+				vvv, err := msgThing.ToVal(vv)
+				if err != nil {
+					return err
+				}
+				ars[schema.GenArray(Identifier, num)] = vvv
+			}
+			if optional.OnlyCache || !d.cacheManager.CheckIsChange(ctx, devices.Core{
+				ProductID: productID, DeviceName: deviceName}, p, msgThing.PropertyLogData{
+				Identifier: schema.GenArray(Identifier, num),
+				Param:      ars[schema.GenArray(Identifier, num)],
+				TimeStamp:  timestamp,
+			}) {
+				return nil
+			}
+
+			id := GetArrayID(Identifier, num)
+			pp := Property{
+				ProductID:  productID,
+				DeviceName: deviceName,
+				Timestamp:  timestamp,
+				Identifier: id,
+			}
+			switch property.Define.ArrayInfo.Type {
+			case schema.DataTypeMatrix:
+				d.asyncPropertyMatrixArray.AsyncInsert(&PropertyMatrixArray{
+					Property: pp,
+					Param:    ars[schema.GenArray(Identifier, num)].([]any),
+					Pos:      int64(num),
+				})
+			case schema.DataTypeStruct:
+				d.asyncPropertyStructArray.AsyncInsert(&PropertyStructArray{
+					Property: pp,
+					Param:    ars[schema.GenArray(Identifier, num)].(map[string]any),
+					Pos:      int64(num),
+				})
+			case schema.DataTypeBool:
+				d.asyncPropertyBoolArray.AsyncInsert(&PropertyBoolArray{
+					Property: pp, Param: cast.ToBool(v), Pos: int64(num),
+				})
+			case schema.DataTypeInt:
+				d.asyncPropertyIntArray.AsyncInsert(&PropertyIntArray{
+					Property: pp, Param: cast.ToInt64(v), Pos: int64(num),
+				})
+			case schema.DataTypeString:
+				d.asyncPropertyStringArray.AsyncInsert(&PropertyStringArray{
+					Property: pp, Param: cast.ToString(v), Pos: int64(num),
+				})
+			case schema.DataTypeFloat:
+				d.asyncPropertyFloatArray.AsyncInsert(&PropertyFloatArray{
+					Property: pp, Param: cast.ToFloat64(v), Pos: int64(num),
+				})
+			case schema.DataTypeTimestamp:
+				d.asyncPropertyTimestampArray.AsyncInsert(&PropertyTimestampArray{
+					Property: pp, Param: cast.ToInt64(v), Pos: int64(num),
+				})
+			case schema.DataTypeEnum:
+				d.asyncPropertyEnumArray.AsyncInsert(&PropertyEnumArray{
+					Property: pp, Param: cast.ToInt64(v), Pos: int64(num),
+				})
+			}
+			return nil
+		}
+
+		switch val := property.Value.(type) {
+		case []any: //这种是数组的所有值一起上传的
+			for i, v := range val {
+				err := genArrSql(property.Identifier, i, v)
+				if err != nil {
+					return err
+				}
+			}
+		default:
+			Identifier, num, ok := schema.GetArray(property.Identifier)
+			if !ok {
+				return errors.Parameter.AddDetail("不是数组")
+			}
+			err := genArrSql(Identifier, num, val)
+			if err != nil {
+				return err
+			}
+		}
+	default:
+		ars[property.Identifier] = property.Value
+		if property.Define.Type == schema.DataTypeStruct {
+			vv, ok := property.Value.(map[string]msgThing.Param)
+			if !ok {
+				return errors.Parameter.AddMsg("结构体类型传参错误")
+			}
+			vvv, err := msgThing.ToVal(vv)
+			if err != nil {
+				return err
+			}
+			ars[property.Identifier] = vvv
+		}
+		if optional.OnlyCache || !d.cacheManager.CheckIsChange(ctx, devices.Core{
+			ProductID: productID, DeviceName: deviceName}, p, msgThing.PropertyLogData{
+			Identifier: property.Identifier,
+			Param:      ars[property.Identifier],
+			TimeStamp:  timestamp,
+		}) {
+			break
+		}
+		pp := Property{
+			ProductID:  productID,
+			DeviceName: deviceName,
+			Timestamp:  timestamp,
+			Identifier: property.Identifier,
+		}
+		switch property.Define.Type {
+		case schema.DataTypeStruct:
+			d.asyncPropertyStruct.AsyncInsert(&PropertyStruct{
+				Property: pp,
+				Param:    ars[property.Identifier].(map[string]any),
+			})
+		case schema.DataTypeMatrix:
+			d.asyncPropertyMatrix.AsyncInsert(&PropertyMatrix{
+				Property: pp,
+				Param:    cast.ToSlice(ars[property.Identifier]),
+			})
+		case schema.DataTypeBool:
+			d.asyncPropertyBool.AsyncInsert(&PropertyBool{
+				Property: pp, Param: cast.ToBool(property.Value),
+			})
+		case schema.DataTypeInt:
+			d.asyncPropertyInt.AsyncInsert(&PropertyInt{
+				Property: pp, Param: cast.ToInt64(property.Value),
+			})
+		case schema.DataTypeString:
+			d.asyncPropertyString.AsyncInsert(&PropertyString{
+				Property: pp, Param: cast.ToString(property.Value),
+			})
+		case schema.DataTypeFloat:
+			d.asyncPropertyFloat.AsyncInsert(&PropertyFloat{
+				Property: pp, Param: cast.ToFloat64(property.Value),
+			})
+		case schema.DataTypeTimestamp:
+			d.asyncPropertyTimestamp.AsyncInsert(&PropertyTimestamp{
+				Property: pp, Param: cast.ToInt64(property.Value),
+			})
+		case schema.DataTypeEnum:
+			d.asyncPropertyEnum.AsyncInsert(&PropertyEnum{
+				Property: pp, Param: cast.ToInt64(property.Value),
+			})
+		}
+	}
+	f := func(ctx context.Context) {
+		// 使用缓存管理器更新属性缓存
+		err := d.cacheManager.UpdatePropertyCache(ctx, productID, deviceName, p, ars, timestamp)
+		if err != nil {
+			logx.WithContext(ctx).Errorf("更新属性缓存失败: %v", err)
+		}
+	}
+	if !optional.Sync {
+		ctxs.GoNewCtx(ctx, f)
+	} else {
+		f(ctx)
+	}
+
+	return
+}
+
+func (d *DeviceDataRepo) GetLatestAllPropertyData(ctx context.Context, m *schema.Model, productID, deviceName string) ([]*msgThing.PropertyLogData, error) {
+	// 使用缓存管理器获取设备所有属性的最后记录
+	return d.cacheManager.GetPropertyAllLastRecord(ctx, m, productID, deviceName)
+}
+
+func (d *DeviceDataRepo) GetLatestPropertyDataByID(ctx context.Context, p *schema.Property, filter msgThing.LatestFilter) (*msgThing.PropertyLogData, error) {
+	// 使用缓存管理器获取最后记录
+	ret, err := d.cacheManager.GetPropertyLastRecord(ctx, filter.ProductID, filter.DeviceName, filter.DataID)
+	if err != nil {
+		logx.WithContext(ctx).Error(err)
+	}
+	if ret != nil && ret.TimeStamp.After(time.Now().Add(-time.Hour*24)) { //todo 后面要修改成 定时去随机删除下缓存
+		vv, er := msgThing.GetVal(&p.Define, ret.Param)
+		if er == nil {
+			ret.Param = vv
+		}
+		return ret, nil
+	}
+	//如果缓存里没有查到,需要从db里查
+	dds, err := d.GetPropertyDataByID(ctx, p,
+		msgThing.FilterOpt{
+			Filter: msgThing.Filter{
+				ProductID:   filter.ProductID,
+				DeviceNames: []string{filter.DeviceName},
+			},
+			Page: def.PageInfo2{Size: 1},
+
+			DataID: filter.DataID,
+			Order:  stores.OrderDesc,
+		})
+	if len(dds) == 0 || err != nil {
+		return nil, err
+	}
+	vv, er := msgThing.GetVal(&p.Define, dds[0].Param)
+	if er == nil {
+		dds[0].Param = vv
+	}
+	// 更新缓存
+	err = d.cacheManager.UpdatePropertyCache(ctx, filter.ProductID, filter.DeviceName, p, map[string]any{filter.DataID: dds[0].Param}, dds[0].TimeStamp)
+	if err != nil {
+		logx.WithContext(ctx).Errorf("更新属性缓存失败: %v", err)
+	}
+	return dds[0], nil
+
+}
+
+func (d *DeviceDataRepo) InsertPropertiesData(ctx context.Context, t *schema.Model, productID string, deviceName string,
+	params map[string]msgThing.Param, timestamp time.Time, optional msgThing.Optional) error {
+	var startTime = time.Now()
+	defer func() {
+		logx.WithContext(ctx).WithDuration(time.Now().Sub(startTime)).
+			Infof("DeviceDataRepo.InsertPropertiesData")
+	}()
+	for identifier, param := range params {
+		p := t.Property[param.Identifier]
+		//入库
+		param.Identifier = identifier
+		err := d.GenInsertPropertySql(ctx, p, productID, deviceName, &param, timestamp, optional)
+		if err != nil {
+			return errors.Database.AddDetailf(
+				"DeviceDataRepo.InsertPropertiesData.InsertPropertyData identifier:%v param:%v err:%v",
+				identifier, param, err)
+		}
+	}
+	return nil
+}
+
+func (d *DeviceDataRepo) GetPropertyDataByID(
+	ctx context.Context, p *schema.Property,
+	filter msgThing.FilterOpt) ([]*msgThing.PropertyLogData, error) {
+	if err := filter.Check(); err != nil {
+		return nil, err
+	}
+
+	var (
+		err error
+		db  = d.db.WithContext(ctx).Model(getModel(p.Define))
+		//needJoinAreaID bool
+		//needJoinGroup  bool
+	)
+
+	if filter.ArgFunc == "" {
+		if filter.Order != stores.OrderAsc {
+			db = db.Order("ts desc")
+		}
+		if filter.PartitionBy != "" {
+			var (
+				selects []string
+				groups  = ""
+			)
+
+			selects, groups, db = d.handlePartition(filter.PartitionBy, db)
+			if len(selects) != 0 {
+				db = db.Select(selects)
+			}
+			if groups != "" {
+				db = db.Group(groups)
+			}
+		}
+		db = db.Table(getTableName(p.Define) + " as tb")
+	} else {
+		db, err = d.getPropertyArgFuncSelect(ctx, db, p, &filter)
+		if err != nil {
+			return nil, err
+		}
+		filter.Page.Size = 0
+	}
+
+	_, num, ok := schema.GetArray(filter.DataID)
+	if ok {
+
+		db = db.Where("pos=?", num)
+	}
+	db = db.Where("tb.identifier=?", filter.DataID)
+	db = d.fillFilter(ctx, db, filter.Filter)
+	db = filter.Page.FmtSql2(db)
+	var retProperties []*msgThing.PropertyLogData
+	var retDatabase = []map[string]any{}
+	err = db.Find(&retDatabase).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	for _, v := range retDatabase {
+		retProperties = append(retProperties, d.ToPropertyData(ctx, filter.NoFirstTs, filter.DataID, p, v))
+	}
+	return retProperties, nil
+}
+
+func (d *DeviceDataRepo) ToPropertyData(ctx context.Context, noFirstTs bool, id string, p *schema.Property, db map[string]any) *msgThing.PropertyLogData {
+	// 辅助函数：计算绝对值
+	abs := func(x int64) int64 {
+		if x < 0 {
+			return -x
+		}
+		return x
+	}
+
+	// 调试：打印原始数据
+	logx.WithContext(ctx).Infof("ToPropertyData: ts_window type=%T, value=%v | ts type=%T, value=%v",
+		db["ts_window"], db["ts_window"], db["ts"], db["ts"])
+
+	// 调试：打印 time.Time 内部值
+	if ts, ok := db["ts"].(time.Time); ok {
+		// 转换为北京时间验证
+		beijingTime := ts.In(time.FixedZone("CST", 8*3600))
+		logx.WithContext(ctx).Infof("ts debug: String=%v, Beijing=%v, Unix=%d, UnixMilli=%d, UnixNano=%d",
+			ts.String(), beijingTime.String(), ts.Unix(), ts.UnixMilli(), ts.UnixNano())
+	}
+	if tsWin, ok := db["ts_window"].(time.Time); ok {
+		// 转换为北京时间验证
+		beijingTime := tsWin.In(time.FixedZone("CST", 8*3600))
+		logx.WithContext(ctx).Infof("ts_window debug: String=%v, Beijing=%v, Unix=%d, UnixMilli=%d, UnixNano=%d",
+			tsWin.String(), beijingTime.String(), tsWin.Unix(), tsWin.UnixMilli(), tsWin.UnixNano())
+	}
+
+	// 直接使用 time.Time，不需要再用 cast.ToTime()
+	var timeStamp time.Time
+	if v, ok := db["ts_window"].(time.Time); ok && !v.IsZero() {
+		timeStamp = v
+		// 验证时间戳是否正确：从显示的时间重建，检查是否匹配原始的 Unix 时间戳
+		year, month, day := v.Date()
+		hour, min, sec := v.Clock()
+		nsec := v.Nanosecond()
+		reconstructed := time.Date(year, month, day, hour, min, sec, nsec, time.UTC)
+		// 允许 1 秒的误差（纳秒部分可能不同）
+		if abs(reconstructed.Unix()-v.Unix()) > 1 {
+			// 时间显示正确但内部 Unix 时间戳错误，使用重建的时间对象
+			timeStamp = time.Date(year, month, day, hour, min, sec, nsec, v.Location())
+			logx.WithContext(ctx).Infof("Fixed timestamp: display=%v, old_unix=%d, new_unix=%d",
+				v.Format("2006-01-02 15:04:05"), v.Unix(), timeStamp.Unix())
+		}
+	}
+
+	data := msgThing.PropertyLogData{
+		DeviceName: cast.ToString(db["device_name"]),
+		Identifier: id,
+		Param:      db["param"],
+		TimeStamp:  timeStamp,
+	}
+	pp, err := p.Define.FmtValue(data.Param)
+	if err != nil {
+		logx.WithContext(ctx).Error("FmtValue", err)
+	} else {
+		data.Param = pp
+	}
+	if b, ok := data.Param.(bool); ok {
+		data.Param = cast.ToInt64(b)
+	}
+	if db["ts"] != nil && (noFirstTs || data.TimeStamp.IsZero()) {
+		// 直接使用 time.Time，不需要再用 cast.ToTime()
+		if v, ok := db["ts"].(time.Time); ok {
+			data.TimeStamp = v
+		} else {
+			data.TimeStamp = cast.ToTime(db["ts"])
+		}
+	}
+	if db["tenant_code"] != nil {
+		data.TenantCode = dataType.TenantCode(cast.ToString(db["tenant_code"]))
+	}
+	if db["project_id"] != nil {
+		data.ProjectID = dataType.ProjectID(cast.ToInt64(db["project_id"]))
+	}
+	if db["area_id"] != nil {
+		data.AreaID = dataType.AreaID(cast.ToInt64(db["area_id"]))
+	}
+	if db["area_id_path"] != nil {
+		data.AreaIDPath = dataType.AreaIDPath(cast.ToString(db["area_id_path"]))
+	}
+	if db["group_purpose"] != nil {
+		groupPurpose := cast.ToString(db["group_purpose"])
+		var idsInfo def.IDsInfo
+		if db["group_id"] != nil {
+			idsInfo.IDs = append(idsInfo.IDs, cast.ToInt64(db["group_id"]))
+		}
+		if db["group_id_path"] != nil {
+			idsInfo.IDPaths = append(idsInfo.IDPaths, cast.ToString(db["group_id_path"]))
+		}
+		data.BelongGroup = map[string]def.IDsInfo{
+			groupPurpose: idsInfo,
+		}
+	}
+	return &data
+}
+
+/*
+SELECT
+
+	FROM_UNIXTIME(
+	        UNIX_TIMESTAMP(@start) +
+	        FLOOR((UNIX_TIMESTAMP(ts) - UNIX_TIMESTAMP(@start)) / @interval) * @interval
+	) AS hour_window,
+	device_name,
+	SUM(param) AS total_param
+
+FROM
+
+	dm_time_model_property_float
+
+WHERE
+
+	ts >= @start
+
+GROUP BY
+
+	hour_window, device_name;
+*/
+func (d *DeviceDataRepo) getPropertyArgFuncSelect(
+	ctx context.Context, db *stores.DB, p *schema.Property,
+	filter *msgThing.FilterOpt) (*stores.DB, error) {
+	var start = "0000-01-01 0:00:00"
+	if filter.Page.TimeStart != 0 {
+		start = time.UnixMilli(filter.Page.TimeStart).Format("2006-01-02 15:04:05")
+	}
+	var (
+		selects []string
+		groups  = ""
+	)
+	if filter.PartitionBy != "" {
+		selects, groups, db = d.handlePartition(filter.PartitionBy, db)
+	}
+	arg := func(ts, param string) string {
+		if ts == "" {
+			ts = "ts"
+		}
+		if param == "" {
+			param = "param"
+		}
+		switch filter.ArgFunc {
+		case "first":
+			if filter.NoFirstTs {
+				return fmt.Sprintf("(ARRAY_AGG(tb.%s ORDER BY tb.%s ASC))[1]  AS param, (ARRAY_AGG(tb.%s ORDER BY tb.%s ASC))[1] AS ts ",
+					param, ts, ts, ts)
+			}
+			return fmt.Sprintf("(ARRAY_AGG(tb.%s ORDER BY tb.%s ASC))[1]  AS param", param, ts)
+		case "last":
+			if filter.NoFirstTs {
+				return fmt.Sprintf("(ARRAY_AGG(tb.%s ORDER BY tb.%s desc))[1]  AS param, (ARRAY_AGG(tb.%s ORDER BY tb.%s desc))[1] AS ts ",
+					param, ts, ts, ts)
+			}
+			return fmt.Sprintf("(ARRAY_AGG(tb.%s ORDER BY tb.%s desc))[1]  AS param", param, ts)
+		default:
+			return fmt.Sprintf("%s(%s)  AS param", filter.ArgFunc, param)
+		}
+	}
+	if filter.Interval != 0 {
+		if filter.IntervalUnit == "" {
+			filter.IntervalUnit = def.TimeUnitS
+		}
+
+		if stores.GetTsDBType() == conf.Pgsql && utils.SliceIn(filter.ArgFunc, "first", "last", "min", "max", "count", "sum") &&
+			utils.SliceIn(filter.IntervalUnit, def.TimeUnitD, def.TimeUnitH, def.TimeUnitN, def.TimeUnitW, def.TimeUnitY) {
+			//pg的 timescale走视图优化
+			switch filter.IntervalUnit {
+			case def.TimeUnitD, def.TimeUnitH:
+				selects = append(selects, "ts as ts_window")
+				db = db.Table(getTableName(p.Define) + "_" + filter.IntervalUnit.ToPgStr() + " as tb")
+			default:
+				selects = append(selects, fmt.Sprintf(`%s AS ts_window`,
+					tsDB.TimeBucketSQL(fmt.Sprintf("'%v %s'", filter.Interval, filter.IntervalUnit.ToPgStr()), "ts")))
+				db = db.Table(getTableName(p.Define) + "_day as tb")
+			}
+			selects = append(selects, arg(filter.ArgFunc+"_ts", filter.ArgFunc+"_param"))
+			db = db.Select(selects).Group("ts_window")
+		} else {
+			db = db.Table(getTableName(p.Define) + " as tb")
+			switch stores.GetTsDBType() {
+			case conf.Pgsql:
+				selects = append(selects, fmt.Sprintf(`%s AS ts_window, %s `,
+					tsDB.TimeBucketSQL(fmt.Sprintf("'%v %s'", filter.Interval, filter.IntervalUnit.ToPgStr()), "ts"), arg("", "")))
+
+				db = db.Select(selects)
+			default:
+				interval := int64(filter.IntervalUnit.ToDuration(filter.Interval) / time.Second)
+				selects = append(selects, fmt.Sprintf(` FROM_UNIXTIME(UNIX_TIMESTAMP('%s') + FLOOR((UNIX_TIMESTAMP(ts) - UNIX_TIMESTAMP('%s')) / %v) * %v ) AS ts_window, %s AS param`,
+					start, start, interval, interval, arg("", "")))
+
+				db = db.Select(selects)
+			}
+			db = db.Group("ts_window")
+		}
+
+	} else if groups == "" {
+		return nil, errors.Parameter.AddMsg("没有设置分组字段，无法进行聚合查询")
+	} else {
+		// 根据argFunc和时间边界对齐情况决定是否走_hour物化视图
+		// first只关心起始边界对齐,last只关心结束边界对齐,min/max两端都需要对齐
+		startAligned := filter.Page.TimeStart%(60*60*1000) == 0
+		endAligned := (filter.Page.TimeEnd+1)%(60*60*1000) == 0
+		canUseView := false
+		if stores.GetTsDBType() == conf.Pgsql {
+			switch filter.ArgFunc {
+			case "first":
+				canUseView = startAligned
+			case "last":
+				canUseView = endAligned
+			case "min", "max":
+				canUseView = startAligned && endAligned
+			}
+		}
+		if canUseView {
+			selects = append(selects, arg(filter.ArgFunc+"_ts", filter.ArgFunc+"_param"))
+			db = db.Table(getTableName(p.Define) + "_hour as tb").Select(selects)
+		} else {
+			selects = append(selects, arg("", ""))
+			db = db.Table(getTableName(p.Define) + " as tb").Select(selects)
+		}
+	}
+	if groups != "" {
+		db = db.Group(groups)
+	}
+	return db, nil
+}
+func (d *DeviceDataRepo) handlePartition(partitionBy string, db *stores.DB) (selects []string, groups string, db2 *stores.DB) {
+	if partitionBy == "" {
+		return nil, "", db
+	}
+	partitionBy = utils.CamelCaseToUdnderscore(partitionBy)
+	ps := strings.Split(partitionBy, ",")
+	var finalp []string
+	for _, p := range ps {
+		if strings.Contains(p, "area_id") {
+			db = db.Joins("left join dm_device_info as di on tb.product_id = di.product_id and tb.device_name = di.device_name")
+			selects = append(selects, "di.area_id as area_id")
+			finalp = append(finalp, p)
+		} else if strings.Contains(p, "group") {
+			db = db.Joins("left join dm_group_device as di on tb.product_id = di.product_id and tb.device_name = di.device_name")
+			selects = append(selects, "di.group_id  as group_id,di.purpose as group_purpose")
+
+			finalp = append(finalp, "group_purpose,group_id")
+		} else if p == "device_name" {
+			selects = append(selects, " tb.device_name as device_name")
+			finalp = append(finalp, p)
+		} else {
+			finalp = append(finalp, p)
+		}
+	}
+	return selects, strings.Join(finalp, ","), db
+}
+func (d *DeviceDataRepo) fillFilter(ctx context.Context,
+	db *stores.DB, filter msgThing.Filter) *stores.DB {
+	if len(filter.DeviceNames) != 0 {
+		db = db.Where("tb.device_name in ?", filter.DeviceNames)
+	}
+	db = tsDB.GroupFilter2(db, filter.BelongGroup)
+	if len(filter.ProductIDs) != 0 {
+		db = db.Where("tb.product_id IN ?", filter.ProductIDs)
+	} else if filter.ProductID != "" {
+		db = db.Where("tb.product_id = ?", filter.ProductID)
+	}
+	subQuery := d.db.WithContext(ctxs.WithDefaultAllProject(ctx)).Table("dm_device_info").Model(&relationDB.DmDeviceInfo{}).Select("product_id, device_name")
+	var hasDeviceJoin bool
+	if filter.ProjectID != 0 {
+		subQuery = subQuery.Where("project_id=?", filter.ProjectID)
+		hasDeviceJoin = true
+	}
+	if filter.TenantCode != "" {
+		subQuery = subQuery.Where("tenant_code=?", filter.TenantCode)
+		hasDeviceJoin = true
+	}
+	if filter.AreaID != 0 {
+		subQuery = subQuery.Where("area_id=?", filter.AreaID)
+		hasDeviceJoin = true
+	}
+	if filter.AreaIDPath != "" {
+		subQuery = subQuery.Where("area_id_path like ?", filter.AreaIDPath+"%")
+		hasDeviceJoin = true
+	}
+	if len(filter.AreaIDs) != 0 {
+		subQuery = subQuery.Where("area_id in ?", filter.AreaIDs)
+		hasDeviceJoin = true
+	}
+	if hasDeviceJoin {
+		db = db.Where("(tb.product_id, tb.device_name) in (?)",
+			subQuery)
+	}
+	return db
+}
+
+func (d *DeviceDataRepo) GetPropertyCountByID(
+	ctx context.Context, p *schema.Property,
+	filter msgThing.FilterOpt) (int64, error) {
+	var (
+		err error
+		db  = d.db.WithContext(ctx).Table(getTableName(p.Define) + " as tb")
+	)
+	db = schema.WhereArray(db, filter.DataID, "pos")
+	db = db.Where("tb.identifier=?", filter.DataID)
+	db = d.fillFilter(ctx, db, filter.Filter)
+	db = filter.Page.FmtSql2(db)
+	var total int64
+	err = db.Count(&total).Error
+	return total, stores.ErrFmt(err)
+}

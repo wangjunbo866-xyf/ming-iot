@@ -1,0 +1,23 @@
+---
+name: map-delivery
+description: Use when explicitly asked for map-delivery, or creating or updating Ming IoT module Specs, Changes (TYPE FEATURE/PATCH/BUGFIX/SUNSET), Plans, Reviews or Evidence, or linking their Gitee Issues and PRs.
+---
+
+# 业务地图交付
+
+正式交付正文使用中文。通过已定位文档工作树的 `map/README.md` → 模块 README → 当前 `spec.md` / Change Hub 定位。当前权威是该主题此时生效、可作为实施依据的文档；按模块入口及目标 Hub/Plan 核实当前阶段和生效记录，候选不自动成为现行规格。
+
+本 Skill 只处理 map 内交付。未迁移文档由用户手工迁移，不查询 Catalog 或旧目录作回退，不承担旧文档盘点、迁移及清理。
+
+1. 使用本 Skill 的 `scripts/resolve_docs.py` 定位 `ming-iot-rd-docs` 工作树；已有指定文档工作树时传入 `--docs-root`，从产品仓进入时传入 `--start` 或 `--workspace-root`。命令与定位规则见 [文档仓定位](references/locator.md)。成功后读取返回工作树根及目标模块的 `AGENTS.md`，核对实际治理和授权边界；后续命令在该工作树根执行。技能安装位置不决定文档仓或候选工作树。
+2. 公共读取：从业务地图定位模块 README、真实 Issue 与已有目标 Change 的 `README.md`（Hub）、Plan。全树查找 `map/**/changes/*/change.md` 的 affected_modules，核对同模块/锚点覆盖。活动态与锚点含义见 [状态与激活](references/workflow.md#状态与激活)，不只依赖一个模块索引。
+   - 既有模块：读取模块入口指向的当前 `spec.md`、来源 Change 和本次候选；尚无生效规格时如实标明。
+   - 新模块：核对 map 内模块边界及真实 Issue 的批准范围，先编写初版 `spec.md`，写清目标、边界、完整行为、验收要求与稳定锚点，并在模块入口标明尚未实施/生效。只有这些要求已明确且可由真实锚点引用，才进入 Change 初始化；有新建授权不等于可以跳过初版规格。
+   - 所需入口或规格缺失：在当前交付记录缺口；仅在批准范围已足以支持起草候选时继续。缺失的既有需求交回用户补充，不自行从旧目录恢复，也不把缺文件视为新模块授权。
+3. 核对真实 Gitee Delivery Issue 的仓库与编号、已批准范围及 Plan。缺少身份或发生活动锚点冲突时记录明确缺口；沿用已生效的授权边界，不能靠 Skill 获得权限。
+4. 新 Change 只用 `tools/map_docs.py init` 初始化结构；把已选模块、Issue、Delivery ID、TYPE 和仓库传入 [参数化命令](references/workflow.md#命令)。首次实施引用第 2 步已定义的初版规格及真实锚点；既有模块的增量引用现行规格，不提前覆盖它。字段和生命周期查同一参考文件。Plan、Review、Evidence 留在同一 Change 目录，辅助 Skill 的结果汇入这里。
+5. 补齐本次 Change 的完整语义正文及 Plan，区分首次实施范围或增量、当前行为、变更后行为和生效条件。按仓库记录验证与 Review 的精确 Head；候选变更后更新受影响的验证结论。评审尚未执行时，在 Hub 写明待评审及交付要求；有真实结论后才创建正式 `review.md`。
+6. 补齐 Issue ↔ Hub ↔ Change/Plan ↔ PR 的导航。缺失对象写明状态，不链接不存在的文件。Issue 工具仅生成待补导航块或回读验证，不自动覆盖远端正文；退出 2 按参考文件交由有权限的人补齐，不能声称已回写。没有成功回读结果就标为未验证。
+7. 运行 `python tools/map_docs.py check --docs-root .`，失败按 [检查失败分流](references/workflow.md#检查失败分流) 处理。申请激活时再按参考文件准备候选并运行只读 `activate`；报告当前权威、候选状态、实际验证和剩余依赖。
+
+结构与激活规则由 Python CLI 执行；Git Hook 和 CI 使用相同入口。本 Skill 提供写作流程，不承担 Git 回调或强制门禁。
