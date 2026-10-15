@@ -16,7 +16,7 @@
     "docs/specs/README.md",
     "docs/runbook/team-development.md",
     "docs/changelog/2026-10-13-ming-specs-pilot.md",
-    "docs/meta/DOC_REGISTRY.yaml",
+    "docs/index.yaml",
     ".agents/skills/ming-specs/**"
   ]
 }

@@ -122,7 +122,7 @@ func TestLocalShareUpstreamOwnedSourceRemainder(t *testing.T) {
 		t.Errorf("upstream-owned Share source file count = %d, want 253", count)
 	}
 	// M4 removes embedded example credentials in two files; exact transforms are
-	// recorded in docs/meta/PUBLICATION_TRANSFORMS.json. Keep the full remainder
+	// recorded in tooling/policy/PUBLICATION_TRANSFORMS.json. Keep the full remainder
 	// frozen, including those files, rather than adding directory exclusions.
 	const want = "b4d4dab7f7d7ae530e050a089be7ab6b891b08bc6c0fccb80d37068712ade07d"
 	if got != want {

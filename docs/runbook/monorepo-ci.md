@@ -24,6 +24,6 @@ GitHub workflow 使用普通 pull_request 和 main/master push、只读 contents
 
 误报例外只允许已复核的完整内容 SHA-256、规则、行号和原因；内容改变即失效。不使用目录级排除、扫描 baseline、行内放行或被扫描仓库提供的 Gitleaks 配置。维护例外需独立复审。
 
-公开前另运行 `make publication-ready`。它在发布清单不是 ready 或存在待决项时失败，不因技术 CI 通过而改变。25文件范围及本次远程授权已记录；已有来源限制继续保留。许可清单与发布状态的权威是 [PUBLICATION_POLICY.json](../meta/PUBLICATION_POLICY.json)。
+公开前另运行 `make publication-ready`。它在发布清单不是 ready 或存在待决项时失败，不因技术 CI 通过而改变。25文件范围及本次远程授权已记录；已有来源限制继续保留。许可清单与发布状态的权威是 [PUBLICATION_POLICY.json](../../tooling/policy/PUBLICATION_POLICY.json)。
 
 迁移采用独立的新历史；M3 及其完整源历史保留在已恢复验证的私有备份中。全新 clone 验证只针对本轮拟公开 refs，不把私有历史一并传入。候选发生变化后，重新绑定完整 Head、验证和独立 Review。

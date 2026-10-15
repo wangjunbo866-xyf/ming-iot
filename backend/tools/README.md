@@ -113,7 +113,7 @@ go run ./cmd/thingsbaseline verify \
   --lock ./things-baseline.lock \
   --source /home/wangjunbo/workspace-iot-platform/things \
   --backend .. \
-  --evidence ../../docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline.json
+  --evidence ../../docs/wiki/legacy/superpowers/evidence/2026-08-14-l0-things-migration-baseline.json
 ```
 
 需要切换 Go 模块镜像时，使用 Ming 工具链公共输入；它不会替代系统传输代理：

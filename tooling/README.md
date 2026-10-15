@@ -13,6 +13,10 @@
 
 [knowledge.json](knowledge.json) 只维护入口和验证范围，业务正文仍在 [docs/specs](../docs/specs/README.md) 与 [团队约定](../docs/runbook/team-development.md)。`knowledge.py` 不创建规格、修改文档或启用 Hook。
 
+`tooling/loopx` 从 Git 主工作区的 `.local/loopx.json` 读取本机 CLI 和 Registry 路由。配置缺失时明确失败；不创建新 Goal，不复制数据库。接入步骤见 [日常开发入口](../docs/runbook/daily-development.md)。
+
+[policy](policy/README.md) 保存机器检查清单；文档来源索引位于 [docs/index.yaml](../docs/index.yaml)。
+
 ## 实验与历史工具
 
 [experiments](experiments/README.md) 保存 r-doc、portable map-delivery 和旧团队/研发工具。它们不通过根 Skill 入口自动加载，不参与默认安装；旧 manifest 中的 canonical、旧仓地址等描述只代表当时来源。旧 Gitee 发布、TeamAI 安装、父子仓发现命令不作为本仓开发步骤运行。
@@ -20,4 +24,4 @@
 ## M4 单仓 CI 与发布核对
 
 参见 [验证说明](../docs/runbook/monorepo-ci.md) 和 [许可证地图](../LICENSES.md)。
-本地技术验证与公开许可分别记录；当前候选保留权利待确认材料，公开状态为 HOLD。
+已批准的 25 文件公开范围继续有效；来源及许可限制见 [公开策略](policy/PUBLICATION_POLICY.json)。迁移 PR #1 已合并，后续改动仍需检查和独立复审。

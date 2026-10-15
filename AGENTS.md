@@ -3,10 +3,10 @@
 ## 仓库地图与快速命令
 
 - 业务代码：`backend/saas`、`backend/share`、`backend/things`；Core/Share/Things 已并入，不再寻找同名兄弟仓实现。
-- 查规格或变更时，从 [知识导航](docs/README.md) 进入模块当前正文；查历史时按 [来源表](docs/meta/DOC_REGISTRY.yaml) 区分适用版本。
+- 查规格或变更时，从 [知识导航](docs/README.md) 进入模块当前正文；查历史时按 [来源表](docs/index.yaml) 区分适用版本。
 - 本地入口：`make knowledge-check`、`make verify-pr`；具体边界见 [工具说明](tooling/README.md) 和 [部署说明](deploy/README.md)。
-- 当前状态：已授权交付 GitHub 的单仓候选；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。
-- 当前 Goal 为 `ming-iot-knowledge-pilot`。LoopX 仍使用已注册的本机运行入口；其迁出旧路径另行验证，不在候选内建立第二份数据库。
+- 当前状态：迁移 PR #1 已合并，M5 正在切换日常入口；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。
+- 当前 Goal 为 `ming-iot-knowledge-pilot`。LoopX 从 `tooling/loopx` 进入；现有 SQLite Goal 的物理注册位置暂保留，详见 [日常开发入口](docs/runbook/daily-development.md)，不得重新初始化或复制第二份数据库。
 
 ## 关键约定速查
 
@@ -14,12 +14,12 @@
 | --- | --- |
 | 需求与规格 | 按模块当前有效正文及已确认决定执行；历史材料不自动成为规则 |
 | 代码检查 | 完整 verify-pr 与独立复审绑定同一候选，真实依赖未运行则明确记录 |
-| 迁移 | 已授权推送候选至 GitHub 并完成 CI/复审；保留旧源与备份，M5、合并和删除另行授权 |
+| 迁移 | 已授权 M5、PR #1 合并与入口切换；旧源和备份保留，删除与生产发布不在范围内 |
 
 
 ## 开始修改前
 
-1. 读取当前状态：`loopx status --goal-id ming-iot-knowledge-pilot`。
+1. 读取当前状态：`tooling/loopx status --goal-id ming-iot-knowledge-pilot`。
 2. 读取当前 LoopX Todo、写范围和用户 Gate，不依赖旧聊天推断任务。
 3. 旧工作区 `iot-doc`、`things` 来源仓保持只读；当前产品实现位于本仓 `backend/things`，可按获批任务修改。
 
@@ -55,7 +55,7 @@
 
 - 日常 Turn 先读取 `loopx diagnose/status/quota`、当前选中 Todo 与有界的 `evidence-log --thin --todo-id ...`；不得默认将整份 `ACTIVE_GOAL_STATE.md` 加载为上下文。只有诊断状态漂移、修复投影或执行获批的状态迁移时才读取全文。
 - Todo `evidence`、`note` 和 `reason` 只保存公开安全的简短结果或稳定证据指针，不内联完整 Review、原始日志、命令输出或大段分析正文。
-- 完整、脱敏、供人阅读的 Review 写入本仓任务证据或 `docs/changelog/`；原始机器 Evidence 留在当前 Goal 的私有证据目录。旧 `docs/rd/reviews/` 仅保留历史。Todo 回执只保留 `verdict`、`exact_head`、`review_ref/evidence_ref`、摘要哈希与 blocker/warning 计数。
+- 完整、脱敏、供人阅读的 Review 写入本仓任务证据或 `docs/changelog/`；原始机器 Evidence 留在当前 Goal 的私有证据目录。旧 `docs/wiki/legacy/rd/reviews/` 仅保留历史。Todo 回执只保留 `verdict`、`exact_head`、`review_ref/evidence_ref`、摘要哈希与 blocker/warning 计数。
 
 ## 长期 Smoke、Monitor 与自修复
 
@@ -68,7 +68,7 @@
 
 以下规则在 `ming-iot` 内覆盖上级工作区对每次 commit、push 单独授权的要求：
 
-- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；本轮已明确授权 GitHub 候选推送、PR、CI 与独立复审；具体范围见 `docs/meta/PUBLICATION_POLICY.json`。
+- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；本轮已明确授权 GitHub 候选推送、PR、CI 与独立复审；具体范围见 `tooling/policy/PUBLICATION_POLICY.json`。
 - 所有跟踪文件变更通过 PR 进入默认分支；禁止直接 push 默认分支的产品变更。首次空仓可建立不含文件的根提交作为 PR 基线。
 - PR 默认由有权限的人在目标托管平台完成 Review 和合并；人执行合并本身即为该次合并授权，不再要求单独的 LoopX User Gate。
 - 只有要求 Agent 执行 PR 合并时，才建立绑定精确 PR、Head、目标分支和合并方式的 User Gate。

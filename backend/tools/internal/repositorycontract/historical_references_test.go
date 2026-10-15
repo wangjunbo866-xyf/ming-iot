@@ -26,7 +26,7 @@ type historicalReference struct {
 
 // Historical records are explicit immutable files, never a directory-wide skip.
 func localShareHistoricalReferencePaths(root string) ([]string, error) {
-	data, err := os.ReadFile(filepath.Join(root, "docs/meta/HISTORICAL_REFERENCES.json"))
+	data, err := os.ReadFile(filepath.Join(root, "tooling/policy/HISTORICAL_REFERENCES.json"))
 	if err != nil {
 		return nil, err
 	}
@@ -62,15 +62,7 @@ func validateHistoricalReference(root string, item historicalReference) error {
 	if p == "" || strings.Contains(p, "\\") || filepath.IsAbs(p) || filepath.ToSlash(filepath.Clean(p)) != p || strings.HasPrefix(p, "../") {
 		return fmt.Errorf("invalid historical path: %s", p)
 	}
-	allowed := strings.HasPrefix(p, "docs/rd/") || strings.HasPrefix(p, "docs/wiki/legacy/")
-	switch p {
-	case "docs/superpowers/plans/2026-07-23-core-migration-foundation.md",
-		"docs/superpowers/plans/2026-07-23-goctl-rpcgen-toolchain.md",
-		"docs/superpowers/plans/2026-08-14-l0-things-compilation-migration-baseline.md",
-		"docs/superpowers/specs/2026-07-23-core-goctl-migration-design.md",
-		"docs/superpowers/specs/2026-08-14-l0-things-compilation-migration-baseline-design.md":
-		allowed = true
-	}
+	allowed := strings.HasPrefix(p, "docs/wiki/legacy/")
 	ext := filepath.Ext(p)
 	if !allowed || (ext != ".md" && ext != ".json" && ext != ".txt") || strings.TrimSpace(item.Reason) == "" {
 		return fmt.Errorf("not an explicit historical document: %s", p)
@@ -100,7 +92,7 @@ func validateHistoricalReference(root string, item historicalReference) error {
 }
 func TestHistoricalReferencesRejectActiveOrChangedFiles(t *testing.T) {
 	root := t.TempDir()
-	historical := "docs/rd/evidence/frozen.md"
+	historical := "docs/wiki/legacy/rd/evidence/frozen.md"
 	full := filepath.Join(root, historical)
 	if err := os.MkdirAll(filepath.Dir(full), 0755); err != nil {
 		t.Fatal(err)
@@ -114,7 +106,7 @@ func TestHistoricalReferencesRejectActiveOrChangedFiles(t *testing.T) {
 	if err := validateHistoricalReference(root, good); err != nil {
 		t.Fatal(err)
 	}
-	for _, path := range []string{"backend/share/live.go", "docs/rd/live.go", "docs/specs/current.md", "../escape.md", "docs/rd/../live.md"} {
+	for _, path := range []string{"backend/share/live.go", "docs/wiki/legacy/rd/live.go", "docs/specs/current.md", "../escape.md", "docs/wiki/legacy/rd/../live.md"} {
 		t.Run(path, func(t *testing.T) {
 			bad := good
 			bad.Path = path
@@ -145,7 +137,7 @@ func TestHistoricalClassificationStillFindsNewActiveReferences(t *testing.T) {
 	if out, err := cmd.CombinedOutput(); err != nil {
 		t.Fatalf("%v: %s", err, out)
 	}
-	for _, path := range []string{"docs/rd/unregistered.md", "backend/live.go", "tooling/live.py"} {
+	for _, path := range []string{"docs/wiki/legacy/rd/unregistered.md", "backend/live.go", "tooling/live.py"} {
 		full := filepath.Join(root, path)
 		if err := os.MkdirAll(filepath.Dir(full), 0755); err != nil {
 			t.Fatal(err)
