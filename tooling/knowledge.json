@@ -39,7 +39,8 @@
     "docs/specs/saas/notification-trigger/spec.md",
     "docs/specs/engineering/api-contract/README.md",
     "docs/specs/engineering/api-contract/spec.md",
-    "docs/changelog/2026-10-16-specs-pr-check.md"
+    "docs/changelog/2026-10-16-specs-pr-check.md",
+    "docs/changelog/2026-10-16-specs-clean-clone-takeover.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

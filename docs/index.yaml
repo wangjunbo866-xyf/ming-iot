@@ -2,6 +2,16 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-clean-clone-takeover-20261016
+    role: clean_clone_notification_takeover_and_documentation_correction
+    status: local_candidate
+    path: docs/changelog/2026-10-16-specs-clean-clone-takeover.md
+    revision: s3-1
+    authority: user_authorized_scoped_validation
+    related:
+      - docs/specs/saas/notification-trigger/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+    conflict_rule: "S3 是无聊天历史的独立 AI 接手演练，调用边界仅为适用源码现状。最终 Head、验证及复审由 Goal 回执绑定；不代表真人验收、长期收益、业务变化、托管运行或生产验收。保留候选、旧仓、备份和历史；小黄任务保持废弃。"
   - source_id: ming-iot-specs-pr-check-20261016
     role: actual_pr_diff_module_mapping_and_regressions
     status: local_candidate
@@ -85,7 +95,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.4.0-draft
+    revision: 0.5.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -96,7 +106,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.4.0-draft
+    revision: 0.5.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
