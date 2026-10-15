@@ -331,15 +331,14 @@ func TestValidateSecretFileEnforcesStrictBoundary(t *testing.T) {
 	}
 }
 
-func TestWriteEMQXBootstrapSecretPublishesAtomic0600File(t *testing.T) {
-	runtimeRoot := t.TempDir()
-	filename := filepath.Join(runtimeRoot, "secrets", "emqx-api-key.conf")
-	if err := WriteEMQXBootstrapSecret(runtimeRoot, "fixture-key", "fixture-secret"); err != nil {
-		t.Fatalf("WriteEMQXBootstrapSecret() error = %v", err)
+func TestWriteFileAtomicallyWithOwnershipPublishesAtomic0600File(t *testing.T) {
+	filename := filepath.Join(t.TempDir(), "emqx-api-key.conf")
+	if err := writeFileAtomicallyWithOwnership(filename, []byte("fixture-key:fixture-secret\n"), 0o600, nil); err != nil {
+		t.Fatalf("writeFileAtomicallyWithOwnership() error = %v", err)
 	}
 	assertEMQXBootstrapSecret(t, filename, "fixture-key:fixture-secret\n")
-	if err := WriteEMQXBootstrapSecret(runtimeRoot, "replacement-key", "replacement-secret"); err != nil {
-		t.Fatalf("WriteEMQXBootstrapSecret(replacement) error = %v", err)
+	if err := writeFileAtomicallyWithOwnership(filename, []byte("replacement-key:replacement-secret\n"), 0o600, nil); err != nil {
+		t.Fatalf("writeFileAtomicallyWithOwnership(replacement) error = %v", err)
 	}
 	assertEMQXBootstrapSecret(t, filename, "replacement-key:replacement-secret\n")
 	entries, err := os.ReadDir(filepath.Dir(filename))
@@ -362,11 +361,20 @@ func TestWriteEMQXBootstrapSecretUsesEMQXRuntimeOwnership(t *testing.T) {
 		if _, statErr := os.Stat(filename); !errors.Is(statErr, os.ErrNotExist) {
 			t.Fatalf("failed ownership correction published target: %v", statErr)
 		}
+		entries, readErr := os.ReadDir(filepath.Dir(filename))
+		if readErr != nil || len(entries) != 0 {
+			t.Fatalf("failed ownership correction left secret files: %+v/%v", entries, readErr)
+		}
 		return
 	}
 	if err != nil {
 		t.Fatalf("WriteEMQXBootstrapSecret() error = %v", err)
 	}
+	assertEMQXBootstrapSecret(t, filename, "fixture-key:fixture-secret\n")
+	if err := WriteEMQXBootstrapSecret(runtimeRoot, "replacement-key", "replacement-secret"); err != nil {
+		t.Fatalf("WriteEMQXBootstrapSecret(replacement) error = %v", err)
+	}
+	assertEMQXBootstrapSecret(t, filename, "replacement-key:replacement-secret\n")
 	info, err := os.Stat(filename)
 	if err != nil {
 		t.Fatal(err)
@@ -460,7 +468,11 @@ func TestWriteFileAtomicallyWithOwnershipFailurePreservesTargetAndCleansTemporar
 func TestWriteEMQXBootstrapSecretRejectsUnsafeInputsWithoutReplacingOldSecret(t *testing.T) {
 	runtimeRoot := t.TempDir()
 	filename := filepath.Join(runtimeRoot, "secrets", "emqx-api-key.conf")
-	if err := WriteEMQXBootstrapSecret(runtimeRoot, "stable-key", "stable-secret"); err != nil {
+	// This fixture tests input rejection, not the caller's ability to chown.
+	if err := os.Mkdir(filepath.Dir(filename), 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filename, []byte("stable-key:stable-secret\n"), 0o600); err != nil {
 		t.Fatal(err)
 	}
 	for _, tt := range []struct {

@@ -117,13 +117,27 @@ func TestDefaultExecutorStagesContractInputs(t *testing.T) {
 		EnvFile:      envFile,
 		RuntimeRoot:  filepath.Join(temp, "runtime"),
 	}
-	if err := executor.Execute("stage", options); err != nil {
-		t.Fatal(err)
-	}
+	err := executor.Execute("stage", options)
 	if got.RepoRoot != options.Repo || got.RuntimeRoot != options.RuntimeRoot || got.Contract == nil || len(got.Contract.Roles) != 5 {
 		t.Fatalf("stage request = %+v", got)
 	}
 	secretFile := filepath.Join(options.RuntimeRoot, "secrets", "emqx-api-key.conf")
+	if os.Geteuid() != 0 && (os.Geteuid() != 1000 || os.Getegid() != 1000) {
+		if err == nil || !strings.Contains(err.Error(), "ownership cannot be corrected") {
+			t.Fatalf("Execute() error = %v, want fail-closed ownership error", err)
+		}
+		if _, statErr := os.Lstat(secretFile); !errors.Is(statErr, os.ErrNotExist) {
+			t.Fatalf("failed ownership correction published target: %v", statErr)
+		}
+		entries, readErr := os.ReadDir(filepath.Dir(secretFile))
+		if readErr != nil || len(entries) != 0 {
+			t.Fatalf("failed ownership correction left secret files: %+v/%v", entries, readErr)
+		}
+		return
+	}
+	if err != nil {
+		t.Fatal(err)
+	}
 	data, err := os.ReadFile(secretFile)
 	if err != nil {
 		t.Fatalf("read staged EMQX secret: %v", err)
@@ -139,6 +153,18 @@ func TestDefaultExecutorStagesContractInputs(t *testing.T) {
 	}
 }
 
+func writeOldEMQXSecretFixture(t *testing.T, runtimeRoot string) {
+	t.Helper()
+	// Keep fixture setup independent of privileges required for real EMQX ownership.
+	directory := filepath.Join(runtimeRoot, "secrets")
+	if err := os.MkdirAll(directory, 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(directory, "emqx-api-key.conf"), []byte("old-key:old-secret\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestDefaultExecutorRemovesOldSecretBeforeStageFailure(t *testing.T) {
 	temp := t.TempDir()
 	envFile := filepath.Join(temp, ".env.local")
@@ -148,9 +174,7 @@ func TestDefaultExecutorRemovesOldSecretBeforeStageFailure(t *testing.T) {
 	if err := os.Mkdir(filepath.Join(temp, "runtime"), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := thingsstartbaseline.WriteEMQXBootstrapSecret(filepath.Join(temp, "runtime"), "old-key", "old-secret"); err != nil {
-		t.Fatal(err)
-	}
+	writeOldEMQXSecretFixture(t, filepath.Join(temp, "runtime"))
 	want := errors.New("stage failed")
 	err := (defaultExecutor{
 		stage: func(thingsstartbaseline.StageRequest) (thingsstartbaseline.StageResult, error) {
@@ -178,9 +202,7 @@ func TestDefaultExecutorPropagatesPublishFailureAfterRemovingOldSecret(t *testin
 	if err := os.Mkdir(runtimeRoot, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := thingsstartbaseline.WriteEMQXBootstrapSecret(runtimeRoot, "old-key", "old-secret"); err != nil {
-		t.Fatal(err)
-	}
+	writeOldEMQXSecretFixture(t, runtimeRoot)
 	err := (defaultExecutor{
 		stage: func(request thingsstartbaseline.StageRequest) (thingsstartbaseline.StageResult, error) {
 			if err := os.Mkdir(filepath.Join(request.RuntimeRoot, "secrets", "emqx-api-key.conf"), 0o700); err != nil {
@@ -288,9 +310,7 @@ func TestDefaultExecutorRejectsInvalidSecretFieldsBeforeStageAndKeepsOldSecret(t
 			if err := os.Mkdir(runtimeRoot, 0o755); err != nil {
 				t.Fatal(err)
 			}
-			if err := thingsstartbaseline.WriteEMQXBootstrapSecret(runtimeRoot, "old-key", "old-secret"); err != nil {
-				t.Fatal(err)
-			}
+			writeOldEMQXSecretFixture(t, runtimeRoot)
 			called := false
 			err := (defaultExecutor{
 				stage: func(thingsstartbaseline.StageRequest) (thingsstartbaseline.StageResult, error) {

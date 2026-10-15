@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"testing"
 )
 
@@ -382,13 +383,17 @@ func TestRealBackendCounts(t *testing.T) {
 	if testing.Short() {
 		t.Skip("requires real core tree")
 	}
-	const coreRoot = "/home/wangjunbo/workspace-iot-platform/ming-iot/backend/saas"
+	_, source, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("locate test source")
+	}
+	coreRoot := filepath.Join(filepath.Dir(source), "..", "..", "..", "saas")
 	snaps, err := LoadBackend(coreRoot)
 	if err != nil {
 		t.Fatalf("LoadBackend: %v", err)
 	}
 	want := map[string]struct{ def, reach, reg, detach int }{
-		"apisvr": {237, 235, 235, 2},
+		"apisvr":  {237, 235, 235, 2},
 		"datasvr": {7, 7, 7, 0},
 	}
 	for svc, w := range want {
