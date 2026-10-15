@@ -266,6 +266,13 @@
       "rule": "generic-api-key",
       "line": 2084,
       "reason": "Go module checksum match spans module lines; complete file matches go.sum grammar, hash frozen."
+    },
+    {
+      "path": "backend/tools/cmd/thingsstartbaseline/production_test.go",
+      "sha256": "13960fd3e7e5b1baba65fea379fd5716a2826b94871409b91f6c5fafb68ab2f7",
+      "rule": "generic-api-key",
+      "line": 1010,
+      "reason": "Unchanged inert runtime environment fixture after portable test setup moved its line; descriptive test-only values, no connection is performed."
     }
   ]
 }
