@@ -5,7 +5,7 @@
 - 业务代码：`backend/saas`、`backend/share`、`backend/things`；Core/Share/Things 已并入，不再寻找同名兄弟仓实现。
 - 查规格或变更时，从 [知识导航](docs/README.md) 进入模块当前正文；查历史时按 [来源表](docs/index.yaml) 区分适用版本。
 - 本地入口：`make knowledge-check`、`make verify-pr`；具体边界见 [工具说明](tooling/README.md) 和 [部署说明](deploy/README.md)。
-- 当前状态：迁移 PR #1 已合并，M5 正在切换日常入口；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。
+- 当前状态：迁移与日常入口切换已完成，同一 Goal 注册迁移及首次真实定时接续已验证；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。验收边界见 [M5 记录](docs/changelog/2026-10-15-m5-cutover.md)。
 - 当前 Goal 为 `ming-iot-knowledge-pilot`。LoopX 从 `tooling/loopx` 进入；同一 SQLite Goal 的注册及状态目录已迁入本仓，共享运行时和历史保留原位。维护或恢复前读取 [日常开发入口](docs/runbook/daily-development.md)，复用现有 Goal 与已审运行包。
 
 ## 关键约定速查

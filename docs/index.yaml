@@ -212,12 +212,12 @@ materials:
 
   - source_id: ming-iot-monorepo-m5-20261015
     role: daily_development_cutover
-    status: route_relocated_host_wake_pending
+    status: route_and_host_continuation_verified
     path: docs/changelog/2026-10-15-m5-cutover.md
-    revision: m5-2
+    revision: m5-3
     authority: user_authorized_scoped_delivery
     related:
       - docs/runbook/daily-development.md
       - docs/architecture/monorepo-migration.md
       - tooling/policy/README.md
-    conflict_rule: "M5 授权覆盖此前暂不合并/切换状态；小黄反馈及依赖项已废弃且未验收。同一 Goal 的注册和状态已通过已审迁移入口迁入本仓，共享 SQLite 和历史保留；实际宿主首次唤醒单独验收。旧仓、退休标记和私有备份继续保留。"
+    conflict_rule: "M5 授权覆盖此前暂不合并/切换状态；小黄反馈及依赖项已废弃且未验收。同一 Goal 的注册和状态已迁入本仓，共享 SQLite 和历史保留；首次真实定时接续已验证。旧仓、退休标记和私有备份继续保留，不包含删除、生产验收或 LoopX 上游发布。"
