@@ -1,0 +1,103 @@
+info(
+    title: "插槽管理模块"
+    desc: "插槽管理模块"
+    author: "杨磊"
+    email: "603785348@qq.com"
+    version: "v1"
+)
+
+@server(
+    group: system/slot/info
+    prefix: /api/v1/system/slot/info
+    accessCodePrefix: "systemSlotManage"
+    accessNamePrefix: "插槽管理"
+    accessGroup: "拓展管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "新增插槽"
+        description: "新建一条扩展插槽定义，含主子编码、请求方式、URI、目标地址与鉴权类型"
+        authType: "supper"
+        resource: "slot"
+        action: "create"
+        group: "system/slot/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (SlotInfo) returns (WithID)
+    @doc(
+        summary: "更新插槽"
+        description: "修改指定插槽的请求方式、URI、目标地址、参数模板与鉴权类型"
+        authType: "supper"
+        resource: "slot"
+        action: "update"
+        group: "system/slot/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (SlotInfo) returns ()
+    @doc(
+        summary: "删除插槽"
+        description: "按主键删除扩展插槽定义，关联的扩展调用将不再可用"
+        authType: "supper"
+        resource: "slot"
+        action: "delete"
+        group: "system/slot/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+    @doc(
+        summary: "获取插槽详情"
+        description: "按主键读取单条扩展插槽的完整定义"
+        authType: "supper"
+        resource: "slot"
+        action: "view"
+        group: "system/slot/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithID) returns (SlotInfo)
+    @doc(
+        summary: "获取插槽列表"
+        description: "按主子编码分页查询扩展插槽定义清单"
+        authType: "supper"
+        resource: "slot"
+        action: "view"
+        group: "system/slot/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (SlotInfoIndexReq) returns (SlotInfoIndexResp)
+
+}
+
+type (
+
+    SlotInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`            //进行数据分页（不传默认2000相当于全部）
+        Code string `json:"code,optional"` //主编码
+        SubCode string `json:"subCode,optional"` //子编码
+    }
+
+    SlotInfoIndexResp  {
+        PageResp
+        List []*SlotInfo `json:"list"`    //项目列表
+    }
+    SlotInfo{
+      ID int64 `json:"id,optional"`
+      Code string `json:"code"`  // 主编码
+      SubCode string `json:"subCode"`// 子编码
+      SlotCode string `json:"slotCode,optional"`  //slot的编码
+      Method string `json:"method,optional"`  // 请求方式 GET  POST
+      Uri string `json:"uri,optional"`  // 参考: /api/v1/system/user/self/captcha?fwefwf=gwgweg&wefaef=gwegwe
+      Hosts []string `json:"hosts,optional"`  //访问的地址 host or host:port
+      Body string `json:"body,optional"`  // body 参数模板
+      Handler map[string]string  `json:"handler,optional"`  //http头 key是头的ID,value是头的值(暂时不需要做这个字段)
+      AuthType string `json:"authType,optional"`  //鉴权类型 core
+      Desc string `json:"desc,optional"`//描述类型
+    }
+)

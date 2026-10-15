@@ -1,0 +1,14 @@
+Name: api
+Host: 0.0.0.0
+Port: 7788
+Mode: dev
+Log:
+  Encoding: plain
+Etcd: {Hosts: [etcd:2379], Key: dm.rpc}
+CacheRedis: [{Host: "redis:6379", Type: node}]
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: things-api}}
+OssConf: {OssType: local, StorePath: /app/oss}
+SysRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: sys.rpc}}}
+DmRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: dm.rpc}}}
+TimedJobRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: timedjob.rpc}}}
+DgRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Endpoints: ["dg:6166"]}}

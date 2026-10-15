@@ -1,0 +1,40 @@
+package startup
+
+import (
+	"context"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/internal/event"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/internal/timer"
+	"gitee.com/ming-iot/share/clients"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/events/topics"
+	"gitee.com/ming-iot/share/utils"
+	"github.com/zeromicro/go-zero/core/logx"
+	"time"
+)
+
+func Init(svcCtx *svc.ServiceContext) error {
+	Subscribe(svcCtx)
+	return InitTimer(svcCtx)
+}
+
+func Subscribe(svcCtx *svc.ServiceContext) {
+	err := svcCtx.FastEvent.QueueSubscribe(topics.TimedJobClean, func(ctx context.Context, t time.Time, body []byte) error {
+		return event.NewEventServer(ctx, svcCtx).DataClean()
+	})
+	logx.Must(err)
+}
+
+func InitTimer(svcCtx *svc.ServiceContext) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+	defer cancel()
+	//dgsvr 订阅到了设备端数据，此时调用StartSpan方法，将订阅到的主题推送给jaeger
+	//此时的ctx已经包含当前节点的span信息，会随着 handle(ctx).Publish 传递到下个节点
+	ctx, span := ctxs.StartSpan(ctx, "InitTimer", "")
+	defer span.End()
+	as := clients.NewAsynqServer(svcCtx.Config.CacheRedis)
+	utils.Go(ctx, func() {
+		as.Run(timer.Timed{SvcCtx: svcCtx})
+	})
+	return nil
+}

@@ -1,0 +1,10 @@
+Ming IoT Things migration baseline
+
+Source repository: https://gitee.com/unitedrhino/things
+Source ref: refs/remotes/origin/master
+Source commit: 243ab1aa03b8a3f106761a81cdd9bd8827d448c8
+Source tree: 544b638ae3ee5e5f3a041bea22ca035dbb7e5859
+Source module: gitee.com/unitedrhino/things
+Target module: gitee.com/ming-iot/things
+
+The migrated source remains governed by AGPL-3.0. See LICENSE.

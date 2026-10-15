@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "google/protobuf/wrappers.proto";
+
+service AreaManage {
+  //新增区域
+  rpc areaInfoCreate (AreaInfo) returns (AreaWithID);
+  //更新区域
+  rpc areaInfoUpdate (AreaInfo) returns (Empty);
+  //删除区域
+  rpc areaInfoDelete (AreaWithID) returns (Empty);
+  //获取区域信息详情
+  rpc areaInfoRead (AreaInfoReadReq) returns (AreaInfo);
+  //获取区域信息列表
+  rpc areaInfoIndex (AreaInfoIndexReq) returns (AreaInfoIndexResp);
+
+  rpc areaProfileRead(AreaProfileReadReq)returns(AreaProfile);
+  rpc areaProfileUpdate(AreaProfile)returns(Empty);
+  rpc areaProfileIndex(AreaProfileIndexReq)returns(AreaProfileIndexResp);
+}
+
+message AreaInfo {
+  string tenantCode =20;//租户号
+  int64 createdTime = 1; //创建时间（只读）
+  int64 areaID = 2; //项目区域id（只读）
+  int64 parentAreaID = 3; //上级项目区域id（只读）
+  int64 projectID = 4; //项目id（只读）
+  string areaName = 5; //项目区域名称（读写）
+  Point Position = 6; //项目区域定位，默认百度坐标系（读写）
+  google.protobuf.StringValue desc = 7; //项目区域备注（读写）
+  repeated AreaInfo children = 8; //下级项目区域列表（只读）
+  string areaIDPath =9;
+  string areaNamePath =10;
+  int64 lowerLevelCount =11;//下级区域的数量
+  repeated int64 childrenAreaIDs =12;//所属的子区域id列表
+  int64 isLeaf =13;//是否是叶子节点
+  string useBy =14;//用途
+  string areaImg =15;//区域图片
+  bool isUpdateAreaImg =16;//是否更新区域的图片
+  google.protobuf.Int64Value deviceCount=17;//绑定该区域的设备统计
+  google.protobuf.Int64Value groupCount=19; //绑定该区域的分组统计
+  int64 isSysCreated =18; //是否是系统创建的,系统创建的只有管理员可以删除
+  string configFile =21;//区域配置文件
+  bool isUpdateConfigFile=22;
+  map<string, string> tags = 23;
+  int64 sort = 24;          // 排序标记
+  repeated Attachment attachments =25;//附件列表
+}
+
+message AreaWithID {
+  int64 areaID = 1; //项目区域id
+}
+
+message AreaProfile{
+  int64 areaID = 1; //项目区域id
+  string code =2;
+  string params =3;
+}
+
+message AreaProfileReadReq{
+  int64 areaID = 2; //项目区域id
+  string code =4;
+}
+
+message AreaProfileIndexReq{
+  int64 areaID = 1; //项目区域id
+  repeated string codes = 2;
+}
+
+message AreaProfileIndexResp{
+  repeated AreaProfile profiles =1;
+}
+
+message AreaInfoReadReq {
+  int64 projectID = 1; //项目ids
+  int64 areaID = 2; //项目区域id
+  bool withChildren = 3;//是否返回子节点
+  string tenantCode =10;//指定租户,只有超级管理员可以操作
+}
+
+message AreaInfoIndexReq {
+  PageInfo page = 1; //进行数据分页（不传默认2000相当于全部）
+  int64 projectID = 3; //项目ids
+  int64 parentAreaID = 4;
+  repeated int64 areaIDs = 5; //区域ids
+  bool  isRetTopLevel = 6;//如果该参数为true则返回除了root节点的有权限的最高层的区域列表
+  int64 isLeaf =7;//是否是叶子节点
+  CompareInt64 deviceCount =8;
+  CompareInt64 groupCount =9;
+  string tenantCode =10;//指定租户,只有超级管理员可以操作
+}
+
+message AreaInfoIndexResp {
+  int64 total = 1; //总数
+  repeated AreaInfo list = 2; //项目区域列表
+}
+

@@ -1,0 +1,49 @@
+package devicemsglogic
+
+import (
+	"context"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/deviceLog"
+	"gitee.com/ming-iot/things/share/devices"
+	"time"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type AbnormalLogCreateLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewAbnormalLogCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AbnormalLogCreateLogic {
+	return &AbnormalLogCreateLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *AbnormalLogCreateLogic) AbnormalLogCreate(in *dm.AbnormalLogInfo) (*dm.Empty, error) {
+	if in.Timestamp == 0 {
+		in.Timestamp = time.Now().UnixMilli()
+	}
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: in.ProductID, DeviceName: in.DeviceName})
+	err = l.svcCtx.AbnormalRepo.Insert(l.ctx, &deviceLog.Abnormal{
+		TenantCode: di.TenantCode,
+		ProjectID:  di.ProjectID,
+		AreaID:     di.AreaID,
+		AreaIDPath: di.AreaIDPath,
+		ProductID:  in.ProductID,
+		Action:     in.Action,
+		Timestamp:  time.UnixMilli(in.Timestamp), // 操作时间
+		DeviceName: in.DeviceName,
+		TraceID:    utils.TraceIdFromContext(l.ctx),
+		Reason:     in.Reason,
+		Type:       in.Type,
+	})
+	return &dm.Empty{}, err
+}

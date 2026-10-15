@@ -1,0 +1,189 @@
+package usermanagelogic
+
+import (
+	"context"
+	"database/sql"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/saas/share/users"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/utils"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+
+	"github.com/spf13/cast"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type UserBindAccountLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewUserBindAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserBindAccountLogic {
+	return &UserBindAccountLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *UserBindAccountLogic) UserBindAccount(in *sys.UserBindAccountReq) (*sys.Empty, error) {
+	cli, er := l.svcCtx.Cm.GetClients(l.ctx, "")
+	if er != nil {
+		return nil, errors.System.AddDetail(er)
+	}
+	if !utils.SliceIn(in.Type, cli.Config.LoginTypes...) {
+		l.Errorf("不支持的登录方式:%v", in.Type)
+		return nil, errors.NotSupportLogin
+	}
+	uc := ctxs.GetUserCtx(l.ctx)
+	ui, err := relationDB.NewUserInfoRepo(l.ctx).FindOne(l.ctx, uc.UserID)
+	if err != nil {
+		return nil, err
+	}
+	switch in.Type {
+	case users.RegEmail:
+		if ui.Email.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		email := l.svcCtx.Captcha.Verify(l.ctx, def.CaptchaTypeEmail, def.CaptchaUseBindAccount, in.CodeID, in.Code)
+		if email == "" || email != in.Account {
+			return nil, errors.Captcha
+		}
+		ui.Email = utils.AnyToNullString(in.Account)
+	case users.RegPhone:
+		phone := l.svcCtx.Captcha.Verify(l.ctx, def.CaptchaTypePhone, def.CaptchaUseBindAccount, in.CodeID, in.Code)
+		if phone == "" || phone != in.Account {
+			return nil, errors.Captcha
+		}
+		ui.Phone = utils.AnyToNullString(in.Account)
+	case users.RegWxMiniP:
+		if cli.MiniProgram == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		auth := cli.MiniProgram.GetAuth()
+		ret, er := auth.Code2SessionContext(l.ctx, in.Code)
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		if ret.ErrCode != 0 {
+			return nil, errors.Parameter.AddMsgf(ret.ErrMsg)
+		}
+		// 始终写入小程序 openid（覆盖 APP wxOpen 等残留）
+		if ret.UnionID != "" {
+			ui.WechatUnionID = sql.NullString{String: ret.UnionID, Valid: true}
+		}
+		ui.WechatOpenID = sql.NullString{String: ret.OpenID, Valid: true}
+	case users.RegHuawei:
+		if ui.HuaweiUnionID.Valid || ui.HuaweiOpenID.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		if cli.Huawei == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		// 优先从缓存读取
+		at, er := GetHuaweiLoginResult(l.ctx, in.Code)
+		if er != nil {
+			// 缓存没有，尝试从注册缓存读取
+			at, er = GetHuaweiRegisterResult(l.ctx, in.Code)
+			if er != nil {
+				// 都没有，调用华为接口
+				at, er = cli.Huawei.QuickLoginByCode(l.ctx, in.Code)
+				if er != nil {
+					return nil, errors.System.AddDetail(er)
+				}
+			}
+		}
+		if at.UserInfo.UnionID != "" {
+			ui.HuaweiUnionID = sql.NullString{String: at.UserInfo.UnionID, Valid: true}
+		}
+		ui.HuaweiOpenID = sql.NullString{String: at.UserInfo.OpenID, Valid: true}
+	case users.RegWxOpen:
+		if ui.WechatUnionID.Valid || ui.WechatOpenID.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		if cli.WxOfficial == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		// 优先从缓存读取
+		at, er := GetWxLoginResAccessToken(l.ctx, in.Code)
+		if er != nil {
+			// 缓存没有，尝试从注册缓存读取
+			at2, er := GetWxRegisterResAccessToken(l.ctx, in.Code)
+			if er != nil {
+				// 都没有，调用微信接口
+				at3, er := cli.WxOfficial.GetOauth().GetUserAccessToken(in.Code)
+				if er != nil {
+					return nil, errors.System.AddDetail(er)
+				}
+				at = &at3
+			} else {
+				at = at2
+			}
+		}
+		if at.UnionID != "" {
+			ui.WechatUnionID = sql.NullString{String: at.UnionID, Valid: true}
+		}
+		ui.WechatOpenID = sql.NullString{String: at.OpenID, Valid: true}
+
+	case users.RegDingApp:
+		if cli.DingMini == nil {
+			return nil, errors.System.AddDetail(err)
+		}
+		ret, er := cli.DingMini.GetUserInfoByCode(in.Code)
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		if ret.Code != 0 {
+			return nil, errors.Parameter.AddMsgf(ret.Msg)
+		}
+		ui.DingTalkUserID = sql.NullString{String: ret.UserInfo.UserId, Valid: true}
+	case users.RegGoogle:
+		if ui.GoogleUserID.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		if cli.Google == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		gUser, er := cli.Google.ResolveUser(l.ctx, in.Code)
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		ui.GoogleUserID = sql.NullString{String: gUser.ID, Valid: true}
+	case users.RegGithub:
+		if ui.GithubUserID.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		if cli.Github == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		token, er := cli.Github.ExchangeCode(l.ctx, in.Code, "")
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		ghUser, er := cli.Github.GetUserInfo(l.ctx, token)
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		ui.GithubUserID = sql.NullString{String: cast.ToString(ghUser.ID), Valid: true}
+	case users.RegApple:
+		if ui.AppleUserID.Valid {
+			return &sys.Empty{}, errors.BindAccount
+		}
+		if cli.Apple == nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		aUser, _, er := cli.Apple.ExchangeCode(l.ctx, in.Code)
+		if er != nil {
+			return nil, errors.System.AddDetail(er)
+		}
+		ui.AppleUserID = sql.NullString{String: aUser.Sub, Valid: true}
+	}
+	err = relationDB.NewUserInfoRepo(l.ctx).Update(l.ctx, ui)
+	return &sys.Empty{}, err
+}

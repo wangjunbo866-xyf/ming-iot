@@ -1,0 +1,61 @@
+apiVersion: graph.ming.io/v1
+kind: Loop
+metadata:
+  id: G0-rd-graph-control-plane
+  title: R&D Graph local control plane
+spec:
+  lifecycle: active
+  dependsOn: []
+  scope:
+    owns:
+      - .graph/registry.yaml
+      - .graph/loops/**
+      - .graph/schemas/**
+      - .githooks/**
+      - AGENTS.md
+      - .gitignore
+      - backend/tools/cmd/graphctl/**
+      - backend/tools/internal/graphctl/**
+      - backend/tools/go.mod
+      - backend/tools/go.sum
+      - backend/tools/README.md
+      - docs/superpowers/specs/*-graph-*.md
+      - docs/superpowers/plans/*-graph-*.md
+      - docs/superpowers/evidence/G0-rd-graph-control-plane/**
+      - docs/superpowers/reviews/G0-rd-graph-control-plane/**
+  gates:
+    - id: graphctl-tests
+      kind: command
+      required: true
+      validator:
+        id: graphctl
+        version: v1
+        sourcePaths:
+          - .graph/schemas/**
+          - backend/tools/cmd/graphctl/**
+          - backend/tools/internal/graphctl/**
+          - backend/tools/go.mod
+          - backend/tools/go.sum
+      workdir: backend/tools
+      argv:
+        - go
+        - test
+        - ./cmd/graphctl
+        - ./internal/graphctl/...
+      env:
+        GOWORK: "off"
+      timeout: 10m
+  evidence:
+    requiredForCompletion: true
+    subjectPaths:
+      - .graph/schemas/**
+      - .githooks/**
+      - AGENTS.md
+      - .gitignore
+      - backend/tools/cmd/graphctl/**
+      - backend/tools/internal/graphctl/**
+      - backend/tools/go.mod
+      - backend/tools/go.sum
+      - backend/tools/README.md
+  review:
+    requiredForCompletion: true

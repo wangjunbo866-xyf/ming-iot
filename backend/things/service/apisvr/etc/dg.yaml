@@ -1,0 +1,17 @@
+Name: dg.rpc
+ListenOn: 0.0.0.0:6166
+DevLink:
+  Mode: mqtt
+  SubMode: emq
+  Mqtt:
+    ClientID: dg.rpc
+    Pass: iThings
+    User: dgsvr
+    Brokers:
+      - tcp://127.0.0.1:1883
+    OpenApi:
+      Host: http://127.0.0.1:18083
+      ApiKey: ${THINGS_EMQX_API_KEY}
+      SecretKey: ${THINGS_EMQX_SECRET_KEY}
+#      ApiKey: ${THINGS_EMQX_API_KEY}
+#      SecretKey: ${THINGS_EMQX_SECRET_KEY}

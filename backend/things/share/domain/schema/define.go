@@ -1,0 +1,81 @@
+package schema
+
+// 数据类型
+type DataType string
+
+const (
+	DataTypeBool      DataType = "bool"
+	DataTypeInt       DataType = "int"
+	DataTypeString    DataType = "string"
+	DataTypeStruct    DataType = "struct"
+	DataTypeFloat     DataType = "float"
+	DataTypeTimestamp DataType = "timestamp" //时间戳, 毫秒级时间戳
+	DataTypeArray     DataType = "array"     //数组,可以使用 a.2=3 的方式修改数组的第二个元素,也可以使用 a[2,3] 的方式修改
+	DataTypeMatrix    DataType = "matrix"    //矩阵, 只能使用[123,34]的方式
+	DataTypeEnum      DataType = "enum"      //枚举, 只能使用预定义的值
+)
+
+type ParamType int64
+
+const (
+	//请求参数的类型：设备属性上报参数
+	ParamProperty ParamType = iota + 1
+	//请求参数的类型：设备行为调用的下行参数
+	ParamActionInput
+	//请求参数的类型：设备行为调用上行的回复参数
+	ParamActionOutput
+	//请求参数的类型：设备事件上报参数
+	ParamEvent
+)
+
+// 物模型标签
+type Tag = int64
+
+const (
+	TagCustom         Tag = 1 //自定义
+	TagOptional       Tag = 2 //可选
+	TagRequired       Tag = 3 //必选 必选不可删除
+	TagDeviceCustom   Tag = 4 //设备自定义物模型
+	TagDeviceOptional Tag = 5 //设备自选物模型
+)
+
+type RecordMode = int64
+
+const (
+	RecordModeAll  RecordMode = 1 //全部记录
+	RecordModeAuto RecordMode = 2 //只记录差异值
+	RecordModeNone RecordMode = 3 //不记录
+)
+
+// FuncGroup 表示物模型功能分类。
+type FuncGroup = int64
+
+const (
+	FuncGroupNormal FuncGroup = 1 //普通功能
+	FuncGroupSystem FuncGroup = 2 //系统功能
+)
+
+// 属性读写类型: r(只读) rw(可读可写)
+type PropertyMode string
+
+const (
+	PropertyModeR  PropertyMode = "r"
+	PropertyModeRW PropertyMode = "rw"
+)
+
+// 事件类型: 信息:info  告警alert  故障:fault
+type EventType = string
+
+const (
+	EventTypeInfo  EventType = "info"
+	EventTypeAlert EventType = "alert"
+	EventTypeFault EventType = "fault"
+)
+
+// 行为的执行方向
+type ActionDir = string
+
+const (
+	ActionDirUp   ActionDir = "up"   //向上调用
+	ActionDirDown ActionDir = "down" //向下调用
+)

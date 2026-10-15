@@ -1,0 +1,79 @@
+package dgdirect
+
+import (
+	"context"
+	"fmt"
+	"sync"
+	"time"
+
+	"gitee.com/ming-iot/share/i18ns"
+	"gitee.com/ming-iot/share/interceptors"
+	"gitee.com/ming-iot/share/services"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/config"
+	deviceauthServer "gitee.com/ming-iot/things/service/dgsvr/internal/server/deviceauth"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/startup"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dgsvr/pb/dg"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/service"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+)
+
+type Config = config.Config
+
+var (
+	svcCtx       *svc.ServiceContext
+	svcOnce      sync.Once
+	postInitOnce sync.Once
+	runSvrOnce   sync.Once
+	c            config.Config
+)
+
+func GetSvcCtx() *svc.ServiceContext {
+	svcOnce.Do(func() {
+		utils.ConfMustLoad("etc/dg.yaml", &c)
+		i18ns.InitWithFS("etc/i18n")
+		svcCtx = svc.NewServiceContext(c)
+
+		startup.Init(svcCtx)
+		logx.Infof("enabled dgsvr")
+	})
+
+	// 让 svcCtx 先返回，延迟执行 mqtt client 的 connect 操作.
+	utils.Go(context.Background(), func() {
+		time.Sleep(time.Second * 2) //其他服务初始化好emq鉴权才能成功
+		postInitOnce.Do(func() {
+			startup.PostInit(svcCtx)
+		})
+	})
+
+	return svcCtx
+}
+
+// RunServer 如果是直连模式,同时提供Grpc的能力
+func RunServer(svcCtx *svc.ServiceContext) {
+	runSvrOnce.Do(func() {
+		// 使用 utils.Go 启动：内部带 recover，避免 RPC bind 失败 panic 直接退出整个进程
+		utils.Go(context.Background(), func() {
+			Run(svcCtx)
+		})
+	})
+
+}
+func Run(svcCtx *svc.ServiceContext) {
+	c := svcCtx.Config
+	s := services.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
+		dg.RegisterDeviceAuthServer(grpcServer, deviceauthServer.NewDeviceAuthServer(svcCtx))
+
+		if c.Mode == service.DevMode || c.Mode == service.TestMode {
+			reflection.Register(grpcServer)
+		}
+	})
+	defer s.Stop()
+	s.AddUnaryInterceptors(interceptors.Ctxs, interceptors.Error)
+
+	fmt.Printf("Starting dgrpc server at %s...\n", c.ListenOn)
+	s.Start()
+}

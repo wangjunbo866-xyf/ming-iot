@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "profile": "ming-iot",
+  "status": "canonical",
+  "delivery_issue": "ming-iot#IKJMKJ",
+  "delivery_issue_url": "https://gitee.com/ming-industry/ming-iot/issues/IKJMKJ",
+  "source_repository": "git:gitee.com/ming-industry/ai-native",
+  "source_revision_before_cutover": "4277290d01083f983d41948b6703a9cea6bc67fd",
+  "documentation_migration": {
+    "status": "completed",
+    "repository": "git:gitee.com/ming-industry/ming-iot-rd-docs",
+    "migration_complete": true,
+    "pull_request": "https://gitee.com/ming-industry/ming-iot-rd-docs/pulls/11",
+    "pull_request_head": "ef9a37f57c5584f30fbe5fdcbdfb8036e3738a4c",
+    "merged_revision": "b16030c10cf2565ecfa16ab19ee43a3a273bec57",
+    "merged_at": "2026-10-04T15:01:55+08:00"
+  },
+  "verification": {
+    "scope": "source migration and current WSL Linux x86_64 host",
+    "team_member_installations_verified": false,
+    "native_windows_verified": false
+  },
+  "skills": {
+    "map-delivery": {
+      "path": "skills/map-delivery",
+      "required": true
+    }
+  },
+  "documentation_repository": {
+    "identity": "git:gitee.com/ming-industry/ming-iot-rd-docs",
+    "directory": "ming-iot-rd-docs"
+  },
+  "teamai": {
+    "package": "teamai-cli",
+    "version": "0.26.0",
+    "provider": "git",
+    "scope": "project"
+  }
+}

@@ -1,0 +1,116 @@
+info(
+    desc: "字典信息"
+	author: "yl"
+	email: "603785348@qq.com"
+)
+
+@server(
+    group: system/dict/detail
+    prefix: /api/v1/system/dict/detail
+    accessCodePrefix: "systemDictManage"
+    accessNamePrefix: "字典管理"
+    accessGroup: "字典管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加字典详情"
+        description: "在指定字典下新增字典项，含展示值、字典值、排序与状态"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "create"
+        group: "system/dict/detail"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DictDetail) returns (WithID)
+
+    @doc(
+        summary: "获取字典详情列表"
+        description: "按字典编码、父节点、状态或字典值分页查询字典项，可批量按值过滤"
+        authType: "all"
+        resource: "dict"
+        action: "view"
+        group: "system/dict/detail"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DictDetailIndexReq) returns (DictDetailIndexResp)
+
+    @doc(
+        summary: "更新字典详情"
+        description: "修改指定字典项的展示值、字典值、排序、状态与自定义数据"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "update"
+        group: "system/dict/detail"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (DictDetail) returns ()
+
+    @doc(
+        summary: "获取字典详情单个"
+        description: "按编号或字典值读取单条字典项，可选附带父级或子级字典项"
+        authType: "all"
+        resource: "dict"
+        action: "view"
+        group: "system/dict/detail"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (DictDetailReadReq) returns (DictDetail)
+
+    @doc(
+        summary: "删除字典详情"
+        description: "按主键删除字典项，其子字典项与引用将一并清理"
+        authType: "supper"
+        isNeedAuth: "true"
+        resource: "dict"
+        action: "delete"
+        group: "system/dict/detail"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+}
+type (
+    DictDetailReadReq{
+        ID int64 `json:"id,optional"`                                  // 编号
+        DictCode string `json:"dictCode"`
+        Value  string                   `json:"value,optional"`   // 字典值
+        WithFather bool `json:"withFather,optional"`//是否返回父级
+        WithChildren bool `json:"withChildren,optional"`//是否返回子级
+    }
+    DictDetailIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        DictCode string `json:"dictCode"`
+        ParentID int64 `json:"parentID,optional"`//父节点
+        Status int64 `json:"status,optional"` // 状态  1:启用,2:禁用
+        Label string `json:"label,optional"`           // 展示值
+        Value string `json:"value,optional"`           // 字典值
+        Values []string `json:"values,optional"` //字典值过滤
+    }
+
+    DictDetailIndexResp  {
+        PageResp
+        List []*DictDetail `json:"list"` //菜单列表
+    }
+    DictDetail{
+        ID int64 `json:"id,optional"`                                  // 编号
+        DictCode string `json:"dictCode"`
+        ParentID int64 `json:"parentID,optional,omitempty"`//父节点
+        IDPath string `json:"idPath,optional"`//1-2-3-的格式记录顶级区域到当前id的路径
+        Label string `json:"label,optional"`           // 展示值
+        Value  string                   `json:"value,optional"`   // 字典值
+        Sort   int64                   `json:"sort,optional"`     // 排序标记,默认为1
+        Desc   *string `json:"desc,optional"`      // 模块描述
+        Status int64                   `json:"status,optional"` // 状态  1:启用,2:禁用
+        Body   *string `json:"body,optional,omitempty"`      // 自定义数据
+        Parent *DictDetail  `json:"parent,optional,omitempty"`
+        Children []*DictDetail `json:"children,optional,omitempty"`
+    }
+)

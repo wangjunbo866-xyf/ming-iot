@@ -1,0 +1,138 @@
+info(
+    desc: "菜单权限"
+	author: "lbs"
+	email: "174805676@qq.com"
+)
+
+@server(
+    group: system/module/info
+    prefix: /api/v1/system/module/info
+    accessCodePrefix: "systemModuleInfo"
+    accessNamePrefix: "模块信息"
+    accessGroup: "模块管理"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "添加模块"
+        description: "在指定应用下新建功能模块，含编号、名称、用途与平台归属等元数据"
+        authType: "supper"
+        resource: "module"
+        action: "create"
+        group: "system/module/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (ModuleInfo) returns (WithID)
+
+    @doc(
+        summary: "获取模块列表"
+        description: "按应用、编号、名称、用途等条件分页查询功能模块清单"
+        authType: "all"
+        resource: "module"
+        action: "view"
+        group: "system/module/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (ModuleInfoIndexReq) returns (ModuleInfoIndexResp)
+
+    @doc(
+        summary: "更新模块"
+        description: "修改指定功能模块的名称、用途与平台归属等元数据"
+        authType: "supper"
+        resource: "module"
+        action: "update"
+        group: "system/module/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (ModuleInfo) returns ()
+
+    @doc(
+        summary: "获取模块详情"
+        description: "按编号或主键读取单个功能模块的完整信息"
+        authType: "all"
+        resource: "module"
+        action: "view"
+        group: "system/module/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (ModuleInfo)
+
+    @doc(
+        summary: "删除模块"
+        description: "按编号或主键删除功能模块，挂在该模块下的菜单与授权将失去归属"
+        authType: "supper"
+        resource: "module"
+        action: "delete"
+        group: "system/module/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDOrCode) returns ()
+
+
+    @doc(
+        summary: "批量导入模块"
+        description: "解析模块 JSON 批量新增或更新功能模块，返回总数、成功、失败和忽略计数"
+        authType: "supper"
+        resource: "module"
+        action: "import"
+        group: "system/module/info"
+        recordLogMode: "2"
+    )
+    @handler multiImport
+    post /multi-import (ModuleMultiImportReq) returns (ModuleMultiImportResp)
+
+    @doc(
+        summary: "批量导出模块"
+        description: "按模块编号集合导出功能模块 JSON，用于跨环境同步或备份"
+        authType: "supper"
+        resource: "module"
+        action: "export"
+        group: "system/module/info"
+        recordLogMode: "2"
+    )
+    @handler multiExport
+    post /multi-export (ModuleMultiExportReq) returns (ModuleMultiExportResp)
+}
+
+type (
+
+    ModuleInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Codes []string `json:"codes,optional"`
+        AppCode string `json:"appCode,optional"` //应用绑定的code列表
+        code string `json:"code,optional"`                               // 应用编号模糊查询
+        Name string `json:"name,optional"` // 按菜单名称筛选
+        Type int64 `json:"type,optional"`
+        Purpose int64 `json:"purpose,optional"`                             //normal普通:1(默认) platformo平台:2(那么只有default租户可以看,然后平台模块http头里不用传租户号)  project 项目:3(需要选择项目,默认选择第一个)
+        Purposes []int64 `json:"purposes,optional"`                             //normal普通:1(默认) platformo平台:2(那么只有default租户可以看,然后平台模块http头里不用传租户号)  project 项目:3(需要选择项目,默认选择第一个)
+
+    }
+
+    ModuleInfoIndexResp  {
+        List []*ModuleInfo `json:"list"` //菜单列表
+        PageResp
+    }
+    ModuleMultiImportReq {
+        Modules string `json:"modules"` //菜单json
+    }
+    ModuleMultiImportResp {
+        Total int64 `json:"total"`                                 //导入总接口数
+        ErrCount int64  `json:"errCount"` //失败数
+        IgnoreCount int64  `json:"ignoreCount"` //忽略数
+        SuccCount int64  `json:"succCount"` //成功数
+    }
+
+    ModuleMultiExportReq {
+        ModuleCodes []string `json:"moduleCodes,optional"`                               // 应用编号
+    }
+    ModuleMultiExportResp {
+        Modules string `json:"modules"` //菜单json
+    }
+)
+

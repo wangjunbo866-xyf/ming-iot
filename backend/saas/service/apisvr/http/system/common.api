@@ -1,0 +1,311 @@
+info(
+    desc: "系统配置"
+    author: "lbs"
+    email: "174805676@qq.com"
+)
+//import "common.api"  //公共结构体定义
+
+@server (
+    group: system/common
+    prefix: /api/v1/system/common
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "获取系统配置"
+        description: "返回地图坐标系与密钥、对象存储访问前缀等前端初始化所需的系统级公开配置"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler config
+    post /config () returns (ConfigResp)
+    @doc(
+        summary: "获取文件上传地址"
+        description: "按业务和场景生成对象存储中的目标路径，并返回 24 小时有效的临时 PUT 直传签名地址"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler uploadUrlCreate
+    post /upload-url/create (UploadUrlCreateReq) returns (UploadUrlCreateResp)
+    @doc(
+        summary: "文件直传"
+        description: "经 multipart 表单把文件二进制直接上传到对象存储，返回最终文件路径与相对 uri"
+        authType: "all"
+        resource: "common"
+        action: "upload"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler uploadFile
+    post /upload-file(Empty) returns (UploadFileResp)
+    @doc(
+        summary: "获取天气情况"
+        description: "根据经纬度或项目定位查询实时天气与空气质量观测数据"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler weatherRead
+    post /weather/read(WeatherReadReq) returns (WeatherReadResp)
+    @doc(
+        summary: "websocket连接"
+        description: "将当前登录用户升级为 WebSocket 长连接，建立后双向推送订阅类实时数据"
+        authType: "all"
+        resource: "common"
+        action: "execute"
+        group: "system/common"
+        recordLogMode: "3"
+    )
+    @handler websocketConnect
+    get /websocket/connect () returns ()
+
+
+    @doc(
+        summary: "获取小程序二维码"
+        description: "按页面路径和场景参数生成小程序码图片的二进制 buffer"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler qRCodeReadReq
+    post /qr-code/read (QRCodeReadReq) returns (QRCodeReadResp)
+
+    @doc(
+        summary: "获取第三方的部门信息详情,Children只能获取一层,需要递归获取"
+        description: "按编号从钉钉或企业微信拉取单个第三方部门节点，可选附带父级或一层子部门"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler thirdDeptRead
+    post /third/dept/read (ThirdDeptInfoReadReq) returns (DeptInfo)
+    @doc(
+        summary: "获取第三方的部门信息列表"
+        description: "分页查询钉钉或企业微信的第三方部门列表，支持按父节点筛选"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler thirdDeptIndex
+    post /third/dept/index (ThirdDeptInfoIndexReq) returns (DeptInfoIndexResp)
+
+    @doc(
+        summary: "批量聚合接口请求"
+        description: "在服务端并发代理调用多个本网关接口并合并返回，减少前端往返请求数"
+        authType: "all"
+        resource: "common"
+        action: "execute"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler apiBatchAgg
+    post /api/batch-agg (ApiBatchAggReq) returns (ApiBatchAggResp)
+}
+
+@server (
+    group: system/common
+    prefix: /api/v1/system/common
+    middleware:  InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "ntp"
+        description: "回显服务端收发时间戳，用于客户端与服务器做时钟同步校正"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "3"
+    )
+    @handler ntpRead
+    post /ntp/read(NtpReadReq) returns (NtpReadResp)
+    @doc(
+        summary: "debug POST"
+        description: "调试探测接口，回显 POST 请求的 URI、请求头与原始请求体"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "3"
+    )
+    @handler debugPost
+    post /debug() returns (DebugResp)
+    @doc(
+        summary: "debug GET"
+        description: "调试探测接口，回显 GET 请求的 URI 与请求头，用于联调链路检查"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "3"
+    )
+    @handler debugGet
+    get /debug() returns (DebugResp)
+    @doc(
+        summary: "debug Tencent 回调"
+        description: "腾讯云回调联调占位接口，当前仅为保留路由不做实际业务处理"
+        authType: "all"
+        resource: "common"
+        action: "view"
+        group: "system/common"
+        recordLogMode: "3"
+    )
+    @handler debugGetTencent
+    get /debug-tencent() returns ()
+
+    @doc(
+        summary: "下载本地文件"
+        description: "按文件路径和签名从本地存储读取文件并写入响应流，供私有文件下载使用"
+        authType: "all"
+        resource: "common"
+        action: "download"
+        group: "system/common"
+        recordLogMode: "1"
+    )
+    @handler downloadFile
+    get /download-file(DownloadFileReq) returns ()
+}
+
+type (
+    ApiBatchAggReq{
+        Reqs []*ApiBatchAggReqOne `json:"reqs"`
+    }
+    ApiBatchAggResp{
+        Lists [][]map[string]interface{} `json:"lists"`
+    }
+    ApiBatchAggReqOne{
+        Uri string  `json:"uri"` //访问的路径资源
+        Bodys []map[string]interface{} `json:"body"`
+    }
+)
+
+
+type (
+    ThirdDeptInfoReadReq{
+        ID int64 `json:"id,optional,string"`                                  // 编号
+        WithFather bool `json:"withFather,optional"`//是否返回父级
+        WithChildren bool `json:"withChildren,optional"`//是否返回子级
+        ThirdType string `json:"thirdType,optional"` //第三方的类型 ding:钉钉  wxE:企业微信
+        ThirdConfig *ThirdAppConfig `json:"thirdConfig"` //
+    }
+    ThirdDeptInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        ParentID int64 `json:"parentID,string,optional"`//父节点
+        ThirdType string `json:"thirdType,optional"` //第三方的类型 ding:钉钉  wxE:企业微信
+        ThirdConfig *ThirdAppConfig `json:"thirdConfig"` //
+    }
+)
+
+type (
+    QRCodeReadReq{
+         page string `json:"page"` //默认是主页，页面 page，例如 pages/index/index，根路径前不要填加 /，不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面。scancode_time为系统保留参数，不允许配置
+         scene string `json:"scene"` //        	最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）
+         envVersion string `json:"envVersion"` //要打开的小程序版本。正式版为 "release"，体验版为 "trial"，开发版为 "develop"。默认是正式版。
+    }
+    DebugResp{
+        RequestUri string `json:"requestUri"`
+        Headers map[string]string `json:"headers"`
+        Body string `json:"body,omitempty"`
+    }
+    QRCodeReadResp{
+        Buffer []byte `json:"buffer"`
+    }
+    WebsocketSubscribeInfo{
+        Code string  `json:"code"`//订阅的code
+        Params map[string]interface{} `json:"params"`//订阅参数
+    }
+
+    WebsocketSubscribeIndexResp{
+        List []*WebsocketSubscribeInfo `json:"list"`
+    }
+    NtpReadReq{
+        DeviceSendTime int64  `json:"deviceSendTime,string"`
+    }
+    NtpReadResp{
+        DeviceSendTime int64 `json:"deviceSendTime,string"`
+        ServerSendTime int64 `json:"serverSendTime,string"`
+        ServerRecvTime int64 `json:"serverRecvTime,string"`
+    }
+    Map  {
+        Mode string `json:"mode,options=gaode"`              //坐标系 默认百度坐标系
+        AccessKey    string `json:"accessKey"` //设备地图key
+        AccessSecret string `json:"accessSecret"`//地图秘钥
+    }
+    Oss  {
+        Host string `json:"host"` //oss访问前缀
+    }
+    ConfigResp  {
+        Map Map `json:"map"`  //设备地图相关配置
+        Oss Oss `json:"oss"`//oss相关配置
+    }
+    UploadUrlCreateReq  {
+        Business string `json:"business"` //业务(如产品管理 productManage)
+        Scene string `json:"scene"` //场景(业务定义 如产品图片 productImg)
+        FilePath string `json:"filePath"` //文件路径(带文件名)
+        Rename bool `json:"rename,optional"` //true 文件重命名，false 不重命名(默认)
+    }
+
+    DownloadFileReq{
+        FilePath string `form:"filePath"`//文件的路径
+        Sign string `form:"sign,optional"`//签名.如果是私有的需要填此参数
+    }
+
+    UploadUrlCreateResp  {
+        FilePath string `json:"filePath"` //文件路径(带文件名)
+        UploadUri string `json:"uploadUri"` //附件直传地址
+    }
+
+    UploadFileResp  {
+        FilePath string `json:"filePath"` //文件路径(带文件名)
+        FileUri string `json:"fileUri"` //文件uri 相对路径
+    }
+    WeatherAir {
+        Aqi      string `json:"aqi"`
+        Level    string `json:"level"`
+        Category string `json:"category"`
+        Primary  string `json:"primary"`
+        Pm10     string `json:"pm10"`
+        Pm2P5    string `json:"pm2p5"`
+        No2      string `json:"no2"`
+        So2      string `json:"so2"`
+        Co       string `json:"co"`
+        O3       string `json:"o3"`
+    }
+  WeatherReadResp{
+        ObsTime   string `json:"obsTime"`
+        Temp      string `json:"temp"`
+        FeelsLike string `json:"feelsLike"`
+        Icon      string `json:"icon"`
+        Text      string `json:"text"`
+        Wind360   string `json:"wind360"`
+        WindDir   string `json:"windDir"`
+        WindScale string `json:"windScale"`
+        WindSpeed string `json:"windSpeed"`
+        Humidity  string `json:"humidity"`
+        Precip    string `json:"precip"`
+        Pressure  string `json:"pressure"`
+        Vis       string `json:"vis"`
+        Cloud     string `json:"cloud"`
+        Dew       string `json:"dew"`
+        Air   WeatherAir     `json:"air"`
+    }
+    WeatherReadReq{
+        Position Point `json:"position,optional"`
+        ProjectID int64 `json:"projectID,optional,string"`
+    }
+)
+

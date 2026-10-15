@@ -1,0 +1,123 @@
+info(
+    title: "公共结构体定义"
+    desc: "公共结构体定义"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+type(
+    PageInfo{
+        Page     int64 `json:"page,optional" form:"page,optional"`         // 页码
+        Size int64 `json:"size,optional" form:"size,optional"` // 每页大小
+        Orders []*OrderBy `json:"orders,optional"` //排序
+    }
+    PageResp{
+        Page     int64 `json:"page,optional"`         // 页码
+        PageSize int64 `json:"pageSize,optional"` // 每页大小
+        Total int64 `json:"total"`
+    }
+    OrderBy{
+        Field string `json:"field,optional"` ////排序的字段名
+        Sort int64 `json:"sort,optional"`//排序方式：0 从小到大, 1 从大到小
+    }
+    CommonResp{
+        ID int64 `json:"id,optional"`         // id
+    }
+    IDList{
+        IDs []int64 `json:"ids"`
+    }
+    WithID{
+        ID int64 `json:"id,optional"`         // id
+    }
+    WithIDStr{
+        ID int64 `json:"id,string,optional"`         // id
+    }
+    WithCode{
+        Code string `json:"code,optional"`
+    }
+    WithIDOrCode{
+        ID int64 `json:"id,optional"`         // id
+        Code string `json:"code,optional"`
+    }
+    WithGroupCode{
+        GroupCode string `json:"groupCode,optional"`         // id
+        Code string `json:"code,optional"`
+    }
+    Tag  {
+        Key string `json:"key"`
+        Value string `json:"value"`
+    }
+
+    Point {
+        Longitude float64 `json:"longitude,range=[0:180]"`                           //经度
+        Latitude  float64 `json:"latitude,range=[0:90]"`                            //纬度
+    }
+
+    DateRange {
+        Start string `json:"start,optional"`       //开始时间 格式：yyyy-mm-dd
+        End string `json:"end,optional"`           //结束时间 格式：yyyy-mm-dd
+    }
+    TimeRange  {
+        Start int64 `json:"start,optional"`       //开始时间 unix时间戳
+        End int64 `json:"end,optional"`           //结束时间 unix时间戳
+    }
+
+    SendOption  {
+        TimeoutToFail  int64 `json:"timeoutToFail,optional"`   //超时失败时间
+        RequestTimeout int64 `json:"requestTimeout,optional"` //请求超时,超时后会进行重试
+        RetryInterval  int64 `json:"retryInterval,optional"`   //重试间隔
+    }
+    DeviceCore {
+        ProductID string `json:"productID"`      //产品ID
+        DeviceName string `json:"deviceName"`    //设备名称
+    }
+    ThirdEmailConfig {
+        From     string`json:"from"`// 发件人  你自己要发邮件的邮箱
+        Host     string`json:"host"`// 服务器地址 例如 smtp.qq.com  请前往QQ或者你要发邮件的邮箱查看其smtp协议
+        Secret   string`json:"secret"`// 密钥    用于登录的密钥 最好不要用邮箱密码 去邮箱smtp申请一个用于登录的密钥
+        Nickname string`json:"nickname"`// 昵称    发件人昵称 通常为自己的邮箱
+        Port     int64 `json:"port"`// 端口     请前往QQ或者你要发邮件的邮箱查看其smtp协议 大多为 465
+        IsSSL    int64 `json:"isSsl"`// 是否SSL   是否开启SSL
+    }
+    ThirdAppConfig {
+        AppID string `json:"appID,optional"`
+        AppKey string `json:"appKey,optional"`//微信小程序无需填写
+        AppSecret string `json:"appSecret,optional"`
+    }
+    // Apple 登录配置
+    AppleAppConfig {
+        AppID string `json:"appID,optional"` // Bundle ID / Services ID
+        BundleID string `json:"bundleID,optional"` // 前端别名，写入时同步到 appID
+        TeamID string `json:"teamID,optional"` // Apple Team ID
+        KeyID string `json:"keyID,optional"` // Apple Key ID
+        PrivateKey string `json:"privateKey,optional"` // Apple 私钥（PEM 格式）
+        RedirectURI string `json:"redirectURI,optional"` // 回调地址
+    }
+    ThirdApp{
+        Version  string  `json:"version,optional"`// 应用版本
+        FilePath string  `json:"filePath,optional"`// 文件路径,拿来下载文件
+        IsUpdateFilePath bool  `json:"isUpdateFilePath,optional,omitempty"`// 是否更新固件
+        VersionDesc string  `json:"versionDesc,optional"`//版本说明
+    }
+    ThirdMiniCore {
+        AppID string `json:"appID,optional,omitempty"`
+        AppKey string `json:"appKey,optional,omitempty"`
+    }
+    Empty{
+
+    }
+    CompareInt64{
+        CmpTYpe string `json:"cmpType"`//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+        Value int64 `json:"value,string"`
+    }
+    CompareString{
+        CmpTYpe string `json:"cmpType"`//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询
+        Value string `json:"value"`
+    }
+    Compare{
+        CmpTYpe string `json:"cmpType"`//"=":相等 "!=":不相等 ">":大于">=":大于等于"<":小于"<=":小于等于 "like":模糊查询,只有string类型可以使用
+        Value string `json:"value"`
+        CastTo string  `json:"castTo"` //参数的类型(填写了会进行数据类型的转换): int float string
+    }
+)

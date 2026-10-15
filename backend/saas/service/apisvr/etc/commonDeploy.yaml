@@ -1,0 +1,51 @@
+# commonDeploy.yaml: deploy/ 容器编排专用本地覆盖配置（单体 saassvr）。
+# 通过 confSuffix=Deploy 加载（ConfMustLoad 自动用 apiDeploy/sysDeploy 覆盖 commonDeploy）。
+# 与 commonLocal.yaml 同构：无 etcd、OssType=local、RPC=direct；
+# 唯一区别是 infra 主机名用 compose 网络里的容器名（mysql/redis/nats）而非 127.0.0.1。
+Host: 0.0.0.0
+CpuThreshold: 0
+Timeout: 1000000
+MaxBytes: 1000000000
+Log:
+  Encoding: plain
+CacheRedis:
+  - Host: redis:6379
+    Pass:
+    Type: node
+Middlewares:
+  Prometheus: false
+Database:
+  DBType: pgsql
+  DSN: ${CORE_DB_DSN}
+SysRpc:
+  Enable: true
+  Mode: direct
+  RunProxy: true
+  Conf:
+    Timeout: 1000000
+TimedJobRpc:
+  Enable: true
+  Mode: direct
+  RunProxy: true
+  Conf:
+    Timeout: 1000000
+TimedSchedulerRpc:
+  Enable: true
+  Mode: direct
+  RunProxy: true
+  Conf:
+    Timeout: 1000000
+Event:
+  Nats:
+    Url: nats://nats:4222
+OssConf:
+  OssType: local
+  PublicBucketName: ithings-public
+  PrivateBucketName: ithings-private
+  TemporaryBucketName: ithings-temporary
+  StorePath: ./oss
+  ConnectTimeout: 6000
+  ReadWriteTimeout: 60000
+DevServer:
+  Enabled: true
+  Port: 7061

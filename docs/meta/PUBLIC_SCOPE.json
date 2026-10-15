@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "decision": "user_approved_25_file_scope",
+  "decision_date": "2026-10-15",
+  "proposal_sha256": "a1d26f92a3408ec7aa003df6a2974ef808cd6d6509934d35f90fc8958d5d2bda",
+  "source_head": "302170043c6ce8dd81ff2a9826156d941ea7deb7",
+  "scope": "Local candidate only; no push, source deletion or new license grant.",
+  "files": [
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/code-generation-flow-OyqPie1A.png",
+      "sha256": "b8774c56cbe2565e6c75e43c67b2ac2fa85ce79abe5d3695bf920eef1ec4358f",
+      "bytes": 1745382,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/flexible-deployment-Bvwlekq3.png",
+      "sha256": "b2701a88cec1ff61ed09dc707c61ec7cd79e4eee7c13e6d54714311ce4f01a5a",
+      "bytes": 1865721,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/monorepo-evolution-YXRaSH8z.png",
+      "sha256": "38a913107262395177eabb71781a25848f9895d01afd0910665a1eb4132d2fba",
+      "bytes": 1830185,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/overview-architecture-D5P0YP9O.png",
+      "sha256": "db02eadafeab76955497ca5e36e6f24cf6d729cbe02dc4437fa203fbb638cf1b",
+      "bytes": 1855066,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/pluggable-apps-BUoWuV-l.png",
+      "sha256": "69837ef9aa27d94b4369f45f3df58e88fa3cd2612709bd68a0729128c1f6fcec",
+      "bytes": 1618167,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/assets/unitedrhino-tech-arch-02/proto-split-ai-cognitive-Ctm88Sch.png",
+      "sha256": "099afe882fca948ed0fccc23a96237dba521fe1927adae053f6bf71d7aa0ed9b",
+      "bytes": 1820451,
+      "category": "external_article_or_image",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/rd/references/unitedrhino-tech-arch-02.md",
+      "sha256": "d29b8dccb4166b660c30d46757cc7608450ae137b6c8546e7b967f98eeb3f8c4",
+      "bytes": 40619,
+      "category": "external_article_or_image",
+      "disposition": "private_original_public_summary",
+      "public_navigation": "docs/rd/references/unitedrhino-tech-arch-02.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/go-things架构图.jpg",
+      "sha256": "72d5c780dda77ea2e252cc22a3cd45c7d8bc95cc0c800ddd6c887f03c06d6d42",
+      "bytes": 113441,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/iThings架构图.png",
+      "sha256": "46f0ec18a52ffcb9663035c4042bb200e80b4d6218672a222eff226a66a278d0",
+      "bytes": 585205,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/常州飞诺医疗技术有限公司.png",
+      "sha256": "6a597a467a4a5390fc9d4f22e75bc4dfc800af4f7c4c024bab989b136094fe2d",
+      "bytes": 2294,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/杭州伟立讯.png",
+      "sha256": "1132fb8795ff0f55a90d43f2482cd24c3a506944ce7b7ab289ce5552c30290cc",
+      "bytes": 2091,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/深圳市易百珑科技有限公司.svg",
+      "sha256": "b0feb6d62dc863f48912a42d52d6d8b893044d4c3449517076169bdc91202be2",
+      "bytes": 10555,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/福建合创网络科技有限公司.png",
+      "sha256": "3cb67f8f98bb5ade33b7ad62fcca89ce35d43f5d5027d4fd924cb0758e2afbfa",
+      "bytes": 6323,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/联远智维.jpg",
+      "sha256": "279f124a3dd06cfa4dc76faa7c267802f91e6eb15cd5a138b4f832e08d68086a",
+      "bytes": 28728,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/useBy/重庆图浩科技.jpg",
+      "sha256": "7f366736818013efbcba3d78ecb3b1d790d4af170b8021a147910d46dc83cb79",
+      "bytes": 68500,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/企业微信二维码.png",
+      "sha256": "931887168008a323d41087397a4ccc69611e882d8a60af4050762eac2e37294e",
+      "bytes": 4696,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/公众号.jpg",
+      "sha256": "dc6786af5e415689148ffc11f3c622cb63f44a0508413543bfa13fe0c4a35985",
+      "bytes": 28045,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/宠物定位项圈.json",
+      "sha256": "e92106da541604228c6a72fbb3c8db62397e0765870b0576009600e91a098c9e",
+      "bytes": 1775,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/微信二维码.jpg",
+      "sha256": "d8bf60cd08d9d709806084fc6260291fe3f9c59970c157aa3cfa6dc67a55ab0e",
+      "bytes": 122485,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/微信赞赏码.jpg",
+      "sha256": "a5997a3ae7de21c59eb8a765cb91cd5dd1bbd66ac6e9dc2e9623476271473050",
+      "bytes": 123251,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/架构图.jpg",
+      "sha256": "6e94cc3ae42c56385985c558860df625c484ebd6d4b1972754ab0f076bea2607",
+      "bytes": 81053,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/组态大屏.png",
+      "sha256": "4f8376080a3eeb86d27e1ce2105660cff7b9ecd154e3a8b79dd523b653abb979",
+      "bytes": 413427,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/设备登录流程.drawio.png",
+      "sha256": "ee228498ec883181e217fabced6139f80272bcbbf0f507d63c7eaad56a23702d",
+      "bytes": 456834,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/设备连接流程图.jpg",
+      "sha256": "fbe68c8c54f73f337207371bf84b1f6cc5f0660e6dd32da89eccba6090241663",
+      "bytes": 33695,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    },
+    {
+      "path": "docs/wiki/legacy/core/doc/assets/部署架构图.png",
+      "sha256": "a932fa2eb0b8e2a64ab29c94620c24e45fd4d0874376cc44ff3b4b1501e31b64",
+      "bytes": 96614,
+      "category": "historical_asset_or_product_example",
+      "disposition": "private_only",
+      "public_navigation": "docs/meta/PUBLIC_SCOPE.md"
+    }
+  ],
+  "mermaid": "retain original bundle plus assembled notices and recorded Jison Lex limitation"
+}

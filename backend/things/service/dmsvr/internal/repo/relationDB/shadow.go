@@ -1,0 +1,75 @@
+package relationDB
+
+import (
+	"context"
+
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/shadow"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+)
+
+type ShadowRepo struct {
+	db *gorm.DB
+}
+
+var async *stores.AsyncInsert[DmDeviceShadow]
+
+func Init() {
+	async = stores.NewAsyncInsert[DmDeviceShadow](stores.GetCommonConn(context.Background()), "", stores.WithDBHandle(func(db *stores.DB) *stores.DB {
+		return db.Clauses(clause.OnConflict{
+			UpdateAll: true, Columns: stores.SetWithPg([]clause.Column{{Name: "product_id"}, {Name: "device_name"}, {Name: "data_id"}}, []clause.Column{})})
+	}))
+}
+
+func NewShadowRepo(in any) shadow.Repo {
+	return &ShadowRepo{db: stores.GetCommonConn(in)}
+}
+
+func (p *ShadowRepo) FindByFilter(ctx context.Context, f shadow.Filter) ([]*shadow.Info, error) {
+	var results []*DmDeviceShadow
+	db := p.fmtFilter(ctx, f).Model(&DmDeviceShadow{})
+	err := db.Find(&results).Error
+	if err != nil {
+		return nil, errors.Database.AddDetail(err)
+	}
+	return ToShadowsDo(results), nil
+}
+
+func (p *ShadowRepo) AsyncUpdate(ctx context.Context, data []*shadow.Info) error {
+	for _, d := range data {
+		async.AsyncInsert(ToShadowPo(d))
+	}
+	return nil
+}
+
+func (p *ShadowRepo) MultiUpdate(ctx context.Context, data []*shadow.Info) error {
+	vals := make([]*DmDeviceShadow, len(data))
+	for i, d := range data {
+		vals[i] = ToShadowPo(d)
+	}
+	err := p.db.WithContext(ctx).Clauses(clause.OnConflict{
+		UpdateAll: true, Columns: stores.SetWithPg([]clause.Column{{Name: "product_id"}, {Name: "device_name"}, {Name: "data_id"}}, []clause.Column{})}).Model(&DmDeviceShadow{}).Create(vals).Error
+	return stores.ErrFmt(err)
+}
+func (p *ShadowRepo) fmtFilter(ctx context.Context, f shadow.Filter) *gorm.DB {
+	db := p.db.WithContext(ctx).Where("product_id = ?", f.ProductID).Where("device_name = ?", f.DeviceName)
+	if len(f.DataIDs) != 0 {
+		db = db.Where("data_id in ?", f.DataIDs)
+	}
+	if f.UpdatedDeviceStatus != 0 {
+		if f.UpdatedDeviceStatus == shadow.UpdatedDevice {
+			db = db.Where("updated_device_time is not null")
+		} else {
+			db = db.Where("updated_device_time is null")
+		}
+	}
+	return db
+}
+
+func (p *ShadowRepo) MultiDelete(ctx context.Context, f shadow.Filter) error {
+	db := p.fmtFilter(ctx, f)
+	err := db.Unscoped().Delete(&DmDeviceShadow{}).Error
+	return errors.IfNotNil(errors.Database, err)
+}

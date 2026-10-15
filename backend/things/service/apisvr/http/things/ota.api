@@ -1,0 +1,15 @@
+info(
+    title: "ota升级"
+    desc: "ota升级"
+    author: "zev"
+    email: "635665396@qq.com"
+    version: "v1"
+)
+
+import "ota/firmware.api" //ota附件接口
+//import "ota/task.api" //ota升级任务接口
+//import "ota/otaFirmware.api" //ota升级包接口
+//import "ota/otaTask.api" //ota升级作业任务接口
+import "ota/job.api" //ota升级批次接口
+import "ota/device.api" //ota升级模块接口
+import "ota/module.api"

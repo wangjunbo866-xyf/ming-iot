@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "google/protobuf/wrappers.proto";
+
+service DictManage{
+  rpc dictInfoCreate(DictInfo) returns(WithID); //添加角色
+  rpc dictInfoIndex(DictInfoIndexReq) returns(DictInfoIndexResp); //获取角色列表
+  rpc dictInfoUpdate(DictInfo) returns(Empty); //更新角色
+  rpc dictInfoDelete(WithID) returns(Empty); //删除角色
+  rpc dictInfoRead(DictInfoReadReq) returns(DictInfo);   //获取详情接口
+
+  rpc dictDetailRead(DictDetailReadReq)returns(DictDetail);
+  rpc dictDetailCreate(DictDetail) returns(WithID); //添加角色
+
+  rpc dictDetailMultiCreate(DictDetailMultiCreateReq) returns(Empty); //添加角色
+  rpc dictDetailIndex(DictDetailIndexReq) returns(DictDetailIndexResp); //获取角色列表
+  rpc dictDetailUpdate(DictDetail) returns(Empty); //更新角色
+  rpc dictDetailDelete(WithID) returns(Empty); //删除角色
+
+  rpc dictMultiImport(DictMultiImportReq) returns(DictMultiImportResp); //删除菜单
+  rpc dictMultiExport(DictMultiExportReq) returns(DictMultiExportResp); //删除菜单
+}
+
+message DictInfo{
+  int64 id = 1;
+  string group =2;//分组
+  string name= 3;          // 字典名（中）
+  string code = 4;          // 字典编码
+  google.protobuf.StringValue desc = 5;        // 模块描述
+  google.protobuf.StringValue body = 6; // 自定义数据
+  int64  structType  =7; //结构类型(不可修改) 1:列表(默认) 2:树型
+}
+
+message DictInfoReadReq{
+  int64 id = 1;
+  string code = 2;
+}
+
+message DictInfoIndexReq{
+  PageInfo page = 1;//分页信息
+  string name = 2;
+  string group = 3;
+}
+
+message DictInfoIndexResp{
+  repeated  DictInfo list =1;
+  int64 total = 2;
+}
+
+message DictDetailReadReq{
+  int64 id = 1;
+  string dictCode= 2;         // 关联标记
+  string value = 3;           // 字典值
+  bool withFather = 4;//是否返回父级
+  bool withChildren =5;//是否返回子级
+}
+
+message DictMultiImportReq{
+  string dicts =1; //导出的菜单json文件
+}
+
+message DictMultiImportResp{
+  int64 total =1;                                 //导入总接口数
+  int64  errCount =2; //失败数
+  int64  ignoreCount =3; //忽略数
+  int64  succCount =4; //成功数
+}
+
+message DictMultiExportReq{
+  repeated string dictCodes= 1;         // 关联标记
+}
+
+message DictMultiExportResp{
+  string dicts =1; //导出的菜单json文件
+}
+
+message DictDetail{
+  int64 id = 1;
+  string dictCode= 2;         // 关联标记
+  string label = 3;           // 展示值
+  string value = 4;           // 字典值
+  int64 sort = 6;          // 排序标记
+  google.protobuf.StringValue desc = 7;        // 模块描述
+  int64 status = 8; // 状态  1:启用,2:禁用
+  google.protobuf.StringValue body = 9; // 自定义数据
+  string idPath =10;//1-2-3-的格式记录顶级区域到当前id的路径
+  int64 parentID =11;//父节点
+  DictDetail parent =12;
+  repeated DictDetail children =13;
+}
+
+message DictDetailIndexReq{
+  PageInfo page = 1;//分页信息
+  string dictCode= 2;         // 关联标记
+  int64 parentID =11;//父节点
+  int64 status = 8; // 状态  1:启用,2:禁用
+  string label = 3;           // 展示值
+  string value = 4;           // 字典值
+  repeated string values =5;//字典值列表
+}
+
+message DictDetailIndexResp{
+  repeated  DictDetail list =1;
+  int64 total = 2;
+}
+
+message DictDetailMultiCreateReq{
+  string dictCode= 1;         // 关联标记
+  repeated  DictDetail list =2;
+}
+

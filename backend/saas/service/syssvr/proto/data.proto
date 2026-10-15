@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+
+service DataManage {
+  rpc dataProjectCreate (DataProjectSaveReq) returns (Empty);   //授权用户数据权限
+  rpc dataProjectMultiCreate (DataProjectMultiSaveReq) returns (Empty);   //授权用户数据权限
+  rpc dataProjectDelete (DataProjectDeleteReq) returns (Empty);   //授权用户数据权限
+  rpc dataProjectMultiDelete(DataProjectMultiDeleteReq)returns(Empty);
+  rpc dataProjectIndex (DataProjectIndexReq) returns (DataProjectIndexResp); //获取用户数据权限列表
+
+  rpc dataAreaMultiUpdate (DataAreaMultiUpdateReq) returns (Empty);   //授权用户数据权限
+  rpc dataAreaIndex (DataAreaIndexReq) returns (DataAreaIndexResp); //获取用户数据权限列表
+  rpc dataAreaMultiDelete (DataAreaMultiDeleteReq) returns (Empty); //删除用户授权
+
+  rpc userAreaApplyIndex(UserAreaApplyIndexReq)returns(UserAreaApplyIndexResp);
+  rpc userAreaApplyDeal(UserAreaApplyDealReq)returns(Empty);//处理区域权限申请
+
+  rpc dataOpenAccessIndex(OpenAccessIndexReq)returns(OpenAccessIndexResp);
+  rpc dataOpenAccessRead(WithID)returns(OpenAccess);
+  rpc dataOpenAccessUpdate(OpenAccess)returns(Empty);
+  rpc dataOpenAccessCreate(OpenAccess)returns(WithID);
+  rpc dataOpenAccessDelete(WithID) returns(Empty);
+}
+
+message OpenAccess{
+  int64 id =1;
+  string tenantCode =2;
+  string code =3;
+  int64 userID =4;
+  string accessSecret =5;
+  repeated string ipRange =6;
+  string desc =7;
+}
+
+message OpenAccessIndexReq{
+  PageInfo page =1;
+  string tenantCode =2;
+  string code =3;
+  int64 userID =4;
+}
+
+message OpenAccessIndexResp{
+  int64 total =1;
+  repeated OpenAccess list=2;
+}
+
+message DataProject {
+    int64 projectID = 1; //权限数据ID
+    int64 authType =2;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+    int64 targetID = 3; //用户ID（必填，雪花ID）
+    int64 updatedTime=4;//更新时间
+}
+
+message DataProjectDeleteReq{
+  int64 targetID = 1; //用户ID（必填，雪花ID）
+  string targetType = 2;
+  int64 projectID = 3; //权限数据ID
+}
+
+message DataProjectMultiDeleteReq{
+  repeated int64 targetIDs = 1; //用户ID（必填，雪花ID）
+  string targetType = 2;
+  int64 projectID = 3; //权限数据ID
+}
+
+message DataProjectSaveReq{
+  int64 targetID = 1; //用户ID（必填，雪花ID）
+  string targetType = 2;
+  int64 projectID = 3; //权限数据ID
+  int64 authType =4;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+}
+
+message DataProjectMultiSaveReq{
+  repeated int64 targetIDs = 1; //用户ID（必填，雪花ID）
+  string targetType = 2;
+  int64 projectID = 3; //权限数据ID
+  int64 authType =4;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+}
+
+message DataProjectIndexReq {
+    PageInfo page = 1 ; //进行数据分页（不传默认2000相当于全部）
+    int64 projectID =2;//获取该项目实际获得的权限
+    int64 targetID = 3;
+    string targetType =4;//user:用户 role:角色
+    int64 authType =5;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+}
+
+message DataProjectIndexResp {
+    int64 total = 1;           //总数
+    repeated DataProject list = 2; //用户数据权限列表
+}
+
+message DataArea {
+  int64 areaID = 1; //项目id
+  int64 authType =2;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+  int64 isAuthChildren =3;//是否同时授权子节点,默认为2
+  int64 areaIDPath = 4;
+  int64 targetID = 5; //用户ID或Roleid（必填，雪花ID）
+  string targetType = 6;
+  int64 updatedTime=7;//更新时间
+}
+
+message DataAreaMultiUpdateReq {
+  int64 targetID = 1; //用户ID（必填，雪花ID）
+  string targetType = 2;
+  int64 projectID = 3; //项目id
+  repeated DataArea areas = 4; //权限数据IDs
+}
+
+message DataAreaIndexReq {
+  PageInfo page = 1 ; //进行数据分页（不传默认2000相当于全部）
+  int64 projectID = 3; //项目id 必选
+  int64 targetID = 4;
+  string targetType =5;
+}
+
+message DataAreaIndexResp {
+  int64 total = 1;           //总数
+  repeated DataArea list = 2; //用户数据权限列表
+}
+
+message DataAreaMultiDeleteReq{
+  int64 projectID = 1; //项目id 必选
+  int64 targetID = 2;
+  string targetType =3;
+  repeated int64 areaIDs = 4;
+}
+
+message UserAreaApplyIndexReq{
+  PageInfo page = 1 ; //进行数据分页（不传默认2000相当于全部）
+  int64 areaID = 2; //项目id
+  repeated int64 authTypes =3;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+}
+
+message UserAreaApplyInfo{
+  int64 id = 1; //项目id
+  int64 userID = 2;
+  int64 areaID = 3; //项目id
+  int64 authType =4;// 1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+  int64 createdTime = 5;
+}
+
+message UserAreaApplyIndexResp{
+  int64 total = 1;           //总数
+  repeated UserAreaApplyInfo list = 2; //用户数据权限列表
+}
+
+message UserAreaApplyDealReq{
+  bool isApprove = 1;//是否同意
+  repeated int64 ids = 2; //授权申请的id列表
+}
+

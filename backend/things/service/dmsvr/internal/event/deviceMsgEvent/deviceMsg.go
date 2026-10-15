@@ -1,0 +1,198 @@
+package deviceMsgEvent
+
+//设备的发布,连接及断连处理
+import (
+	"context"
+	"time"
+
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/deviceStatus"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type DeviceMsgHandle struct {
+	svcCtx *svc.ServiceContext
+	ctx    context.Context
+	logx.Logger
+}
+
+func NewDeviceMsgHandle(ctx context.Context, svcCtx *svc.ServiceContext) *DeviceMsgHandle {
+	return &DeviceMsgHandle{
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+	}
+}
+
+func (l *DeviceMsgHandle) Gateway(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	resp, err := NewGatewayLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, resp)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, resp)
+		if err != nil {
+			l.Error(msg, resp, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, resp, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Thing(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	l.FixDisconnect(msg)
+	startTime := time.Now()
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	resp, err := NewThingLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, resp)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, resp)
+		if err != nil {
+			l.Error(msg, resp, err)
+		}
+	})
+	l.WithDuration(time.Now().Sub(startTime)).Infof("%s startTime:%v req:%v resp:%v err:%v",
+		utils.FuncName(), startTime, msg, resp, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Ota(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	resp, err := NewOtaLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, resp)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, resp)
+		if err != nil {
+			l.Error(msg, resp, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, resp, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Shadow(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	resp, err := NewShadowLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, resp)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, resp)
+		if err != nil {
+			l.Error(msg, resp, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, resp, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Config(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	respMsg, err := NewConfigLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, respMsg)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, respMsg)
+		if err != nil {
+			l.Error(msg, respMsg, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, respMsg, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Ext(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	resp, err := NewExtLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, resp)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, resp)
+		if err != nil {
+			l.Error(msg, resp, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, resp, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) SDKLog(msg *deviceMsg.PublishMsg) error {
+	di, err := l.svcCtx.DeviceCache.GetData(l.ctx, devices.Core{ProductID: msg.ProductID, DeviceName: msg.DeviceName})
+	if err != nil {
+		l.Error(err)
+		return err
+	}
+	msg = l.svcCtx.ScriptTrans.UpBeforeTrans(l.ctx, di, msg)
+	l.FixDisconnect(msg)
+	respMsg, err := NewSDKLogLogic(l.ctx, l.svcCtx).Handle(msg)
+	l.deviceResp(di, respMsg)
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		err := l.svcCtx.ScriptTrans.UpAfterTrans(l.ctx, di, msg, respMsg)
+		if err != nil {
+			l.Error(msg, respMsg, err)
+		}
+	})
+	l.Infof("%s req:%v resp:%v err:%v", utils.FuncName(), msg, respMsg, err)
+	return err
+}
+
+func (l *DeviceMsgHandle) Connected(msg *deviceStatus.ConnectMsg) error {
+	return NewConnectedLogic(l.ctx, l.svcCtx).Handle(msg)
+}
+
+func (l *DeviceMsgHandle) Disconnected(msg *deviceStatus.ConnectMsg) error {
+	return NewDisconnectedLogic(l.ctx, l.svcCtx).Handle(msg)
+}
+func (l *DeviceMsgHandle) deviceResp(di *dm.DeviceInfo, respMsg *deviceMsg.PublishMsg) {
+	if respMsg == nil {
+		return
+	}
+	startTime := time.Now()
+	respMsg = l.svcCtx.ScriptTrans.DownBeforeTrans(l.ctx, di, respMsg)
+	er := l.svcCtx.PubDev.PublishToDev(l.ctx, di, respMsg)
+	if er != nil {
+		l.Errorf("DeviceMsgHandle.deviceResp.PublishToDev failure err:%v", er)
+		return
+	}
+	l.svcCtx.ScriptTrans.DownAfterTrans(l.ctx, di, respMsg)
+
+	l.WithDuration(time.Now().Sub(startTime)).Debugf("DeviceMsgHandle.deviceResp startTime:%v msg:%v", startTime, respMsg)
+}
+
+func (l *DeviceMsgHandle) FixDisconnect(msg *deviceMsg.PublishMsg) {
+}

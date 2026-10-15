@@ -1,0 +1,300 @@
+{
+  "files": [
+    {
+      "mode": "0644",
+      "path": "README.md",
+      "sha256": "b425b9e2d7f5b370d73616fa20ea48595227126fce7e6c6e96cdec27a1b00a1d",
+      "size": 446
+    },
+    {
+      "mode": "0644",
+      "path": "manifests/discarded-sources.json",
+      "sha256": "110ad586273a91561b5eb0259dd0fd59839e76215781b864411ef2ba6ef56c19",
+      "size": 643
+    },
+    {
+      "mode": "0644",
+      "path": "manifests/source-provenance.json",
+      "sha256": "582c4a86441dc1c4c70243b955c5ccce964b4f734006c09dedab9780ca70394d",
+      "size": 1715
+    },
+    {
+      "mode": "0644",
+      "path": "manifests/unpublished-commits.json",
+      "sha256": "b1e39570ee35561de30d07d861b76a494d973d8e1f0c457642970babaf59b0ae",
+      "size": 2885
+    },
+    {
+      "mode": "0644",
+      "path": "repository-bundles/ming-iot-pre-loopx-20260823.bundle",
+      "sha256": "72bf445b89935d2ebb39170832d4bc7517affd6711fa0646525dd4cad8b02ede",
+      "size": 10874490
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/iot-doc/untracked-framework-specs/2026-08-21-loopx-driven-iot-development-control-plane-design.md",
+      "sha256": "6150d110ac5a77378bf304c7c27aa93cce0ec1a2ca1568ab3f1608e315a34ae3",
+      "size": 36088
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/iot-doc/untracked-framework-specs/2026-08-23-ai-native-software-rd-two-stage-blueprint-design.md",
+      "sha256": "ff81d1e5d14b51ae354bebe6c7009d7947b30abdc43a83263b53199d479d64fd",
+      "size": 17755
+    },
+    {
+      "mode": "0664",
+      "path": "snapshots/2026-08-23/ming-iot/.graph/loops/G0-rd-graph-control-plane.yaml",
+      "sha256": "cc0ebeff87c5be6cb3bfbc2a4a10afd516dbbbf932a044b78009d8873c836e7c",
+      "size": 1581
+    },
+    {
+      "mode": "0664",
+      "path": "snapshots/2026-08-23/ming-iot/.graph/loops/L0-things-baseline.yaml",
+      "sha256": "e387aa980b3b460226110076d841215af77313f73c1026285e3091e511bfcad6",
+      "size": 3159
+    },
+    {
+      "mode": "0664",
+      "path": "snapshots/2026-08-23/ming-iot/.graph/registry.yaml",
+      "sha256": "91d888671d0b0d85c76a904a13f96f9df9c6016184c5659385d15aca41dac965",
+      "size": 440
+    },
+    {
+      "mode": "0664",
+      "path": "snapshots/2026-08-23/ming-iot/.graph/schemas/loop-v1.schema.json",
+      "sha256": "9e701f58b27a0a7b18f2f8e77b1fc23ddd525eb66b54b1acca7b979f50ee4d94",
+      "size": 12221
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-07-23-core-migration-verification.md",
+      "sha256": "e839b5b3e444f47303bc439a6027a70d6bde07ac7a7dc865bc8b50e939797360",
+      "size": 8811
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-07-23-core-source-baseline.md",
+      "sha256": "82c85d8491040de7a5b9ad4ebcc037038ee79b32f1450295474c492da9a22ae2",
+      "size": 4156
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-07-23-goctl-build.md",
+      "sha256": "fcc2aac55cd6d08af058f20942697be39b687f9ace9179b9f06d395b619661aa",
+      "size": 4585
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline-attempt-1-fail.json",
+      "sha256": "c3507d65b772ed1ef22a0b39800a9f30e50125cabd50a3994556502a6c21ebe3",
+      "size": 33352
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline-attempt-2-workspace-fail.json",
+      "sha256": "9ea7feb361a4db855b6f10160cb6407b78d87181f799954285f53175d986c6ea",
+      "size": 35354
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline-attempt-3-review-rejected.json",
+      "sha256": "5f9a269e79cf5c7af21b734fce776694b92abac655afc1fd64f9982c81388818",
+      "size": 35645
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline.json",
+      "sha256": "eaa13e8fec4c430b2df4f3459fecc60a271577d5790a41c0f1abcffed9158123",
+      "size": 24068
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline.md",
+      "sha256": "79b867408917bf571e635aab0db51aaedc4791fae78e074a23c48c0336fab9b7",
+      "size": 6963
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/2026-08-14-l0-things-source-baseline.md",
+      "sha256": "3269b2a258911e0f0554dccef1b707f31485bf0bf77788ff9ee4f590f02770d7",
+      "size": 1819
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/G0-rd-graph-control-plane/20260817T164744.583799632Z-55773884bef2cfc8/evidence.json",
+      "sha256": "b2c4b8110aac7d55ef560b60fce2a0050376d11359f08bedb5940776a3b34828",
+      "size": 1149
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/G0-rd-graph-control-plane/20260817T164744.583799632Z-55773884bef2cfc8/logs/graphctl-tests.log",
+      "sha256": "7d1fed8435d989b6f6f395dd795acfd26b0f0bfdfd0ab5b1554b2a097d26dc2f",
+      "size": 604
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/L0-things-baseline/20260817T155813.837306742Z-c073f43470d2a441/artifacts/things-baseline/l0-things-evidence.json",
+      "sha256": "12cf6631d4e493eb8d24375e7d0ae0f1c39008992646fe2384f73addf3a849d1",
+      "size": 24754
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/L0-things-baseline/20260817T155813.837306742Z-c073f43470d2a441/evidence.json",
+      "sha256": "8442e3709b17ea8bf87c862def6c9de01ddc92633dc60db11d23f2fd4f3372e7",
+      "size": 1460
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/evidence/L0-things-baseline/20260817T155813.837306742Z-c073f43470d2a441/logs/things-baseline.log",
+      "sha256": "12cf6631d4e493eb8d24375e7d0ae0f1c39008992646fe2384f73addf3a849d1",
+      "size": 24754
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-07-23-core-api-contract-normalization.md",
+      "sha256": "ed944bfc2d29cf3b1ccee4f59ef4b21d9151a8ae7dd97287a0bf9e5faf5c7980",
+      "size": 22781
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-07-23-core-migration-foundation.md",
+      "sha256": "c6e13a0313036abfe2b8611256894e1e52b59bb81b81f1de0de3c10ce0eff52a",
+      "size": 15610
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-07-23-core-migration-roadmap.md",
+      "sha256": "f068a41fb07f4c00b2c7c7afb2146d3c120da7ba8c149764ed2bb9251146e4b2",
+      "size": 7916
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-07-23-goctl-rpcgen-toolchain.md",
+      "sha256": "e0426edecfa3c37dde27e6609f85c91051bf66f3a3639d1196d4627498bd616b",
+      "size": 38578
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-07-23-syssvr-proto-split.md",
+      "sha256": "72746ade9d08f2632c162494c3a04f9e2a2bed5839e19909be61dad56e679e38",
+      "size": 31467
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-14-l0-things-compilation-migration-baseline.md",
+      "sha256": "7f089afe4bdf69051898b4e6750c82ce4188f063b452da98b2b97852f8c0611c",
+      "size": 34102
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md",
+      "sha256": "d7ecacf16245a702c6afec7239c75ff0572efc02c28ef4feb2575c2bdc55704a",
+      "size": 14731
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-15-l0-schema-fixture-gate-recovery.md",
+      "sha256": "67dc1ed9a6cf104fc1a54679b0c4c8e9b58a530bc287df8f654f254c37d61981",
+      "size": 18381
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-16-rd-graph-local-control-plane.md",
+      "sha256": "8168652aa6fed8786fa99f242f8e36c73e87a44ea9baf5dc342b2e391d21aa55",
+      "size": 132142
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-18-o0a-graph-active-ownership-context.md",
+      "sha256": "02b298ef74474eb041462f8491020313560750b56f9256c8a95f723aa70c301e",
+      "size": 48007
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-18-o0b-graph-closed-loop-history-handoff.md",
+      "sha256": "aac14e4713bc5abc3229d584696e49eea17d96adc03192e84d261f24bdfa80fd",
+      "size": 45002
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-19-thingsbaseline-isolated-build-and-go-proxy.md",
+      "sha256": "96f244ca4b70b945fc2c5462a709647cbbfac621fd2c610c54241237923c0d81",
+      "size": 20040
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-19-thingsbaseline-shared-go-cache.md",
+      "sha256": "8ddbf78a506820528971aab1c42aabf96ce9d9e47be0aea216ad0176bfdf38ac",
+      "size": 37667
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/plans/2026-08-23-loopx-personal-framework-bootstrap.md",
+      "sha256": "a3c6811a79fb6e9a87814700cd510ffbad29374174029712b674496aa30a71f8",
+      "size": 53458
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/reviews/G0-rd-graph-control-plane/O0b-20260818/milestone-review.md",
+      "sha256": "64a86384dad6f552de02bab399441db1b5f7180abcfb8a9225de89221a78d02c",
+      "size": 302
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-07-23-core-goctl-migration-design.md",
+      "sha256": "259004357ff9bef2644c0bbe33e645eaad2804fed57a9b537fc1ab0fa8210255",
+      "size": 21178
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-14-l0-things-compilation-migration-baseline-design.md",
+      "sha256": "1c7cf267cb50aa9720b36b3e0ff94cd26da66eb117758c4796269c06ba70f866",
+      "size": 27250
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-16-rd-graph-local-control-plane-design.md",
+      "sha256": "8ad46582a25136b4aa683611931730aec84729b7bfbe1f46fa0cbb2575742aa4",
+      "size": 39781
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-18-o0b-graph-closed-loop-history-handoff-design.md",
+      "sha256": "6cf6264c6a10d4a5a03ad7a9d03c7702318fe45a9e9bdc988d570d223acb588a",
+      "size": 10267
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-18-rd-graph-fast-full-control-plane-design.md",
+      "sha256": "4e6875ecc7ebff906569a2339aa2f9342458414cb8834f8edd47f144c569b7cc",
+      "size": 25872
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-19-thingsbaseline-isolated-build-and-go-proxy-design.md",
+      "sha256": "3e3f0a253ab3a709ffe6988ae294f693164744068e2d83f6513eeb59fbe51699",
+      "size": 6354
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-19-thingsbaseline-shared-go-cache-design.md",
+      "sha256": "dc6aaa379f16abf45ca3f9ce6a4e91a0e0aed5c9af3ac1bc441d081df89c83d8",
+      "size": 10307
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-23-loopx-plan-bilingual-publication-design.md",
+      "sha256": "68806dea5086e86966049f6d9e00c885c0648683a417717371c40b5773aa9ca2",
+      "size": 3358
+    },
+    {
+      "mode": "0644",
+      "path": "snapshots/2026-08-23/ming-iot/docs/superpowers/specs/2026-08-23-ming-iot-local-rd-docs-isolation-design.md",
+      "sha256": "db205151521afaa4862d41935869fc21fc3563d3cbd92532ac27cb1d69293cfd",
+      "size": 8791
+    }
+  ],
+  "root": "archives",
+  "schemaVersion": 1
+}

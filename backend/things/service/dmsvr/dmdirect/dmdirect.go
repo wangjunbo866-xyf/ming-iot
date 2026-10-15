@@ -1,0 +1,80 @@
+package dmdirect
+
+import (
+	"fmt"
+
+	"gitee.com/ming-iot/share/i18ns"
+	"gitee.com/ming-iot/share/interceptors"
+	"gitee.com/ming-iot/share/services"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/config"
+	devicegroup "gitee.com/ming-iot/things/service/dmsvr/internal/server/devicegroup"
+	userdevice "gitee.com/ming-iot/things/service/dmsvr/internal/server/userdevice"
+
+	"sync"
+
+	deviceinteract "gitee.com/ming-iot/things/service/dmsvr/internal/server/deviceinteract"
+	devicemanage "gitee.com/ming-iot/things/service/dmsvr/internal/server/devicemanage"
+	devicemsg "gitee.com/ming-iot/things/service/dmsvr/internal/server/devicemsg"
+	otamanage "gitee.com/ming-iot/things/service/dmsvr/internal/server/otamanage"
+	productmanage "gitee.com/ming-iot/things/service/dmsvr/internal/server/productmanage"
+	protocolmanage "gitee.com/ming-iot/things/service/dmsvr/internal/server/protocolmanage"
+	remoteconfig "gitee.com/ming-iot/things/service/dmsvr/internal/server/remoteconfig"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/startup"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+)
+
+type Config = config.Config
+
+var (
+	svcCtx     *svc.ServiceContext
+	svcOnce    sync.Once
+	runSvrOnce sync.Once
+	c          config.Config
+)
+
+func GetSvcCtx() *svc.ServiceContext {
+	svcOnce.Do(func() {
+		utils.ConfMustLoad("etc/dm.yaml", &c)
+		i18ns.InitWithFS("etc/i18n")
+
+		svcCtx = svc.NewServiceContext(c)
+		startup.Init(svcCtx)
+		logx.Infof("enabled dmsvr")
+	})
+	return svcCtx
+}
+
+// RunServer 如果是直连模式,同时提供Grpc的能力
+func RunServer(svcCtx *svc.ServiceContext) {
+	runSvrOnce.Do(func() {
+		go Run(svcCtx)
+	})
+
+}
+func Run(svcCtx *svc.ServiceContext) {
+	c := svcCtx.Config
+	s := services.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
+		dm.RegisterProtocolManageServer(grpcServer, protocolmanage.NewProtocolManageServer(svcCtx))
+		dm.RegisterDeviceManageServer(grpcServer, devicemanage.NewDeviceManageServer(svcCtx))
+		dm.RegisterProductManageServer(grpcServer, productmanage.NewProductManageServer(svcCtx))
+		dm.RegisterRemoteConfigServer(grpcServer, remoteconfig.NewRemoteConfigServer(svcCtx))
+		dm.RegisterDeviceGroupServer(grpcServer, devicegroup.NewDeviceGroupServer(svcCtx))
+		dm.RegisterDeviceInteractServer(grpcServer, deviceinteract.NewDeviceInteractServer(svcCtx))
+		dm.RegisterDeviceMsgServer(grpcServer, devicemsg.NewDeviceMsgServer(svcCtx))
+		dm.RegisterOtaManageServer(grpcServer, otamanage.NewOtaManageServer(svcCtx))
+		dm.RegisterUserDeviceServer(grpcServer, userdevice.NewUserDeviceServer(svcCtx))
+		//if c.Mode == service.DevMode || c.Mode == service.TestMode {
+		reflection.Register(grpcServer)
+		//}
+	})
+	defer s.Stop()
+	s.AddUnaryInterceptors(interceptors.Ctxs, interceptors.Error)
+
+	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
+	s.Start()
+}

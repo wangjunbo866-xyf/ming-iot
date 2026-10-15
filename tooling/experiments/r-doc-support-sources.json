@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "source": "r-doc upstream snapshot preserved by M2",
+  "upstream_revision_reported_by_candidate_v4": "bc23420d7df5ec1d2c5fb45e066c919790ab9cf9",
+  "verification": "each file SHA-256 matches M2 backup/manifests/ai-native.json; candidate implementation and tests are not replaced",
+  "destinations": [
+    "r-doc-v3",
+    "r-doc-v4"
+  ],
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "3fa3b50d33cdbb635c5fea8794bf8acf8d74f3375dfef6c7be5dff191158bb45"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    },
+    {
+      "path": "README.md",
+      "sha256": "bf05de0d170bd1f11054f47ab17b7005060dbccc95975ffcbf7911fffbc9fd0b"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "f37c6160f57365868f200876c83b3f8dcb66b2e586ad95cc070309190d7321a7"
+    },
+    {
+      "path": "VERSION",
+      "sha256": "59854984853104df5c353e2f681a15fc7924742f9a2e468c29af248dce45ce03"
+    },
+    {
+      "path": "benchmarks/README.md",
+      "sha256": "ffd8f443096b84984eeb16d176589c65a5ae31564b1a024ffb34e6680f77d169"
+    },
+    {
+      "path": "benchmarks/naturalistic/README.md",
+      "sha256": "b0a51eb2e49a1ad40e1de3c6a0cd17486fe62a678fcb13db1d8da9a29abf2dcf"
+    },
+    {
+      "path": "benchmarks/naturalistic/aggregate.py",
+      "sha256": "3c2ab5a1a9442e186a2e06bbdcd9ba302e37e87503fccc7a90750f0e551fa204"
+    },
+    {
+      "path": "benchmarks/naturalistic/capture_codex.py",
+      "sha256": "4c5c3c00ba4d64172f275f657586ef59c74b9257395478464183f531872909ce"
+    },
+    {
+      "path": "benchmarks/naturalistic/export_public_evidence.py",
+      "sha256": "dcdcff07ef511693ed84805e1fc401cabf85da2537fac9aed0c7716675374651"
+    },
+    {
+      "path": "benchmarks/naturalistic/grader.py",
+      "sha256": "ad6de7803033a5f71ba79bd19ff712f4c2b28501f4cfe8cb7b33318fbdd06fb0"
+    },
+    {
+      "path": "benchmarks/naturalistic/public-evidence-verification.md",
+      "sha256": "d08419a1d2c2be89e30f14608585532b7b8bc3f47974048138d3b3dcd8dc7ee8"
+    },
+    {
+      "path": "benchmarks/naturalistic/replay_batch.py",
+      "sha256": "81ba5848b7fa8c38291cdcdaa60433c5a2fa86abbda9915a059c20291430d8a1"
+    },
+    {
+      "path": "benchmarks/naturalistic/run_batch.py",
+      "sha256": "a613619cf5ddf6bf33347261f61e7d468dcd7d41dbe1c88a5cece4b20f1ceb4f"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/api-response-field-rename.json",
+      "sha256": "247e00cbae324df0de943efa92a192ceccbb714a4afdea15090f0041d8786b9b"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/architecture-decision-sync-v1.json",
+      "sha256": "3a3e0672e7c28fd0f9691e7a3f5610cf42c7a59db7c58dd91eb64e852f3fa383"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/cli-option-rename.json",
+      "sha256": "f5d9b77ce759778d1703027d44f135f209fb07dac172d797e42bc2cb9f582e99"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/cross-module-contract-migration-v1.json",
+      "sha256": "cfbe0bb696943d3147c9e8de6e3e04b54ae36ba574cd84e1ae46a100a52538c7"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/event-payload-rename-v2.json",
+      "sha256": "cd2997e62deb6b45b44b4ab192d9d10b76a68a7773e8ff20cf655ecf152d4301"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/event-payload-rename.json",
+      "sha256": "2a7b022d96ab8bf18d80d80b6ccf33e556da65ceeb58c0b16752f09513688d01"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/release-doc-drift-v1.json",
+      "sha256": "6b6e19537aa4469b53e301edb7a1252e4f25576aa88bbdd7f94980cf8c7a3e38"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks/sql-column-rename.json",
+      "sha256": "7d4fd7f0779e5710f4981964d5f2ef54415abfbe51620caaa778758a3ad01358"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/api-response-field-rename.json",
+      "sha256": "247e00cbae324df0de943efa92a192ceccbb714a4afdea15090f0041d8786b9b"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/architecture-decision-sync-v1.json",
+      "sha256": "9253342c0e48b925ddd3e7208cdb14833365f9faa4593f8df0cd02cd07b55fb2"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/cli-option-rename.json",
+      "sha256": "f5d9b77ce759778d1703027d44f135f209fb07dac172d797e42bc2cb9f582e99"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/cross-module-contract-migration-v1.json",
+      "sha256": "cfbe0bb696943d3147c9e8de6e3e04b54ae36ba574cd84e1ae46a100a52538c7"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/event-payload-rename-v2.json",
+      "sha256": "cd2997e62deb6b45b44b4ab192d9d10b76a68a7773e8ff20cf655ecf152d4301"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/event-payload-rename.json",
+      "sha256": "2a7b022d96ab8bf18d80d80b6ccf33e556da65ceeb58c0b16752f09513688d01"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/release-doc-drift-v1.json",
+      "sha256": "c2737048d3b8ab50655166dbcc48a165c22a715ecf23ec63e2914b40d719c28d"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-regrade-v2/sql-column-rename.json",
+      "sha256": "7d4fd7f0779e5710f4981964d5f2ef54415abfbe51620caaa778758a3ad01358"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/api-response-field-rename.json",
+      "sha256": "247e00cbae324df0de943efa92a192ceccbb714a4afdea15090f0041d8786b9b"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/architecture-decision-sync-v2.json",
+      "sha256": "eae1880261f01b4ba5fd4e77de8ab820edc9021c60a0e56a644a1616e8ac87fe"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/cli-option-rename.json",
+      "sha256": "f5d9b77ce759778d1703027d44f135f209fb07dac172d797e42bc2cb9f582e99"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/cross-module-contract-migration-v2.json",
+      "sha256": "9ac62f7b2fa6fc4d49ead8a0dc8011cba351f8f06575cdc65491243b49f71c45"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/event-payload-rename-v2.json",
+      "sha256": "cd2997e62deb6b45b44b4ab192d9d10b76a68a7773e8ff20cf655ecf152d4301"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/event-payload-rename.json",
+      "sha256": "2a7b022d96ab8bf18d80d80b6ccf33e556da65ceeb58c0b16752f09513688d01"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/release-doc-drift-v2.json",
+      "sha256": "dfcb3d15b98debc3030258878df76ac7c6477bda027a14f68a9461fca12bf3cb"
+    },
+    {
+      "path": "benchmarks/naturalistic/tasks-v2/sql-column-rename.json",
+      "sha256": "7d4fd7f0779e5710f4981964d5f2ef54415abfbe51620caaa778758a3ad01358"
+    },
+    {
+      "path": "benchmarks/naturalistic/verify_public_evidence.py",
+      "sha256": "0f66a6c630a3e0ba2a766a9ad677380f300265fa48035e81358931ca5cf5473d"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "be43a6bd688182372dd8173e238bdbedeb6a5d0797014b3b1519d49a84e1132e"
+    },
+    {
+      "path": "docs/design/README.md",
+      "sha256": "57664c82416bfdeb439cd247b3b1fdfa20970a079d8b6ad5752c9d9edaae82bf"
+    },
+    {
+      "path": "docs/design/r-doc-architecture.md",
+      "sha256": "43ce491092336a6c195a3dc9755c527139c0c1ca89ea8546b7a4894b9ac7498d"
+    },
+    {
+      "path": "docs/development/README.md",
+      "sha256": "6408d2934fbfdc2ce4e1e90e24a6f00997b5e4bf7dfd5a81a5ec71e6e5846b6b"
+    },
+    {
+      "path": "docs/development/benchmarks.md",
+      "sha256": "ff1fb4632c19e65be713da38f1114b6973625ad4fc7f0f99d182521cf29a0782"
+    },
+    {
+      "path": "docs/development/verification-report.md",
+      "sha256": "90fb13a6543d09963b0d3de6f2108ad9ea4965fd6ca5384ad67b9258e9019639"
+    },
+    {
+      "path": "docs/development/workflow.md",
+      "sha256": "a8dbd8c8a5d6693d1fb89d4da9d960eb62d178b2a4256f3905dffaf9cb0cd5f3"
+    },
+    {
+      "path": "docs/release/README.md",
+      "sha256": "2825689c6f69861598a94d30073c9e3e02d225cdd0ecb7b1e90f2c07286744ac"
+    },
+    {
+      "path": "docs/release/github-and-npx.md",
+      "sha256": "d99c5974195bae81ae102e87ee293d99bb06f44309916fa8afd0562129e807c8"
+    },
+    {
+      "path": "docs/release/release-checklist.md",
+      "sha256": "4866a7568f5f96376a2ad143a0b416ec060613d5bad20dae5794c8dd948ef72a"
+    },
+    {
+      "path": "skills/r-doc/evals/cases-v0.2.15.json",
+      "sha256": "d5334e0893c5571df9e326ae713ebe72f68584f2130f5357bc6905f3f15a560f"
+    },
+    {
+      "path": "skills/r-doc/evals/cases.json",
+      "sha256": "3915475530c7240f9622ddb6383215dc101819878ab59248659c6937faf3be02"
+    },
+    {
+      "path": "skills/r-doc/evals/example-evidence.json",
+      "sha256": "6ee2f9c7a310a79318166e85e45e7acebd00a2b74e21b654c8d196f9205adb63"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "sha256": "28091c674d4059334e2e7fa8fde605f852e3cb126160ff24aeef5f931368a5d8"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skills": {
+    "map-delivery": {
+      "files": {
+        "SKILL.md": "29641970a163cffdf16ed8a7966ae1e81b0281ae1cacd3b76567f60fa525875d",
+        "references/locator.md": "02f3ace25d431c945e3c798309bd503694e3e1bbdb2da79ce12f8a6d422cba0a",
+        "references/workflow.md": "2bdb81d06d3ea00d3130c341c6e6b9f62f764da936a25e90e16b5b0197e75770",
+        "scripts/resolve_docs.py": "424556ff48430e3bbefa8e29ed248ac4937bc1449cf7cda800204808fd296c72"
+      },
+      "path": "skills/map-delivery"
+    }
+  }
+}

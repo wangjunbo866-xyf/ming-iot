@@ -1,0 +1,186 @@
+package relationDB
+
+import (
+	"context"
+	"fmt"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+)
+
+/*
+这个是参考样例
+使用教程:
+1. 将UserMessage全局替换为模型的表名
+2. 完善todo
+*/
+
+type UserMessageRepo struct {
+	db *gorm.DB
+}
+
+func NewUserMessageRepo(in any) *UserMessageRepo {
+	return &UserMessageRepo{db: stores.GetCommonConn(in)}
+}
+
+type UserMessageFilter struct {
+	MessageID   int64
+	WithMessage bool
+	Group       string
+	NotifyCode  string
+	NotifyType  string
+	CreatedTime *def.TimeRange
+	IsRead      int64
+	Str1        string
+	Str2        string
+	Str3        string
+}
+
+func userMessageNeedsMessageInfoFilter(f UserMessageFilter) bool {
+	return f.NotifyCode != "" || f.NotifyType != "" || f.Str1 != "" || f.Str2 != "" || f.Str3 != ""
+}
+
+func (p UserMessageRepo) fmtFilter(ctx context.Context, f UserMessageFilter) *gorm.DB {
+	db := p.db.WithContext(ctx)
+	if f.MessageID != 0 {
+		db = db.Where("message_id = ?", f.MessageID)
+	}
+	if f.CreatedTime != nil {
+		if f.CreatedTime.Start != 0 {
+			db = db.Where("created_time >= ?", utils.ToYYMMddHHSS(f.CreatedTime.Start*1000))
+		}
+		if f.CreatedTime.End != 0 {
+			db = db.Where("created_time <= ?", utils.ToYYMMddHHSS(f.CreatedTime.End*1000))
+		}
+	}
+	if f.Group != "" {
+		db = db.Where(fmt.Sprintf("%s = ?", stores.Col("group")), f.Group)
+	}
+	db = db.Where("user_id = ?", ctxs.GetUserCtxNoNil(ctx).UserID)
+	if userMessageNeedsMessageInfoFilter(f) {
+		db = db.Where("message_id IN (?)", p.messageInfoIDSubquery(ctx, f))
+	}
+	if f.IsRead != 0 {
+		db = db.Where("is_read = ?", f.IsRead)
+	}
+
+	if f.WithMessage {
+		db = db.Preload("Message")
+	}
+	return db
+}
+
+// messageInfoIDSubquery 按消息体字段筛选，避免 JOIN 导致 COUNT/ORDER 列歧义。
+func (p UserMessageRepo) messageInfoIDSubquery(ctx context.Context, f UserMessageFilter) *gorm.DB {
+	mi := (&SysMessageInfo{}).TableName()
+	sq := p.db.WithContext(ctx).Table(mi).Select("id").Where(mi + ".deleted_time = 0")
+	if f.NotifyCode != "" {
+		sq = sq.Where(mi+".notify_code = ?", f.NotifyCode)
+	}
+	if f.NotifyType != "" {
+		sq = applyMessageInfoNotifyTypeWhere(sq, f.NotifyType, mi+".notify_type")
+	}
+	if f.Str1 != "" {
+		sq = sq.Where(mi+".str1 = ?", f.Str1)
+	}
+	if f.Str2 != "" {
+		sq = sq.Where(mi+".str2 = ?", f.Str2)
+	}
+	if f.Str3 != "" {
+		sq = sq.Where(mi+".str3 = ?", f.Str3)
+	}
+	return sq
+}
+
+func (p UserMessageRepo) Insert(ctx context.Context, data *SysUserMessage) error {
+	result := p.db.WithContext(ctx).Create(data)
+	return stores.ErrFmt(result.Error)
+}
+
+func (p UserMessageRepo) FindOneByFilter(ctx context.Context, f UserMessageFilter) (*SysUserMessage, error) {
+	var result SysUserMessage
+	db := p.fmtFilter(ctx, f)
+	err := db.First(&result).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return &result, nil
+}
+
+func (p UserMessageRepo) FindByFilter(ctx context.Context, f UserMessageFilter, page *stores.PageInfo) ([]*SysUserMessage, error) {
+	var results []*SysUserMessage
+	db := p.fmtFilter(ctx, f).Model(&SysUserMessage{})
+	db = page.ToGorm(db)
+	err := db.Find(&results).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return results, nil
+}
+
+func (p UserMessageRepo) CountByFilter(ctx context.Context, f UserMessageFilter) (size int64, err error) {
+	db := p.fmtFilter(ctx, f).Model(&SysUserMessage{})
+	err = db.Count(&size).Error
+	return size, stores.ErrFmt(err)
+}
+
+func (p UserMessageRepo) Update(ctx context.Context, data *SysUserMessage) error {
+	err := p.db.WithContext(ctx).Where("id = ?", data.ID).Save(data).Error
+	return stores.ErrFmt(err)
+}
+
+func (p UserMessageRepo) MultiIsRead(ctx context.Context, userID int64, ids []int64) error {
+	err := p.db.WithContext(ctx).Model(&SysUserMessage{}).Where("user_id = ? and id in ?", userID, ids).Update("is_read", def.True).Error
+	return stores.ErrFmt(err)
+}
+func (p UserMessageRepo) CountNotRead(ctx context.Context, userID int64) (map[string]int64, error) {
+	var ret []struct {
+		Group  string `json:"group"`
+		C      int64  `json:"c"`
+		IsRead int64  `json:"is_read"`
+	}
+	err := p.db.WithContext(ctx).Model(&SysUserMessage{}).Group(stores.Col("group")+",is_read").
+		Select(fmt.Sprintf("%s,is_read,count(1) as c", stores.Col("group"))).
+		Where("user_id = ?", userID).Find(&ret).Error
+	var val = map[string]int64{}
+	for _, v := range ret {
+		if v.IsRead == def.True {
+			if _, ok := val[v.Group]; !ok {
+				val[v.Group] = 0
+			}
+			continue
+		}
+
+		val[v.Group] = v.C
+	}
+	return val, stores.ErrFmt(err)
+}
+
+func (p UserMessageRepo) DeleteByFilter(ctx context.Context, f UserMessageFilter) error {
+	db := p.fmtFilter(ctx, f)
+	err := db.Delete(&SysUserMessage{}).Error
+	return stores.ErrFmt(err)
+}
+
+func (p UserMessageRepo) Delete(ctx context.Context, id int64) error {
+	err := p.db.WithContext(ctx).Where("id = ?", id).Delete(&SysUserMessage{}).Error
+	return stores.ErrFmt(err)
+}
+func (p UserMessageRepo) FindOne(ctx context.Context, id int64) (*SysUserMessage, error) {
+	var result SysUserMessage
+	err := p.db.WithContext(ctx).Where("id = ?", id).First(&result).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return &result, nil
+}
+
+// 批量插入 LightStrategyDevice 记录
+func (p UserMessageRepo) MultiInsert(ctx context.Context, data []*SysUserMessage) error {
+	err := p.db.WithContext(ctx).Clauses(clause.OnConflict{UpdateAll: true,
+		Columns: stores.SetColumnsWithPg(p.db, &SysUserMessage{}, "idx_sys_user_message_ri_mi")}).Model(&SysUserMessage{}).Create(data).Error
+	return stores.ErrFmt(err)
+}

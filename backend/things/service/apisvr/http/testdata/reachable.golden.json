@@ -1,0 +1,2246 @@
+[
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/access",
+    "handler": "access",
+    "requestType": "DeviceAuthAccessReq",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/login",
+    "handler": "login",
+    "requestType": "DeviceAuthLoginReq",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/register",
+    "handler": "register",
+    "requestType": "DeviceRegisterReq",
+    "responseType": "DeviceRegisterResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/root-check",
+    "handler": "rootCheck",
+    "requestType": "DeviceAuthRootCheckReq",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth5/access",
+    "handler": "access",
+    "requestType": "DeviceAuth5AccessReq",
+    "responseType": "DeviceAuth5AccessResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth5/login",
+    "handler": "login",
+    "requestType": "DeviceAuth5LoginReq",
+    "responseType": "DeviceAuth5LoginResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/edge/send/:handle/:type",
+    "handler": "send",
+    "requestType": "DeviceInteractEdgeSendReq",
+    "responseType": "DeviceInteractEdgeSendResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/index",
+    "handler": "index",
+    "requestType": "DeviceGateWayIndexReq",
+    "responseType": "DeviceGateWayIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/multi-create",
+    "handler": "multiCreate",
+    "requestType": "DeviceGateWayMultiCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DeviceGateWayMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-create",
+    "handler": "multiCreate",
+    "requestType": "DeviceGroupMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DeviceGroupMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "DeviceGroupMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind",
+    "handler": "bind",
+    "requestType": "DeviceInfoBindReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind/token/create",
+    "handler": "bindTokenCreate",
+    "responseType": "DeviceBindTokenInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind/token/read",
+    "handler": "bindTokenRead",
+    "requestType": "DeviceBindTokenReadReq",
+    "responseType": "DeviceBindTokenInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/can-bind",
+    "handler": "canBind",
+    "requestType": "DeviceInfoCanBindReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/count",
+    "handler": "count",
+    "requestType": "DeviceCountReq",
+    "responseType": "DeviceCountResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/create",
+    "handler": "create",
+    "requestType": "DeviceInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/delete",
+    "handler": "delete",
+    "requestType": "DeviceInfoDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/index",
+    "handler": "index",
+    "requestType": "DeviceInfoIndexReq",
+    "responseType": "DeviceInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/move",
+    "handler": "move",
+    "requestType": "DeviceMoveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-bind",
+    "handler": "multiBind",
+    "requestType": "DeviceInfoMultiBindReq",
+    "responseType": "DeviceInfoMultiBindResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-import",
+    "handler": "multiImport",
+    "requestType": "DeviceMultiImportReq",
+    "responseType": "DeviceMultiImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "DeviceInfoMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-update-import",
+    "handler": "multiUpdateImport",
+    "requestType": "DeviceMultiUpdateImportReq",
+    "responseType": "DeviceMultiUpdateImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/ota/upgrade",
+    "handler": "otaUpgrade",
+    "requestType": "DeviceOtaUpgradeReq",
+    "responseType": "DeviceOtaUpgradeResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/pair-confirm",
+    "handler": "confirm",
+    "requestType": "DevicePairConfirmReq",
+    "responseType": "DevicePairConfirmResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/pair-grant",
+    "handler": "grant",
+    "requestType": "DevicePairGrantReq",
+    "responseType": "DevicePairGrantResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/read",
+    "handler": "read",
+    "requestType": "DeviceInfoReadReq",
+    "responseType": "DeviceInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/transfer",
+    "handler": "transfer",
+    "requestType": "DeviceInfoTransferReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/unbind",
+    "handler": "unbind",
+    "requestType": "DeviceInfoUnbindReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/update",
+    "handler": "update",
+    "requestType": "DeviceInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-read",
+    "handler": "actionRead",
+    "requestType": "DeviceInteractRespReadReq",
+    "responseType": "DeviceInteractSendActionResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-resp",
+    "handler": "actionResp",
+    "requestType": "DeviceInteractActionRespReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-send",
+    "handler": "actionSend",
+    "requestType": "DeviceInteractSendActionReq",
+    "responseType": "DeviceInteractSendActionResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/gateway-get-found-send",
+    "handler": "gatewayGetFoundSend",
+    "requestType": "GatewayGetFoundReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/gateway-notify-bind-send",
+    "handler": "gatewayNotifyBindSend",
+    "requestType": "GatewayNotifyBindSendReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-multi-send",
+    "handler": "propertyControlMultiSend",
+    "requestType": "DeviceInteractMultiSendPropertyReq",
+    "responseType": "DeviceInteractMultiSendPropertyResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-read",
+    "handler": "propertyControlRead",
+    "requestType": "DeviceInteractRespReadReq",
+    "responseType": "DeviceInteractSendPropertyResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-send",
+    "handler": "propertyControlSend",
+    "requestType": "DeviceInteractSendPropertyReq",
+    "responseType": "DeviceInteractSendPropertyResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-get-report-multi-send",
+    "handler": "propertyGetReportMultiSend",
+    "requestType": "DeviceInteractPropertyGetReportMultiSendReq",
+    "responseType": "DeviceInteractPropertyGetReportMultiSendResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-get-report-send",
+    "handler": "propertyGetReportSend",
+    "requestType": "DeviceInteractPropertyGetReportSendReq",
+    "responseType": "DeviceInteractPropertyGetReportSendResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/abnormal-log/index",
+    "handler": "abnormalLogIndex",
+    "requestType": "DeviceMsgAbnormalLogIndexReq",
+    "responseType": "DeviceMsgAbnormalLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/event-log/index",
+    "handler": "eventLogIndex",
+    "requestType": "DeviceMsgEventLogIndexReq",
+    "responseType": "DeviceMsgEventLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/gateway-can-bind-index",
+    "handler": "gatewayCanBindIndex",
+    "requestType": "GatewayCanBindIndexReq",
+    "responseType": "GatewayCanBindIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/hub-log/index",
+    "handler": "hubLogIndex",
+    "requestType": "DeviceMsgHubLogIndexReq",
+    "responseType": "DeviceMsgHubLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-agg/by-device/index",
+    "handler": "propertyAggByDeviceIndex",
+    "requestType": "DeviceMsgPropertyAggByDeviceIndexReq",
+    "responseType": "DeviceMsgPropertyLogAggIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-agg/index",
+    "handler": "propertyAggIndex",
+    "requestType": "DeviceMsgPropertyLogAggIndexReq",
+    "responseType": "DeviceMsgPropertyLogAggIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-latest-agg/index",
+    "handler": "propertyLatestAggIndex",
+    "requestType": "DeviceMsgPropertyLatestAggIndexReq",
+    "responseType": "DeviceMsgPropertyLatestAggIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-latest/index",
+    "handler": "propertyLatestIndex",
+    "requestType": "DeviceMsgPropertyLatestIndexReq",
+    "responseType": "DeviceMsgPropertyIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-agg/by-device/index",
+    "handler": "propertyLogAggByDeviceIndex",
+    "requestType": "DeviceMsgPropertyAggByDeviceIndexReq",
+    "responseType": "DeviceMsgPropertyLogAggIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-agg/index",
+    "handler": "propertyLogAggIndex",
+    "requestType": "DeviceMsgPropertyLogAggIndexReq",
+    "responseType": "DeviceMsgPropertyLogAggIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-latest/index",
+    "handler": "propertyLogLatestIndex",
+    "requestType": "DeviceMsgPropertyLatestIndexReq",
+    "responseType": "DeviceMsgPropertyIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log/index",
+    "handler": "propertyLogIndex",
+    "requestType": "DeviceMsgPropertyLogIndexReq",
+    "responseType": "DeviceMsgPropertyIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log/multi-index",
+    "handler": "propertyLogMultiIndex",
+    "requestType": "DeviceMsgPropertyLogMultiIndexReq",
+    "responseType": "DeviceMsgPropertyMultiIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/sdk-log/index",
+    "handler": "sdkLogIndex",
+    "requestType": "DeviceMsgSdkLogIndexReq",
+    "responseType": "DeviceMsgSdkIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/send-log/index",
+    "handler": "sendLogIndex",
+    "requestType": "DeviceMsgSendLogIndexReq",
+    "responseType": "DeviceMsgSendLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/shadow/index",
+    "handler": "shadowIndex",
+    "requestType": "DeviceMsgPropertyLatestIndexReq",
+    "responseType": "DeviceMsgShadowIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/status-log/index",
+    "handler": "statusLogIndex",
+    "requestType": "DeviceMsgStatusLogIndexReq",
+    "responseType": "DeviceMsgStatusLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/delete",
+    "handler": "delete",
+    "requestType": "DeviceProfileReadReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/index",
+    "handler": "index",
+    "requestType": "DeviceProfileIndexReq",
+    "responseType": "DeviceProfileIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/read",
+    "handler": "read",
+    "requestType": "DeviceProfileReadReq",
+    "responseType": "DeviceProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/update",
+    "handler": "update",
+    "requestType": "DeviceProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/create",
+    "handler": "create",
+    "requestType": "DeviceSchema",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/index",
+    "handler": "index",
+    "requestType": "DeviceSchemaIndexReq",
+    "responseType": "DeviceSchemaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/multi-create",
+    "handler": "multiCreate",
+    "requestType": "DeviceSchemaMultiCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DeviceSchemaMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/tsl-read",
+    "handler": "tslRead",
+    "requestType": "DeviceSchemaTslReadReq",
+    "responseType": "DeviceSchemaTslReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/update",
+    "handler": "update",
+    "requestType": "DeviceSchema",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/secure-control/key-grant",
+    "handler": "keyGrant",
+    "requestType": "DeviceSecureControlKeyGrantReq",
+    "responseType": "DeviceSecureControlKeyGrantResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/version/index",
+    "handler": "index",
+    "requestType": "DeviceModuleVersionIndexReq",
+    "responseType": "DeviceModuleVersionIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/version/read",
+    "handler": "read",
+    "requestType": "DeviceModuleVersionReadReq",
+    "responseType": "DeviceModuleVersion",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-create",
+    "handler": "multiCreate",
+    "requestType": "GroupDeviceMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "GroupDeviceMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "GroupDeviceMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/create",
+    "handler": "create",
+    "requestType": "GroupInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/index",
+    "handler": "index",
+    "requestType": "GroupInfoIndexReq",
+    "responseType": "GroupInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/read",
+    "handler": "read",
+    "requestType": "GroupInfoReadReq",
+    "responseType": "GroupInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/update",
+    "handler": "update",
+    "requestType": "GroupInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/cancel",
+    "handler": "cancel",
+    "requestType": "OtaFirmwareDeviceCancelReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/confirm",
+    "handler": "confirm",
+    "requestType": "OtaFirmwareDeviceConfirmReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/index",
+    "handler": "index",
+    "requestType": "OtaFirmwareDeviceIndexReq",
+    "responseType": "OtaFirmwareDeviceIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/retry",
+    "handler": "retry",
+    "requestType": "OtaFirmwareDeviceRetryReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/create",
+    "handler": "create",
+    "requestType": "FirmwareCreateReq",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/index",
+    "handler": "index",
+    "requestType": "FirmwareIndexReq",
+    "responseType": "FirmwareIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "FirmwareInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/update",
+    "handler": "update",
+    "requestType": "FirmwareUpdateReq",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/create",
+    "handler": "create",
+    "requestType": "OtaFirmwareJobInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/index",
+    "handler": "index",
+    "requestType": "OtaFirmwareJobIndexReq",
+    "responseType": "OtaFirmwareJobInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "OtaFirmwareJobInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/update",
+    "handler": "update",
+    "requestType": "OtaFirmwareJobInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/create",
+    "handler": "create",
+    "requestType": "OtaModuleInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/index",
+    "handler": "index",
+    "requestType": "OtaModuleInfoIndexReq",
+    "responseType": "OtaModuleInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "OtaModuleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/update",
+    "handler": "update",
+    "requestType": "OtaModuleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/create",
+    "handler": "create",
+    "requestType": "ProductCategory",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/index",
+    "handler": "index",
+    "requestType": "ProductCategoryIndexReq",
+    "responseType": "ProductCategoryIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/multi-export",
+    "handler": "multiExport",
+    "requestType": "ProductCategoryExportReq",
+    "responseType": "ProductCategoryExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/multi-import",
+    "handler": "multiImport",
+    "requestType": "ProductCategoryImportReq",
+    "responseType": "ImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/read",
+    "handler": "read",
+    "requestType": "WithIDChildren",
+    "responseType": "ProductCategory",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/index",
+    "handler": "schemaIndex",
+    "requestType": "ProductCategorySchemaIndexReq",
+    "responseType": "ProductCategorySchemaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-create",
+    "handler": "schemaMultiCreate",
+    "requestType": "ProductCategorySchemaMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-delete",
+    "handler": "schemaMultiDelete",
+    "requestType": "ProductCategorySchemaMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-update",
+    "handler": "schemaMultiUpdate",
+    "requestType": "ProductCategorySchemaMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/update",
+    "handler": "update",
+    "requestType": "ProductCategory",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/config/update",
+    "handler": "update",
+    "requestType": "ProductConfig",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/custom/read",
+    "handler": "read",
+    "requestType": "ProductCustomReadReq",
+    "responseType": "ProductCustom",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/custom/update",
+    "handler": "update",
+    "requestType": "ProductCustom",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/create",
+    "handler": "create",
+    "requestType": "ProductInfo",
+    "responseType": "ProductID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/delete",
+    "handler": "delete",
+    "requestType": "ProductID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/index",
+    "handler": "index",
+    "requestType": "ProductInfoIndexReq",
+    "responseType": "ProductInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/init",
+    "handler": "init",
+    "requestType": "ProductInitReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/multi-export",
+    "handler": "multiExport",
+    "requestType": "ProductInfoExportReq",
+    "responseType": "ProductInfoExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/multi-import",
+    "handler": "multiIimport",
+    "requestType": "ProductInfoImportReq",
+    "responseType": "ImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/read",
+    "handler": "read",
+    "requestType": "ProductInfoReadReq",
+    "responseType": "ProductInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/update",
+    "handler": "update",
+    "requestType": "ProductInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/bind",
+    "handler": "productModelModuleBind",
+    "requestType": "ProductModelModuleBindReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/binding-index",
+    "handler": "productModelModuleIndex",
+    "requestType": "ProductModelModuleIndexReq",
+    "responseType": "ProductModelModuleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/create",
+    "handler": "modelModuleCreate",
+    "requestType": "ModelModuleCreateReq",
+    "responseType": "ModelModuleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/delete",
+    "handler": "modelModuleDelete",
+    "requestType": "ModelModuleDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/index",
+    "handler": "modelModuleIndex",
+    "requestType": "ModelModuleIndexReq",
+    "responseType": "ModelModuleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/create",
+    "handler": "modelModulePropertyCreate",
+    "requestType": "ModelModulePropertyCreateReq",
+    "responseType": "ModelModulePropertyInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/delete",
+    "handler": "modelModulePropertyDelete",
+    "requestType": "ModelModulePropertyDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/index",
+    "handler": "modelModulePropertyIndex",
+    "requestType": "ModelModulePropertyIndexReq",
+    "responseType": "ModelModulePropertyIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/update",
+    "handler": "modelModulePropertyUpdate",
+    "requestType": "ModelModulePropertyUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/unbind",
+    "handler": "productModelModuleUnbind",
+    "requestType": "ProductModelModuleUnbindReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/update",
+    "handler": "modelModuleUpdate",
+    "requestType": "ModelModuleUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/activate",
+    "handler": "productModelReleaseActivate",
+    "requestType": "ProductModelReleaseActivateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/index",
+    "handler": "productModelReleaseIndex",
+    "requestType": "ProductModelReleaseIndexReq",
+    "responseType": "ProductModelReleaseIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/publish",
+    "handler": "productModelReleasePublish",
+    "requestType": "ProductModelReleasePublishReq",
+    "responseType": "ProductModelReleaseInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/read",
+    "handler": "productModelReleaseRead",
+    "requestType": "ProductModelReleaseReadReq",
+    "responseType": "ProductModelReleaseInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/tsl-read",
+    "handler": "productModelReleaseTslRead",
+    "requestType": "ProductModelReleaseTslReadReq",
+    "responseType": "ProductModelReleaseTslReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/create",
+    "handler": "create",
+    "requestType": "ProductRemoteConfigCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/index",
+    "handler": "index",
+    "requestType": "ProductRemoteConfigIndexReq",
+    "responseType": "ProductRemoteConfigIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/lastest-read",
+    "handler": "lastestRead",
+    "requestType": "ProductRemoteConfigLastestReadReq",
+    "responseType": "ProductRemoteConfigLastestReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/push-all",
+    "handler": "pushAll",
+    "requestType": "ProductRemoteConfigPushAllReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/create",
+    "handler": "create",
+    "requestType": "ProductSchemaCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/delete",
+    "handler": "delete",
+    "requestType": "ProductSchemaDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/index",
+    "handler": "index",
+    "requestType": "ProductSchemaIndexReq",
+    "responseType": "ProductSchemaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/multi-create",
+    "handler": "multiCreate",
+    "requestType": "ProductSchemaMultiCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/tsl-import",
+    "handler": "tslImport",
+    "requestType": "ProductSchemaTslImportReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/tsl-read",
+    "handler": "tslRead",
+    "requestType": "ProductSchemaTslReadReq",
+    "responseType": "ProductSchemaTslReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/update",
+    "handler": "update",
+    "requestType": "ProductSchemaUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/create",
+    "handler": "create",
+    "requestType": "ProtocolInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/index",
+    "handler": "index",
+    "requestType": "ProtocolInfoIndexReq",
+    "responseType": "ProtocolInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "ProtocolInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/update",
+    "handler": "update",
+    "requestType": "ProtocolInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/create",
+    "handler": "create",
+    "requestType": "ProtocolScript",
+    "responseType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/debug",
+    "handler": "debug",
+    "requestType": "ProtocolScriptDebugReq",
+    "responseType": "ProtocolScriptDebugResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/delete",
+    "handler": "delete",
+    "requestType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/create",
+    "handler": "create",
+    "requestType": "ProtocolScriptDevice",
+    "responseType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/delete",
+    "handler": "delete",
+    "requestType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/index",
+    "handler": "index",
+    "requestType": "ProtocolScriptDeviceIndexReq",
+    "responseType": "ProtocolScriptDeviceIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/read",
+    "handler": "read",
+    "requestType": "WithIDStr",
+    "responseType": "ProtocolScriptDevice",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/update",
+    "handler": "update",
+    "requestType": "ProtocolScriptDevice",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/index",
+    "handler": "index",
+    "requestType": "ProtocolScriptIndexReq",
+    "responseType": "ProtocolScriptIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/multi-export",
+    "handler": "multiExport",
+    "requestType": "ProtocolScriptExportReq",
+    "responseType": "ProtocolScriptExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/multi-import",
+    "handler": "multiIimport",
+    "requestType": "ProtocolScriptImportReq",
+    "responseType": "ImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/read",
+    "handler": "read",
+    "requestType": "WithIDStr",
+    "responseType": "ProtocolScript",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/update",
+    "handler": "update",
+    "requestType": "ProtocolScript",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/service/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/service/index",
+    "handler": "index",
+    "requestType": "ProtocolServiceIndexReq",
+    "responseType": "ProtocolServiceIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/sync/device",
+    "handler": "device",
+    "requestType": "ProtocolSyncDeviceReq",
+    "responseType": "ProtocolSyncDeviceResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/sync/product",
+    "handler": "product",
+    "requestType": "CodeReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/create",
+    "handler": "create",
+    "requestType": "CommonSchemaInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/delete",
+    "handler": "delete",
+    "requestType": "CommonSchemaDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/index",
+    "handler": "index",
+    "requestType": "CommonSchemaIndexReq",
+    "responseType": "CommonSchemaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/init",
+    "handler": "init",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/multi-export",
+    "handler": "multiExport",
+    "requestType": "CommonSchemaExportReq",
+    "responseType": "CommonSchemaExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/multi-import",
+    "handler": "multiIimport",
+    "requestType": "CommonSchemaImportReq",
+    "responseType": "ImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/update",
+    "handler": "update",
+    "requestType": "CommonSchemaInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/area/create",
+    "handler": "create",
+    "requestType": "SlotAreaSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/area/delete",
+    "handler": "delete",
+    "requestType": "SlotAreaSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/user/subscribe",
+    "handler": "subscribe",
+    "requestType": "SlotUserSubscribe",
+    "responseType": "SlotUserSubscribeResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/index",
+    "handler": "index",
+    "responseType": "UserCollectDeviceInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/multi-create",
+    "handler": "multiCreate",
+    "requestType": "UserCollectDeviceSave",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "UserCollectDeviceSave",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/create",
+    "handler": "create",
+    "requestType": "UserDeviceShareInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/delete",
+    "handler": "delete",
+    "requestType": "UserDeviceShareReadReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/index",
+    "handler": "index",
+    "requestType": "UserDeviceShareIndexReq",
+    "responseType": "UserDeviceShareIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-accept",
+    "handler": "multiAccept",
+    "requestType": "UserDeviceShareMultiAcceptInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-create",
+    "handler": "multiCreate",
+    "requestType": "UserDeviceShareMultiInfo",
+    "responseType": "UserDeviceShareMultiToken",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "UserDeviceShareMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-delete-token",
+    "handler": "multiDeleteToken",
+    "requestType": "UserDeviceShareMultiDeleteTokenReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-get-token-list",
+    "handler": "multiGetTokenList",
+    "responseType": "UserDeviceShareMultiGetTokenListResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-index",
+    "handler": "multiIndex",
+    "requestType": "UserDeviceShareMultiToken",
+    "responseType": "UserDeviceShareMultiIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/read",
+    "handler": "read",
+    "requestType": "UserDeviceShareReadReq",
+    "responseType": "UserDeviceShareInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/token/check",
+    "handler": "tokenCheck",
+    "requestType": "UserDeviceShareTokenCheckReq",
+    "responseType": "UserDeviceShareTokenCheckResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/update",
+    "handler": "update",
+    "requestType": "UserDeviceShareInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  }
+]

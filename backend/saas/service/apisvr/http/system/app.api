@@ -1,0 +1,160 @@
+info(
+	title: "接口管理模块"
+	desc: "接口管理"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+	group: system/app/info
+	prefix: /api/v1/system/app/info
+    accessCodePrefix: "systemAppManage"
+    accessNamePrefix: "应用管理"
+    accessGroup: "应用管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加应用"
+        description: "创建一个应用定义，含编号、名称与登录方式，用于多端统一鉴权配置"
+        authType: "supper"
+        resource: "app"
+        action: "create"
+        group: "system/app/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (AppInfo) returns (WithIDOrCode)
+
+    @doc(
+        summary: "获取应用列表"
+        description: "按名称或编号分页查询平台已登记的应用定义列表"
+        authType: "supper"
+        resource: "app"
+        action: "view"
+        group: "system/app/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (AppInfoIndexReq) returns (AppInfoIndexResp)
+
+    @doc(
+        summary: "获取应用详情"
+        description: "按编号或主键读取单个应用定义的完整信息"
+        authType: "supper"
+        resource: "app"
+        action: "view"
+        group: "system/app/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (WithIDOrCode) returns (AppInfo)
+
+    @doc(
+        summary: "更新应用"
+        description: "修改指定应用的基本信息与多端登录方式配置"
+        authType: "supper"
+        resource: "app"
+        action: "update"
+        group: "system/app/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (AppInfo) returns ()
+
+    @doc(
+        summary: "删除应用"
+        description: "按编号或主键删除应用定义，相关租户应用绑定将失去归属"
+        authType: "supper"
+        resource: "app"
+        action: "delete"
+        group: "system/app/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDOrCode) returns ()
+}
+
+@server(
+    group: system/app/module
+    prefix: /api/v1/system/app/module
+    accessCodePrefix: "systemAppManage"
+    accessNamePrefix: "应用模块"
+    accessGroup: "应用管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新APP权限"
+        description: "整体覆盖指定应用绑定的模块编号集合，调整该应用可见的功能模块"
+        authType: "supper"
+        resource: "app"
+        action: "update"
+        group: "system/app/module"
+        recordLogMode: "2"
+    )
+    @handler multiUpdate
+    post /multi-update (AppModuleMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "获取APP权限列表"
+        description: "返回指定应用当前绑定的功能模块编号列表"
+        authType: "supper"
+        resource: "app"
+        action: "view"
+        group: "system/app/module"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (AppModuleIndexReq) returns (AppModuleIndexResp)
+}
+
+
+
+type (
+//    AppPolicyReadReq{
+//        AppCode string `json:"appCode"`
+//        Code string `json:"code"`
+//    }
+//    AppPolicy{
+//     ID int64 `json:"id,optional"`
+//     AppCode string `json:"appCode,optional"`
+//     Code string           `json:"code,optional"`//
+//     Name string           `json:"name,optional"`//
+//     Subject string `json:"subject,optional"`
+//     Body string `json:"body,optional"`
+//    }
+
+    AppModuleMultiUpdateReq{
+        Code string `json:"code"`                     // 应用编号
+        ModuleCodes []string `json:"moduleCodes"`  //App列表数据
+    }
+    AppModuleIndexReq{
+        Code string `json:"code"`                     // 应用编号
+    }
+    AppModuleIndexResp{
+        ModuleCodes []string `json:"moduleCodes"`  //App列表数据
+    }
+
+    AppInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Name string `json:"name,optional"`                     // 应用名称
+        Code string `json:"code,optional"`                     // 应用编号
+    }
+
+
+    AppInfoIndexResp  {
+        List []*AppInfo `json:"list"`            // 接口列表数据
+        PageResp
+    }
+
+    AppDeleteReq  {
+        ID int64 `json:"id"`                          // 接口编号
+    }
+)

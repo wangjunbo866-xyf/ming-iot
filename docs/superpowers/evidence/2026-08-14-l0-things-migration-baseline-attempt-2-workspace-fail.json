@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "loopId": "L0",
+  "finalEvidence": true,
+  "startedAt": "2026-08-15T09:22:25.146708106+08:00",
+  "finishedAt": "2026-08-15T09:30:48.303147415+08:00",
+  "durationMs": 503156,
+  "source": {
+    "repository": "https://gitee.com/unitedrhino/things",
+    "ref": "refs/remotes/origin/master",
+    "commit": "243ab1aa03b8a3f106761a81cdd9bd8827d448c8",
+    "tree": "544b638ae3ee5e5f3a041bea22ca035dbb7e5859",
+    "before": {
+      "head": "df81bb288874dfcd7d30512cf3f9de47d484a4b0",
+      "ref": "243ab1aa03b8a3f106761a81cdd9bd8827d448c8",
+      "statusSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "after": {
+      "head": "df81bb288874dfcd7d30512cf3f9de47d484a4b0",
+      "ref": "243ab1aa03b8a3f106761a81cdd9bd8827d448c8",
+      "statusSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "selectedFiles": 976,
+    "selectedBlobBytes": 4866935,
+    "archiveSha256": "32b998e4621dd88a39b618552187cfbd1be910851925702a07c9e4c82cb4d486"
+  },
+  "render1": {
+    "manifestSha256": "526c3ca685b570b2bc97a2fad19da7476fc2996c60e783065b6a0c73ee6c4903",
+    "treeSha256": "8d2ab9f63e29e01dff94924718c228f56462c0a1abb74b88ef9459834767b9a1",
+    "files": 980,
+    "transform": {
+      "corePrefixCount": 94,
+      "thingsPrefixCount": 2726,
+      "credentialLineCount": 55,
+      "privateKeyBlockCount": 1,
+      "vetFixCount": 1,
+      "schemaFixtureIdentifierCount": 45
+    },
+    "credentials": {
+      "files": 9,
+      "active": 35,
+      "commented": 20,
+      "paths": {
+        "databaseDSN": 10,
+        "tsdbDSN": 18,
+        "ossAccessKeyID": 3,
+        "ossAccessKeySecret": 3,
+        "authWhiteUsersPassword": 11,
+        "devLinkOpenApiApiKey": 1,
+        "devLinkOpenApiSecretKey": 1,
+        "devLinkMqttOpenApiApiKey": 4,
+        "devLinkMqttOpenApiSecretKey": 4
+      }
+    },
+    "scan": {
+      "regularFiles": 980,
+      "directories": 278,
+      "trailingWhitespace": 97,
+      "totalBytes": 4857727
+    },
+    "commands": [
+      {
+        "name": "go-mod-tidy",
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e0ad3856d4d7a84d8ba01cca3e5fb93a82759139477af889cada338e3847c178",
+        "stderrTail": "ws-sdk-go-v2/service/internal/s3shared v1.19.16\ngo: downloading github.com/glebarez/go-sqlite v1.22.0\ngo: downloading modernc.org/sqlite v1.28.0\ngo: downloading github.com/grafana/pyroscope-go v1.2.7\ngo: downloading github.com/go-logr/logr v1.4.3\ngo: downloading go.opentelemetry.io/otel/metric v1.39.0\ngo: downloading github.com/go-logr/stdr v1.2.2\ngo: downloading golang.org/x/oauth2 v0.34.0\ngo: downloading github.com/alibabacloud-go/darabonba-openapi/v2 v2.1.13\ngo: downloading github.com/alibabacloud-go/dysmsapi-20170525/v3 v3.0.6\ngo: downloading github.com/alibabacloud-go/tea-utils/v2 v2.0.9\ngo: downloading github.com/alibabacloud-go/tea v1.3.14\ngo: downloading github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.3.14\ngo: downloading github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.1.49\ngo: downloading github.com/silenceper/wechat/v2 v2.1.11\ngo: downloading github.com/alibabacloud-go/tea-utils v1.3.1\ngo: downloading github.com/dolthub/maphash v0.1.0\ngo: downloading github.com/mattn/go-colorable v0.1.13\ngo: downloading github.com/mattn/go-isatty v0.0.20\ngo: downloading github.com/beorn7/perks v1.0.1\ngo: downloading github.com/prometheus/client_model v0.6.2\ngo: downloading github.com/prometheus/common v0.63.0\ngo: downloading github.com/prometheus/procfs v0.16.0\ngo: downloading github.com/gammazero/deque v0.2.1\ngo: downloading github.com/robfig/cron/v3 v3.0.1\ngo: downloading github.com/coreos/go-semver v0.3.1\ngo: downloading go.etcd.io/etcd/client/pkg/v3 v3.6.0\ngo: downloading github.com/jackc/pgx/v5 v5.7.4\ngo: downloading go.uber.org/zap v1.27.0\ngo: downloading github.com/go-sql-driver/mysql v1.9.2\ngo: downloading github.com/gogo/protobuf v1.3.2\ngo: downloading github.com/pelletier/go-toml/v2 v2.2.4\ngo: downloading github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0\ngo: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f\ngo: downloading github.com/openzipkin/zipkin-go v0.4.3\ngo: downloading github.com/richardlehane/msoleps v1.0.4\ngo: downloading go.opentelemetry.io/proto/otlp v1.7.1\ngo: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2\ngo: downloading google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217\ngo: downloading github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.16\ngo: downloading github.com/rs/xid v1.6.0\ngo: downloading k8s.io/apimachinery v0.32.3\ngo: downloading k8s.io/client-go v0.32.3\ngo: downloading github.com/go-playground/locales v0.14.1\ngo: downloading github.com/gabriel-vasile/mimetype v1.4.11\ngo: downloading github.com/leodido/go-urn v1.4.0\ngo: downloading go.opentelemetry.io/auto/sdk v1.2.1\ngo: downloading github.com/klauspost/cpuid/v2 v2.3.0\ngo: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd\ngo: downloading github.com/modern-go/reflect2 v1.0.2\ngo: downloading modernc.org/libc v1.37.6\ngo: downloading modernc.org/mathutil v1.6.0\ngo: downloading github.com/grafana/pyroscope-go/godeltaprof v0.1.9\ngo: downloading github.com/alibabacloud-go/endpoint-util v1.1.0\ngo: downloading github.com/alibabacloud-go/openapi-util v0.1.0\ngo: downloading github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5\ngo: downloading github.com/aliyun/credentials-go v1.4.5\ngo: downloading github.com/alibabacloud-go/debug v1.0.1\ngo: downloading github.com/sirupsen/logrus v1.9.4\ngo: downloading github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d\ngo: downloading github.com/go-redis/redis/v8 v8.11.5\ngo: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822\ngo: downloading github.com/coreos/go-systemd/v22 v22.5.0\ngo: downloading go.uber.org/multierr v1.11.0\ngo: downloading github.com/jackc/pgpassfile v1.0.0\ngo: downloading github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761\ngo: downloading filippo.io/edwards25519 v1.1.0\ngo: downloading github.com/cenkalti/backoff/v4 v4.3.0\ngo: downloading github.com/tinylib/msgp v1.3.0\ngo: downloading k8s.io/api v0.32.3\ngo: downloading github.com/google/gofuzz v1.2.0\ngo: downloading sigs.k8s.io/yaml v1.4.0\ngo: downloading k8s.io/klog/v2 v2.130.1\ngo: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec\ngo: downloading github.com/tjfoc/gmsm v1.4.1\ngo: downloading github.com/clbanning/mxj/v2 v2.7.0\ngo: downloading gopkg.in/ini.v1 v1.67.0\ngo: downloading modernc.org/memory v1.7.2\ngo: downloading github.com/jackc/puddle/v2 v2.2.2\ngo: downloading gopkg.in/inf.v0 v0.9.1\ngo: downloading sigs.k8s.io/structured-merge-diff/v4 v4.4.2\ngo: downloading sigs.k8s.io/json v0.0.0-20241010143419-9aa6b5e7a4b3\ngo: downloading github.com/philhofer/fwd v1.2.0\ngo: downloading github.com/google/gnostic-models v0.6.8\ngo: downloading k8s.io/kube-openapi v0.0.0-20241105132330-32ad38e42d3f\ngo: downloading github.com/fxamacker/cbor/v2 v2.7.0\ngo: downloading golang.org/x/term v0.39.0\ngo: downloading github.com/go-openapi/swag v0.23.1\ngo: downloading github.com/x448/float16 v0.8.4\ngo: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc\ngo: downloading gopkg.in/evanphx/json-patch.v4 v4.12.0\ngo: downloading github.com/go-openapi/jsonreference v0.21.0\ngo: downloading github.com/mailru/easyjson v0.9.1\ngo: downloading github.com/emicklei/go-restful/v3 v3.11.0\ngo: downloading github.com/stretchr/testify v1.11.1\ngo: downloading github.com/frankban/quicktest v1.14.6\ngo: downloading github.com/alicebob/miniredis/v2 v2.35.0\ngo: downloading github.com/dgryski/go-farm v0.0.0-20190423205320-6a90982ecee2\ngo: downloading github.com/elazarl/goproxy v0.0.0-20231117061959-7cc037d33fb5\ngo: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c\ngo: downloading github.com/Masterminds/semver/v3 v3.2.1\ngo: downloading gopkg.in/h2non/gock.v1 v1.1.2\ngo: downloading golang.org/x/image v0.25.0\ngo: downloading github.com/DATA-DOG/go-sqlmock v1.5.2\ngo: downloading github.com/lib/pq v1.10.9\ngo: downloading github.com/alecthomas/assert/v2 v2.10.0\ngo: downloading go.uber.org/goleak v1.3.0\ngo: downloading go.opentelemetry.io/otel/sdk/metric v1.38.0\ngo: downloading github.com/golang/mock v1.7.0-rc.1\ngo: downloading github.com/kylelemons/godebug v1.1.0\ngo: downloading github.com/bsm/gomega v1.27.10\ngo: downloading github.com/bsm/ginkgo/v2 v2.12.0\ngo: downloading github.com/smartystreets/goconvey v1.8.1\ngo: downloading github.com/go-playground/assert/v2 v2.2.0\ngo: downloading github.com/alibabacloud-go/alibabacloud-gateway-pop v0.0.6\ngo: downloading github.com/prashantv/gostub v1.1.0\ngo: downloading github.com/onsi/ginkgo v1.16.5\ngo: downloading github.com/onsi/gomega v1.35.1\ngo: downloading gonum.org/v1/gonum v0.16.0\ngo: downloading github.com/spf13/pflag v1.0.10\ngo: downloading github.com/onsi/ginkgo/v2 v2.21.0\ngo: downloading github.com/go-openapi/jsonpointer v0.21.1\ngo: downloading github.com/josharian/intern v1.0.0\ngo: downloading github.com/kr/pretty v0.3.1\ngo: downloading github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542\ngo: downloading github.com/alibabacloud-go/darabonba-array v0.1.0\ngo: downloading github.com/alibabacloud-go/darabonba-encode-util v0.0.2\ngo: downloading github.com/alibabacloud-go/darabonba-map v0.0.2\ngo: downloading github.com/alibabacloud-go/darabonba-signature-util v0.0.7\ngo: downloading github.com/alibabacloud-go/darabonba-string v1.0.2\ngo: downloading github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2\ngo: downloading github.com/stretchr/objx v0.5.2\ngo: downloading github.com/nxadm/tail v1.4.8\ngo: downloading github.com/alecthomas/repr v0.4.0\ngo: downloading github.com/hexops/gotextdiff v1.0.3\ngo: downloading github.com/yuin/gopher-lua v1.1.1\ngo: downloading github.com/rogpeppe/go-internal v1.14.1\ngo: downloading github.com/kr/text v0.2.0\ngo: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7\ngo: downloading github.com/fsnotify/fsnotify v1.7.0\ngo: downloading github.com/go-task/slim-sprig/v3 v3.0.0\ngo: downloading golang.org/x/tools v0.41.0\ngo: downloading github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572\ngo: downloading github.com/jtolds/gls v4.20.0+incompatible\ngo: downloading github.com/smarty/assertions v1.16.0\ngo: downloading github.com/gopherjs/gopherjs v1.17.2"
+      },
+      {
+        "name": "go-mod-verify",
+        "exitCode": 0,
+        "stdoutSha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "render2": {
+    "manifestSha256": "526c3ca685b570b2bc97a2fad19da7476fc2996c60e783065b6a0c73ee6c4903",
+    "treeSha256": "8d2ab9f63e29e01dff94924718c228f56462c0a1abb74b88ef9459834767b9a1",
+    "files": 980,
+    "transform": {
+      "corePrefixCount": 94,
+      "thingsPrefixCount": 2726,
+      "credentialLineCount": 55,
+      "privateKeyBlockCount": 1,
+      "vetFixCount": 1,
+      "schemaFixtureIdentifierCount": 45
+    },
+    "credentials": {
+      "files": 9,
+      "active": 35,
+      "commented": 20,
+      "paths": {
+        "databaseDSN": 10,
+        "tsdbDSN": 18,
+        "ossAccessKeyID": 3,
+        "ossAccessKeySecret": 3,
+        "authWhiteUsersPassword": 11,
+        "devLinkOpenApiApiKey": 1,
+        "devLinkOpenApiSecretKey": 1,
+        "devLinkMqttOpenApiApiKey": 4,
+        "devLinkMqttOpenApiSecretKey": 4
+      }
+    },
+    "scan": {
+      "regularFiles": 980,
+      "directories": 278,
+      "trailingWhitespace": 97,
+      "totalBytes": 4857727
+    },
+    "commands": [
+      {
+        "name": "go-mod-tidy",
+        "exitCode": 0,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "df893f816592c812b1759c0a56da7c2e25c1c9cca02352dd0db51930dcdb0d72",
+        "stderrTail": "/inflection v1.0.0\ngo: downloading github.com/tidwall/match v1.1.1\ngo: downloading github.com/tidwall/pretty v1.2.1\ngo: downloading github.com/richardlehane/mscfb v1.0.4\ngo: downloading github.com/tiendc/go-deepcopy v1.7.1\ngo: downloading github.com/xuri/efp v0.0.1\ngo: downloading github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9\ngo: downloading golang.org/x/crypto v0.47.0\ngo: downloading github.com/glebarez/go-sqlite v1.22.0\ngo: downloading modernc.org/sqlite v1.28.0\ngo: downloading k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e\ngo: downloading github.com/pelletier/go-toml/v2 v2.2.4\ngo: downloading github.com/spaolacci/murmur3 v1.1.0\ngo: downloading github.com/klauspost/crc32 v1.3.0\ngo: downloading github.com/minio/crc64nvme v1.1.0\ngo: downloading github.com/minio/md5-simd v1.1.2\ngo: downloading go.uber.org/automaxprocs v1.6.0\ngo: downloading github.com/go-ini/ini v1.67.0\ngo: downloading github.com/go-logr/logr v1.4.3\ngo: downloading go.opentelemetry.io/otel/metric v1.39.0\ngo: downloading github.com/go-logr/stdr v1.2.2\ngo: downloading github.com/grafana/pyroscope-go v1.2.7\ngo: downloading github.com/robfig/cron/v3 v3.0.1\ngo: downloading github.com/jackc/pgx/v5 v5.7.4\ngo: downloading github.com/go-sql-driver/mysql v1.9.2\ngo: downloading github.com/mattn/go-colorable v0.1.13\ngo: downloading github.com/mattn/go-isatty v0.0.20\ngo: downloading github.com/coreos/go-semver v0.3.1\ngo: downloading go.etcd.io/etcd/client/pkg/v3 v3.6.0\ngo: downloading go.uber.org/zap v1.27.0\ngo: downloading github.com/gogo/protobuf v1.3.2\ngo: downloading github.com/openzipkin/zipkin-go v0.4.3\ngo: downloading github.com/beorn7/perks v1.0.1\ngo: downloading github.com/prometheus/client_model v0.6.2\ngo: downloading github.com/prometheus/common v0.63.0\ngo: downloading github.com/prometheus/procfs v0.16.0\ngo: downloading github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0\ngo: downloading go.opentelemetry.io/proto/otlp v1.7.1\ngo: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f\ngo: downloading github.com/go-playground/locales v0.14.1\ngo: downloading github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5\ngo: downloading github.com/aliyun/credentials-go v1.4.5\ngo: downloading github.com/gabriel-vasile/mimetype v1.4.11\ngo: downloading github.com/leodido/go-urn v1.4.0\ngo: downloading github.com/alibabacloud-go/endpoint-util v1.1.0\ngo: downloading github.com/alibabacloud-go/openapi-util v0.1.0\ngo: downloading github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.16\ngo: downloading github.com/alibabacloud-go/debug v1.0.1\ngo: downloading github.com/modern-go/reflect2 v1.0.2\ngo: downloading github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd\ngo: downloading github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d\ngo: downloading github.com/go-redis/redis/v8 v8.11.5\ngo: downloading github.com/sirupsen/logrus v1.9.4\ngo: downloading github.com/rs/xid v1.6.0\ngo: downloading github.com/richardlehane/msoleps v1.0.4\ngo: downloading go.opentelemetry.io/auto/sdk v1.2.1\ngo: downloading modernc.org/libc v1.37.6\ngo: downloading modernc.org/mathutil v1.6.0\ngo: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2\ngo: downloading google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217\ngo: downloading github.com/klauspost/cpuid/v2 v2.3.0\ngo: downloading k8s.io/apimachinery v0.32.3\ngo: downloading k8s.io/client-go v0.32.3\ngo: downloading github.com/grafana/pyroscope-go/godeltaprof v0.1.9\ngo: downloading filippo.io/edwards25519 v1.1.0\ngo: downloading github.com/jackc/pgpassfile v1.0.0\ngo: downloading github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761\ngo: downloading github.com/coreos/go-systemd/v22 v22.5.0\ngo: downloading go.uber.org/multierr v1.11.0\ngo: downloading github.com/cenkalti/backoff/v4 v4.3.0\ngo: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822\ngo: downloading github.com/tjfoc/gmsm v1.4.1\ngo: downloading github.com/clbanning/mxj/v2 v2.7.0\ngo: downloading gopkg.in/ini.v1 v1.67.0\ngo: downloading github.com/tinylib/msgp v1.3.0\ngo: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec\ngo: downloading k8s.io/api v0.32.3\ngo: downloading github.com/google/gofuzz v1.2.0\ngo: downloading sigs.k8s.io/yaml v1.4.0\ngo: downloading modernc.org/memory v1.7.2\ngo: downloading github.com/jackc/puddle/v2 v2.2.2\ngo: downloading k8s.io/klog/v2 v2.130.1\ngo: downloading github.com/philhofer/fwd v1.2.0\ngo: downloading gopkg.in/inf.v0 v0.9.1\ngo: downloading sigs.k8s.io/structured-merge-diff/v4 v4.4.2\ngo: downloading sigs.k8s.io/json v0.0.0-20241010143419-9aa6b5e7a4b3\ngo: downloading github.com/google/gnostic-models v0.6.8\ngo: downloading k8s.io/kube-openapi v0.0.0-20241105132330-32ad38e42d3f\ngo: downloading github.com/fxamacker/cbor/v2 v2.7.0\ngo: downloading golang.org/x/term v0.39.0\ngo: downloading github.com/go-openapi/swag v0.23.1\ngo: downloading github.com/x448/float16 v0.8.4\ngo: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc\ngo: downloading github.com/go-openapi/jsonreference v0.21.0\ngo: downloading github.com/mailru/easyjson v0.9.1\ngo: downloading github.com/stretchr/testify v1.11.1\ngo: downloading github.com/frankban/quicktest v1.14.6\ngo: downloading github.com/alicebob/miniredis/v2 v2.35.0\ngo: downloading github.com/Masterminds/semver/v3 v3.2.1\ngo: downloading gopkg.in/h2non/gock.v1 v1.1.2\ngo: downloading github.com/elazarl/goproxy v0.0.0-20231117061959-7cc037d33fb5\ngo: downloading gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c\ngo: downloading github.com/dgryski/go-farm v0.0.0-20190423205320-6a90982ecee2\ngo: downloading golang.org/x/image v0.25.0\ngo: downloading github.com/alecthomas/assert/v2 v2.10.0\ngo: downloading github.com/DATA-DOG/go-sqlmock v1.5.2\ngo: downloading go.uber.org/goleak v1.3.0\ngo: downloading github.com/smartystreets/goconvey v1.8.1\ngo: downloading go.opentelemetry.io/otel/sdk/metric v1.38.0\ngo: downloading github.com/kylelemons/godebug v1.1.0\ngo: downloading github.com/lib/pq v1.10.9\ngo: downloading github.com/alibabacloud-go/alibabacloud-gateway-pop v0.0.6\ngo: downloading github.com/golang/mock v1.7.0-rc.1\ngo: downloading github.com/go-playground/assert/v2 v2.2.0\ngo: downloading github.com/onsi/ginkgo v1.16.5\ngo: downloading github.com/onsi/gomega v1.35.1\ngo: downloading gonum.org/v1/gonum v0.16.0\ngo: downloading github.com/spf13/pflag v1.0.10\ngo: downloading github.com/bsm/gomega v1.27.10\ngo: downloading github.com/bsm/ginkgo/v2 v2.12.0\ngo: downloading github.com/prashantv/gostub v1.1.0\ngo: downloading gopkg.in/evanphx/json-patch.v4 v4.12.0\ngo: downloading github.com/emicklei/go-restful/v3 v3.11.0\ngo: downloading github.com/onsi/ginkgo/v2 v2.21.0\ngo: downloading github.com/go-openapi/jsonpointer v0.21.1\ngo: downloading github.com/josharian/intern v1.0.0\ngo: downloading github.com/h2non/parth v0.0.0-20190131123155-b4df798d6542\ngo: downloading github.com/kr/pretty v0.3.1\ngo: downloading github.com/alibabacloud-go/darabonba-array v0.1.0\ngo: downloading github.com/alibabacloud-go/darabonba-encode-util v0.0.2\ngo: downloading github.com/alibabacloud-go/darabonba-map v0.0.2\ngo: downloading github.com/alibabacloud-go/darabonba-signature-util v0.0.7\ngo: downloading github.com/alibabacloud-go/darabonba-string v1.0.2\ngo: downloading github.com/yuin/gopher-lua v1.1.1\ngo: downloading github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2\ngo: downloading github.com/alecthomas/repr v0.4.0\ngo: downloading github.com/stretchr/objx v0.5.2\ngo: downloading github.com/hexops/gotextdiff v1.0.3\ngo: downloading github.com/nxadm/tail v1.4.8\ngo: downloading github.com/rogpeppe/go-internal v1.14.1\ngo: downloading github.com/kr/text v0.2.0\ngo: downloading gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7\ngo: downloading github.com/fsnotify/fsnotify v1.7.0\ngo: downloading github.com/go-task/slim-sprig/v3 v3.0.0\ngo: downloading golang.org/x/tools v0.41.0\ngo: downloading github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572\ngo: downloading github.com/smarty/assertions v1.16.0\ngo: downloading github.com/jtolds/gls v4.20.0+incompatible\ngo: downloading github.com/gopherjs/gopherjs v1.17.2"
+      },
+      {
+        "name": "go-mod-verify",
+        "exitCode": 0,
+        "stdoutSha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "reproducibility": {
+    "id": "reproducibility",
+    "result": "PASS"
+  },
+  "target": {
+    "logicalPath": "backend/things",
+    "module": "gitee.com/ming-iot/things",
+    "beforeTreeSha256": "8d2ab9f63e29e01dff94924718c228f56462c0a1abb74b88ef9459834767b9a1",
+    "afterTreeSha256": "8d2ab9f63e29e01dff94924718c228f56462c0a1abb74b88ef9459834767b9a1",
+    "totalDifferences": 0,
+    "differences": [],
+    "differencesTruncated": false
+  },
+  "transform": {
+    "corePrefixCount": 94,
+    "thingsPrefixCount": 2726,
+    "credentialLineCount": 55,
+    "privateKeyBlockCount": 1,
+    "vetFixCount": 1,
+    "schemaFixtureIdentifierCount": 45
+  },
+  "contracts": {
+    "apiFiles": 34,
+    "protoFiles": 4,
+    "generatedProtoFiles": 7,
+    "testFiles": 23
+  },
+  "phases": [
+    {
+      "id": "source-read",
+      "result": "PASS"
+    },
+    {
+      "id": "render-1",
+      "result": "PASS"
+    },
+    {
+      "id": "render-2",
+      "result": "PASS"
+    },
+    {
+      "id": "reproducibility",
+      "result": "PASS"
+    },
+    {
+      "id": "target-compare",
+      "result": "PASS"
+    },
+    {
+      "id": "isolation-copy",
+      "result": "PASS"
+    },
+    {
+      "id": "command-gates",
+      "result": "FAIL",
+      "failureKind": "GATE"
+    },
+    {
+      "id": "isolation-unchanged",
+      "result": "PASS"
+    },
+    {
+      "id": "module-clean",
+      "result": "PASS"
+    },
+    {
+      "id": "target-unchanged",
+      "result": "PASS"
+    },
+    {
+      "id": "source-unchanged",
+      "result": "PASS"
+    }
+  ],
+  "gates": [
+    {
+      "id": "tools-test",
+      "command": "cd backend/tools \u0026\u0026 GOWORK=off go test ./...",
+      "result": "PASS",
+      "execution": "EXITED",
+      "exitCode": 0,
+      "logSha256": "b332ceaf6f215cb58ef00d016b2b6fab47b8cca1729e17550e1852c6972c1cd4",
+      "summary": "[stdout]\nok  \tming-iot/backend/tools/cmd/apicheck\t6.906s\n?   \tming-iot/backend/tools/cmd/clientcontract\t[no test files]\nok  \tming-iot/backend/tools/cmd/protocompat\t0.261s\n?   \tming-iot/backend/tools/cmd/rpcgen\t[no test files]\n?   \tming-iot/backend/tools/cmd/saastxn\t[no test files]\nok  \tming-iot/backend/tools/cmd/thingsbaseline\t0.003s\nok  \tming-iot/backend/tools/internal/apicontract\t1.334s\nok  \tming-iot/backend/tools/internal/clientcontract\t0.007s\nok  \tming-iot/backend/tools/internal/protocompat\t0.006s\nok  \tming-iot/backend/tools/internal/rpcgen\t0.008s\nok  \tming-iot/backend/tools/internal/saastxn\t0.132s\nok  \tming-iot/backend/tools/internal/thingsbaseline\t3.984s\n?   \tming-iot/backend/tools/templates/things-baseline\t[no test files]\n\n[stderr]\ngo: downloading gopkg.in/yaml.v3 v3.0.1\ngo: downloading golang.org/x/sys v0.33.0\ngo: downloading github.com/zeromicro/go-zero/tools/goctl v1.8.4\ngo: downloading golang.org/x/mod v0.32.0\ngo: downloading google.golang.org/protobuf v1.36.6\ngo: downloading github.com/google/go-cmp v0.6.0\ngo: downloading github.com/zeromicro/go-zero v1.9.4\ngo: downloading github.com/fatih/structtag v1.2.0\ngo: downloading golang.org/x/text v0.34.0\ngo: downloading github.com/gookit/color v1.6.0\ngo: downloading github.com/zeromicro/antlr v0.0.1\ngo: downloading github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e",
+      "durationMs": 16419
+    },
+    {
+      "id": "saas-test",
+      "command": "cd backend/saas \u0026\u0026 GOWORK=off go test ./...",
+      "result": "PASS",
+      "execution": "EXITED",
+      "exitCode": 0,
+      "logSha256": "08dd3be56663fd4f99378e7326aa797182782c2ffeb02e6ff5cda48e1f4c7485",
+      "summary": "[stdout]\ns/service/timed/timedschedulersvr\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/client/timedscheduler\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/config\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/logic/timedscheduler\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/server/timedscheduler\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/startup\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/svc\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/internal/timer\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/pb/timedscheduler\t[no test files]\n?   \tgitee.com/ming-iot/saas/service/timed/timedschedulersvr/timedschedulerdirect\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/caches\t[no test files]\nok  \tgitee.com/ming-iot/saas/share/clients/oauth2\t0.134s\n?   \tgitee.com/ming-iot/saas/share/dataType\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/log\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/ops\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/slot\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/task\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/tenant\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/domain/userDataAuth\t[no test files]\nok  \tgitee.com/ming-iot/saas/share/localdev\t0.002s\n?   \tgitee.com/ming-iot/saas/share/middlewares\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/topics\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/users\t[no test files]\n?   \tgitee.com/ming-iot/saas/share/websocket\t[no test files]\n?   \tgitee.com/ming-iot/saas/tools/genAdcode\t[no test files]\n?   \tgitee.com/ming-iot/saas/tools/genPassword\t[no test files]\n\n[stderr]\noading github.com/tjfoc/gmsm v1.3.2\ngo: downloading google.golang.org/genproto/googleapis/api v0.0.0-20250324211829-b45e905df463\ngo: downloading github.com/coreos/go-semver v0.3.1\ngo: downloading github.com/gogo/protobuf v1.3.2\ngo: downloading github.com/clbanning/mxj/v2 v2.7.0\ngo: downloading filippo.io/edwards25519 v1.1.0\ngo: downloading k8s.io/api v0.29.3\ngo: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.24.0\ngo: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822\ngo: downloading github.com/jackc/pgpassfile v1.0.0\ngo: downloading github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761\ngo: downloading github.com/coreos/go-systemd/v22 v22.5.0\ngo: downloading github.com/jackc/puddle/v2 v2.2.2\ngo: downloading k8s.io/klog/v2 v2.110.1\ngo: downloading k8s.io/utils v0.0.0-20240711033017-18e509b52bc8\ngo: downloading sigs.k8s.io/structured-merge-diff/v4 v4.4.1\ngo: downloading gopkg.in/inf.v0 v0.9.1\ngo: downloading github.com/google/gofuzz v1.2.0\ngo: downloading sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd\ngo: downloading modernc.org/mathutil v1.6.0\ngo: downloading modernc.org/memory v1.5.0\ngo: downloading github.com/google/go-cmp v0.7.0\ngo: downloading github.com/google/gnostic-models v0.6.8\ngo: downloading golang.org/x/term v0.32.0\ngo: downloading k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00\ngo: downloading github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc\ngo: downloading sigs.k8s.io/yaml v1.3.0\ngo: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec\ngo: downloading github.com/emicklei/go-restful/v3 v3.11.0\ngo: downloading github.com/go-openapi/swag v0.23.1\ngo: downloading github.com/go-openapi/jsonreference v0.21.0\ngo: downloading github.com/mailru/easyjson v0.9.0\ngo: downloading github.com/go-openapi/jsonpointer v0.21.1\ngo: downloading github.com/josharian/intern v1.0.0",
+      "durationMs": 108605
+    },
+    {
+      "id": "things-test",
+      "command": "cd verification-tree \u0026\u0026 GOWORK=off go test ./...",
+      "result": "PASS",
+      "execution": "EXITED",
+      "exitCode": 0,
+      "logSha256": "b436ff50e93d9cf4e3d9ca235521d76401e7be19180e038879352841634cad81",
+      "summary": "[stdout]\nare/domain/application\t[no test files]\nok  \tgitee.com/ming-iot/things/share/domain/deviceAuth\t0.020s\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg\t[no test files]\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgExt\t[no test files]\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgGateway\t[no test files]\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgOta\t[no test files]\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgRemoteConfig\t[no test files]\n?   \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgSdkLog\t[no test files]\nok  \tgitee.com/ming-iot/things/share/domain/deviceMsg/msgThing\t0.021s\n?   \tgitee.com/ming-iot/things/share/domain/protocols\t[no test files]\nok  \tgitee.com/ming-iot/things/share/domain/schema\t0.020s\nok  \tgitee.com/ming-iot/things/share/domain/usershare\t0.002s\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/config\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/logic\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/logic/protocolsync\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/server\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/server/protocolsync\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/startup\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/internal/svc\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/pb/protocolSync\t[no test files]\n?   \tgitee.com/ming-iot/things/share/rpcs/protocolSync/protocolSyncClient\t[no test files]\n?   \tgitee.com/ming-iot/things/share/thingsSlot\t[no test files]\n?   \tgitee.com/ming-iot/things/share/topics\t[no test files]\n?   \tgitee.com/ming-iot/things/share/userSubscribe\t[no test files]\n\n[stderr]\n.39.0\ngo: downloading github.com/glebarez/go-sqlite v1.22.0\ngo: downloading modernc.org/sqlite v1.28.0\ngo: downloading k8s.io/apimachinery v0.32.3\ngo: downloading k8s.io/client-go v0.32.3\ngo: downloading go.opentelemetry.io/proto/otlp v1.7.1\ngo: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20251222181119-0a764e51fe1b\ngo: downloading github.com/go-sql-driver/mysql v1.9.2\ngo: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.2\ngo: downloading google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217\ngo: downloading github.com/klauspost/cpuid/v2 v2.3.0\ngo: downloading github.com/richardlehane/msoleps v1.0.4\ngo: downloading github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5\ngo: downloading github.com/aliyun/credentials-go v1.4.5\ngo: downloading github.com/alibabacloud-go/debug v1.0.1\ngo: downloading go.opentelemetry.io/auto/sdk v1.2.1\ngo: downloading github.com/leodido/go-urn v1.4.0\ngo: downloading github.com/gabriel-vasile/mimetype v1.4.11\ngo: downloading k8s.io/api v0.32.3\ngo: downloading modernc.org/libc v1.37.6\ngo: downloading github.com/sirupsen/logrus v1.9.4\ngo: downloading github.com/tinylib/msgp v1.3.0\ngo: downloading github.com/tjfoc/gmsm v1.4.1\ngo: downloading k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e\ngo: downloading k8s.io/klog/v2 v2.130.1\ngo: downloading sigs.k8s.io/structured-merge-diff/v4 v4.4.2\ngo: downloading sigs.k8s.io/json v0.0.0-20241010143419-9aa6b5e7a4b3\ngo: downloading github.com/fxamacker/cbor/v2 v2.7.0\ngo: downloading github.com/philhofer/fwd v1.2.0\ngo: downloading golang.org/x/term v0.39.0\ngo: downloading k8s.io/kube-openapi v0.0.0-20241105132330-32ad38e42d3f\ngo: downloading sigs.k8s.io/yaml v1.4.0\ngo: downloading gopkg.in/evanphx/json-patch.v4 v4.12.0\ngo: downloading github.com/x448/float16 v0.8.4\ngo: downloading github.com/mailru/easyjson v0.9.1\ngo: downloading modernc.org/memory v1.7.2",
+      "durationMs": 144040
+    },
+    {
+      "id": "workspace-test",
+      "command": "go test Ming workspace modules",
+      "result": "FAIL",
+      "execution": "EXITED",
+      "exitCode": 1,
+      "logSha256": "8e7439056b0a3c7193b3171635f4b5bc7b1d9a3b9386e75de3c429943c054c2c",
+      "summary": "[stdout]\n/userSubscribe\t[no test files]\n--- FAIL: TestCLIVerifyGoldenMatch (0.12s)\n    main_test.go:41: verify exit=1, want 0\n        directory cmd/apicheck is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using:\n        \tgo work use .\n--- FAIL: TestCLISnapshotRefusesWithoutUpdate (0.11s)\n    main_test.go:62: expected refusal message, got:\n        directory cmd/apicheck is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using:\n        \tgo work use .\n--- FAIL: TestCLIVerifyMetadataNone (0.12s)\n    main_test.go:75: verify --metadata=none exit=1, want 0\n        directory cmd/apicheck is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using:\n        \tgo work use .\n--- FAIL: TestCLILintCleanFile (0.12s)\n    main_test.go:89: lint role.api exit=1, want 0\n        directory cmd/apicheck is contained in a module that is not one of the workspace modules listed in go.work. You can add the module to the workspace using:\n        \tgo work use .\nFAIL\nFAIL\tming-iot/backend/tools/cmd/apicheck\t1.701s\n?   \tming-iot/backend/tools/cmd/clientcontract\t[no test files]\nok  \tming-iot/backend/tools/cmd/protocompat\t0.362s\n?   \tming-iot/backend/tools/cmd/rpcgen\t[no test files]\n?   \tming-iot/backend/tools/cmd/saastxn\t[no test files]\nok  \tming-iot/backend/tools/cmd/thingsbaseline\t0.003s\nok  \tming-iot/backend/tools/internal/apicontract\t1.287s\nok  \tming-iot/backend/tools/internal/clientcontract\t(cached)\nok  \tming-iot/backend/tools/internal/protocompat\t0.006s\nok  \tming-iot/backend/tools/internal/rpcgen\t0.009s\nok  \tming-iot/backend/tools/internal/saastxn\t0.136s\nok  \tming-iot/backend/tools/internal/thingsbaseline\t3.907s\n?   \tming-iot/backend/tools/templates/things-baseline\t[no test files]\nFAIL\n\n[stderr]\ngo: downloading google.golang.org/genproto v0.0.0-20231106174013-bbf56f31fb17\ngo: downloading github.com/cespare/xxhash v1.1.0\ngo: downloading golang.org/x/image v0.25.0\ngo: downloading github.com/grpc-ecosystem/grpc-gateway v1.16.0",
+      "durationMs": 191666
+    },
+    {
+      "id": "things-build",
+      "command": "cd verification-tree \u0026\u0026 make BIN_DIR=backend/bin build",
+      "result": "NOT_RUN",
+      "execution": "NOT_RUN",
+      "exitCode": null,
+      "durationMs": 0
+    }
+  ],
+  "overallResult": "FAIL"
+}

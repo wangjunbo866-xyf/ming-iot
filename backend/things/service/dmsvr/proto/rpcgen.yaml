@@ -1,0 +1,78 @@
+version: 2
+runtime: dmsvr
+modulePath: gitee.com/ming-iot/things
+runtimeDir: service/dmsvr
+protoDir: service/dmsvr/proto
+pbDir: service/dmsvr/pb/dm
+package: dm
+goPackage: pb/dm
+pbSelector: dm
+aggregate: dm.proto
+supportingProtos:
+  - dmShare.proto
+  - protocolModel.proto
+  - schemaInfo.proto
+registry:
+  path: service/dmsvr/dmdirect/dmdirect.go
+  selector: dm
+services:
+  - proto: deviceManage.proto
+    service: DeviceManage
+    packageDir: devicemanage
+    clientFile: deviceManage.go
+    serverFile: deviceManageServer.go
+    registration: required
+  - proto: productManage.proto
+    service: ProductManage
+    packageDir: productmanage
+    clientFile: productManage.go
+    serverFile: productManageServer.go
+    registration: required
+  - proto: schemaManage.proto
+    service: SchemaManage
+    packageDir: schemamanage
+    clientFile: schemaManage.go
+    serverFile: schemaManageServer.go
+    registration: preserve_absent
+  - proto: protocolManage.proto
+    service: ProtocolManage
+    packageDir: protocolmanage
+    clientFile: protocolManage.go
+    serverFile: protocolManageServer.go
+    registration: required
+  - proto: deviceGroup.proto
+    service: DeviceGroup
+    packageDir: devicegroup
+    clientFile: deviceGroup.go
+    serverFile: deviceGroupServer.go
+    registration: required
+  - proto: remoteConfig.proto
+    service: RemoteConfig
+    packageDir: remoteconfig
+    clientFile: remoteConfig.go
+    serverFile: remoteConfigServer.go
+    registration: required
+  - proto: deviceMsg.proto
+    service: DeviceMsg
+    packageDir: devicemsg
+    clientFile: deviceMsg.go
+    serverFile: deviceMsgServer.go
+    registration: required
+  - proto: deviceInteract.proto
+    service: DeviceInteract
+    packageDir: deviceinteract
+    clientFile: deviceInteract.go
+    serverFile: deviceInteractServer.go
+    registration: required
+  - proto: otaManage.proto
+    service: OtaManage
+    packageDir: otamanage
+    clientFile: otaManage.go
+    serverFile: otaManageServer.go
+    registration: required
+  - proto: userDevice.proto
+    service: userDevice
+    packageDir: userdevice
+    clientFile: userDevice.go
+    serverFile: userDeviceServer.go
+    registration: required

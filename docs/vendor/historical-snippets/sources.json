@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "attribution_draft_not_publication_clearance",
+  "sources": [
+    {
+      "component": "NATS",
+      "repository": "nats-io/nats-server",
+      "comparison_commit": "c1ca29ba0d040c259bcf23e1a7451c38609ab14a",
+      "license_file": "docs/vendor/historical-snippets/licenses/NATS-LICENSE.txt",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "document": "docs/wiki/legacy/iot-doc/亿级点位高吞吐架构/1.MQTT-Broker/MQTT-接入网关/reference/nats/nats-source-code-analysis.md",
+      "attribution_status": "fixed comparison source; adapted excerpts or design reference, not original checkout proof"
+    },
+    {
+      "component": "nbio",
+      "repository": "lesismal/nbio",
+      "comparison_commit": "8ad01e6461af31d510d27b679f670c3dddbe417c",
+      "license_file": "docs/vendor/historical-snippets/licenses/nbio-LICENSE.txt",
+      "license_sha256": "6777f2154d58ba63a644c41fa631cfa82071860c6f33ce89a6d557689d727d1e",
+      "document": "docs/wiki/legacy/iot-doc/亿级点位高吞吐架构/1.MQTT-Broker/MQTT-接入网关/reference/nbio/nbio-analysis.md",
+      "attribution_status": "fixed comparison source; adapted excerpts or design reference, not original checkout proof"
+    },
+    {
+      "component": "comqtt",
+      "repository": "wind-c/comqtt",
+      "comparison_commit": "c68325655488ddc2d9f798c218a68e88fd08d913",
+      "license_file": "docs/vendor/historical-snippets/licenses/comqtt-LICENSE.txt",
+      "license_sha256": "bfa2aa54489d516c7009775973bec1079b9f45da1a376014c01762b7bef6f5bb",
+      "document": "docs/wiki/legacy/iot-doc/亿级点位高吞吐架构/1.MQTT-Broker/MQTT-接入网关/18.cloud-mqtt-gateway-comqtt-packets-extraction.md",
+      "attribution_status": "fixed comparison source; adapted excerpts or design reference, not original checkout proof"
+    },
+    {
+      "component": "gnet",
+      "repository": "panjf2000/gnet",
+      "comparison_commit": "fd7ce4bef97582920c174b56a96cbbda7a5bcd42",
+      "license_file": "docs/vendor/historical-snippets/licenses/gnet-LICENSE.txt",
+      "license_sha256": "4f81ecf128a847a1808c98e379be68fb3e4cd798fc86f61504a15e44d9d9cad0",
+      "document": "docs/wiki/legacy/iot-doc/亿级点位高吞吐架构/1.MQTT-Broker/MQTT-接入网关/18.cloud-mqtt-gateway-comqtt-packets-extraction.md",
+      "attribution_status": "fixed comparison source; adapted excerpts or design reference, not original checkout proof"
+    },
+    {
+      "component": "go-zero",
+      "repository": "zeromicro/go-zero",
+      "comparison_commit": "0f2b589d4db9e7db2251c1a95fae867493058bb3",
+      "license_file": "docs/vendor/historical-snippets/licenses/go-zero-LICENSE.txt",
+      "license_sha256": "a31424b15cfcbb5f0269b4e9ba4ee6f24fdb4c0a991a9c7891fb184078c4eb98",
+      "document": "docs/wiki/legacy/iot-doc/亿级点位高吞吐架构/1.MQTT-Broker/MQTT-接入网关/10.cloud-mqtt-gateway-devserver-design.md",
+      "attribution_status": "fixed comparison source; adapted excerpts or design reference, not original checkout proof"
+    }
+  ],
+  "scope": "Historical document excerpts and design references only; not a complete product dependency inventory."
+}

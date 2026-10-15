@@ -1,0 +1,17 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+
+import public "dmShare.proto";
+import public "protocolModel.proto";
+import public "schemaInfo.proto";
+import public "deviceManage.proto";
+import public "productManage.proto";
+import public "schemaManage.proto";
+import public "protocolManage.proto";
+import public "deviceGroup.proto";
+import public "remoteConfig.proto";
+import public "deviceMsg.proto";
+import public "deviceInteract.proto";
+import public "otaManage.proto";
+import public "userDevice.proto";

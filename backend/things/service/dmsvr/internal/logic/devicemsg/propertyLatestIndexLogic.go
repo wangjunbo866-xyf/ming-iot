@@ -1,0 +1,140 @@
+package devicemsglogic
+
+import (
+	"context"
+	"sync"
+	"time"
+
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/logic"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg/msgThing"
+	"gitee.com/ming-iot/things/share/domain/schema"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type PropertyLatestIndexLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewPropertyLatestIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PropertyLatestIndexLogic {
+	return &PropertyLatestIndexLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+// 获取设备数据信息
+func (l *PropertyLatestIndexLogic) PropertyLatestIndex(in *dm.PropertyLatestIndexReq) (*dm.PropertyLogIndexResp, error) {
+	var (
+		diDatas []*dm.PropertyLogInfo
+		total   int
+		dataMap map[string]*schema.Property
+	)
+	dc := devices.Core{
+		ProductID:  in.ProductID,
+		DeviceName: in.DeviceName,
+	}
+	_, err := logic.SchemaAccess(l.ctx, l.svcCtx, def.AuthRead, dc, nil)
+	if err != nil {
+		return nil, err
+	}
+	temp, err := l.svcCtx.DeviceSchemaRepo.GetData(l.ctx, dc)
+	if err != nil {
+		return nil, errors.System.AddDetail(err)
+	}
+	dd := l.svcCtx.SchemaManaRepo
+	if len(in.DataIDs) == 0 {
+		dataMap = temp.Property.GetMap()
+	} else {
+		dataMap = temp.Property.GetMapWithIDs(in.DataIDs...)
+	}
+	total = len(dataMap)
+	mutex := sync.Mutex{}
+	var lastBind int64
+	uc := ctxs.GetUserCtxNoNil(l.ctx)
+	if !uc.IsAdmin {
+		di, err := l.svcCtx.DeviceCache.GetData(l.ctx, dc)
+		if err != nil {
+			return nil, err
+		}
+		lastBind = di.LastBind
+	}
+	var dp = make(map[string]*msgThing.PropertyLogData)
+	datas, err := dd.GetLatestAllPropertyData(l.ctx, temp, in.ProductID, in.DeviceName)
+	if err != nil {
+		l.Error(err)
+	} else {
+		for _, v := range datas {
+			dp[v.Identifier] = v
+		}
+	}
+	for k, v := range dataMap {
+		property := v
+		dataID := k
+		handleData := func(data *msgThing.PropertyLogData) {
+			var diData dm.PropertyLogInfo
+			if data != nil && lastBind != 0 && property.FuncGroup != schema.FuncGroupSystem {
+				if data.TimeStamp.Before(time.Unix(lastBind, 0)) {
+					data = nil
+				}
+			}
+			if data == nil {
+				if in.IgnoreEmpty {
+					return
+				}
+				v, err := property.Define.GetDefaultValue()
+				if err != nil {
+					l.Errorf("%s.GetDefaultValue err=%v", utils.FuncName(), utils.Fmt(err))
+					return
+				}
+				diData = dm.PropertyLogInfo{
+					Timestamp: 0,
+					DataID:    dataID,
+					DataName:  schema.GetDataName(temp, dataID),
+					Value:     utils.ToString(v),
+				}
+			} else {
+				sdef := property.Define
+				if sdef.Type == schema.DataTypeArray || sdef.Type == schema.DataTypeMatrix {
+					sdef = *sdef.ArrayInfo
+				}
+				if sdef.Type == schema.DataTypeStruct {
+					dd, _ := schema.ParseDataID(dataID)
+					if dd != nil && dd.Column != "" {
+						sdef = sdef.Spec[dd.Column].DataType
+					}
+				}
+				diData = dm.PropertyLogInfo{
+					Timestamp: data.TimeStamp.UnixMilli(),
+					DataID:    data.Identifier,
+					DataName:  schema.GetDataName(temp, data.Identifier),
+				}
+				v, err := sdef.FmtValue(data.Param)
+				if err == nil {
+					diData.Value = utils.ToString(v)
+				} else {
+					diData.Value = utils.ToString(data.Param)
+				}
+			}
+			mutex.Lock()
+			defer mutex.Unlock()
+			diDatas = append(diDatas, &diData)
+			l.Debugf("%s.get data=%+v", utils.FuncName(), &diData)
+		}
+		handleData(dp[dataID])
+	}
+	return &dm.PropertyLogIndexResp{
+		Total: int64(total),
+		List:  diDatas,
+	}, nil
+}

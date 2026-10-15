@@ -1,0 +1,124 @@
+info(
+    title: "产品物模型发布版本"
+    desc: "管理产品物模型不可变发布及显式激活"
+    author: "ming-iot"
+    version: "v1"
+)
+
+@server(
+    group: things/product/modelRelease
+    prefix: /api/v1/things/product/model-release
+    accessCodePrefix: "thingsProductModelRelease"
+    accessNamePrefix: "产品物模型发布版本"
+    accessGroup: "产品管理"
+    middleware: CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "发布产品物模型"
+        description: "把指定产品的完整草稿编译为新的不可变发布版本"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "other"
+        resource: "product-model-release"
+        action: "publish"
+        group: "things/product/modelRelease"
+        recordLogMode: "2"
+    )
+    @handler productModelReleasePublish
+    post /publish (ProductModelReleasePublishReq) returns (ProductModelReleaseInfo)
+
+    @doc(
+        summary: "激活产品物模型"
+        description: "把同租户同产品的精确发布版本设置为当前版本"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "other"
+        resource: "product-model-release"
+        action: "enable"
+        group: "things/product/modelRelease"
+        recordLogMode: "2"
+    )
+    @handler productModelReleaseActivate
+    post /activate (ProductModelReleaseActivateReq) returns ()
+
+    @doc(
+        summary: "读取物模型版本"
+        description: "按正数发布标识读取指定产品的精确不可变版本"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "product-model-release"
+        action: "view"
+        group: "things/product/modelRelease"
+        recordLogMode: "1"
+    )
+    @handler productModelReleaseRead
+    post /read (ProductModelReleaseReadReq) returns (ProductModelReleaseInfo)
+
+    @doc(
+        summary: "查询物模型版本"
+        description: "分页查询指定产品已经发布的不可变版本清单"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "product-model-release"
+        action: "view"
+        group: "things/product/modelRelease"
+        recordLogMode: "1"
+    )
+    @handler productModelReleaseIndex
+    post /index (ProductModelReleaseIndexReq) returns (ProductModelReleaseIndexResp)
+
+    @doc(
+        summary: "读取版本扁平TSL"
+        description: "读取精确版本或当前已激活版本的扁平物模型TSL"
+        authType: "admin"
+        isNeedAuth: "true"
+        operType: "find"
+        resource: "product-model-release-tsl"
+        action: "view"
+        group: "things/product/modelRelease"
+        recordLogMode: "1"
+    )
+    @handler productModelReleaseTslRead
+    post /tsl-read (ProductModelReleaseTslReadReq) returns (ProductModelReleaseTslReadResp)
+}
+
+type (
+    ProductModelReleaseInfo {
+        ReleaseID int64 `json:"releaseID,string"`
+        ProductID string `json:"productID"`
+        ReleaseNo int64 `json:"releaseNo"`
+        SchemaVersion int64 `json:"schemaVersion"`
+        Bundle string `json:"bundle"`
+        BundleHash string `json:"bundleHash"`
+        Status string `json:"status"`
+        CreatedTime int64 `json:"createdTime"`
+    }
+    ProductModelReleasePublishReq {
+        ProductID string `json:"productID"`
+    }
+    ProductModelReleaseActivateReq {
+        ProductID string `json:"productID"`
+        ReleaseID int64 `json:"releaseID,string"`
+    }
+    ProductModelReleaseReadReq {
+        ProductID string `json:"productID"`
+        ReleaseID int64 `json:"releaseID,string"`
+    }
+    ProductModelReleaseIndexReq {
+        Page *PageInfo `json:"page,optional"`
+        ProductID string `json:"productID"`
+    }
+    ProductModelReleaseIndexResp {
+        List []*ProductModelReleaseInfo `json:"list"`
+        PageResp
+    }
+    ProductModelReleaseTslReadReq {
+        ProductID string `json:"productID"`
+        ReleaseID int64 `json:"releaseID,string,optional"`
+        Active bool `json:"active,optional"`
+    }
+    ProductModelReleaseTslReadResp {
+        Tsl string `json:"tsl"`
+    }
+)

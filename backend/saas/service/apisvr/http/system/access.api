@@ -1,0 +1,202 @@
+info(
+	title: "接口管理模块"
+	desc: "接口管理"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+	group: system/access/api
+	prefix: /api/v1/system/access/api
+    accessCodePrefix: "systemAccessManage"
+    accessNamePrefix: "接口管理"
+    accessGroup: "授权管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加接口"
+        description: "登记一条后端 HTTP 接口契约，含路由、方法、所属模块和鉴权要求，用于权限建模"
+        authType: "supper"
+        resource: "access"
+        action: "create"
+        group: "system/access/api"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (ApiInfo) returns (WithID)
+
+    @doc(
+        summary: "获取接口列表"
+        description: "按路由、方法、名称或授权类型分页查询已登记的接口契约清单"
+        authType: "supper"
+        resource: "access"
+        action: "view"
+        group: "system/access/api"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (ApiInfoIndexReq) returns (ApiInfoIndexResp)
+
+    @doc(
+        summary: "更新接口"
+        description: "修改指定接口的路由、方法、鉴权类型等契约属性，影响后续权限校验"
+        authType: "supper"
+        resource: "access"
+        action: "update"
+        group: "system/access/api"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (ApiInfo) returns ()
+
+    @doc(
+        summary: "删除接口"
+        description: "按编号删除接口登记，关联该接口的授权配置将一并失去挂载点"
+        authType: "supper"
+        resource: "access"
+        action: "delete"
+        group: "system/access/api"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+}
+
+@server (
+    group: system/access/info
+    prefix: /api/v1/system/access/info
+    accessCodePrefix: "systemAccessManage"
+    accessNamePrefix: "授权管理"
+    accessGroup: "授权管理"
+    defaultAuthType: "supper"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加访问权限信息"
+        description: "新增一条操作权限点定义，绑定所属模块并声明是否需要鉴权"
+        authType: "supper"
+        resource: "access"
+        action: "create"
+        group: "system/access/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (AccessInfo) returns (WithID)
+
+    @doc(
+        summary: "获取访问权限信息列表"
+        description: "按模块、分组、授权类型和鉴权要求分页查询操作权限点列表"
+        authType: "supper"
+        resource: "access"
+        action: "view"
+        group: "system/access/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (AccessIndexReq) returns (AccessIndexResp)
+
+    @doc(
+        summary: "获取访问权限信息树结构"
+        description: "按模块聚合操作权限点并以树形结构返回，供前端权限勾选组件使用"
+        authType: "supper"
+        resource: "access"
+        action: "view"
+        group: "system/access/info"
+        recordLogMode: "1"
+    )
+    @handler tree
+    post /tree (AccessIndexReq) returns (AccessIndexResp)
+
+    @doc(
+        summary: "更新访问权限信息"
+        description: "修改指定操作权限点的名称、模块归属、鉴权要求等属性"
+        authType: "supper"
+        resource: "access"
+        action: "update"
+        group: "system/access/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (AccessInfo) returns ()
+
+    @doc(
+        summary: "删除访问权限信息"
+        description: "按编号删除操作权限点，引用该权限点的角色或租户授权随之失效"
+        authType: "supper"
+        resource: "access"
+        action: "delete"
+        group: "system/access/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+    @doc(
+        summary: "批量导入授权"
+        description: "解析上传文件批量登记操作权限点，返回总数、成功、失败和忽略计数"
+        authType: "admin"
+        resource: "access"
+        action: "import"
+        group: "system/access/info"
+        recordLogMode: "2"
+        isNeedAuth: "true"
+        injectFormdataParam: "file"
+    )
+    @handler multiImport
+    post /multi-import (AccessMultiImportReq) returns (AccessMultiImportResp)
+}
+
+type (
+    AccessMultiImportReq {
+        Module string  `form:"module,optional"` //模块
+    }
+    AccessMultiImportResp {
+        Total int64 `json:"total"`                                 //导入总接口数
+        ErrCount int64  `json:"errCount"` //失败数
+        IgnoreCount int64  `json:"ignoreCount"` //忽略数
+        SuccCount int64  `json:"succCount"` //成功数
+    }
+
+    ApiInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Route string `json:"route,optional"`                   // 接口路由
+        Method string `json:"method,optional"`      // 接口请求方式: （1 GET 2 POST 3 HEAD 4 OPTIONS 5 PUT 6 DELETE 7 TRACE 8 CONNECT 9 其它）
+        Name string `json:"name,optional"`                     // 接口名称
+        AccessCode string `json:"accessCode,optional"`                               // 应用编号
+        AuthType int64 `json:"authType,optional,range=[0:3]"`        //  1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+    }
+
+
+    ApiInfoIndexResp  {
+        List []*ApiInfo `json:"list"`            // 接口列表数据
+        PageResp
+    }
+
+    AccessIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        Module string  `json:"module,optional"` //模块
+        Group string `json:"group,optional"`                   // 接口路由
+        Name string `json:"name,optional"`                     // 接口名称
+        Code string `json:"code,optional"`                               // 应用编号
+        IsNeedAuth int64 `json:"isNeedAuth,optional,range=[0:2]"`        // 是否需要权限认证 1是 2否
+        AuthTypes []int64 `json:"authTypes,optional,range=[0:3]"`        //  1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+        WithApis bool `json:"withApis,optional"`
+    }
+
+
+    AccessIndexResp  {
+        List []*AccessInfo `json:"list"`            // 接口列表数据
+        PageResp
+    }
+    AccessTreeResp  {
+        List []*AccessModuleInfo `json:"list"`            // 接口列表数据
+    }
+)

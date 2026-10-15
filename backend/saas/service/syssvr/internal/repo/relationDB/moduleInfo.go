@@ -1,0 +1,127 @@
+package relationDB
+
+import (
+	"context"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/domain/module"
+	"gitee.com/ming-iot/share/stores"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+)
+
+/*
+这个是参考样例
+使用教程:
+1. 将ModuleInfo全局替换为模型的表名
+2. 完善todo
+*/
+
+type ModuleInfoRepo struct {
+	db *gorm.DB
+}
+
+func NewModuleInfoRepo(in any) *ModuleInfoRepo {
+	return &ModuleInfoRepo{db: stores.GetCommonConn(in)}
+}
+
+type ModuleInfoFilter struct {
+	ID        int64
+	Codes     []string
+	Code      string
+	Name      string
+	WithMenus bool
+	Type      int64
+	Purpose   module.Purpose
+	Purposes  []module.Purpose
+}
+
+func (p ModuleInfoRepo) fmtFilter(ctx context.Context, f ModuleInfoFilter) *gorm.DB {
+	db := p.db.WithContext(ctx)
+	if f.WithMenus {
+		db = db.Preload("Menus")
+	}
+	if f.Purpose > 0 {
+		db = db.Where("purpose = ?", f.Purpose)
+	}
+	if len(f.Purposes) > 0 {
+		db = db.Where("purpose in ?", f.Purposes)
+	}
+	if f.Type != 0 {
+		db = db.Where("type=?", f.Type)
+	}
+	if f.ID != 0 {
+		db = db.Where("id=?", f.ID)
+	}
+	if len(f.Codes) > 0 {
+		db = db.Where("code in ?", f.Codes)
+	}
+	if f.Name != "" {
+		db = db.Where("name like ?", "%"+f.Name+"%")
+	}
+	if f.Code != "" {
+		db = db.Where("code like ?", "%"+f.Code+"%")
+	}
+	return db
+}
+
+func (p ModuleInfoRepo) Insert(ctx context.Context, data *SysModuleInfo) error {
+	result := p.db.WithContext(ctx).Create(data)
+	return stores.ErrFmt(result.Error)
+}
+
+func (p ModuleInfoRepo) FindOneByFilter(ctx context.Context, f ModuleInfoFilter) (*SysModuleInfo, error) {
+	var result SysModuleInfo
+	db := p.fmtFilter(ctx, f)
+	err := db.Preload("Home").First(&result).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return &result, nil
+}
+func (p ModuleInfoRepo) FindByFilter(ctx context.Context, f ModuleInfoFilter, page *stores.PageInfo) ([]*SysModuleInfo, error) {
+	var results []*SysModuleInfo
+	db := p.fmtFilter(ctx, f).Model(&SysModuleInfo{})
+	db = page.ToGorm(db).Order(stores.Col("order"))
+	err := db.Preload("Home").Find(&results).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return results, nil
+}
+
+func (p ModuleInfoRepo) CountByFilter(ctx context.Context, f ModuleInfoFilter) (size int64, err error) {
+	db := p.fmtFilter(ctx, f).Model(&SysModuleInfo{})
+	err = db.Count(&size).Error
+	return size, stores.ErrFmt(err)
+}
+
+func (p ModuleInfoRepo) Update(ctx context.Context, data *SysModuleInfo) error {
+	data.Home = nil
+	err := p.db.WithContext(ctx).Where("id = ?", data.ID).Save(data).Error
+	return stores.ErrFmt(err)
+}
+
+func (p ModuleInfoRepo) DeleteByFilter(ctx context.Context, f ModuleInfoFilter) error {
+	db := p.fmtFilter(ctx, f)
+	err := db.Delete(&SysModuleInfo{}).Error
+	return stores.ErrFmt(err)
+}
+
+func (p ModuleInfoRepo) Delete(ctx context.Context, id int64) error {
+	err := p.db.WithContext(ctx).Where("id = ?", id).Delete(&SysModuleInfo{}).Error
+	return stores.ErrFmt(err)
+}
+func (p ModuleInfoRepo) FindOne(ctx context.Context, id int64) (*SysModuleInfo, error) {
+	var result SysModuleInfo
+	err := p.db.WithContext(ctx).Where("id = ?", id).Preload("Home").First(&result).Error
+	if err != nil {
+		return nil, stores.ErrFmt(err)
+	}
+	return &result, nil
+}
+
+// 批量插入 LightStrategyDevice 记录
+func (p ModuleInfoRepo) MultiInsert(ctx context.Context, data []*SysModuleInfo) error {
+	err := p.db.WithContext(ctx).Clauses(clause.OnConflict{UpdateAll: true}).Model(&SysModuleInfo{}).Create(data).Error
+	return stores.ErrFmt(err)
+}

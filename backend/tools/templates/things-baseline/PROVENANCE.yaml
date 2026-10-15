@@ -1,0 +1,26 @@
+schemaVersion: 1
+loopId: L0
+source:
+  repository: {{SOURCE_REPOSITORY}}
+  ref: {{SOURCE_REF}}
+  commit: {{SOURCE_COMMIT}}
+  tree: {{SOURCE_TREE}}
+  module: {{SOURCE_MODULE}}
+target:
+  module: {{TARGET_MODULE}}
+  saasModule: {{SAAS_MODULE}}
+dependencies:
+  shareModule: {{SHARE_MODULE}}
+  shareVersion: {{SHARE_VERSION}}
+license: AGPL-3.0
+files:
+  source: {{SOURCE_FILE_COUNT}}
+  target: {{TARGET_FILE_COUNT}}
+transforms:
+  corePrefixCount: {{CORE_PREFIX_COUNT}}
+  thingsPrefixCount: {{THINGS_PREFIX_COUNT}}
+  credentialLineCount: {{CREDENTIAL_LINE_COUNT}}
+  privateKeyBlockCount: {{PRIVATE_KEY_BLOCK_COUNT}}
+  vetFixCount: {{VET_FIX_COUNT}}
+  schemaFixtureIdentifierCount: {{SCHEMA_FIXTURE_IDENTIFIER_COUNT}}
+  nonYamlCredentialValueCount: {{NON_YAML_CREDENTIAL_VALUE_COUNT}}

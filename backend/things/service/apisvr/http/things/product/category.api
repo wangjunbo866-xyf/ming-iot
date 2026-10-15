@@ -1,0 +1,139 @@
+info(
+    title: "产品管理模块"
+    desc: "产品管理模块"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+@server(
+    group: things/product/category
+    prefix: /api/v1/things/product/category
+    accessCodePrefix: "thingsProductCategory"
+    accessNamePrefix: "产品品类"
+    accessGroup: "产品管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "新增产品品类"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler create
+    post /create (ProductCategory) returns ()
+    @doc(
+        summary: "更新产品品类"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler update
+    post /update (ProductCategory) returns ()
+    @doc(
+        summary: "删除产品品类"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+    @doc "获取产品品类列表"
+    @handler index
+    post /index (ProductCategoryIndexReq) returns (ProductCategoryIndexResp)
+    @doc "获取产品品类详情"
+    @handler read
+    post /read (WithIDChildren) returns (ProductCategory)
+    @doc(
+        summary: "批量更新产品品类物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler schemaMultiUpdate
+    post /schema/multi-update (ProductCategorySchemaMultiSaveReq) returns ()
+    @doc(
+        summary: "批量新增产品品类物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler schemaMultiCreate
+    post /schema/multi-create (ProductCategorySchemaMultiSaveReq) returns ()
+    @doc(
+        summary: "批量删除产品品类物模型"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler schemaMultiDelete
+    post /schema/multi-delete (ProductCategorySchemaMultiSaveReq) returns ()
+    @doc "获取产品品类物模型列表"
+    @handler schemaIndex
+    post /schema/index (ProductCategorySchemaIndexReq) returns (ProductCategorySchemaIndexResp)
+
+
+    @doc(
+        summary: "批量导入产品品类"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler multiImport
+    post /multi-import (ProductCategoryImportReq) returns (ImportResp)
+    @doc(
+        summary: "批量导出产品品类"
+        authType: "admin"
+        isNeedAuth: "true"
+    )
+    @handler multiExport
+    post /multi-export (ProductCategoryExportReq) returns (ProductCategoryExportResp)
+}
+
+type (
+    ProductCategoryImportReq{
+        Categories string  `json:"categories"`
+    }
+    ProductCategoryExportReq{
+        IDs []int64 `json:"ids,string,optional"`
+    }
+    ProductCategoryExportResp{
+        Categories string  `json:"categories"`
+    }
+
+    ProductCategorySchemaIndexReq{
+        ProductCategoryID int64    `json:"productCategoryID"`
+        WithFather bool  `json:"withFather,optional"`
+    }
+    ProductCategorySchemaIndexResp{
+        Identifiers []string `json:"identifiers"`
+    }
+
+    ProductCategorySchemaMultiSaveReq{
+        ProductCategoryID int64    `json:"productCategoryID"`
+        Identifiers []string `json:"identifiers"`
+    }
+
+    ProductCategory  {
+        ID int64 `json:"id,optional"`
+        ParentID int64 `json:"parentID,optional"`
+        IDPath []int64 `json:"idPath,optional"`//只读
+        Name string `json:"name,optional"`
+        Desc *string `json:"desc,optional"`                       //描述
+        HeadImg  string `json:"headImg,optional"`        // 用户头像
+        IsUpdateHeadImg  bool `json:"isUpdateHeadImg,omitempty,optional"`        // 用户头像
+        IsLeaf int64 `json:"isLeaf,optional"`
+        Order     int64 `json:"order,optional"`//排序,必须大于等于1,为0代表不修改
+        DeviceCount int64 `json:"deviceCount,optional"`//设备数量
+        Children []*ProductCategory `json:"children,optional"`
+    }
+
+
+    ProductCategoryIndexReq  {
+        Page *PageInfo `json:"page,optional"`           //分页信息,只获取一个则不填
+        Name string `json:"name,optional"` //过滤产品名称
+        ParentID int64 `json:"parentID,optional"`
+        IDs []int64 `json:"ids,optional"`//id过滤
+        ProjectID int64 `json:"projectID,string,optional"`                            //项目id,只获取项目下有设备的
+    }
+
+    ProductCategoryIndexResp  {
+        List []*ProductCategory `json:"list"`    //产品信息
+        Total int64 `json:"total,optional"`  //拥有的总数
+        Num int64 `json:"num,optional"`      //返回的数量
+    }
+)

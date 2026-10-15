@@ -1,0 +1,487 @@
+info(
+	title: "用户管理模块"
+	desc: "用户管理相关接口，包括创建账号，登录，获取验证码，获取用户列表，获取单个用户信息，更新用户信息，删除用户"
+	author: "L"
+	email: "174805676@qq.com"
+	version: "v0.1.0"
+)
+
+@server (
+	group: system/user/self
+	prefix: /api/v1/system/user/self
+	accessCode: "systemUserSelf"
+	accessName: "用户基础操作"
+	accessGroup: "用户管理"
+	defaultAuthType: "all"
+	defaultNeedAuth: "false"
+	middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "用户登出"
+        description: "清除当前登录用户的会话与令牌，使签发的访问令牌失效"
+        authType: "all"
+        resource: "user"
+        action: "logout"
+        group: "system/user/self"
+        recordLogMode: "2"
+    )
+    @handler logout
+    post /logout ()
+
+	@doc(
+		summary: "获取用户应用列表"
+		description: "按当前用户角色可见的应用编号筛选本租户开通应用并返回应用详情列表"
+		authType: "all"
+		resource: "app"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler appIndex
+	post /app/index () returns (AppInfoIndexResp)
+
+	@doc(
+		summary: "获取用户模块列表"
+		description: "按当前用户在应用下的角色权限返回可见模块，可附带每个模块的菜单列表"
+		authType: "all"
+		resource: "module"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler moduleIndex
+	post /module/index (UserModuleIndexReq) returns (TenantModuleInfoIndexResp)
+	@doc(
+		summary: "获取用户菜单列表"
+		description: "按模块编号和当前用户角色权限返回租户应用菜单，并以树形结构组织返回"
+		authType: "all"
+		resource: "module"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler menuIndex
+	post /menu/index (UserMenuIndexReq) returns (TenantAppMenuIndexResp)
+	@doc(
+		summary: "获取用户授权树"
+		description: "汇聚当前用户角色或所属租户的授权码，返回按模块聚合的访问授权树"
+		authType: "all"
+		resource: "access"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler accessTree
+	post /access/tree () returns (AccessTreeResp)
+	@doc(
+		summary: "获取用户信息"
+		description: "读取当前登录用户的资料，可按需附带角色、租户、项目和部门信息"
+		authType: "all"
+		resource: "user"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler read
+	post /read (UserSelfReadReq) returns (UserInfo)
+	@doc(
+		summary: "更新用户基本数据"
+		description: "当前用户修改自己的昵称、头像等基本资料，用户编号固定为登录用户不可更改"
+		authType: "all"
+		resource: "user"
+		action: "update"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler update
+	post /update (UserInfo) returns ()
+	@doc(
+		summary: "注销用户"
+		description: "当前用户以管理员上下文删除自己账号，注销后该用户记录被物理删除"
+		authType: "all"
+		resource: "user"
+		action: "delete"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler cancel
+	post /cancel () returns ()
+	@doc(
+		summary: "更新用户密码"
+		description: "通过原密码或手机邮箱验证码校验后为当前用户设置新登录密码"
+		authType: "all"
+		resource: "user"
+		action: "reset-password"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler changePwd
+	post /change-pwd (UserChangePwdReq) returns ()
+
+	@doc(
+		summary: "绑定账号"
+		description: "为当前登录用户绑定手机号、邮箱或第三方登录账号，需通过对应验证码校验"
+		authType: "all"
+		resource: "user"
+		action: "bind"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler bindAccount
+	post /bind-account (UserBindAccountReq) returns ()
+
+	@doc(
+		summary: "申请用户区域权限"
+		description: "当前用户提交指定区域的数据权限申请，申请进入待审批流程"
+		authType: "all"
+		resource: "area"
+		action: "create"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler areaApplyCreate
+	post /area/apply/create (UserAreaApplyCreateReq) returns ()
+
+	@doc(
+		summary: "用户消息批量已读"
+		description: "按消息编号列表把当前用户的站内信批量标记为已读"
+		authType: "all"
+		resource: "message"
+		action: "update"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler messageMultiIsRead
+	post /message/multi-is-read (IDList) returns ()
+	@doc(
+		summary: "用户消息统计"
+		description: "按消息分组统计当前用户未读与已读站内信数量，用于消息中心徽标"
+		authType: "all"
+		resource: "message"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler messageStatistics
+	post /message/statistics () returns (UserMessageStatisticsResp)
+
+	@doc(
+		summary: "上报 uni-push 客户端 ID（platform=unbind 为解绑当前用户与本机 cid）"
+		description: "登记或解除当前用户与推送客户端标识的绑定关系，用于站内推送通道选择"
+		authType: "all"
+		resource: "message"
+		action: "bind"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler pushClientReport
+	post /push-client/report (UserPushClientReportReq) returns ()
+	@doc(
+		summary: "用户消息列表"
+		description: "分页查询当前用户的站内信，支持按分组、通知类型、已读状态和时间范围过滤"
+		authType: "all"
+		resource: "message"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler messageIndex
+	post /message/index (UserMessageIndexReq) returns (UserMessageIndexResp)
+
+	@doc(
+		summary: "获取用户配置详情"
+		description: "按配置编号读取当前用户的个性化配置，可附带可见的项目列表"
+		authType: "all"
+		resource: "user"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler profileRead
+	post /profile/read (UserProfileReadReq) returns (UserProfileReadResp)
+	@doc(
+		summary: "更新用户配置"
+		description: "写入或覆盖当前用户指定编号下的个性化配置参数"
+		authType: "all"
+		resource: "user"
+		action: "update"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler profileUpdate
+	post /profile/update (UserProfile) returns ()
+	@doc(
+		summary: "获取用户配置列表"
+		description: "按编号集合批量获取当前用户的个性化配置列表"
+		authType: "all"
+		resource: "user"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler profileIndex
+	post /profile/index (UserProfileIndexReq) returns (UserProfileIndexResp)
+
+	@doc(
+		summary: "精准搜索用户"
+		description: "按账号精确查找单个用户，命中时返回其基本资料，未命中返回未找到"
+		authType: "all"
+		resource: "user"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler userSearch
+	post /user/search (UserSearchReq) returns (UserSearchResp)
+}
+
+@server (
+	group: system/user/self
+	prefix: /api/v1/system/user/self
+	middleware:  InitCtxsWare
+)
+service api {
+	@doc(
+		summary: "获取验证码"
+		description: "按用途生成图形或短信邮箱验证码，返回验证码编号、过期时间和图形验证码图片地址"
+		authType: "public"
+		resource: "user"
+		action: "captcha"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler captcha
+	post /captcha (UserCaptchaReq) returns (UserCaptchaResp)
+
+	@doc(
+		summary: "用户登录"
+		description: "校验账号密码或第三方登录凭证，签发访问令牌并记录登录日志与登录设备信息"
+		authType: "public"
+		resource: "user"
+		action: "login"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler login
+	post /login (UserLoginReq) returns (UserLoginResp)
+
+	@doc(
+		summary: "用户注册"
+		description: "注册新账号并可选自动登录签发令牌，同时写入注册自动登录日志"
+		authType: "public"
+		resource: "user"
+		action: "register"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler register
+	post /register (UserRegisterReq) returns (UserLoginResp)
+	@doc(
+		summary: "忘记密码"
+		description: "通过手机号或邮箱验证码校验后重置账号登录密码"
+		authType: "public"
+		resource: "user"
+		action: "reset-password"
+		group: "system/user/self"
+		recordLogMode: "2"
+	)
+	@handler forgetPwd
+	post /forget-pwd (UserForgetPwdReq) returns ()
+
+	@doc(
+		summary: "获取用户应用详情"
+		description: "按应用编号或第三方应用 ID 读取应用基本信息和租户自定义配置及归属租户列表"
+		authType: "public"
+		resource: "app"
+		action: "view"
+		group: "system/user/self"
+		recordLogMode: "1"
+	)
+	@handler appRead
+	post /app/read (UserSelfAppReadReq) returns (UserSelfAppReadResp)
+}
+
+type (
+	UserSearchReq{
+		Account string  `json:"account"`
+	}
+	UserSearchResp{
+		UserID         int64  `json:"userID,string,optional"`        // 用户id
+		UserName    string `json:"userName,optional"`          // 用户名(唯一)
+		NickName    string `json:"nickName,optional"`          // 用户的昵称
+		HeadImg  string `json:"headImg,optional"`        // 用户头像
+		Status int64  `json:"status,optional"`
+	}
+	UserSelfAppReadReq{
+		Code string `json:"code,optional"`//应用编号
+		AppID string `json:"appID,optional"`//第三方应用ID
+		Type string `json:"type,optional"`//  app:应用  mini:小程序
+		SubType string `json:"subType,optional"`//wx:微信小程序  dingTalk:钉钉小程序
+	}
+	UserSelfAppReadResp{
+		Code string `json:"code"`                               // 应用编号
+		Name string `json:"name,optional"`                      // 名称
+		Config string `json:"config,optional"`                  // 自定义配置json
+		TenantCodes []string `json:"tenantCodes,optional"`//拥有这个app的租户列表
+	}
+
+	UserAreaApplyCreateReq{
+		AreaID int64 `json:"areaID,string"`
+		AuthType int64 `json:"authType"` //1:读权限,只能读,不能写 4:管理权限,可以修改别人的权限
+	}
+
+	UserSelfReadReq{
+		WithRoles bool  `json:"withRoles,optional"`
+		WithTenant bool `json:"withTenant,optional"`
+		WithProjects bool `json:"withProjects,optional"`
+		WithDepts bool  `json:"withDepts,optional"`
+	}
+	TenantModuleInfoIndexResp{
+		List []*TenantModuleInfo `json:"list"` //菜单列表
+		PageResp
+	}
+	UserModuleIndexReq{
+		WithMenus bool `json:"withMenus,optional"`//同时返回模块下的菜单列表
+	}
+	UserMenuIndexReq{
+		ModuleCode string `json:"moduleCode,optional"`                               // 应用编号
+		IsCommon   int64 `json:"isCommon,optional"`  // 是否常用菜单 1-是 2-否
+	}
+    UserResourceReadResp{
+		Roles []*RoleInfo `json:"roles"` //角色列表
+		Info  *UserInfo `json:"info"`//用户信息
+    }
+	UserChangePwdReq {
+		Type string `json:"type,options=phone|email|pwd"` 	//验证方式:	phone手机号 email邮箱  pwd:原密码
+		Code    string `json:"code,optional"`	//验证码    微信登录填code 账号密码登录时填写密码
+		CodeID  string `json:"codeID,optional"`	//验证码编号 微信登录填state
+		Password  string `json:"password,optional"`	//密码
+		OldPassword string  `json:"oldPassword,optional"` //pwd方式需要填写 如果原来没有设置过密码可以不填 输入原密码修改密码(md5格式并需要输入图像验证码)
+	}
+	UserCaptchaReq  {
+		Account string `json:"account,optional"`               //短信验证时填写手机号,邮箱验证时填写邮箱
+		Type    string `json:"type,options=phone|image|email"` //验证方式:短信验证,图片验证码
+		Use     string `json:"use,options=login|register|changePwd|forgetPwd|bindAccount"`     //用途
+		Code    string `json:"code,optional"`                  //验证码    微信邮箱验证登录填code
+		CodeID  string `json:"codeID,optional"`                //验证码编号 微信邮箱验证登录填state
+	}
+
+	UserCaptchaResp {
+		CodeID string `json:"codeID"`       //验证码编号
+		Url    string `json:"url,optional"` //图片验证码url
+		Expire int64  `json:"expire"`       //过期时间
+	}
+	UserLoginReq {
+		Account    string `json:"account,optional"`                               //登录账号(支持用户名,手机号,邮箱) 账号密码登录时需要填写
+		PwdType   int32  `json:"pwdType,optional"`                              //账号密码登录时需要填写.0,无密码 1，明文 2，md5加密
+		Password  string `json:"password,optional"`                             //密码，建议md5转换 密码登录时需要填写
+		LoginType string `json:"loginType,options=phone|wxOpen|wxIn|wxMiniP|dingApp|pwd|email|huawei|jwt|google|apple|github"` //验证类型 phone 手机号 wxOpen 微信开放平台 wxIn 微信内 wxMiniP 微信小程序 pwd 账号密码 email 邮箱 huawei 华为 jwt 第三方jwt google Google apple Apple github GitHub
+		Code      string `json:"code,optional"`                                 //验证码    微信邮箱验证登录填code
+		CodeID    string `json:"codeID,optional"`                               //验证码编号 微信邮箱验证登录填state
+	}
+
+	UserLoginResp {
+		Info  UserInfo `json:"info"`  //用户信息
+		Roles []*RoleInfo `json:"roles"` //角色列表
+		Depts []*DeptInfo `json:"depts,omitempty"`
+		Token JwtToken `json:"token"` //用户token
+	}
+
+	JwtToken {
+		AccessToken  string `json:"accessToken,omitempty"`//用户token
+		AccessExpire int64  `json:"accessExpire,string,omitempty"`//token过期时间
+		RefreshAfter int64  `json:"refreshAfter,string,omitempty"`//token刷新时间
+	}
+)
+type (
+	UserProfileReadReq{
+		Code string `json:"code"`
+		WithProjects bool `json:"withProjects,optional"`
+	}
+	UserProfileReadResp{
+		UserProfile
+		Projects []*ProjectInfo `json:"projects,optional,omitempty"`    //项目列表
+	}
+	UserProfile{
+		Code string `json:"code"`
+		Params string  `json:"params"`
+	}
+	UserProfileIndexReq{
+	 	Codes []string `json:"codes"`
+	}
+	UserProfileIndexResp{
+		Profiles []*UserProfile `json:"profiles"`
+	}
+)
+
+
+type (
+	UserPushClientReportReq {
+		PushClientId string `json:"pushClientId"`
+		Platform     string `json:"platform,options=android|ios|harmony|harmonyos|unbind"`
+		AppId        string `json:"appId,optional"`
+		AppVersion   string `json:"appVersion,optional"`
+	}
+)
+
+type (
+	UserMessageIndexReq {
+		Page *PageInfo `json:"page,optional"`
+		Group string `json:"group,optional"`
+		NotifyCode string `json:"notifyCode,optional"`
+		NotifyType string `json:"notifyType,optional"`
+		IsRead int64 `json:"isRead,optional"`
+		Str1 string `json:"str1,optional"`
+		Str2 string `json:"str2,optional"`
+		Str3 string `json:"str3,optional"`
+		CreatedTime *TimeRange `json:"createdTime,optional"`
+	}
+	UserMessageStatisticsResp{
+		List []*UserMessageStatistics `json:"list"`
+	}
+	UserMessageStatistics{
+		Group string `json:"group"`
+		Count int64 `json:"count"`
+	}
+	UserMessage {
+		ID  int64 `json:"id"`
+		UserID  int64 `json:"userID,string"`
+		IsRead  int64 `json:"isRead"`
+		*MessageInfo
+	}
+	UserMessageIndexResp{
+		PageResp
+		List []*UserMessage `json:"list"`
+	}
+)
+
+type (
+	//登录信息注册,注册第一步(注册核心登录信息) 返回一个jwt用来第二步注册 第一步注册成功后就可以登录了,第二步注册是填写信息
+	UserRegisterReq {
+		 //注册方式:	phone手机号注册 wxOpen 微信开放平台登录 wxIn 微信内登录 wxMiniP 微信小程序 pwd 账号密码注册 huawei 华为
+		RegType string `json:"regType,options=phone|email|wxOpen|wxIn|wxMiniP|pwd|dingApp|huawei|jwt|google|apple|github"`
+		Account    string `json:"account,optional"`	//手机号注册时填写手机号 账号密码注册时填写userName
+		Code    string `json:"code"`	//验证码    微信登录填code 账号密码登录时填写密码
+		CodeID  string `json:"codeID,optional"`	//验证码编号 微信登录填state
+		Password  string `json:"password,optional"`	//密码
+		Expand map[string ]string `json:"expand,optional"`//拓展, 微信登录方式 phoneCode:获取手机号code  手机号和邮箱注册: wxOpenCode:如果需要同时绑定微信则在这里填写开放平台的用户code huaweiCode:如果需要同时绑定华为则在这里填写用户code
+		Info *UserInfo `json:"info,optional"` //用户信息
+        IsWithLogin bool  `json:"isWithLogin,optional"`//注册成功同时返回token,自动登录
+    }
+
+	UserForgetPwdReq{
+		Type string `json:"type,options=phone|email"` 	//验证方式:	phone手机号 email邮箱
+		Account    string `json:"account,optional"`		//手机号注册时填写手机号 账号密码注册时填写userName
+		Code    string `json:"code,optional"`  			//验证码    微信登录填code 账号密码登录时填写密码
+		CodeID  string `json:"codeID,optional"`   		//验证码编号 微信登录填state
+		Password  string `json:"password"`           	//密码
+	}
+
+	UserBindAccountReq{
+		Type string `json:"type,options=phone|email|wxOpen|wxIn|wxMiniP|dingApp|huawei|google|apple|github"`  	//验证方式:phone手机号注册 wxOpen 微信开放平台登录 wxIn 微信内 wxMiniP 微信小程序 huawei 华为 google Google apple Apple github GitHub
+		Account    string `json:"account,optional"`		//手机号注册时填写手机号 email填写邮箱
+		Code    string `json:"code,optional"`  			//验证码    微信登录填code 账号密码登录时填写密码
+		CodeID  string `json:"codeID,optional"`   		//验证码编号 微信登录填state
+	}
+)

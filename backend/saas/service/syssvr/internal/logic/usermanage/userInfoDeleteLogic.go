@@ -1,0 +1,117 @@
+package usermanagelogic
+
+import (
+	"context"
+
+	projectmanagelogic "gitee.com/ming-iot/saas/service/syssvr/internal/logic/projectmanage"
+	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/saas/share/topics"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+	"github.com/spf13/cast"
+	"gorm.io/gorm"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type UserInfoDeleteLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+	UiDB *relationDB.UserInfoRepo
+}
+
+func NewUserInfoDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfoDeleteLogic {
+	return &UserInfoDeleteLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+		UiDB:   relationDB.NewUserInfoRepo(ctx),
+	}
+}
+
+func (l *UserInfoDeleteLogic) UserInfoDelete(in *sys.UserInfoDeleteReq) (*sys.Empty, error) {
+	uc := ctxs.GetUserCtx(l.ctx)
+	ti, err := l.svcCtx.TenantCache.GetData(l.ctx, uc.TenantCode)
+	if err != nil {
+		return nil, err
+	}
+	if ti.AdminUserID == in.UserID {
+		return nil, errors.Permissions.AddMsg("超级管理员不允许删除")
+	}
+
+	tc, err := l.svcCtx.TenantConfigCache.GetData(l.ctx, uc.TenantCode)
+	if err != nil {
+		return nil, err
+	}
+	pis, err := relationDB.NewProjectInfoRepo(l.ctx).FindByFilter(l.ctx, relationDB.ProjectInfoFilter{AdminUserID: in.UserID}, nil)
+	if err != nil {
+		return nil, err
+	}
+	if tc.CheckUserDelete == 1 {
+
+		if len(pis) > 0 {
+			return nil, errors.Permissions.AddMsg("名下还有项目,需要先转让项目给其他人才可以注销")
+		}
+	}
+
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		uidb := relationDB.NewUserInfoRepo(tx)
+		err := uidb.Delete(ctxs.WithRoot(l.ctx), cast.ToInt64(in.UserID))
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewUserProfileRepo(tx).DeleteByFilter(ctxs.WithRoot(l.ctx),
+			relationDB.UserProfileFilter{UserID: in.UserID})
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewDataProjectRepo(tx).DeleteByFilter(ctxs.WithRoot(l.ctx),
+			relationDB.DataProjectFilter{Target: &relationDB.Target{Type: def.TargetUser, ID: in.UserID}})
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewDataAreaRepo(tx).DeleteByFilter(ctxs.WithRoot(l.ctx),
+			relationDB.DataAreaFilter{TargetType: def.TargetUser, TargetID: in.UserID})
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewUserRoleRepo(tx).DeleteByFilter(ctxs.WithRoot(l.ctx),
+			relationDB.UserRoleFilter{UserID: in.UserID})
+		if err != nil {
+			return err
+		}
+		for _, v := range pis {
+			if tc.CheckUserDelete != 1 { //如果是不检查项目下的设备,那么就直接全部删除
+				err = projectmanagelogic.ProjectDelete(ctxs.WithRoot(l.ctx), tx, int64(v.ProjectID))
+				if err != nil {
+					return err
+				}
+				err = l.svcCtx.FastEvent.Publish(l.ctx, topics.CoreProjectInfoDelete, v.ProjectID)
+				if err != nil {
+					l.Error(err)
+				}
+			}
+		}
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	l.Infof("%s.delete uid=%v", utils.FuncName(), in.UserID)
+	err = l.svcCtx.FastEvent.Publish(l.ctx, topics.CoreUserDelete, def.IDs{IDs: []int64{in.UserID}})
+	if err != nil {
+		l.Errorf("Publish userDelete %v err:%v", in, err)
+	}
+	l.svcCtx.UserCache.SetData(l.ctx, in.UserID, nil)
+	l.svcCtx.UsersCache.SetData(l.ctx, in.UserID, nil)
+	l.svcCtx.UserToken.KickedOut(l.ctx, in.UserID)
+
+	return &sys.Empty{}, nil
+}

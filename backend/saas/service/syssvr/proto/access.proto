@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+
+service AccessManage{
+  rpc apiInfoCreate(ApiInfo) returns(WithID);   //添加接口
+  rpc apiInfoIndex(ApiInfoIndexReq) returns(ApiInfoIndexResp); //获取接口列表
+  rpc apiInfoUpdate(ApiInfo) returns(Empty);   //更新接口
+  rpc apiInfoDelete(WithID) returns(Empty);   //删除接口
+
+  rpc accessInfoMultiImport(AccessInfoMultiImportReq) returns(AccessInfoMultiImportResp);   //添加接口
+  rpc accessInfoCreate(AccessInfo) returns(WithID);   //添加接口
+  rpc accessInfoIndex(AccessInfoIndexReq) returns(AccessInfoIndexResp); //获取接口列表
+  rpc accessInfoUpdate(AccessInfo) returns(Empty);   //更新接口
+  rpc accessInfoDelete(WithID) returns(Empty);   //删除接口
+}
+
+message AuthApiInfo{
+  string route = 1;
+  string method = 2;//大写 http 方法
+}
+
+message ApiInfoIndexReq{
+  PageInfo page = 1;// 分页信息
+  string route = 2; // 接口路由
+  string method = 3; // 接口请求方式: POST GET
+  string name = 4;  // 接口名称
+  int64 authType = 5;// 1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+  repeated int64 apiIDs = 6;//API列表数据
+  string accessCode =7;
+}
+
+message ApiInfo{
+  string accessCode = 7;
+  int64 id = 1;            // 接口编号
+  string route = 2;        // 接口路由
+  string method = 3;        // 接口请求方式: POST GET
+  string name = 5;         // 接口名称
+  int64  businessType = 6; // 业务类型（1新增 2修改 3删除 4查询 5其它)
+  int64 recordLogMode = 8; //1为自动模式(读取类型忽略,其他类型记录日志) 2全部记录 3不记录
+  string desc = 9;//描述
+}
+
+message ApiInfoIndexResp{
+  repeated ApiInfo list = 1; // 接口列表数据
+  int64 total = 2;           // 接口列表总记录数
+}
+
+message AccessInfoMultiImportReq{
+  string module =1;//模块
+  string access =2;
+}
+
+message AccessInfoMultiImportResp{
+  int64 total=1;
+  int64 errCount=2;
+  int64 ignoreCount=3;
+  int64 succCount=4;
+}
+
+message AccessInfoIndexReq{
+  PageInfo page = 1;// 分页信息
+  string module =2;//模块
+  string group = 3; // 接口分组
+  string code =4;
+  repeated string codes = 7;
+  string name = 8;  // 接口名称
+  int64 isNeedAuth = 9;//是否需要权限认证 1是 2否
+  repeated int64 authTypes = 10;// 1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+  bool WithApis =11;
+}
+
+message AccessInfo{
+  int64 id = 1;// 编号
+  string module =2;//模块
+  string group = 3;// 分组
+  string code = 4;//编码
+  string name = 5;// 名称
+  int64 isNeedAuth = 6;//是否需要权限认证 1是 2否
+  int64 authType = 7;// 1(all) 全部人可以操作 2(admin) 默认授予租户管理员权限 3(superAdmin,supper) default租户才可以操作(超管是跨租户的)
+  string desc = 8;//描述
+  repeated ApiInfo Apis = 9;
+}
+
+message AccessInfoIndexResp{
+  repeated AccessInfo list = 1; // 接口列表数据
+  int64 total = 2;           // 接口列表总记录数
+}
+

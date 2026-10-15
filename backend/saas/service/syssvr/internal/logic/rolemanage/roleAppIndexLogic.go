@@ -1,0 +1,38 @@
+package rolemanagelogic
+
+import (
+	"context"
+	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
+
+	"gitee.com/ming-iot/saas/service/syssvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type RoleAppIndexLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewRoleAppIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RoleAppIndexLogic {
+	return &RoleAppIndexLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *RoleAppIndexLogic) RoleAppIndex(in *sys.RoleAppIndexReq) (*sys.RoleAppIndexResp, error) {
+	var appCodes []string
+	ra, err := relationDB.NewRoleAppRepo(l.ctx).FindByFilter(l.ctx,
+		relationDB.RoleAppFilter{RoleIDs: in.Ids, RoleID: in.Id}, nil)
+	if err != nil {
+		return nil, err
+	}
+	for _, v := range ra {
+		appCodes = append(appCodes, v.AppCode)
+	}
+	return &sys.RoleAppIndexResp{AppCodes: appCodes, Total: int64(len(appCodes))}, nil
+}

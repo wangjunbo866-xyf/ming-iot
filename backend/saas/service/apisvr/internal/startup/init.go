@@ -1,0 +1,32 @@
+package startup
+
+import (
+	"context"
+	"gitee.com/ming-iot/saas/service/apisvr/internal/svc"
+	"gitee.com/ming-iot/saas/service/syssvr/sysExport"
+	"gitee.com/ming-iot/saas/share/domain/slot"
+	ws "gitee.com/ming-iot/saas/share/websocket"
+	"github.com/zeromicro/go-zero/core/logx"
+	"time"
+)
+
+type retStu struct {
+	List []map[string]any `json:"list"`
+}
+
+func Init(svcCtx *svc.ServiceContext) {
+
+	ws.RegisterSubscribeCheck2(func(ctx context.Context, in *ws.SubscribeInfo) ([]map[string]any, error) {
+		ctx, c := context.WithTimeout(ctx, 2*time.Second)
+		defer c()
+		sl, err := svcCtx.Slot.GetData(ctx, sysExport.GenSlotCacheKey(slot.CodeUserSubscribe, in.Code))
+		if err != nil {
+			return nil, err
+		}
+		var ret retStu
+		err = sl.Request(ctx, in, &ret)
+		return ret.List, err
+	})
+	err := svcCtx.ServerMsg.Start()
+	logx.Must(err)
+}

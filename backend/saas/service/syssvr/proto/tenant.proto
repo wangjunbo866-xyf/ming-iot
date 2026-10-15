@@ -1,0 +1,294 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import "base.proto";
+import "user.proto";
+import "module.proto";
+import "google/protobuf/wrappers.proto";
+
+service TenantManage {
+  //新增区域
+  rpc tenantInfoCreate (TenantInfoCreateReq) returns (WithID);
+  //更新区域
+  rpc tenantInfoUpdate (TenantInfo) returns (Empty);
+  //删除区域
+  rpc tenantInfoDelete (WithIDCode) returns (Empty);
+  //获取租户信息详情
+  rpc tenantInfoRead (WithIDCode) returns (TenantInfo);
+  //获取租户信息列表
+  rpc tenantInfoIndex (TenantInfoIndexReq) returns (TenantInfoIndexResp);
+
+  rpc tenantConfigUpdate(TenantConfig)returns(Empty);
+  rpc tenantConfigRead(WithCode)returns(TenantConfig);
+
+  rpc tenantAccessMultiDelete(TenantAccessMultiSaveReq) returns (Empty);  //更新角色API权限
+  rpc tenantAccessMultiCreate(TenantAccessMultiSaveReq) returns (Empty);  //更新角色API权限
+  rpc tenantAccessMultiUpdate(TenantAccessMultiSaveReq) returns (Empty);  //更新角色API权限
+  rpc tenantAccessIndex(TenantAccessIndexReq) returns (TenantAccessIndexResp); //获取角色API权限列表
+
+  rpc tenantAppIndex(TenantAppIndexReq) returns (TenantAppIndexResp); //获取租户APP权限列表
+  rpc tenantAppCreate(TenantAppInfo) returns(Empty); //添加角色
+  rpc tenantAppRead(TenantAppWithIDOrCode) returns(TenantAppInfo); //添加角色
+  rpc tenantAppUpdate(TenantAppInfo) returns(Empty); //添加角色
+  rpc tenantAppDelete(TenantAppWithIDOrCode) returns(Empty); //删除角色
+
+  rpc tenantAppModuleMultiCreate(TenantAppInfo) returns(Empty); //添加角色
+  rpc tenantAppModuleCreate(TenantModuleCreateReq) returns(Empty); //添加角色
+  rpc tenantAppModuleIndex(TenantModuleIndexReq) returns(TenantModuleIndexResp); //获取角色列表
+  rpc tenantAppModuleDelete(TenantModuleWithIDOrCode) returns(Empty); //删除角色
+
+  rpc tenantAppMenuCreate(TenantAppMenu) returns(WithID); //添加菜单
+  rpc tenantAppMenuIndex(TenantAppMenuIndexReq) returns(TenantAppMenuIndexResp); //获取菜单列表
+  rpc tenantAppMenuUpdate(TenantAppMenu) returns(Empty); //更新菜单
+  rpc tenantAppMenuDelete(WithAppCodeID) returns(Empty); //删除菜单
+
+
+
+  rpc tenantOpenCheckToken(TenantOpenCheckTokenReq) returns(TenantOpenCheckTokenResp);
+
+  rpc tenantOpenWebHook(WithCode)returns(TenantOpenWebHook);
+
+  rpc tenantAgreementIndex(TenantAgreementIndexReq) returns(TenantAgreementIndexResp); //获取协议列表
+  rpc tenantAgreementUpdate(TenantAgreement) returns(Empty); //更新协议
+  rpc tenantAgreementCreate(TenantAgreement) returns(WithID); //创建协议
+  rpc tenantAgreementRead(WithIDCode) returns(TenantAgreement); //获取协议详情
+  rpc tenantAgreementDelete(WithID) returns(Empty); //删除协议
+}
+
+message ThirdApp {
+  string version =1;// 应用版本
+  string versionDesc=2;//版本说明
+  string filePath=3;// 文件路径,拿来下载文件
+  bool isUpdateFilePath=4;// 文件路径,拿来下载文件
+}
+
+message AppleAppConfig {
+  string appID = 1;       // Bundle ID / Services ID
+  string teamID = 2;      // Apple Team ID
+  string keyID = 3;       // Apple Key ID
+  string privateKey = 4;  // Apple 私钥（PEM格式）
+  string redirectURI = 5; // 回调地址
+}
+
+message TenantAgreement{
+  int64 id =1;
+  string code =2;//协议编码
+  string name =3;//协议名称
+  string title =4;
+  string content = 5;
+}
+
+message TenantAgreementIndexReq{
+  PageInfo page =1;
+}
+
+message TenantAgreementIndexResp{
+  repeated TenantAgreement list =1;
+  int64 total= 2;
+}
+
+message TenantOpenCheckTokenReq{
+  string token = 1;
+  string ip = 2;
+}
+
+message TenantOpenCheckTokenResp{
+  int64 userID = 1;
+  string tenantCode = 5;//租户编码
+  int64 isAdmin = 6;//是否是超级管理员
+  string userName = 7;//用户名
+}
+
+message TenantOpenWebHook{
+  int64 id =1;
+  string tenantCode =2;
+  string code =3;
+  string uri =5;
+  repeated string hosts =6;
+  string desc =7;
+  map<string,string> handler =8;
+}
+
+message TenantInfoCreateReq{
+  TenantInfo info = 1;
+  UserInfo adminUserInfo = 2;
+}
+
+message TenantInfo{
+  int64 id = 1;
+  string name = 2;
+  string code = 3;
+  int64 adminUserID = 4;
+  int64 adminRoleID = 5;
+  google.protobuf.StringValue desc = 6;
+  int64 defaultProjectID = 7;
+  int64 defaultAreaID = 8;
+  string backgroundImg =9;
+  bool isUpdateBackgroundImg = 10;
+  string backgroundColour =15;//背景颜色
+  google.protobuf.StringValue backgroundDesc =19;//背景描述
+  string logoImg =11;
+  bool isUpdateLogoImg =12;
+  string title =13;
+  string titleEn =14;
+  int64 createdTime =16;
+  int64 status =17;
+  string footer =18;//页尾
+  int64 userCount =20;//用户统计
+}
+
+message TenantInfoIndexReq{
+  PageInfo page = 1;//分页信息
+  string name = 2;
+  string code = 3;
+  int64 status = 4;
+  string appCode =5;//过滤绑定了指定app的租户
+}
+
+message TenantInfoIndexResp{
+  repeated  TenantInfo list =1;
+  int64 total = 2;
+}
+
+message TenantConfig{
+  int64 id = 1;
+  string name = 2;
+  string tenantCode = 3;//租户编码
+  int64 registerRoleID=4;//注册分配的角色id
+  string weatherKey =7;//和风天气秘钥 参考: https://dev.qweather.com/
+  int64 isSsl =12;//是否单会话登录(默认为2) Single Session Login
+  int64 checkUserDelete=5;//1(禁止项目管理员注销账号) 2(不禁止项目管理员注销账号)
+  google.protobuf.Int64Value deviceLimit = 8;//租户下的设备数量限制,0为不限制
+  repeated  TenantConfigRegisterAutoCreateProject registerAutoCreateProject =6;//注册自动创建项目
+  repeated int64 feedbackNotifyUserIDs = 9;//产生问题反馈通知的用户ID列表
+  google.protobuf.Int64Value operLogKeepDays =10;//操作日志保留时间,如果为0则为永久
+  google.protobuf.Int64Value loginLogKeepDays =11;//登录日志保留时间,如果为0则为永久
+
+}
+
+message TenantConfigRegisterAutoCreateProject{
+    int64 id =4;
+    string projectName =1;
+    int64 isSysCreated =2; //是否是系统创建的,系统创建的只有管理员可以删除
+    repeated TenantConfigRegisterAutoCreateArea areas=3;
+}
+
+message TenantConfigRegisterAutoCreateArea{
+  int64 id =5;
+  string  areaName =1;
+  string  areaImg =2;
+  int64   isSysCreated = 3;//是否是系统创建的,系统创建的只有管理员可以删除
+  bool isUpdateAreaImg=4;//是否更新区域图片
+}
+
+message TenantAccessMultiSaveReq{
+  string code = 1;
+  repeated  string  accessCodes = 4;
+}
+
+message TenantAccessIndexReq{
+  string code = 1;
+}
+
+message TenantAccessIndexResp{
+  repeated string accessCodes = 1;
+}
+
+message TenantAppInfo{
+  int64 id =6;
+  string code = 1;
+  string appCode = 2;
+  repeated TenantAppModule modules = 3;//模块列表
+  ThirdAppConfig dingMini =4;//钉钉小程序
+  ThirdAppConfig wxMini =5;//微信小程序
+  ThirdAppConfig wxOpen =7;//微信开放 web app需要填写
+  ThirdApp android =10; //安卓应用
+  ThirdAppConfig huawei =12; //华为应用
+  ThirdAppConfig google =13; //Google登录配置
+  ThirdAppConfig github =14; //GitHub登录配置
+  AppleAppConfig apple =15;  //Apple登录配置
+  repeated string LoginTypes =8;//支持的登录类型(不填支持全部登录方式):  	 "email":邮箱 "phone":手机号  "wxMiniP":微信小程序  "wxOpen": 微信开放平台登录   "dingApp":钉钉应用(包含小程序,h5等方式)  "pwd":账号密码注册  "huawei":华为应用登录  "google":Google  "github":GitHub  "apple":Apple
+  int64 isAutoRegister =9;//登录未注册是否自动注册
+  string config =11;//自定义配置json
+}
+
+message TenantAppWithIDOrCode{
+  string code = 1;
+  string appCode = 2;
+  int64 id = 3;
+}
+
+message TenantAppModule{
+  string code = 1;
+  repeated int64 menuIDs =2;
+}
+
+message TenantAppIndexReq{
+  PageInfo page = 1;//分页信息
+  string code = 2;
+  repeated string appCodes = 3;
+  string type=4;//应用类型 web:web页面  app:应用  mini:小程序
+  string subType=5;//子类型  wx:微信小程序  dingTalk:钉钉小程序
+  string appID =6;
+}
+
+message TenantAppIndexResp{
+  int64 total = 1;
+  repeated TenantAppInfo list = 2;//app列表数据
+}
+
+message TenantAppMultiUpdateReq{
+  string code = 2;
+  repeated string appCodes = 3;
+}
+
+message TenantModuleIndexReq{
+  PageInfo page = 1;//分页信息
+  string code = 2;
+  string appCode =3;
+  repeated string moduleCodes = 4;
+}
+
+message TenantModuleIndexResp{
+  repeated ModuleInfo list = 1;
+}
+
+message TenantAppMenuIndexReq{
+  PageInfo page = 1;//分页信息
+  string code = 2;
+  string appCode =3;
+  string moduleCode =4;
+  bool isRetTree = 5;
+  repeated int64 menuIDs = 6;
+  int64 isCommon = 7;
+}
+
+message TenantAppMenuIndexResp{
+  repeated TenantAppMenu list = 1;
+}
+
+message TenantAppMenu{
+  int64 templateID = 1;
+  string code = 2;
+  string appCode =3;
+  MenuInfo info=4;
+  repeated TenantAppMenu children = 5;
+}
+
+message TenantModuleCreateReq{
+  string code = 1;
+  string appCode =2;
+  string moduleCode = 3;
+  repeated int64 menuIDs =4;
+}
+
+message TenantModuleWithIDOrCode{
+  string code = 1;
+  string appCode = 2;
+  string moduleCode = 3;
+  int64 id = 4;
+}
+

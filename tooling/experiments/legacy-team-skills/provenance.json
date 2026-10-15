@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "map_delivery": {
+    "status": "canonical",
+    "delivery_issue": "ming-iot#IKJMKJ",
+    "delivery_issue_url": "https://gitee.com/ming-industry/ming-iot/issues/IKJMKJ",
+    "source_repository": "git:gitee.com/ming-industry/ai-native",
+    "source_path": "skills/map-delivery",
+    "source_revision_before_cutover": "4277290d01083f983d41948b6703a9cea6bc67fd",
+    "legacy_source": {
+      "repository": "git:gitee.com/ming-industry/ming-iot-rd-docs",
+      "revision": "93889ad506bbe7575b8fa9c546a486a06e882544",
+      "path": ".agents/skills/map-delivery"
+    },
+    "documentation_migration_status": "completed",
+    "migration_complete": true,
+    "migration_record": "manifest.json#/documentation_migration",
+    "verification_record": "docs/validation.md",
+    "changes": [
+      "Locate the documentation worktree independently of the installed skill path",
+      "Keep registration and required-skill checks in the team configuration repository"
+    ]
+  }
+}

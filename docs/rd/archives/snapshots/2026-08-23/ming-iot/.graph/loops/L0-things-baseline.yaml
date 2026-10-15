@@ -1,0 +1,92 @@
+apiVersion: graph.ming.io/v1
+kind: Loop
+metadata:
+  id: L0-things-baseline
+  title: L0 Things compilation migration baseline
+spec:
+  lifecycle: active
+  dependsOn: []
+  scope:
+    owns:
+      - backend/go.work
+      - backend/go.work.sum
+      - backend/saas/go.mod
+      - backend/saas/go.sum
+      - backend/things/**
+      - backend/tools/cmd/thingsbaseline/**
+      - backend/tools/internal/thingsbaseline/**
+      - backend/tools/templates/things-baseline/**
+      - backend/tools/things-baseline.lock
+      - docs/superpowers/specs/2026-08-14-l0-things-compilation-migration-baseline-design.md
+      - docs/superpowers/specs/2026-08-19-thingsbaseline-isolated-build-and-go-proxy-design.md
+      - docs/superpowers/specs/2026-08-19-thingsbaseline-shared-go-cache-design.md
+      - docs/superpowers/plans/2026-08-14-l0-things-compilation-migration-baseline.md
+      - docs/superpowers/plans/2026-08-15-l0-schema-fixture-gate-recovery.md
+      - docs/superpowers/plans/2026-08-15-l0-final-review-fail-closed-recovery.md
+      - docs/superpowers/plans/2026-08-19-thingsbaseline-isolated-build-and-go-proxy.md
+      - docs/superpowers/plans/2026-08-19-thingsbaseline-shared-go-cache.md
+      - docs/superpowers/evidence/2026-08-14-l0-things-*.json
+      - docs/superpowers/evidence/2026-08-14-l0-things-*.md
+      - docs/superpowers/evidence/L0-things-baseline/**
+      - docs/superpowers/reviews/L0-things-baseline/**
+    watches:
+      - .graph/loops/L0-things-baseline.yaml
+      - .gitignore
+      - backend/tools/README.md
+      - backend/tools/go.mod
+      - backend/tools/go.sum
+    externalSources:
+      - path: ../things
+        access: read-only
+  gates:
+    - id: things-baseline
+      kind: command
+      required: true
+      validator:
+        id: thingsbaseline
+        version: v1
+        sourcePaths:
+          - backend/tools/cmd/thingsbaseline/**
+          - backend/tools/internal/thingsbaseline/**
+          - backend/tools/templates/things-baseline/**
+          - backend/tools/things-baseline.lock
+          - backend/tools/go.mod
+          - backend/tools/go.sum
+        artifacts:
+          - l0-things-evidence.json
+      workdir: backend/tools
+      argv:
+        - go
+        - run
+        - ./cmd/thingsbaseline
+        - verify
+        - --lock
+        - ./things-baseline.lock
+        - --source
+        - ../../../things
+        - --backend
+        - ..
+        - --evidence
+        - ${RUN_DIR}/l0-things-evidence.json
+      env:
+        GOWORK: "off"
+      timeout: 30m
+  evidence:
+    requiredForCompletion: true
+    subjectPaths:
+      - backend/go.work
+      - backend/go.work.sum
+      - backend/saas/go.mod
+      - backend/saas/go.sum
+      - backend/things/**
+      - backend/tools/cmd/thingsbaseline/**
+      - backend/tools/internal/thingsbaseline/**
+      - backend/tools/go.mod
+      - backend/tools/go.sum
+      - backend/tools/templates/things-baseline/**
+      - backend/tools/things-baseline.lock
+    canonical:
+      - docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline.json
+      - docs/superpowers/evidence/2026-08-14-l0-things-migration-baseline.md
+  review:
+    requiredForCompletion: true

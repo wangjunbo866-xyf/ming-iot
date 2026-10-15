@@ -1,0 +1,53 @@
+{
+  "schema_version": "ming_iot_local_share_source_freeze_v1",
+  "generated_at": "2026-08-27T11:45:00+08:00",
+  "source": {
+    "repository": "gitee.com/unitedrhino/share",
+    "tag": "v1.6.4",
+    "commit": "ece02ca9d6defd63356931a59e653950f27ac572",
+    "tree": "21bdb52ed508152cf440b8d8a3b3ae3943a4b84a",
+    "tracked_file_count": 255,
+    "ls_tree_sha256": "6a7d2b40e5a6f6fdeb7d7a3d2f01fe1994efab3aa2c2f52ba352c50f4c4a5a6c",
+    "archive_sha256": "8c90b2b3853ad86b422f9929d801d617645bac3dbf68f600e3736b3a32505acf",
+    "self_reference_file_count": 84,
+    "self_reference_path_list_sha256": "5d57488bf044c8659a7f032561371d6eac756edf89169ea23ffed340c32beb42",
+    "working_tree_clean": true,
+    "remote_tag_verified": true
+  },
+  "license_observation": {
+    "repository_level_license_file_present": false,
+    "repository_metadata_license": null,
+    "file_level_apache_2_headers": [
+      "utils/keyMatch.go",
+      "utils/notify/notify_linux.go",
+      "utils/notify/notify_other.go",
+      "utils/notify/notify_windows.go"
+    ],
+    "whole_repository_redistribution_authority_proven": false,
+    "decision": "BLOCK_SOURCE_COPY_AND_PUBLICATION_UNTIL_RIGHTS_HOLDER_AUTHORIZATION"
+  },
+  "target_snapshot": {
+    "repository": "gitee.com/ming-industry/ming-iot",
+    "commit": "61c9c1a928f23c97332ebf93ac84801591d170b9",
+    "working_tree_clean": true,
+    "backend_old_path_file_count": 1548,
+    "backend_old_path_breakdown": {
+      "backend/saas": 818,
+      "backend/things": 726,
+      "backend/tools": 4
+    },
+    "backend_go_file_count": 1539,
+    "backend_non_go_file_count": 9,
+    "all_tracked_old_path_file_count": 1553,
+    "all_tracked_old_path_list_sha256": "5d6a4fc25d343b03e3daaa12293096dd7c3b952b916abdf6264ca701ae30e3e2",
+    "historical_docs_old_path_file_count": 5
+  },
+  "freshness": {
+    "invalidated_by": [
+      "source tag v1.6.4 resolving to a different commit",
+      "source tree or tracked-file manifest digest changing",
+      "target commit changing before implementation without regenerating the target allowlist",
+      "a repository-level license or rights-holder authorization becoming available"
+    ]
+  }
+}

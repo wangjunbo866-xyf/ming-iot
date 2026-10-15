@@ -1,0 +1,56 @@
+# ming-iot LoopX 协作入口
+
+## 开始修改前
+
+1. 读取当前状态：`loopx status --goal-id ming-iot-framework-v1`。
+2. 读取当前 LoopX Todo、写范围和用户 Gate，不依赖旧聊天推断任务。
+3. `iot-doc` 中的架构默认只读；`things` 永久只读。
+
+## 持久资料登记
+
+- 需要跨 Chat 保留的设计、Proposal、研究资料、SOP、Evidence 或外部资料必须使用 `loopx-doc-registry`。
+- 固定顺序是：先在项目权威表面建立可持久读取的正文映射并验证正文可读，再 dry-run，通过 LoopX 正式登记来源（由 LoopX 保存脱敏指纹），执行 `refresh-state`，最后回读状态。
+- 正文与项目文档目录不是 `.loopx/registry.json`；不得手工修改该 Registry 完成登记。
+- Git 跟踪的项目文件在独立 worktree 修改；`.loopx/` 与 `.codex/` 是本机私有状态，只能由 LoopX 在已注册项目根维护，worktree 不创建第二份。
+- 正文无法定位、目标 Goal 不明确或读取权限不明确时，停止登记并写入 Todo/Blocker。
+- `source_ref_sha256` 是 raw locator 的脱敏摘要，不是文件定位器、正文内容哈希，也不是正式登记命令的 source 输入；没有可读取文档映射的记录不是完整登记。Authority 或文档目录变化后必须运行项目侧聚焦校验。
+
+## 修改与完成
+
+- 所有 Git 跟踪文件修改必须绑定当前 Todo，并在独立 worktree 内且符合获批的 write scope。
+- `.loopx/`、`.codex/` 私有状态变更同样必须绑定当前 Todo 和获批边界，并只从已注册项目根通过 LoopX 执行。
+- Agent Todo 按 Loop、阶段成果或需要独立交接的拓扑节点登记；实施计划中的 Task/Step 只记录在 Plan 与 Evidence 中，不得默认逐项转成 Agent Todo。只有跨仓库、跨负责人或独立延期交接时才拆分新的 Agent Todo。
+- 同一 Agent Todo 的 Plan Task/Step 执行期间不得创建验收 User Gate；仅在该 Todo 的全部工作与验证完成后创建一次汇总验收 User Gate。Git 与高风险权限边界按下文分层执行。
+- 完成前运行与变更相关的项目测试和静态检查。
+- LoopX 状态不替代 Git diff、测试结果或用户检查。
+
+## 交付验证与 Gitee PR
+
+- 代码变更从仓库根 `Makefile` 选择 Verification Profile；以 `make help` 的当前输出为入口说明，并按 `deploy/README.md` 的变更面选择规则运行最低档位。
+- 普通代码 PR 必须运行 `make verify-pr`。需要真实 Kafka 或 Things 依赖时另跑显式 `verify-integration` suite；发布候选才运行带重型确认的 `verify-release`。重型验证结论不授予发布或生产权限。
+- Gitee PR 使用 `.gitee/PULL_REQUEST_TEMPLATE.zh-CN.md`，关联 Delivery Issue、私有研发文档的已合并 revision、完整 40 位候选 Head、实际 Profile 结论和绑定同一 Head 的独立 Review。
+- 未运行项以非 PASS 结论记录原因和补验证方式；既有失败保留真实状态并关联独立缺陷 Issue，不通过缩小或绕过 Profile 获得绿色。
+
+## LoopX 上下文与 Evidence 热路径
+
+- 日常 Turn 先读取 `loopx diagnose/status/quota`、当前选中 Todo 与有界的 `evidence-log --thin --todo-id ...`；不得默认将整份 `ACTIVE_GOAL_STATE.md` 加载为上下文。只有诊断状态漂移、修复投影或执行获批的状态迁移时才读取全文。
+- Todo `evidence`、`note` 和 `reason` 只保存公开安全的简短结果或稳定证据指针，不内联完整 Review、原始日志、命令输出或大段分析正文。
+- 完整、脱敏、供人阅读的 Review 写入本地事实源 `ming-iot-rd-docs/reviews/`；原始机器 Evidence 留在 LoopX 私有 Evidence 目录。Todo 回执只保留 `verdict`、`exact_head`、`review_ref/evidence_ref`、摘要哈希与 blocker/warning 计数。
+
+## 长期 Smoke、Monitor 与自修复
+
+- 只长期保留能验证已发布行为、可复用控制面契约、安全边界、真实回归或代表性端到端路径的 Smoke；仅证明一次临时分析、候选排序或过渡结论的检查留在当次 Evidence，不扩大永久测试面。
+- 项目特定的周期观察登记为 LoopX `continuous_monitor` Todo，并保存稳定目标、调度信息和简短 Evidence；宿主唤醒 Prompt 保持通用，不写死某个 PR、迁移或临时任务。
+- `continuous_monitor` 只负责观察和报告状态变化，不自动授予代码修改、合并、发布或生产操作权限；发生实质变化时再创建或唤醒普通 Agent Todo。
+- 出现 LoopX 投影矛盾、进展过小、状态漂移或用户指出流程错误时，暂停普通交付并执行 `loopx-self-repair`；修复落到最低且可持续的责任层，例如 Todo、边界投影、交互规则、项目文档或聚焦 Smoke，不依赖聊天记忆或降低 Gate。
+
+## Git 与高风险授权边界
+
+以下规则在 `ming-iot` 内覆盖上级工作区对每次 commit、push 单独授权的要求：
+
+- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit、推送候选分支并创建或更新 PR。
+- 所有跟踪文件变更通过 PR 进入 `master`；禁止直接 push `master`。
+- PR 默认由有权限的人在 Gitee 完成 Review 和合并；人在 Gitee 执行合并本身即为该次合并授权，不再要求单独的 LoopX User Gate。
+- 只有要求 Agent 执行 PR 合并时，才建立绑定精确 PR、Head、目标分支和合并方式的 User Gate。
+- 版本发布、生产环境变更、凭据处理和权限变更必须建立绑定精确目标与动作的 User Gate。
+- 禁止重写受保护分支历史；重写已发布的共享功能分支必须建立精确 User Gate。

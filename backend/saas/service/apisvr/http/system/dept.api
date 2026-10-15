@@ -1,0 +1,318 @@
+info(
+    desc: "部门信息"
+	author: "yl"
+	email: "603785348@qq.com"
+)
+
+@server(
+    group: system/dept/info
+    prefix: /api/v1/system/dept/info
+    accessCodePrefix: "systemDeptManage"
+    accessNamePrefix: "部门管理"
+    accessGroup: "部门管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加部门详情"
+        description: "在指定父部门下新建部门，含名称、排序、状态与钉钉部门映射等属性"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "create"
+        group: "system/dept/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DeptInfo) returns (WithIDStr)
+
+    @doc(
+        summary: "获取部门列表"
+        description: "按父节点、名称、状态或钉钉部门 ID 分页查询部门，返回层级结构清单"
+        authType: "all"
+        resource: "dept"
+        action: "view"
+        group: "system/dept/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DeptInfoIndexReq) returns (DeptInfoIndexResp)
+
+    @doc(
+        summary: "更新部门"
+        description: "修改指定部门的名称、排序、状态、父级及钉钉部门映射"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "update"
+        group: "system/dept/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (DeptInfo) returns ()
+
+    @doc(
+        summary: "获取部门单个"
+        description: "按编号读取单个部门详情，可选附带父级或一层子部门信息"
+        authType: "all"
+        resource: "dept"
+        action: "view"
+        group: "system/dept/info"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (DeptInfoReadReq) returns (DeptInfo)
+
+    @doc(
+        summary: "删除部门"
+        description: "按编号删除部门，其下属用户与子部门的授权关系将一并清理"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "delete"
+        group: "system/dept/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDStr) returns ()
+
+}
+
+
+@server(
+    group: system/dept/user
+    prefix: /api/v1/system/dept/user
+    accessCodePrefix: "systemDeptUser"
+    accessNamePrefix: "部门用户"
+    accessGroup: "部门管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "批量授权部门用户"
+        description: "把一批用户加入指定部门并设置管理或普通授权，可选同时授权子部门"
+        authType: "all"
+        resource: "dept"
+        action: "bind"
+        group: "system/dept/user"
+        recordLogMode: "2"
+    )
+    @handler multiCreate
+    post /multi-create (DeptUserMultiCreateReq) returns ()
+    @doc(
+        summary: "批量取消授权部门用户"
+        description: "按部门与用户编号列表移除用户的部门隶属授权关系"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "unbind"
+        group: "system/dept/user"
+        recordLogMode: "2"
+    )
+    @handler multiDelete
+    post /multi-delete (DeptUserMultiDeleteReq) returns ()
+
+    @doc(
+        summary: "获取部门授权列表"
+        description: "分页查询指定部门下的已授权用户及其授权类型与用户核心信息"
+        authType: "all"
+        resource: "dept"
+        action: "view"
+        group: "system/dept/user"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DeptUserIndexReq) returns (DeptUserIndexResp)
+
+}
+
+@server(
+    group: system/dept/syncJob
+    prefix: /api/v1/system/dept/sync-job
+    accessCodePrefix: "systemDeptManage"
+    accessNamePrefix: "部门同步任务"
+    accessGroup: "部门管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "添加同步任务"
+        description: "新建部门与第三方系统的同步任务，含同步方向、第三方配置与字段映射"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "create"
+        group: "system/dept/syncJob"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (DeptSyncJob) returns (WithIDStr)
+
+    @doc(
+        summary: "获取同步任务列表"
+        description: "按父节点、状态、名称或同步方向分页查询部门同步任务"
+        authType: "all"
+        resource: "dept"
+        action: "view"
+        group: "system/dept/syncJob"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (DeptSyncJobIndexReq) returns (DeptSyncJobIndexResp)
+
+    @doc(
+        summary: "更新同步任务"
+        description: "修改指定同步任务的第三方配置、字段映射与同步模式"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "update"
+        group: "system/dept/syncJob"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (DeptSyncJob) returns ()
+
+    @doc(
+        summary: "获取同步任务单个"
+        description: "按编号读取单个同步任务详情，可选附带父级或子任务信息"
+        authType: "all"
+        resource: "dept"
+        action: "view"
+        group: "system/dept/syncJob"
+        recordLogMode: "1"
+    )
+    @handler read
+    post /read (DeptSyncJobReadReq) returns (DeptSyncJob)
+
+    @doc(
+        summary: "删除同步任务"
+        description: "按编号删除部门同步任务，关联的定时与实时同步将停止"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "delete"
+        group: "system/dept/syncJob"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithIDStr) returns ()
+
+    @doc(
+        summary: "执行同步任务"
+        description: "立即触发指定同步任务，按配置方向在联犀与第三方系统间同步部门数据"
+        authType: "admin"
+        isNeedAuth: "true"
+        resource: "dept"
+        action: "execute"
+        group: "system/dept/syncJob"
+        recordLogMode: "2"
+    )
+    @handler execute
+    post /execute (DeptSyncJobExecuteReq) returns ()
+}
+
+type (
+    DeptUser{
+        ID int64 `json:"id,optional,string"`
+        UserID int64 `json:"userID,optional,string"`
+        DeptID int64 `json:"deptID,optional,string"`
+        DeptIDPath string `json:"deptIdPath,optional"`
+        AuthType int64 `json:"authType,optional"` //授权类型: 1 //管理权限,可以修改该部门及修改部门人员的授权 2 普通权限
+        IsAuthChildren int64 `json:"isAuthChildren,optional"`//同时授权子节点
+        User *UserCore `json:"user,optional"` //用户信息
+    }
+    DeptUserMultiDeleteReq{
+        DeptID int64 `json:"deptID,string"`
+        IDs []int64  `json:"ids,string"`
+    }
+    DeptUserMultiCreateReq{
+        DeptID int64 `json:"deptID,optional,string"`
+        UserIDs []int64 `json:"userIDs,string"`
+        AuthType int64 `json:"authType"` //授权类型: 1 //管理权限,可以修改该部门及修改部门人员的授权 2 普通权限
+        IsAuthChildren int64 `json:"isAuthChildren"`//同时授权子节点
+    }
+    DeptUserIndexReq{
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        DeptID int64 `json:"deptID,optional,string"`
+    }
+    DeptUserIndexResp{
+        PageResp
+        List []*DeptUser `json:"list"`
+    }
+)
+
+type (
+    DeptSyncJobExecuteReq{
+        JobID int64 `json:"jobID,optional,string"`                                  // 编号
+    }
+    DeptSyncJobReadReq{
+        ID int64 `json:"id,optional,string"`                                  // 编号
+        WithFather bool `json:"withFather,optional"`//是否返回父级
+        WithChildren bool `json:"withChildren,optional"`//是否返回子级
+    }
+    DeptSyncJobIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        ParentID int64 `json:"parentID,string,optional"`//父节点
+        Status int64 `json:"status,optional"` // 状态  1:启用,2:禁用
+        Name string `json:"name,optional"`           // 名称
+        Direction int64 `json:"direction,optional"`// 同步的方向,1上游同步到联犀(默认),2联犀同步到下游
+    }
+
+    DeptSyncJobIndexResp  {
+        PageResp
+        List []*DeptSyncJob `json:"list"` //任务列表
+    }
+
+    DeptSyncJob{
+        ID int64 `json:"id,string,optional"`                                  // 编号
+        Direction int64 `json:"direction,optional"`// 同步的方向,1上游同步到联犀(默认),2联犀同步到下游
+        ThirdType string `json:"thirdType,optional"`//同步的类型
+        ThirdConfig *ThirdAppConfig `json:"thirdConfig,optional"`//第三方配置
+        FieldMap map[string]string `json:"fieldMap,optional"` //用户字段映射,左边是联犀的字段,右边是第三方的,不填写就是全量映射
+        SyncDeptIDs []string `json:"syncDeptIDs,optional"` //同步的第三方部门id列表,不填为同步全部
+        IsAddSync int64 `json:"isAddSync,optional"`//新增人员自动同步,默认为1
+        SyncMode int64 `json:"syncMode,optional"`//同步模式: 1:手动(默认) 2: 定时同步(半小时) 3: 实时同步
+        CreatedTime int64 `json:"createdTime,optional"`//创建时间
+    }
+
+)
+
+
+type (
+    DeptInfoReadReq{
+        ID int64 `json:"id,optional,string"`                                  // 编号
+        TenantCode string  `json:"tenantCode,optional"`
+        WithFather bool `json:"withFather,optional"`//是否返回父级
+        WithChildren bool `json:"withChildren,optional"`//是否返回子级
+    }
+    DeptInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        ParentID int64 `json:"parentID,string,optional"`//父节点
+        DingTalkIDs []string  `json:"dingTalkIDs,optional"` //钉钉的部门ID
+        Status int64 `json:"status,optional"` // 状态  1:启用,2:禁用
+        Name string `json:"name,optional"`           // 名称
+        TenantCode string  `json:"tenantCode,optional"`
+    }
+
+    DeptInfoIndexResp  {
+        PageResp
+        List []*DeptInfo `json:"list"` //菜单列表
+    }
+    DeptInfo{
+        ID int64 `json:"id,string,optional"`                                  // 编号
+        ParentID int64 `json:"parentID,string,optional,omitempty"`//父节点
+        IDPath string `json:"idPath,optional"`//1-2-3-的格式记录顶级区域到当前id的路径
+        Name string `json:"name,optional"`           // 部门名称
+        Sort   int64                   `json:"sort,optional"`     // 排序标记
+        Desc   *string `json:"desc,optional"`      // 描述
+        UserCount int64 `json:"userCount,optional"` //只读,用户统计,包含下级部门的人数
+        Status int64                   `json:"status,optional"` // 状态  1:启用,2:禁用
+        DingTalkID int64  `json:"dingTalkID,string,optional"` //钉钉的部门ID
+        Parent *DeptInfo  `json:"parent,optional,omitempty"`
+        Children []*DeptInfo `json:"children,optional,omitempty"`
+    }
+)

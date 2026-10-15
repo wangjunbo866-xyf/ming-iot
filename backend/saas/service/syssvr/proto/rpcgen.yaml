@@ -1,0 +1,90 @@
+# rpcgen manifest — syssvr 多 proto 生成清单。
+# 由 backend/tools/cmd/rpcgen 读取，不使用 glob 推断领域和顺序。
+# 参见 docs/superpowers/specs/2026-07-23-core-goctl-migration-design.md §10.1。
+version: 1
+runtime: syssvr
+protoDir: service/syssvr/proto
+pbDir: service/syssvr/pb/sys
+package: sys
+goPackage: pb/sys
+aggregate: sys.proto
+shared:
+  - base.proto
+registry: service/syssvr/sysdirect/sysdirect.go
+clientContractGolden: service/syssvr/client/testdata/public-api.json
+services:
+  - proto: access.proto
+    service: AccessManage
+    packageDir: accessmanage
+    clientFile: accessManage.go
+    serverFile: accessManageServer.go
+  - proto: app.proto
+    service: AppManage
+    packageDir: appmanage
+    clientFile: appManage.go
+    serverFile: appManageServer.go
+  - proto: area.proto
+    service: AreaManage
+    packageDir: areamanage
+    clientFile: areaManage.go
+    serverFile: areaManageServer.go
+  - proto: common.proto
+    service: Common
+    packageDir: common
+    clientFile: common.go
+    serverFile: commonServer.go
+  - proto: data.proto
+    service: DataManage
+    packageDir: datamanage
+    clientFile: dataManage.go
+    serverFile: dataManageServer.go
+  - proto: department.proto
+    service: DepartmentManage
+    packageDir: departmentmanage
+    clientFile: departmentManage.go
+    serverFile: departmentManageServer.go
+  - proto: dict.proto
+    service: DictManage
+    packageDir: dictmanage
+    clientFile: dictManage.go
+    serverFile: dictManageServer.go
+  - proto: log.proto
+    service: Log
+    packageDir: log
+    clientFile: log.go
+    serverFile: logServer.go
+  - proto: module.proto
+    service: ModuleManage
+    packageDir: modulemanage
+    clientFile: moduleManage.go
+    serverFile: moduleManageServer.go
+  - proto: notify.proto
+    service: NotifyManage
+    packageDir: notifymanage
+    clientFile: notifyManage.go
+    serverFile: notifyManageServer.go
+  - proto: ops.proto
+    service: ops
+    packageDir: ops
+    clientFile: ops.go
+    serverFile: opsServer.go
+  - proto: project.proto
+    service: ProjectManage
+    packageDir: projectmanage
+    clientFile: projectManage.go
+    serverFile: projectManageServer.go
+  - proto: role.proto
+    service: RoleManage
+    packageDir: rolemanage
+    clientFile: roleManage.go
+    serverFile: roleManageServer.go
+  - proto: tenant.proto
+    service: TenantManage
+    packageDir: tenantmanage
+    clientFile: tenantManage.go
+    serverFile: tenantManageServer.go
+  - proto: user.proto
+    service: UserManage
+    packageDir: usermanage
+    clientFile: userManage.go
+    serverFile: userManageServer.go

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "captureId": "2026-08-23-pre-loopx",
+  "sources": [
+    {
+      "id": "ming-iot-main",
+      "path": "../ming-iot",
+      "head": "403b9a6d6b7e2c60a1ff96ef0f681da272d04c36",
+      "branch": "master",
+      "workingTree": "clean",
+      "originMaster": "7bd2e7f630cb09f054f105f2e21032edb51ee964",
+      "originCoreMigrationFoundation": "7d26ed1617e6bdf6d378716310f4dfc901ee297c"
+    },
+    {
+      "id": "ming-iot-loopx-bootstrap-worktree",
+      "path": "../ming-iot/.worktrees/loopx-personal-framework-bootstrap",
+      "head": "403b9a6d6b7e2c60a1ff96ef0f681da272d04c36",
+      "branch": "plan/loopx-personal-framework-bootstrap",
+      "untracked": [
+        "docs/superpowers/plans/2026-08-23-loopx-personal-framework-bootstrap.md",
+        "docs/superpowers/specs/2026-08-23-loopx-plan-bilingual-publication-design.md",
+        "docs/superpowers/specs/2026-08-23-ming-iot-local-rd-docs-isolation-design.md"
+      ]
+    },
+    {
+      "id": "iot-doc-framework-specs",
+      "path": "../iot-doc",
+      "head": "287d41a7ca2f5d444ceb34264fbe1ac515c42836",
+      "branch": "master",
+      "untracked": [
+        "docs/superpowers/specs/2026-08-21-loopx-driven-iot-development-control-plane-design.md",
+        "docs/superpowers/specs/2026-08-23-ai-native-software-rd-two-stage-blueprint-design.md"
+      ]
+    }
+  ],
+  "discardedSources": "discarded-sources.json",
+  "bundleRefPolicy": {
+    "include": [
+      "refs/heads/*",
+      "refs/remotes/*",
+      "refs/tags/*"
+    ],
+    "exclude": [
+      "refs/stash",
+      "worktrees/*",
+      "HEAD"
+    ],
+    "reason": "Ephemeral stash and worktree refs are not authoritative history and remain untouched in the source repository."
+  }
+}

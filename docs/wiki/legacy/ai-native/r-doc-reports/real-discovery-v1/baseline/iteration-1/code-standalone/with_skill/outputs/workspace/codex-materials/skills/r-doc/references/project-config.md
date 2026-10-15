@@ -1,0 +1,95 @@
+# Project configuration
+
+## Lookup order
+
+Look for project configuration in this order and read the first valid file. If more than one exists, report the duplicate configuration and ask the user to choose; do not merge them silently:
+
+~~~text
+.r-doc.yaml
+docs/r-doc.yaml
+r-doc.yaml
+~~~
+
+When no configuration exists, use the default rules. The deterministic audit and repair helpers now load the first existing configuration in this order. Configuration can override project conventions, but it cannot disable sensitive-content protection, conflict reporting, non-destructive changes, or evidence requirements. If more than one file exists, the audit reports `config-duplicate`; the repairer refuses to guess which file is authoritative.
+
+## Recommended shape
+
+~~~yaml
+version: 1
+project_type: auto
+governance_level: standard
+docs_root: docs
+required_document_types:
+  - requirements
+  - design
+  - testing
+exclude:
+  - .git
+  - node_modules
+  - dist
+  - build
+gates:
+  review: audit
+  release: audit
+relationships:
+  require_for:
+    requirements:
+      - design
+    design:
+      - testing
+sensitive_allowlist:
+  google-api-key:
+    - <copy-provider-documented-example-here>
+decision_notes:
+  root: .agents/notes
+~~~
+
+Optional fields:
+
+- `version`: configuration schema version; currently only `1` is accepted;
+- `project_type`: `auto` or a project-type name; it is validated as a project convention and does not replace the document-type rules below;
+- `governance_level`: `minimal`, `standard`, or `strict`; defaults to `standard`;
+- `docs_root`: the documentation root, defaulting to `docs`;
+- `required_document_types`: document types explicitly required by the project;
+- `exclude`: additional directory or file patterns to exclude;
+- `gates`: stage strength such as `advisory`, `audit`, or `blocking`; a `--stage` value that is not configured is an `invalid-stage` error rather than a passing no-op;
+- `relationships.require_for`: minimum relationships between document types;
++ `sensitive_allowlist`: exact, reviewed provider-documentation examples keyed by a supported detector code; values are literal strings, never regular expressions, and must not be real credentials;
++ `decision_notes.root`: optional in-root location for the decision-note layer. If configured, the directory and its `README.md` are required. If omitted, `.agents/notes/` is discovered when it already exists.
+
+## Supported field matrix
+
+The recommended shape above is intentionally complete: the audit recognizes ten top-level fields. The first two protect configuration compatibility and describe project conventions; the remaining eight affect document discovery or audit behavior.
+
+| Field | Deterministic effect | Typical location |
+| --- | --- | --- |
+| `version` | Rejects unsupported configuration schema versions. | `.r-doc.yaml` |
+| `project_type` | Validates the project-type value; it does not silently change required checks. | `.r-doc.yaml` |
+| `governance_level` | Selects required indexes and metadata checks; `strict` also makes warnings fail. Security and link-target checks remain enabled at every level. | `.r-doc.yaml` |
+| `docs_root` | Selects the documentation root used by audit and repair. | `.r-doc.yaml` |
+| `required_document_types` | Requires at least one topic document of each listed type. | `.r-doc.yaml` |
+| `exclude` | Excludes matching files/directories from scanning and coverage, including directly maintained root Markdown; `AGENTS.md` remains mandatory. | `.r-doc.yaml` |
+| `gates` | Maps `--stage` names to `advisory`, `audit`, or `blocking` behavior. | `.r-doc.yaml` |
+| `relationships.require_for` | Requires configured `related_docs` edges between document types. | `.r-doc.yaml` |
+| `sensitive_allowlist` | Allows only exact, reviewed public examples for named detectors and emits an informational audit record when one matches. | `.r-doc.yaml` |
+| `decision_notes.root` | Enables and routes the optional decision-note layer; validates the configured root and its `README.md`. | `.r-doc.yaml` |
+
+`planned_code` is deliberately not a configuration field. It belongs in a topic document's frontmatter because it describes that document's planned code relationship. Use `planned_code` for an in-root path that may not exist yet; use `related_code` only for an existing file. See [metadata-schema.md](metadata-schema.md).
+
+## Executed fields
+
+The helpers execute these fields rather than treating them as descriptive metadata:
+
+- `governance_level: minimal` keeps root `AGENTS.md` mandatory but makes the docs-root index, nested indexes, and topic frontmatter optional. Maintained Markdown documents still need a route from `AGENTS.md` or an existing index. The audit and repair tools continue checking links and sensitive content.
+- `governance_level: standard` is the default and retains the existing entrypoint, index, nested-index, and metadata rules.
+- `governance_level: strict` uses the standard structure and treats warnings as failures. Configure `required_document_types`, `relationships`, and `gates` for project-specific completeness and lifecycle requirements.
+- `docs_root` changes the scanned documentation root and the links generated by `repair_docs.py`;
+- `exclude` omits matching files and directories from index coverage and metadata checks, while built-in safety directories remain excluded;
+- `exclude` also applies to directly maintained root Markdown files such as `NOTES.md` and `README.md`; root `AGENTS.md` remains the mandatory entrypoint and is always checked;
+- `required_document_types` requires at least one topic document of each listed type;
+- `gates` maps a `--stage <name>` invocation to `advisory`, `audit`, or `blocking`; the latter two treat warnings as failures;
+- `relationships.require_for` requires a source document's `related_docs` to include at least one document of each configured target type.
+- `sensitive_allowlist` records an informational finding for each exact matching value and suppresses only the corresponding error; it cannot disable a detector or turn a malformed configuration into a pass. Use it only for public, unusable, provider-documented examples, never for credentials.
+- `decision_notes.root` enables strict routing for decision notes. An existing default `.agents/notes/` root is also audited without configuration. Notes remain outside ordinary `docs/` index coverage, but their links and sensitive values are checked by the same gates.
+
+The path and list fields must be relative, non-empty, and type-correct. Report unknown fields and invalid configuration, then continue audit checks with safe defaults. Do not treat a configuration error as a passing audit.

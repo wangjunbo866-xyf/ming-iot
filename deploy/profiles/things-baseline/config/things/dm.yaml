@@ -1,0 +1,16 @@
+Name: dm.rpc
+ListenOn: 0.0.0.0:9081
+Mode: dev
+Log:
+  Encoding: plain
+Etcd: {Hosts: [etcd:2379], Key: dm.rpc}
+Database: {DBType: pgsql, IsInitTable: true, DSN: "${THINGS_DB_DSN}"}
+CacheRedis: [{Host: "redis:6379", Type: node}]
+TSDB: {DBType: tdengine, Driver: taosRestful, DSN: "${THINGS_TSDB_DSN}"}
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: dmsvr}}
+OssConf: {OssType: local, StorePath: /app/oss}
+AuthWhite:
+  Users: [{UserName: dgsvr, Password: "${THINGS_INTERNAL_AUTH_PASSWORD}"}]
+  IpRange: ["127.0.0.0/8", "172.16.0.0/12", "10.0.0.0/8"]
+TimedJobRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: timedjob.rpc}}}
+SysRpc: {Enable: true, Mode: grpc, Conf: {Timeout: 1000000, Etcd: {Hosts: [etcd:2379], Key: sys.rpc}}}

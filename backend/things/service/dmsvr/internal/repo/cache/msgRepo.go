@@ -1,0 +1,74 @@
+package cache
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg"
+	"github.com/zeromicro/go-zero/core/stores/kv"
+)
+
+const (
+	msgExpr = 10 * 60
+)
+
+func genDeviceMsgKey(msgType string, handle string, Type string, device devices.Core, MsgToken string) string {
+	return fmt.Sprintf("deviceMsg:%s:%s:%s:%s:%s:%s",
+		handle, Type, msgType, device.ProductID, device.DeviceName, MsgToken)
+}
+
+func SetDeviceMsg(ctx context.Context, store kv.Store, msgType string, req *deviceMsg.PublishMsg, MsgToken string) error {
+	payload, err := json.Marshal(req)
+	if err != nil {
+		return err
+	}
+	err = store.SetexCtx(ctx, genDeviceMsgKey(msgType, req.Handle, req.Type, devices.Core{
+		ProductID:  req.ProductID,
+		DeviceName: req.DeviceName,
+	}, MsgToken), string(payload), msgExpr)
+	return err
+}
+
+func GetDeviceMsg[reqType any](ctx context.Context, store kv.Store, msgType string /*请求还是回复*/, handle string, Type string, device devices.Core, MsgToken string) (*reqType, error) {
+	val, err := store.GetCtx(ctx, genDeviceMsgKey(msgType, handle, Type, devices.Core{
+		ProductID:  device.ProductID,
+		DeviceName: device.DeviceName,
+	}, MsgToken))
+	if val == "" || err != nil {
+		return nil, err
+	}
+	var req deviceMsg.PublishMsg
+	var ret reqType
+	err = utils.Unmarshal([]byte(val), &req)
+	if err != nil {
+		return nil, err
+	}
+	err = utils.Unmarshal(req.Payload, &ret)
+	return &ret, err
+}
+
+// GetDeviceMsgMeta 读取缓存里的完整 deviceMsg.PublishMsg 元数据，用于获取 OperatorUserID 等内部字段
+func GetDeviceMsgMeta(ctx context.Context, store kv.Store, msgType string, handle string, Type string, device devices.Core, MsgToken string) (*deviceMsg.PublishMsg, error) {
+	val, err := store.GetCtx(ctx, genDeviceMsgKey(msgType, handle, Type, devices.Core{
+		ProductID:  device.ProductID,
+		DeviceName: device.DeviceName,
+	}, MsgToken))
+	if val == "" || err != nil {
+		return nil, err
+	}
+	var req deviceMsg.PublishMsg
+	err = utils.Unmarshal([]byte(val), &req)
+	if err != nil {
+		return nil, err
+	}
+	return &req, nil
+}
+func DelDeviceMsg[reqType any](ctx context.Context, store kv.Store, msgType string /*请求还是回复*/, handle string, Type string, device devices.Core, MsgToken string) error {
+	_, err := store.DelCtx(ctx, genDeviceMsgKey(msgType, handle, Type, devices.Core{
+		ProductID:  device.ProductID,
+		DeviceName: device.DeviceName,
+	}, MsgToken))
+	return err
+}

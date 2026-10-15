@@ -1,0 +1,65 @@
+info(
+    title: "产品远程配置模块"
+    desc: "产品远程配置模块"
+    author: "liuboshu"
+    version: "v1"
+)
+
+
+@server(
+    group: things/product/remoteConfig
+    prefix: /api/v1/things/product
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc "创建配置"
+    @handler create
+    post /remote-config/create (ProductRemoteConfigCreateReq) returns ()
+
+    @doc "获取配置列表"
+    @handler index
+    post /remote-config/index (ProductRemoteConfigIndexReq) returns (ProductRemoteConfigIndexResp)
+
+    @doc "推送配置"
+    @handler pushAll
+    post /remote-config/push-all (ProductRemoteConfigPushAllReq) returns ()
+
+    @doc "获取最新配置"
+    @handler lastestRead
+    post /remote-config/lastest-read (ProductRemoteConfigLastestReadReq) returns (ProductRemoteConfigLastestReadResp)
+}
+
+type (
+    ProductRemoteConfig  {
+        ID int64 `json:"id"`                  //配置编号
+        Content string `json:"content"`       //配置内容
+        CreateTime string `json:"createTime"` //创建时间
+    }
+
+    ProductRemoteConfigCreateReq  {
+        ProductID string `json:"productID"` //产品id
+        Content string `json:"content"`     //配置内容
+    }
+
+    ProductRemoteConfigIndexReq  {
+        ProductID string `json:"productID"` //产品id
+        Page *PageInfo `json:"page,optional"` //分页信息
+    }
+
+    ProductRemoteConfigIndexResp  {
+        List []*ProductRemoteConfig `json:"list"` //产品信息
+        PageResp
+    }
+
+    ProductRemoteConfigPushAllReq  {
+        ProductID string `json:"productID"` //产品id
+    }
+
+    ProductRemoteConfigLastestReadReq  {
+        ProductID string `json:"productID"` //产品id
+    }
+
+    ProductRemoteConfigLastestReadResp  {
+        ProductRemoteConfig
+    }
+)

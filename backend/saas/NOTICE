@@ -1,0 +1,12 @@
+Ming IoT Core / 明物联 Core
+
+This component is derived from UnitedRhino Core / 联犀 Core:
+https://gitee.com/unitedrhino/core
+https://github.com/unitedrhino/core
+
+Upstream baseline:
+1b3110e5e17d5a0066d38930b67bc44fdcc3c6fc
+
+The upstream component is licensed under the GNU Affero General Public
+License version 3. This repository contains modifications. See LICENSE for
+the complete license text.

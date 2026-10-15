@@ -1,0 +1,9 @@
+Name: timedjob.rpc
+ListenOn: 0.0.0.0:3256
+Mode: dev
+Log:
+  Encoding: plain
+Etcd: {Hosts: [etcd:2379], Key: timedjob.rpc}
+Database: {DBType: pgsql, IsInitTable: true, DSN: "${CORE_DB_DSN}"}
+CacheRedis: [{Host: "redis:6379", Type: node}]
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: timedjobsvr}}

@@ -1,0 +1,101 @@
+package svc
+
+import (
+	"context"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/client/timedmanage"
+	"gitee.com/ming-iot/share/conf"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/eventBus"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/config"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/domain/custom"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/repo/cache"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/repo/event/publish/pubDev"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/repo/event/publish/pubInner"
+	"gitee.com/ming-iot/things/service/dmsvr/client/devicemanage"
+	"gitee.com/ming-iot/things/service/dmsvr/client/productmanage"
+	"gitee.com/ming-iot/things/service/dmsvr/dmExport"
+	"gitee.com/ming-iot/things/service/dmsvr/dmdirect"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/clients"
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type ServiceContext struct {
+	Config       config.Config
+	PubDev       pubDev.PubDev
+	MqttClient   *clients.MqttClient
+	PubInner     pubInner.PubInner
+	FastEvent    *eventBus.FastEvent
+	TimedM       timedmanage.TimedManage
+	ProductM     productmanage.ProductManage
+	DeviceM      devicemanage.DeviceManage
+	Script       custom.Repo
+	ProductCache dmExport.ProductCacheT
+	DeviceCache  dmExport.DeviceCacheT
+	NodeID       int64
+}
+
+func NewServiceContext(c config.Config) *ServiceContext {
+	var (
+		productM productmanage.ProductManage
+		deviceM  devicemanage.DeviceManage
+		timedM   timedmanage.TimedManage
+	)
+	/*
+		// move to startup.PostInit()
+			dl, err := pubDev.NewPubDev(c.DevLink)
+			if err != nil {
+				logx.Error("NewDevClient err", err)
+				os.Exit(-1)
+			}
+
+			il, err := pubInner.NewPubInner(c.Event)
+			if err != nil {
+				logx.Error("NewInnerDevPub err", err)
+				os.Exit(-1)
+			}
+	*/
+	if c.DmRpc.Mode == conf.ClientModeGrpc {
+		productM = productmanage.NewProductManage(c.DmRpc.MustNewClient())
+		deviceM = devicemanage.NewDeviceManage(c.DmRpc.MustNewClient())
+	} else {
+		productM = dmdirect.NewProductManage(c.DmRpc.RunProxy)
+		deviceM = dmdirect.NewDeviceManage(c.DmRpc.RunProxy)
+	}
+	scriptCache := cache.NewScriptRepo(func(ctx context.Context, productID string) (info *custom.Info, err error) {
+		ret, err := productM.ProductCustomRead(ctx, &dm.ProductCustomReadReq{ProductID: productID})
+		if err != nil {
+			if errors.Cmp(err, errors.NotFind) { //如果是没找到
+				return nil, nil
+			}
+			return nil, err
+		}
+		return &custom.Info{
+			ProductID:       ret.ProductID,
+			TransformScript: utils.ToNullString(ret.TransformScript),
+			ScriptLang:      ret.ScriptLang,
+		}, nil
+	})
+	nodeID := utils.GetNodeID(c.CacheRedis, c.Name)
+	serverMsg, err := eventBus.NewFastEvent(c.Event, c.Name, nodeID)
+	logx.Must(err)
+	pc, err := dmExport.NewProductInfoCache(productM, serverMsg)
+	logx.Must(err)
+	dc, err := dmExport.NewDeviceInfoCache(deviceM, serverMsg)
+	logx.Must(err)
+	timedM = timedmanage.NewTimedManage(c.TimedJobRpc.MustNewClient())
+	return &ServiceContext{
+		Config: c,
+		// PubDev:   dl,
+		// PubInner: il,
+		FastEvent:    serverMsg,
+		ProductM:     productM,
+		DeviceM:      deviceM,
+		Script:       scriptCache,
+		ProductCache: pc,
+		DeviceCache:  dc,
+		NodeID:       nodeID,
+		TimedM:       timedM,
+	}
+}

@@ -1,0 +1,36 @@
+{
+  "source_head": "487c2f068a66f0a4878eef04dafad1241270a535",
+  "scope": "Explicit sanitization in the new isolated candidate only. Original bytes remain in private M2/M3 history.",
+  "files": [
+    {
+      "path": "backend/share/clients/oauth2/github_test.go",
+      "source_sha256": "1701bac624e8cf8dddbaf9e9e291df1e1d514ac173254ac5d9ac51c745f5c94d",
+      "candidate_sha256": "50157ccbed9b18ca852aa537b9b2b56f020d30c42bba416a5e42e598118f6c21",
+      "reason": "Replace embedded OAuth app credentials with an inert fixture; constructor test makes no token exchange network request."
+    },
+    {
+      "path": "backend/share/oss/AWS_STS.md",
+      "source_sha256": "721f04c641d8879791317dfa6393c5196cdb52a1b07502fd2d0a110408dd2112",
+      "candidate_sha256": "3bdef272647c4233c654bcf9875d0998b915666c454daf94de569f0aa2a5d885",
+      "reason": "Remove embedded AWS identity, credential and account-specific resources from the configuration example; no live credential use or rotation performed."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/pair/protocol_test.go",
+      "source_sha256": "ed5f13f7730366497d3cda0942cb5e299b67e8a9547f0651b3ba69d10848df14",
+      "candidate_sha256": "7d3fd93a5c3dd5f1f3a8acb53cc007189facc3e7fc60591fa6b942d115a467de",
+      "reason": "Replace provenance-uncertain product test vector with deterministic test-only input; retain first-16-ASCII-byte behavior."
+    },
+    {
+      "path": "backend/things/service/apisvr/internal/logic/things/device/pair/logic_integration_test.go",
+      "source_sha256": "5cfd9aa2e657cacfefef4a6a1f12dbba29275dcaaf96afd33737493648701cce",
+      "candidate_sha256": "8830cf689f2d4e7307720e44606ac99c397c2cbbdf39119d6367d3189e43049b",
+      "reason": "Replace provenance-uncertain product test vector with deterministic test-only input; retain first-16-ASCII-byte behavior."
+    },
+    {
+      "path": "backend/things/service/dgsvr/internal/logic/deviceauth/deviceRegisterLogic_test.go",
+      "source_sha256": "d8f8ceaa9b0c68f1386c3bb6a5f2ec2b71799e9d2a280ec77a856493f46d6650",
+      "candidate_sha256": "db2f0bf83432ece846e58cbf9333780771c05fa4c00f1a880996c3bc9c581a77",
+      "reason": "Replace provenance-uncertain device registration test secret with deterministic test-only input."
+    }
+  ]
+}

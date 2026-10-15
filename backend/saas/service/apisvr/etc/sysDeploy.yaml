@@ -1,0 +1,17 @@
+# sysDeploy.yaml: deploy/ 容器编排下 syssvr (sysdirect) 覆盖配置（confSuffix=Deploy）。
+# sysdirect.GetSvcCtx 加载 etc/sys.yaml，confSuffix=Deploy 使其加载本文件并合并 commonDeploy.yaml。
+# direct 模式下 syssvr 不启动独立 grpc server；ListenOn/Name 仅为满足 zrpc.RpcServerConf 必填校验。
+Name: sys.rpc
+ListenOn: 0.0.0.0:9180
+UserToken:
+  AccessSecret: ${CORE_USER_TOKEN_SECRET}
+  AccessExpire: 36000000
+UserOpt:
+  NeedUserName: true
+  NeedPassWord: true
+  PassLevel: 2
+Map:
+  Mode: gaode
+  AccessKey: ${CORE_MAP_ACCESS_KEY}
+  AccessSecret: ${CORE_MAP_ACCESS_SECRET}
+ThirdJwtSecret: ${THIRD_JWT_SECRET}

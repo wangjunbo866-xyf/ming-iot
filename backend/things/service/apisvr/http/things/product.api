@@ -1,0 +1,15 @@
+info(
+	title: "web端网关"
+	desc: "负责http协议的网关"
+	author: "杨磊"
+	email: "603685348@qq.com"
+	version: "v1"
+)
+
+import "product/category.api"  //产品品类相关接口
+import "product/info.api"  //产品信息相关接口
+import "product/schema.api"  //产品物模型相关接口
+import "product/remoteConfig.api"  //产品物模型相关接口
+import "product/custom.api"  //产品自定义相关接口
+import "product/modelModule.api"  //产品物模型属性模块
+import "product/modelRelease.api"  //产品物模型发布版本

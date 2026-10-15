@@ -1,0 +1,142 @@
+package productmanagelogic
+
+import (
+	"context"
+
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/share/domain/schema"
+	"gorm.io/gorm"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type ProductCategorySchemaMultiUpdateLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewProductCategorySchemaMultiUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ProductCategorySchemaMultiUpdateLogic {
+	return &ProductCategorySchemaMultiUpdateLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *ProductCategorySchemaMultiUpdateLogic) ProductCategorySchemaMultiUpdate(in *dm.ProductCategorySchemaMultiSaveReq) (*dm.Empty, error) {
+	if err := ctxs.IsRoot(l.ctx); err != nil {
+		return nil, err
+	}
+	pcDB := relationDB.NewProductCategoryRepo(l.ctx)
+	var productIDs []string
+	var productMap = map[string]*relationDB.DmProductInfo{}
+	{
+		var productCategoryIDs = []int64{in.ProductCategoryID}
+		if in.ProductCategoryID != def.RootNode {
+			pc, err := pcDB.FindOne(l.ctx, in.ProductCategoryID)
+			if err != nil {
+				return nil, err
+			}
+			productCategoryIDs = append(productCategoryIDs, utils.GetIDPath(pc.IDPath)...)
+		} else { //root节点要处理所有产品
+			productCategoryIDs = []int64{}
+		}
+		var err error
+		products, err := relationDB.NewProductInfoRepo(l.ctx).FindByFilter(l.ctx, relationDB.ProductFilter{CategoryIDs: productCategoryIDs}, nil)
+		if err != nil {
+			return nil, err
+		}
+		for _, v := range products {
+			productMap[v.ProductID] = v
+		}
+		productIDs = utils.ToSliceWithFunc(products, func(in *relationDB.DmProductInfo) string {
+			return in.ProductID
+		})
+	}
+	csDB := relationDB.NewCommonSchemaRepo(l.ctx)
+	cs, err := csDB.FindByFilter(l.ctx, relationDB.CommonSchemaFilter{Identifiers: in.Identifiers}, nil)
+	if err != nil {
+		return nil, err
+	}
+	if len(cs) != len(in.Identifiers) {
+		return nil, errors.Parameter.AddMsg("有物模型不存在")
+	}
+	pcsDB := relationDB.NewProductCategorySchemaRepo(l.ctx)
+	olds, err := pcsDB.FindByFilter(l.ctx, relationDB.ProductCategorySchemaFilter{ProductCategoryID: in.ProductCategoryID}, nil)
+	if err != nil {
+		return nil, err
+	}
+	oldIdentifiers := utils.ToSliceWithFunc(olds, func(in *relationDB.DmProductCategorySchema) string {
+		return in.Identifier
+	})
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		err := relationDB.NewProductSchemaRepo(tx).UpdateTag(l.ctx, productIDs, oldIdentifiers, schema.TagRequired, schema.TagOptional)
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewProductCategorySchemaRepo(l.ctx).MultiUpdate(l.ctx, in.ProductCategoryID, in.Identifiers)
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewProductSchemaRepo(tx).UpdateTag(l.ctx, productIDs, in.Identifiers, schema.TagOptional, schema.TagRequired)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		adds := utils.GetAddSlice(oldIdentifiers, in.Identifiers)
+		if len(adds) == 0 {
+			return
+		}
+		addSet := utils.SliceToSet(adds)
+		//物模型没有的需要增加
+		for _, identifier := range cs {
+			if _, ok := addSet[identifier.Identifier]; !ok {
+				continue //非新增的直接跳过
+			}
+			identifier.ID = 0
+			identifier.Tag = schema.TagRequired
+			err = stores.GetTenantConn(ctx).Transaction(func(tx *gorm.DB) error {
+				var findProducts = map[string]struct{}{} //数据库中有该物模型的
+				psDB := relationDB.NewProductSchemaRepo(tx)
+				//获取涉及到的产品物模型
+				ps, err := psDB.FindProductIDByFilter(ctx, relationDB.ProductSchemaFilter{ProductIDs: productIDs, Identifiers: []string{identifier.Identifier}})
+				if err != nil {
+					return err
+				}
+				findProducts = utils.SliceToSet(ps)
+				var schemas []*relationDB.DmProductSchema
+				var addProductIDs []string
+
+				for _, v := range adds {
+					if _, ok := findProducts[v]; ok {
+						continue
+					}
+					addProductIDs = append(addProductIDs, v)
+					//如果没有这个物模型需要新增
+					schemas = append(schemas, &relationDB.DmProductSchema{
+						TenantCode:   productMap[v].TenantCode,
+						ProductID:    v,
+						Identifier:   identifier.Identifier,
+						DmSchemaCore: identifier.DmSchemaCore,
+					})
+				}
+				return psDB.MultiInsert(ctx, schemas)
+			})
+			if err != nil {
+				logx.WithContext(ctx).Error(err)
+			}
+		}
+	})
+	return &dm.Empty{}, err
+}

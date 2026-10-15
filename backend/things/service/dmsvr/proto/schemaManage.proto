@@ -1,0 +1,118 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+
+import "productManage.proto";
+import "dmShare.proto";
+import "google/protobuf/wrappers.proto";
+service SchemaManage{
+  rpc commonSchemaInit(Empty)  returns (Empty);
+  //更新产品物模型
+  rpc commonSchemaUpdate(CommonSchemaUpdateReq)returns (Empty);
+  //新增产品
+  rpc commonSchemaCreate(CommonSchemaCreateReq)     returns (Empty);
+  //删除产品
+  rpc commonSchemaDelete(WithID)     returns (Empty);
+  //获取产品信息列表
+  rpc commonSchemaIndex(CommonSchemaIndexReq)     returns (CommonSchemaIndexResp);
+
+  rpc commonSchemaMultiImport(CommonSchemaImportReq) returns(ImportResp); //产品导入
+  rpc commonSchemaMultiExport(CommonSchemaExportReq) returns(CommonSchemaExportResp); //产品导出
+}
+
+message CommonSchemaImportReq{
+  string schemas =1;//品类信息
+}
+
+message  CommonSchemaExportReq{
+  repeated string identifiers = 5; //标识符列表
+}
+
+message  CommonSchemaExportResp{
+  string schemas =1;//品类信息
+}
+
+message CommonSchemaUpdateReq{
+  CommonSchemaInfo info = 1;//物模型信息
+
+}
+
+message CommonSchemaCreateReq{
+  CommonSchemaInfo info = 1;//物模型信息
+}
+
+message CommonSchemaIndexReq{
+  PageInfo page = 1;//分页信息 只获取一个则不填
+  repeated string productIDs = 2; //有这个属性的产品id列表
+  int64  type = 3; //物模型类型 1:property属性 2:event事件 3:action行为
+  repeated int64 types =20;
+  repeated string   identifiers = 5; //过滤标识符列表
+  string name =6;//标识符名字过滤
+  bool withProductCategory =4;
+  int64 productCategoryID = 7;//过滤属于该产品品类的物模型
+  bool productCategoryWithFather =8;//同时返回父节点的物模型
+  int64 isCanSceneLinkage =9;//是否支持场景联动控制
+  int64 funcGroup =14; // 功能分类: 1:普通功能 2:系统功能
+  int64 userPerm =15;//用户权限操作: 1:r(只读) 3:rw(可读可写)
+  int64 areaID =16;//过滤区域下设备共有的物模型
+  string areaIDPath=23; //区域路径过滤
+  int64 projectID =24;//过滤项目下设备共有的物模型
+  int64 groupID =17;//过滤分组下设备共有的物模型
+  repeated int64 groupIDs =18;//过滤分组下设备共有的物模型
+  string  propertyMode =19;//属性类型可用 读写类型: 1:r(只读) 2:rw(可读可写)
+  int64 controlMode = 21;  //控制模式: 1: 可以群控,可以单控  2:只能单控
+  string  productSceneMode =22;//产品场景模式 读写类型: r(只读) rw(可读可写) none(不参与场景)
+  string identifier = 25;//标识符模糊过滤
+}
+
+message CommonSchemaIndexResp{
+  repeated CommonSchemaInfo list = 1;
+  int64  total = 2;//总数(只有分页的时候会返回)
+}
+
+message CommonSchemaInfo{
+  int64 id =1;
+  int64 type = 2;         //物模型类型 1:property属性 2:event事件 3:action行为
+  string identifier = 4;           //标识符
+  google.protobuf.StringValue name = 5;       //功能名称
+  google.protobuf.StringValue desc = 6;       //描述
+  int64 required = 7;  //是否必须 1:是 2:否
+  int64 isCanSceneLinkage =8;//是否支持场景联动控制
+  int64 funcGroup =14; // 功能分类: 1:普通功能 2:系统功能
+  int64 userPerm =15;//用户权限操作: 1:r(只读) 3:rw(可读可写)
+  int64 recordMode = 10;// 1(默认) 记录历史记录 2 只记录差异值 3 不记录历史记录
+  int64 isPassword = 17;// 是否是密码类型,密码类型需要加掩码
+  /*
+    affordance 各功能类型的详细参数定义(JSON)。由字段 type 决定其结构:
+
+    1) type=1 PropertyAffordance (属性能力)
+       - isUseShadow: bool  是否使用设备影子。true: 设备离线时写入影子，在线直发
+       - isNoRecord:  bool  是否不存储历史记录。true: 不落库，仅保留最新
+       - define:      object 数据定义(Define)。描述该属性的数据类型、取值范围/枚举、单位、步进等
+       - mode:        int    读写类型(PropertyMode)。1: r(只读) 2: rw(可读可写)
+       - 说明: Define 用于描述数据 schema，通常包含 type、specs(如 min/max/step/enum/unit/length 等)。Params 的单项也复用 Define
+       - JSON 示例:
+         {"isUseShadow":true,"isNoRecord":false,"define":{"type":"int","min":0,"max":100,"unit":"%"},"mode":2}
+
+    2) type=2 EventAffordance (事件能力)
+       - type:   string  事件类型(EventType)。取值: info(信息) / alert(告警) / fault(故障)
+       - params: object  事件参数(Params)。键为参数名，值为参数定义(同 Define)
+       - JSON 示例:
+         {"type":"alert","params":{"code":{"type":"string"},"level":{"type":"enum","enum":["L1","L2","L3"]}}}
+
+    3) type=3 ActionAffordance (行为能力)
+       - dir:    string  调用方向(ActionDir)。如 up/down，表示触发/响应方向
+       - input:  object  调用入参(Params)。键为参数名，值为参数定义(同 Define)
+       - output: object  返回出参(Params)。键为参数名，值为参数定义(同 Define)
+       - JSON 示例:
+         {"dir":"down","input":{"switch":{"type":"bool"}},"output":{"result":{"type":"int","enum":[0,1]}}}
+
+    参考: things/share/domain/schema/affordance.go 中的 PropertyAffordance / EventAffordance / ActionAffordance 定义；
+          以及同包内 Define / PropertyMode / EventType / ActionDir / Params 的含义约定
+  */
+  google.protobuf.StringValue affordance = 11;//各功能类型参数(JSON)
+  string extendConfig = 12; //拓展参数
+  int64 order =13;//排序
+  int64 controlMode = 16;  //控制模式: 1: 可以群控,可以单控  2:只能单控
+  repeated ProductCategory productCategories =3; //绑定的产品品类(如果绑定了,则该品类下的产品会自动新增并不允许删除)
+}

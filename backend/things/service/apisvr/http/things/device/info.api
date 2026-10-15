@@ -1,0 +1,466 @@
+info(
+    title: "设备管理模块"
+    desc: "设备管理模块"
+    author: "杨磊"
+    email: "603685348@qq.com"
+    version: "v1"
+)
+
+
+@server(
+    group: things/device/info
+    prefix: /api/v1/things/device/info
+    accessCodePrefix: "thingsDeviceInfo"
+    accessNamePrefix: "设备信息"
+    accessGroup: "设备管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "新增设备"
+        isNeedAuth: "true"
+        authType: "admin"
+    )
+    @handler create
+    post /create (DeviceInfo) returns ()
+    @doc(
+        summary: "更新设备"
+    )
+    @handler update
+    post /update (DeviceInfo) returns ()
+    @doc(
+        summary: "批量更新设备"
+    )
+    @handler multiUpdate
+    post /multi-update (DeviceInfoMultiUpdateReq) returns ()
+    @doc(
+        summary: "导入批量更新设备"
+        injectFormdataParam: "file"
+        isNeedAuth: "true"
+        authType: "admin"
+    )
+    @handler multiUpdateImport
+    post /multi-update-import (DeviceMultiUpdateImportReq) returns (DeviceMultiUpdateImportResp)
+    @doc(
+        summary: "删除设备"
+        isNeedAuth: "true"
+        authType: "admin"
+    )
+    @handler delete
+    post /delete (DeviceInfoDeleteReq) returns ()
+    @doc(
+        summary: "获取设备列表"
+    )
+    @handler index
+    post /index (DeviceInfoIndexReq) returns (DeviceInfoIndexResp)
+    @doc(
+        summary: "获取设备详情"
+    )
+    @handler read
+    post /read (DeviceInfoReadReq) returns (DeviceInfo)
+    @doc(
+        summary: "设备统计详情"
+    )
+    @handler count
+    post /count (DeviceCountReq) returns (DeviceCountResp)
+    @doc(
+        summary: "批量导入设备"
+        injectFormdataParam: "file"
+        isNeedAuth: "true"
+        authType: "admin"
+    )
+    @handler multiImport
+    post /multi-import (DeviceMultiImportReq) returns (DeviceMultiImportResp)
+    @doc(
+        summary: "绑定"
+        businessType: "modify"
+    )
+    @handler bind
+    post /bind (DeviceInfoBindReq) returns ()
+    @doc(
+        summary: "批量绑定"
+        businessType: "modify"
+    )
+    @handler multiBind
+    post /multi-bind (DeviceInfoMultiBindReq) returns (DeviceInfoMultiBindResp)
+    @doc(
+        summary: "是否可以绑定设备"
+        businessType: "find"
+    )
+    @handler canBind
+    post /can-bind (DeviceInfoCanBindReq) returns (DeviceInfoCanBindResp)
+    @doc(
+        summary: "解绑设备"
+        businessType: "modify"
+    )
+    @handler unbind
+    post /unbind (DeviceInfoUnbindReq) returns ()
+    @doc(
+        summary: "绑定token状态查询"
+    )
+    @handler bindTokenRead
+    post /bind/token/read (DeviceBindTokenReadReq) returns (DeviceBindTokenInfo)
+    @doc(
+        summary: "创建绑定token"
+        businessType: "modify"
+    )
+    @handler bindTokenCreate
+    post /bind/token/create () returns (DeviceBindTokenInfo)
+    @doc(
+        summary: "转移设备到新设备上"
+        businessType: "modify"
+    )
+    @handler move
+    post /move (DeviceMoveReq) returns ()
+    @doc(
+        summary: "转让设备"
+        businessType: "modify"
+    )
+    @handler transfer
+    post /transfer (DeviceInfoTransferReq) returns ()
+    @doc(
+        summary: "设备升级,获取升级包手动升级"
+        businessType: "modify"
+    )
+    @handler otaUpgrade
+    post /ota/upgrade (DeviceOtaUpgradeReq) returns (DeviceOtaUpgradeResp)
+}
+
+type (
+
+
+    // DeviceOtaUpgradeReq OTA升级请求
+    DeviceOtaUpgradeReq  {
+        ProductID   string `json:"productID"`   // 产品ID
+        DeviceName  string `json:"deviceName"` // 设备名称
+        Version     string `json:"version"`       // 当前版本,如果和设备的当前版本不一致,会更新设备的版本,如果和固件的版本一致,这个固件的升级进度会变成成功
+    }
+
+// DeviceOtaUpgradeResp OTA升级响应
+    DeviceOtaUpgradeResp  {
+        Firmware *OtaUpgradeData `json:"firmware"` // 如果有新版本会返回
+    }
+
+// OtaUpgradeData 固件升级信息
+    OtaUpgradeData  {
+        Version    string    `json:"version"`       // 新固件的版本
+        Name       string    `json:"name"`             // 固件升级包名称
+        Desc       string    `json:"desc"`             // 文件描述
+        IsDiff     int64     `json:"isDiff"`        // 是否差分升级包（0/1）
+        SignMethod string    `json:"signMethod"` // OTA升级包签名方法（MD5/SHA256，默认MD5）
+        Extra      string    `json:"extra"`           // 额外信息
+        Files      []*OtaFile `json:"files"`          // 升级文件列表
+    }
+
+// OtaFile 升级文件详情
+    OtaFile  {
+        Size      int64  `json:"size"`         // 文件大小（字节）
+        Name      string `json:"name"`          // 文件名
+        FileUrl   string `json:"fileUrl"`    // 文件下载地址
+        FileMd5   string `json:"fileMd5"`    // 文件MD5校验值
+        Signature string `json:"signature"`// 文件签名值
+    }
+
+    DeviceInfo  {
+        ID    int64  `json:"id,optional,omitempty"`
+        TenantCode string `json:"tenantCode,optional,omitempty"`
+        ProductID string `json:"productID"`                                               //产品id 只读
+        ProjectID int64 `json:"projectID,string,optional"`                                               //项目id 只读
+        ProductName string `json:"productName,optional,omitempty"`
+        DeviceType int64    `json:"deviceType,optional,omitempty"`//设备类型:1:直连设备,2:网关,3:子设备,4:监控设备
+        ProductImg string `json:"productImg,optional,omitempty"`                        //产品图片
+        AreaID int64 `json:"areaID,string,optional,omitempty"`                                                     //项目区域id 只读
+        DeviceName string `json:"deviceName"`                                             //设备名称 读写
+        DeviceAlias *string `json:"deviceAlias,optional"`                                  //设备别名 读写
+        Secret string `json:"secret,optional,omitempty"`                                            //设备秘钥 只读
+        Cert string `json:"cert,optional,omitempty"`                                                // 设备证书  只读
+        Imei string `json:"imei,optional,omitempty"`                                                // IMEI号信息 只读
+        Mac string `json:"mac,optional,omitempty"`                                                  // MAC号信息 只读
+        CategoryID int64 `json:"categoryID,optional,omitempty"`                                     //产品品类
+        Version *string `json:"version,optional,omitempty"`                                         // 固件版本  读写
+        HardInfo string `json:"hardInfo,optional,omitempty"`                                        // 模组硬件型号 只读
+        SoftInfo string `json:"softInfo,optional,omitempty"`                                        // 模组软件版本 只读
+        MobileOperator int64    `json:"mobileOperator,optional,range=[0:10],omitempty"`                       //移动运营商:1)移动 2)联通 3)电信 4)广电
+        Phone          *string   `json:"phone,optional,omitempty"`                        //手机号
+        Iccid          *string   `json:"iccid,optional,omitempty"`                        //SIM卡卡号
+        Position *Point `json:"position,optional,omitempty"`                                        //设备定位,默认百度坐标系
+        Address *string `json:"address,optional,omitempty"`                                         //所在地址
+        Adcode *string  `json:"adcode,optional,omitempty"`//地区编码
+        Tags []*Tag `json:"tags,optional,omitempty"`                                                // 设备tag
+        SchemaAlias    map[string]string       `json:"schemaAlias,optional,omitempty"` //设备物模型别名,如果是结构体类型则key为xxx.xxx
+        IsOnline int64 `json:"isOnline,optional,range=[0:2],omitempty"`                                         // 在线状态  1离线 2在线 只读
+        FirstLogin int64 `json:"firstLogin,optional,string,omitempty"`                              //激活时间 只读
+        FirstBind int64 `json:"firstBind,optional,string,omitempty"`
+        LastBind int64 `json:"lastBind,optional,string,omitempty"`                                //最后绑定时间 只读
+        LastLogin int64 `json:"lastLogin,optional,string,omitempty"`                                //最后上线时间 只读
+        LastOffline int64 `json:"lastOffline,optional,string,omitempty"`                                //最后下线时间 只读
+        ExpTime *int64 `json:"expTime,optional,string,omitempty"` //到期时间
+        LogLevel int64 `json:"logLevel,optional,range=[0:5],omitempty"`                                         // 日志级别:1)关闭 2)错误 3)告警 4)信息 5)调试  读写
+        Rssi int64  `json:"rssi,optional,omitempty"`//信号强度
+        CreatedTime int64 `json:"createdTime,optional,string,omitempty"`                            //创建时间 只读
+        Status int64 `json:"status,optional,omitempty"` //设备状态 1-未激活，2-在线，3-离线 4-异常(频繁上下线,告警中)
+        IsEnable int64 `json:"isEnable,optional,omitempty"` //是否启用
+        WithProperties map[string]*DeviceInfoWithProperty `json:"withProperties,optional,omitempty"` //获取的属性列表,如果不传withProperty,则不会返回
+        ProtocolConf []*Tag `json:"protocolConf,optional,omitempty"` //协议配置
+        SubProtocolConf []*Tag `json:"subProtocolConf,optional,omitempty"` //子协议配置
+        Profiles map[string]string  `json:"profiles,optional,omitempty"`
+        Owner *UserCore `json:"owner,optional,omitempty"`
+        RatedPower  int64 `json:"ratedPower,optional,omitempty"`
+        NetType int64 `json:"netType,optional,range=[0:10],omitempty"`                                           //通讯方式:1:其他,2:wi-fi,3:2G/3G/4G,4:5G,5:BLE,6:LoRaWAN,7:wifi+ble,8:有线网,9:4G+BLE
+        NeedConfirmVersion string  `json:"needConfirmVersion,optional,omitempty"` //待确认升级的版本
+        UserID int64  `json:"userID,string,optional,omitempty"`
+        LastIp string `json:"lastIp,optional,omitempty"`//最后登录的ip地址
+        LastLocalIp string `json:"lastLocalIp,optional,omitempty"`//最后登录局域网的ip地址
+        Sort int64  `json:"sort,optional,omitempty"` //排序
+        DeviceImg string `json:"deviceImg,omitempty,optional"`                        //设备图片
+        IsUpdateDeviceImg bool `json:"isUpdateDeviceImg,omitempty,optional"` //只有这个参数为true的时候才会更新设备图片,传参为设备图片的file path
+        File string `json:"file,omitempty,optional"`                        //设备相关文件
+        IsUpdateFile bool `json:"isUpdateFile,omitempty,optional"` //只有这个参数为true的时候才会更新设备文件,传参为设备文件的file path
+        Desc *string  `json:"desc,optional,omitempty"`
+        Distributor *IDPath `json:"distributor,optional,omitempty"`
+        Gateway *DeviceInfo `json:"gateway,optional,omitempty"`//子设备绑定的网关信息,只读
+        Area *AreaInfo `json:"area,optional,omitempty"` //区域信息,只读
+        Groups []*GroupCore `json:"groups,optional,omitempty"`//所在分组信息,只读
+        GroupPurpose string `json:"groupPurpose,optional,omitempty"`//更新的时候使用,将设备该用途下的分组进行更新
+        GroupIDs []int64 `json:"groupIDs,optional,string,omitempty"`//如果要更新分组,必须填写groupPurpose
+    }
+
+    GroupCore{
+        ID int64 `json:"id"`
+        ParentID int64  `json:"parentID"`
+        Name string  `json:"name"`
+        Purpose string  `json:"purpose"`//用途
+    }
+
+    DeviceInfoWithProperty {
+        Value string `json:"value"`                  //获取到的值
+        Timestamp int64 `json:"timestamp,string"`   //发生时间戳(毫秒时间戳)
+    }
+
+    DeviceInfoTransferReq{
+        Device *DeviceCore `json:"device,optional"`
+        Devices []*DeviceCore `json:"devices,optional"`
+        SrcProjectID int64  `json:"srcProjectID,string,optional"`//指定原来的项目ID,不写使用头
+        TransferTo int64  `json:"transferTo"`//转让给: 1: 某个人 2: 自己的某个项目
+        UserID int64  `json:"userID,string,optional"`
+        ProjectID int64  `json:"projectID,string,optional"`
+        AreaID int64 `json:"areaID,string,optional"`//转移到项目时指定区域ID
+        IsCleanData int64 `json:"isCleanData"`//是否清除数据:1是 2否
+    }
+    DeviceMoveReq{
+        Old *DeviceCore `json:"old"`//需要转移的设备
+        New *DeviceCore `json:"new"`//转移的对象
+        withTarget []string `json:"withTarget,optional"`//设备配置-profile,schemaAlias:profile
+    }
+    DeviceInfoCanBindReq{
+        Device DeviceCore `json:"device"`
+    }
+    DeviceInfoCanBindResp{
+        ProjectID int64 `json:"projectID,string,omitempty,optional"`//非共享关系时的设备当前项目ID
+        IsShare bool `json:"isShare,omitempty,optional"`//是否是共享设备关系
+    }
+    DeviceInfoMultiBindReq{
+        Devices []*DeviceCore `json:"devices"`
+        AreaID int64  `json:"areaID,optional,string"`
+    }
+    DeviceInfoMultiBindResp{
+        Errs []*DeviceError `json:"errs"`
+    }
+    DeviceInfoUnbindReq{
+        ProductID string `json:"productID"`                                               //产品id 只读
+        DeviceName string `json:"deviceName"`                                             //设备名称 读写
+    /*
+中绑定,强制解绑参数
+对参数（deviceName、nonce、productID、timestamp）按字典序升序排序。
+将以上参数，按参数名称 = 参数值 & 参数名称 = 参数值拼接成字符串, 如："deviceName=xxx&nonce=2125656451&productID=xxx&timestamp=1687525491"。
+使用 HMAC-sha1 算法对上一步中获得的字符串进行计算，密钥取secretType   取设备的物模型密码类型的属性。
+将生成的结果使用 Base64 进行编码，即可获得最终的签名串放入 signature。
+*/
+        SecretType string `json:"secretType,optional"` //采用秘钥的类型
+        Signature string `json:"signature,optional"` //签名
+        Timestamp int64 `json:"timestamp,optional"` //秒时间戳
+        SignType string `json:"signType,optional"` //hmacsha256 hmacsha1 hmacmd5(默认)
+        Nonce int64 `json:"nonce,optional"` //随机数
+    }
+    DeviceInfoBindReq{
+        Device DeviceCore `json:"device"`
+        AreaID int64  `json:"areaID,optional,string"`
+        Token string  `json:"token,optional"`//配网token,中绑定需要
+        Expand map[string]string `json:"expand,optional"` //拓展字段
+    }
+    DeviceBindTokenReadReq{
+        Token string  `json:"token"`//配网token
+    }
+    DeviceBindTokenInfo{
+        Token string  `json:"token,optional"`//配网token
+        Status int64  `json:"status,optional"`//token状态 1:初始状态 2: 设备已上报
+    }
+    DeviceInfoSaveReq  {
+        ProductID string `json:"productID"`                                              //产品id 只读
+        DeviceName string `json:"deviceName"`                                            //设备名称 读写
+        DeviceAlias *string `json:"deviceAlias,optional"`                                 //设备别名 读写
+        LogLevel int64 `json:"logLevel,optional,range=[0:5]"`                                        // 日志级别:1)关闭 2)错误 3)告警 4)信息 5)调试  读写
+        Address *string `json:"address,optional"`                                        //所在地址
+        Position *Point `json:"position,optional"`                                       //设备定位,默认百度坐标系
+        Tags []*Tag `json:"tags,optional"`                                               // 设备tag
+        Phone          *string   `json:"phone,optional"`                        //手机号
+        Iccid          *string   `json:"iccid,optional"`                        //SIM卡卡号
+        UserID         int64  `json:"userID,string,optional"`        // 用户id
+        MobileOperator int64    `json:"mobileOperator,optional,range=[0:4]"`                       //移动运营商:1)移动 2)联通 3)电信 4)广电
+        AreaID int64 `json:"areaID,string,optional"`      //项目区域id 只读（1: root节点 2: 未分类节点 其他:子节点）
+        SchemaAlias    map[string]string       `json:"schemaAlias,optional"` //设备物模型别名,如果是结构体类型则key为xxx.xxx
+    }
+    DeviceInfoDeleteReq  {
+        ProductID string `json:"productID"`                                              //产品id 只读
+        DeviceName string `json:"deviceName"`                                            //设备名称 读写
+    }
+    DeviceInfoReadReq  {
+        ProductID string `json:"productID,optional"`                                     //产品id 为空时获取所有产品
+        DeviceName string `json:"deviceName"`                                            //设备名称 读写
+        WithProperties []string `json:"withProperties,optional"`   //如果不为nil,如果为空,获取设备所有最新属性 如果传了属性列表,则会返回属性列表
+        PropertyIgnoreEmpty bool `json:"propertyIgnoreEmpty,optional"`// 设备属性是否忽略空值,空值是否返回
+        WithProfiles []string `json:"withProfiles,optional"` //
+        WithOwner bool  `json:"withOwner,optional"`//同时获取拥有人的信息
+        WithGateway bool  `json:"withGateway,optional"`//同时返回子设备绑定的网关信息
+        WithArea bool `json:"withArea,optional"` //同时返回区域信息
+        IsOnlyCore bool `json:"isOnlyCore,optional"` //只返回核心信息
+    }
+    DeviceInfoMultiUpdateReq  {
+           Devices []*DeviceCore `json:"devices"`
+            AreaID int64 `json:"areaID,string,optional"`
+           RatedPower  int64 `json:"ratedPower,optional,omitempty"`
+    }
+    
+    DeviceMultiUpdateImportReq{
+        
+    }
+    DeviceMultiUpdateImportResp {
+        Total int64 `json:"total"`                                 //导入总接口数
+        ErrCount int64  `json:"errCount"` //失败数
+        ErrDetail []DeviceMultiUpdateImportError `json:"errDetail"` //失败详情
+        IgnoreCount int64  `json:"ignoreCount"` //忽略数
+        SuccCount int64  `json:"succCount"` //成功数
+    }
+
+    DeviceMultiUpdateImportError{
+        Device DeviceCore `json:"device"`
+        Code int64 `json:"code"`
+        Msg string  `json:"msg"`
+    }
+
+    DeviceInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`             //分页信息 只获取一个则不填
+        TenantCode string `json:"tenantCode,optional"`
+        ProductID string `json:"productID,optional"`      //产品id 为空时获取所有产品
+        ProductIDs []string `json:"productIDs,optional"`      //产品id 为空时获取所有产品
+        DeviceName string `json:"deviceName,optional"`    //过滤条件:模糊查询 设备名
+        DeviceNames []string `json:"deviceNames,optional"`    //过滤条件:精准查询 设备名
+        DeviceNameOrAlias string `json:"deviceNameOrAlias,optional"`//过滤条件:模糊查询 设备名或别名
+        ExpTime *CompareInt64 `json:"expTime,optional"` //到期时间
+        RatedPower *CompareInt64 `json:"ratedPower,optional"` //额定功率:单位w/h
+        Rssi *CompareInt64 `json:"rssi,optional"` //信号强度
+        DeviceAlias string `json:"deviceAlias,optional"`  //过滤条件:模糊查询 设备别名
+        DeviceTypes []int64 `json:"deviceTypes,optional"`                                     //设备类型:1:设备,2:网关,3:子设备//设备类型:1:设备,2:网关,3:子设备
+        Position *Point `json:"position,optional"`        //设备定位,默认百度坐标系，用于获取以该点为中心，Range范围内的设备列表，与Range连用
+        Range int64 `json:"range,optional"`               //过滤条件:距离坐标点固定范围内的设备 单位：米
+        Tags []*Tag `json:"tags,optional"`                // key tag过滤查询,非模糊查询 为tag的名,value为tag对应的值
+        WithProperties []string `json:"withProperties,optional"`   //如果不为nil,如果为空,获取设备所有最新属性 如果传了属性列表,则会返回属性列表,如果没有匹配的则不会返回
+        PropertyIgnoreEmpty bool `json:"propertyIgnoreEmpty,optional"`// 设备属性是否忽略空值,空值是否返回
+        WithProfiles []string `json:"withProfiles,optional"` //
+        AreaID int64 `json:"areaID,string,optional"`                  //项目区域ids
+        AreaIDs []int64 `json:"areaIDs,string,optional"`                  //项目区域ids
+        AreaIDPath string `json:"areaIDPath,optional"`                  //区域路径过滤
+        AreaIDPaths []string `json:"areaIDPaths,optional"`                  //区域路径过滤
+
+        IsOnline int64 `json:"isOnline,optional,range=[0:2]"`                                         // 在线状态过滤  1离线 2在线
+        ProductCategoryID int64 `json:"productCategoryID,optional"`
+        ProductCategoryIDs []int64 `json:"productCategoryIDs,optional"`
+        WithShared int64 `json:"withShared,optional,range=[0:2]"`                                         // 过滤分享的设备1: 同时获取分享的设备 2:只获取分享的设备
+        WithCollect int64 `json:"withCollect,optional,range=[0:2]"`                                         // 过滤收藏的设备(这里只获取收藏的设备) 1: 同时获取收藏的设备 2:只获取收藏的设备
+        Versions []string `json:"versions,optional"`
+        NotVersion string `json:"notVersion,optional"`
+        Gateway *DeviceCore `json:"gateway,optional"`//过滤网关
+        GroupID int64 `json:"groupID,optional,string"`
+        GroupIDs []int64 `json:"groupIDs,optional,string"`
+        GroupIDPaths []string `json:"groupIDPaths,optional"`
+        GroupIDPath string `json:"groupIDPath,optional"`
+        NotGroupID int64 `json:"notGroupID,optional,string"`
+        ParentGroupID int64 `json:"parentGroupID,optional,string"`
+        GroupPurpose string `json:"groupPurpose,optional"`//设备分组用途 不填默认为default
+        GroupName string `json:"groupName,optional"`
+        NotAreaID int64 `json:"notAreaID,optional,string"`
+        Devices []*DeviceCore `json:"devices,optional"`
+        Status int64 `json:"status,optional"` //设备状态 1-未激活，2-在线，3-离线 4-异常(频繁上下线,告警中)
+        Statuses []int64  `json:"statuses,optional"`
+        WithOwner bool  `json:"withOwner,optional"`//同时获取拥有人的信息
+        WithGateway bool  `json:"withGateway,optional"`//同时返回子设备绑定的网关信息
+        HasOwner int64 `json:"hasOwner,optional"`//是否被人拥有,1为是 2为否
+        UserID int64  `json:"userID,string,optional"`
+        NetType int64 `json:"netType,optional,range=[0:10]"`                                           //通讯方式:1:其他,2:wi-fi,3:2G/3G/4G,4:5G,5:BLE,6:LoRaWAN,7:wifi+ble,8:有线网,9:4G+BLE
+        NetTypes []int64 `json:"netTypes,optional"`                                           //通讯方式列表:支持按一个或多个网络类型过滤
+        WithArea bool `json:"withArea,optional"` //同时返回区域信息
+        IsOnlyCore bool `json:"isOnlyCore,optional"` //只返回核心信息
+        Iccid          string   `json:"iccid,optional,omitempty"`                        //SIM卡卡号
+        WithGroups []string  `json:"withGroups,optional"`
+        Property map[string ]*Compare `json:"property,optional"`//设备最新属性过滤,key为属性的id,如果是结构体则key为 aaa.bbb 数组为aaa.1
+    }
+    DeviceInfoIndexResp  {
+        List []*DeviceInfo `json:"list"`    //设备信息
+        PageResp
+    }
+
+    DeviceCountReq {
+        CountTypes []string `json:"countTypes"`//总数:total,在线设备数:status,设备类型: deviceType
+        RangeType int64 `json:"rangeType,string"`//0:全部 1:area 2:group
+        RangeIDs []int64 `json:"rangeIDs,string"`//统计的id列表, areaID或者groupID
+    }
+//    DeviceInfoCount {
+//        Total int64 `json:"total"`//总数
+//        Online int64 `json:"online"`     // 在线设备数
+//        Offline int64 `json:"offline"`   // 离线设备数
+//        Inactive int64 `json:"inactive"` // 未激活设备数
+//        Unknown int64 `json:"unknown"`   // 未知设备数（all = 在线+离线+未激活+未知）
+//    }
+//    DeviceTypeCount {
+//        Device int64 `json:"device"`   // 设备类型数
+//        Gateway int64 `json:"gateway"` // 网关类型数
+//        Subset int64 `json:"subset"`   // 子设备类型数
+//        Unknown int64 `json:"unknown"` // 未知设备类型
+//    }
+    DeviceCountResp {
+       List []*DeviceCountInfo `json:"list"`
+    }
+    DeviceCountInfo{
+       RangeID int64 `json:"rangeID,string"`
+       Count map[string]int64 `json:"count"`
+    }
+
+    DeviceMultiImportReq {
+//        File []byte `form:"file,optional"`                //csv文件(实际必填)
+    }
+    DeviceMultiImportRow {
+        Row int64 `json:"row"`                  //【提示】数据所在表格行
+        ProductID string `json:"productID"` //【必填】产品ID
+        DeviceName string `json:"deviceName"`   //【必填】设备名称
+        DeviceAlias string `json:"deviceAlias"` //【选填】设备别名
+        Secret string `json:"secret"`           //【选填】设备秘钥
+        GatewayProductID string `json:"gatewayProductID"`//【选填】绑定的网关产品ID(网关的设备ID全局唯一可不填)
+        GatewayDeviceName  string `json:"gatewayDeviceName"`//【选填】绑定的网关设备ID
+        LogLevel string `json:"logLevel"`       //【选填】日志级别（关闭/错误/告警/信息/调试）
+        Tags string `json:"tags"`               //【选填】设备标签（格式k1:v1;k2:v2;...）
+        Position string `json:"position"`       //【选填】设备位置百度坐标（格式:经,纬）
+        Address string `json:"address"`         //【选填】设备所在详细地址
+        Tips string `json:"tips"`               //【提示】模板使用提示
+    }
+    DeviceMultiImportResp {
+        Total int64 `json:"total"`                                 //当前表格数据量
+        Headers *DeviceMultiImportRow `json:"headers"`             //表格表头信息
+        Errdata []*DeviceMultiImportRow `json:"errdata"`           //批量导入错误清单
+    }
+    DeviceMultiImportErrdata {
+        Row int64 `json:"row"`                   //错误所在表格行
+        Msg string `json:"msg"`                  //详细错误信息
+    }
+
+)

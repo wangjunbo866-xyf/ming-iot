@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "repository": "git:gitee.com/ming-industry/ai-native",
+  "directory": "ai-native",
+  "skills": {"map-delivery": "skills/map-delivery"},
+  "lock_file": "skills.lock.json"
+}

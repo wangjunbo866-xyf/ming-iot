@@ -1,0 +1,58 @@
+{
+  "status": "private_rehearsal_not_publication",
+  "base_candidate": "7e7573a273ba7f18c6be723dc1a5c7634ef31648",
+  "sources": [
+    {
+      "source": "ai-native",
+      "head": "777d68e54942b1f6cf661e9c3ed7887050c22b61"
+    },
+    {
+      "source": "core",
+      "head": "9c027986e1bbcd86d33a5d9f5c2146f52cba247c"
+    },
+    {
+      "source": "iot-doc",
+      "head": "287d41a7ca2f5d444ceb34264fbe1ac515c42836"
+    },
+    {
+      "source": "ming-iot",
+      "head": "6742201e9666fd3b3067216b2efbb3b8ba7338d7"
+    },
+    {
+      "source": "ming-iot-rd-docs",
+      "head": "b16030c10cf2565ecfa16ab19ee43a3a273bec57"
+    },
+    {
+      "source": "share",
+      "head": "ece02ca9d6defd63356931a59e653950f27ac572"
+    },
+    {
+      "source": "things",
+      "head": "0fcfcfde8f3a66a774ad4443706274ea8e952b59"
+    }
+  ],
+  "rules": [
+    "One repository; source histories and local state retained in private verified backups.",
+    "AirMQ and ThingsBoard are excluded learning repositories; their sources remain outside the monorepo. Private M2 histories are not approved publication ancestry.",
+    "Historical instructions are inactive; imported tooling is experimental until M3 adaptation.",
+    "No GitHub push; no source repository deletion."
+  ],
+  "m2_followups": [
+    "Review source-only historical operational files and areastat incompatibility.",
+    "Adapt relocated tooling and historical document links in M3.",
+    "Run full history/publication boundary review before any remote publication."
+  ],
+  "excluded_sources": [
+    {
+      "source": "AirMQ",
+      "head": "6e42efaf4f9215acedbac6cb138f2dc34c59a7c4",
+      "reason": "user_confirmed_learning_reference_not_migrated"
+    },
+    {
+      "source": "thingsboard",
+      "head": "0439df09f31b0e8101b9f0a6be556c087d86818d",
+      "reason": "user_confirmed_learning_reference_not_migrated"
+    }
+  ],
+  "m3_scope": "core/share/things already integrated; retain M2 reconciled deltas, adapt entrypoints and checks only"
+}

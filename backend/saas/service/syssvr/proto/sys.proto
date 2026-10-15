@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package sys;
+
+option go_package = "pb/sys";
+
+import public "base.proto";
+import public "access.proto";
+import public "app.proto";
+import public "area.proto";
+import public "common.proto";
+import public "data.proto";
+import public "department.proto";
+import public "dict.proto";
+import public "log.proto";
+import public "module.proto";
+import public "notify.proto";
+import public "ops.proto";
+import public "project.proto";
+import public "role.proto";
+import public "tenant.proto";
+import public "user.proto";

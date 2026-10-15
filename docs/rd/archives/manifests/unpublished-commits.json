@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "base": "7bd2e7f630cb09f054f105f2e21032edb51ee964",
+  "head": "403b9a6d6b7e2c60a1ff96ef0f681da272d04c36",
+  "commits": [
+    {
+      "sha": "edf39c1e0d6f2da14cb74adf8eb98522dafab88c",
+      "subject": "docs(tools): design shared Go cache",
+      "paths": [
+        ".graph/loops/L0-things-baseline.yaml",
+        "docs/superpowers/specs/2026-08-19-thingsbaseline-shared-go-cache-design.md"
+      ],
+      "disposition": "ARCHIVE_ONLY",
+      "reason": "Both paths belong to the retired Graph and local R&D archive."
+    },
+    {
+      "sha": "e1cd1794534d6f34cdaffbaba13ffd28544a7299",
+      "subject": "docs(tools): plan shared Go cache implementation",
+      "paths": [
+        ".graph/loops/L0-things-baseline.yaml",
+        "docs/superpowers/plans/2026-08-19-thingsbaseline-shared-go-cache.md"
+      ],
+      "disposition": "ARCHIVE_ONLY",
+      "reason": "Both paths belong to the retired Graph and local R&D archive."
+    },
+    {
+      "sha": "0bf3d2548ad9c7241f9f37f0c3e36098867f6789",
+      "subject": "feat(tools): resolve shared Go cache paths",
+      "paths": [
+        "backend/tools/internal/thingsbaseline/go_cache.go",
+        "backend/tools/internal/thingsbaseline/go_cache_test.go"
+      ],
+      "disposition": "REPLAY_CODE"
+    },
+    {
+      "sha": "8982a3cbde5bc6d9c6fb63eee49b8406b0c26717",
+      "subject": "feat(tools): reuse trusted Go caches",
+      "paths": [
+        "backend/tools/internal/thingsbaseline/go_cache.go",
+        "backend/tools/internal/thingsbaseline/go_cache_test.go",
+        "backend/tools/internal/thingsbaseline/render.go",
+        "backend/tools/internal/thingsbaseline/render_test.go"
+      ],
+      "disposition": "REPLAY_CODE"
+    },
+    {
+      "sha": "dc19c8a77e05994e1efa61c30b6e267c9048b3d2",
+      "subject": "feat(tools): reuse Go caches in L0 gates",
+      "paths": [
+        "backend/tools/internal/thingsbaseline/verify.go",
+        "backend/tools/internal/thingsbaseline/verify_test.go"
+      ],
+      "disposition": "REPLAY_CODE"
+    },
+    {
+      "sha": "8a9e7930dc4e8b67aec212484a197a15f8998f88",
+      "subject": "docs(tools): explain shared Go cache semantics",
+      "paths": [
+        "backend/tools/README.md",
+        "docs/superpowers/specs/2026-08-14-l0-things-compilation-migration-baseline-design.md"
+      ],
+      "disposition": "SPLIT_REPLAY",
+      "replayPaths": [
+        "backend/tools/README.md"
+      ],
+      "archiveOnlyPaths": [
+        "docs/superpowers/specs/2026-08-14-l0-things-compilation-migration-baseline-design.md"
+      ]
+    },
+    {
+      "sha": "403b9a6d6b7e2c60a1ff96ef0f681da272d04c36",
+      "subject": "fix(tools): pin render commands to attested Go tool",
+      "paths": [
+        "backend/tools/internal/thingsbaseline/render.go",
+        "backend/tools/internal/thingsbaseline/render_test.go"
+      ],
+      "disposition": "REPLAY_CODE"
+    }
+  ]
+}

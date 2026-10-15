@@ -1,0 +1,297 @@
+info(
+    desc: "角色"
+	author: "lbs"
+	email: "174805676@qq.com"
+)
+
+@server(
+    group: system/role/info
+    prefix: /api/v1/system/role/info
+    accessCodePrefix: "systemRoleManage"
+    accessNamePrefix: "角色管理"
+    accessGroup: "角色管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "添加角色"
+        description: "在当前租户下新建角色，含名称、备注与状态，供后续授予用户和配置权限"
+        authType: "admin"
+        resource: "role"
+        action: "create"
+        group: "system/role/info"
+        recordLogMode: "2"
+    )
+    @handler create
+    post /create (RoleInfo) returns (WithID)
+
+    @doc(
+        summary: "获取角色列表"
+        description: "按名称、状态、编号或主键集合分页查询当前租户的角色清单"
+        authType: "admin"
+        resource: "role"
+        action: "view"
+        group: "system/role/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (RoleInfoIndexReq) returns (RoleInfoIndexResp)
+
+    @doc(
+        summary: "更新角色"
+        description: "修改指定角色的名称、备注与状态等基本信息"
+        authType: "admin"
+        resource: "role"
+        action: "update"
+        group: "system/role/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (RoleInfo) returns ()
+
+    @doc(
+        summary: "删除角色"
+        description: "按主键删除角色，已绑定该角色的用户将失去对应权限"
+        authType: "admin"
+        resource: "role"
+        action: "delete"
+        group: "system/role/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+}
+
+
+@server(
+    group: system/role/app
+    prefix: /api/v1/system/role/app
+    accessCodePrefix: "systemRoleManage"
+    accessNamePrefix: "角色应用"
+    accessGroup: "角色管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新APP权限"
+        description: "整体覆盖角色可访问的应用编号集合，影响该角色用户可见应用"
+        authType: "admin"
+        resource: "role"
+        action: "update"
+        group: "system/role/app"
+        recordLogMode: "2"
+    )
+    @handler multiUpdate
+    post /multi-update (RoleAppMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "获取APP权限列表"
+        description: "返回指定角色当前被授予的应用编号列表及总数"
+        authType: "admin"
+        resource: "role"
+        action: "view"
+        group: "system/role/app"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (RoleAppIndexReq) returns (RoleAppIndexResp)
+}
+
+
+@server(
+    group: system/role/access
+    prefix: /api/v1/system/role/access
+    accessCodePrefix: "systemRoleManage"
+    accessNamePrefix: "角色授权"
+    accessGroup: "角色管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新操作权限"
+        description: "整体覆盖角色被授予的操作权限点编号集合，决定该角色用户可执行操作"
+        authType: "admin"
+        resource: "role"
+        action: "update"
+        group: "system/role/access"
+        recordLogMode: "2"
+    )
+    @handler multiUpdate
+    post /multi-update (RoleAccessMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "获取操作权限列表"
+        description: "返回指定角色当前被授予的操作权限点编号集合"
+        authType: "admin"
+        resource: "role"
+        action: "view"
+        group: "system/role/access"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (RoleAccessIndexReq) returns (RoleAccessIndexResp)
+
+}
+
+
+@server(
+    group: system/role/menu
+    prefix: /api/v1/system/role/menu
+    accessCodePrefix: "systemRoleManage"
+    accessNamePrefix: "角色菜单"
+    accessGroup: "角色管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新角色对应菜单列表"
+        description: "按应用与模块整体覆盖角色被授予的菜单编号集合，影响该角色用户的菜单展示"
+        authType: "admin"
+        resource: "role"
+        action: "update"
+        group: "system/role/menu"
+        recordLogMode: "2"
+    )
+    @handler mulitUpdate
+    post /multi-update (RoleMenuMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "获取角色对应菜单列表"
+        description: "按应用与模块返回指定角色当前被授予的菜单编号列表"
+        authType: "admin"
+        resource: "role"
+        action: "view"
+        group: "system/role/menu"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (RoleMenuIndexReq) returns (RoleMenuIndexResp)
+}
+
+@server(
+    group: system/role/module
+    prefix: /api/v1/system/role/module
+    accessCodePrefix: "systemRoleManage"
+    accessNamePrefix: "角色模块"
+    accessGroup: "角色管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "更新角色对应模块列表"
+        description: "按应用整体覆盖角色被授予的功能模块编号集合，决定该角色用户可见模块"
+        authType: "admin"
+        resource: "role"
+        action: "update"
+        group: "system/role/module"
+        recordLogMode: "2"
+    )
+    @handler mulitUpdate
+    post /multi-update (RoleModuleMultiUpdateReq) returns ()
+
+    @doc(
+        summary: "获取角色对应模块列表"
+        description: "按应用返回指定角色当前被授予的功能模块编号列表"
+        authType: "admin"
+        resource: "role"
+        action: "view"
+        group: "system/role/module"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (RoleModuleIndexReq) returns (RoleModuleIndexResp)
+}
+
+
+
+type (
+
+    RoleAppMultiUpdateReq{
+        ID int64 `json:"id"`      //角色ID
+        AppCodes []string `json:"appCodes"`  //App列表数据
+    }
+    RoleAppIndexReq{
+        ID int64 `json:"id"`      //角色ID
+    }
+    RoleAppIndexResp{
+        AppCodes []string `json:"appCodes"`  //App列表数据
+        Total int64 `json:"total"`         //App列表总数
+    }
+
+    RoleAccessMultiUpdateReq {
+        ID int64 `json:"id"`      //角色ID
+        AccessCodes []string `json:"accessCodes"`                               // 模块编号
+    }
+
+    RoleAccessIndexReq{
+        ID int64 `json:"id"`      //角色ID
+    }
+
+    RoleAccessIndexResp {
+        AccessCodes []string `json:"accessCodes"`                               // 模块编号
+    }
+
+
+
+    RoleInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`//分页信息,只获取一个则不填
+        Name string `json:"name,optional"`           //按名称查找角色
+        Status int64 `json:"status,optional"`        //按状态查找角色
+        Codes []string  `json:"codes,optional"` //角色编码过滤
+        IDs []int64  `json:"ids,optional"`
+    }
+
+    RoleInfo  {
+        ID int64 `json:"id,optional"`                                // 编号
+        Name string `json:"name,optional"`                           // 角色名称
+        Desc *string `json:"desc,optional"`                       // 备注
+        CreatedTime int64 `json:"createdTime,optional"`              // 创建时间
+        Status int64 `json:"status,optional"`                        // 角色状态
+        Code string  `json:"code,optional"` //角色编码
+    }
+
+    RoleInfoIndexResp  {
+        List []*RoleInfo `json:"list"`  //角色列表数据
+        PageResp
+    }
+
+    RoleMenuMultiUpdateReq  {
+        ID int64 `json:"id"`   //角色编号
+        AppCode string `json:"appCode"`                               // 应用编号
+        ModuleCode string `json:"moduleCode"`
+        MenuIDs []int64 `json:"menuIDs"` //菜单编号列表
+    }
+    RoleMenuIndexReq{
+        ID int64 `json:"id"`   //角色编号
+        AppCode string `json:"appCode"`                               // 应用编号
+        ModuleCode string `json:"moduleCode"`
+    }
+    RoleMenuIndexResp{
+        MenuIDs []int64 `json:"menuIDs"` //菜单编号列表
+    }
+)
+
+type (
+    RoleModuleMultiUpdateReq  {
+        ID int64 `json:"id"`   //角色编号
+        AppCode string `json:"appCode"`                               // 应用编号
+        ModuleCodes []string `json:"moduleCodes"`
+    }
+    RoleModuleIndexReq{
+        ID int64 `json:"id"`   //角色编号
+        AppCode string `json:"appCode"`                               // 应用编号
+    }
+    RoleModuleIndexResp{
+        ModuleCodes []string `json:"moduleCodes"` //菜单编号列表
+    }
+)

@@ -1,0 +1,2713 @@
+[
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/create",
+    "handler": "create",
+    "requestType": "ApiInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/index",
+    "handler": "index",
+    "requestType": "ApiInfoIndexReq",
+    "responseType": "ApiInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/api/update",
+    "handler": "update",
+    "requestType": "ApiInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/create",
+    "handler": "create",
+    "requestType": "AccessInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/index",
+    "handler": "index",
+    "requestType": "AccessIndexReq",
+    "responseType": "AccessIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/multi-import",
+    "handler": "multiImport",
+    "requestType": "AccessMultiImportReq",
+    "responseType": "AccessMultiImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/tree",
+    "handler": "tree",
+    "requestType": "AccessIndexReq",
+    "responseType": "AccessIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/access/info/update",
+    "handler": "update",
+    "requestType": "AccessInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/create",
+    "handler": "create",
+    "requestType": "AppInfo",
+    "responseType": "WithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/delete",
+    "handler": "delete",
+    "requestType": "WithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/index",
+    "handler": "index",
+    "requestType": "AppInfoIndexReq",
+    "responseType": "AppInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "AppInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/info/update",
+    "handler": "update",
+    "requestType": "AppInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/module/index",
+    "handler": "index",
+    "requestType": "AppModuleIndexReq",
+    "responseType": "AppModuleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/app/module/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "AppModuleMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/create",
+    "handler": "create",
+    "requestType": "AreaInfo",
+    "responseType": "AreaWithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/delete",
+    "handler": "delete",
+    "requestType": "AreaWithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/index",
+    "handler": "index",
+    "requestType": "AreaInfoIndexReq",
+    "responseType": "AreaInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/read",
+    "handler": "read",
+    "requestType": "AreaInfoReadReq",
+    "responseType": "AreaInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/info/update",
+    "handler": "update",
+    "requestType": "AreaInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/index",
+    "handler": "profileIndex",
+    "requestType": "AreaProfileIndexReq",
+    "responseType": "AreaProfileIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/read",
+    "handler": "profileRead",
+    "requestType": "AreaProfileReadReq",
+    "responseType": "AreaProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/area/profile/update",
+    "handler": "profileUpdate",
+    "requestType": "AreaProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/api/batch-agg",
+    "handler": "apiBatchAgg",
+    "requestType": "ApiBatchAggReq",
+    "responseType": "ApiBatchAggResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/config",
+    "handler": "config",
+    "responseType": "ConfigResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/debug",
+    "handler": "debugGet",
+    "responseType": "DebugResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/debug",
+    "handler": "debugPost",
+    "responseType": "DebugResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/debug-tencent",
+    "handler": "debugGetTencent",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/download-file",
+    "handler": "downloadFile",
+    "requestType": "DownloadFileReq",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/ntp/read",
+    "handler": "ntpRead",
+    "requestType": "NtpReadReq",
+    "responseType": "NtpReadResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/qr-code/read",
+    "handler": "qRCodeReadReq",
+    "requestType": "QRCodeReadReq",
+    "responseType": "QRCodeReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/third/dept/index",
+    "handler": "thirdDeptIndex",
+    "requestType": "ThirdDeptInfoIndexReq",
+    "responseType": "DeptInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/third/dept/read",
+    "handler": "thirdDeptRead",
+    "requestType": "ThirdDeptInfoReadReq",
+    "responseType": "DeptInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/upload-file",
+    "handler": "uploadFile",
+    "requestType": "Empty",
+    "responseType": "UploadFileResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/upload-url/create",
+    "handler": "uploadUrlCreate",
+    "requestType": "UploadUrlCreateReq",
+    "responseType": "UploadUrlCreateResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/common/weather/read",
+    "handler": "weatherRead",
+    "requestType": "WeatherReadReq",
+    "responseType": "WeatherReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/api/v1/system/common/websocket/connect",
+    "handler": "websocketConnect",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/index",
+    "handler": "index",
+    "requestType": "DataAreaIndexReq",
+    "responseType": "DataAreaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DataAreaMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "DataAreaMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/user/apply/deal",
+    "handler": "deal",
+    "requestType": "UserAreaApplyDealReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/area/user/apply/index",
+    "handler": "index",
+    "requestType": "UserAreaApplyIndexReq",
+    "responseType": "UserAreaApplyIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/create",
+    "handler": "create",
+    "requestType": "DataProjectSaveReq",
+    "responseType": "DataProject",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/delete",
+    "handler": "delete",
+    "requestType": "DataProjectDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/index",
+    "handler": "projectIndex",
+    "requestType": "DataProjectIndexReq",
+    "responseType": "DataProjectIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/multi-create",
+    "handler": "projectMultiCreate",
+    "requestType": "DataProjectMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/data/project/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DataProjectMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/create",
+    "handler": "create",
+    "requestType": "DeptInfo",
+    "responseType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/delete",
+    "handler": "delete",
+    "requestType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/index",
+    "handler": "index",
+    "requestType": "DeptInfoIndexReq",
+    "responseType": "DeptInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/read",
+    "handler": "read",
+    "requestType": "DeptInfoReadReq",
+    "responseType": "DeptInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/info/update",
+    "handler": "update",
+    "requestType": "DeptInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/create",
+    "handler": "create",
+    "requestType": "DeptSyncJob",
+    "responseType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/delete",
+    "handler": "delete",
+    "requestType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/execute",
+    "handler": "execute",
+    "requestType": "DeptSyncJobExecuteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/index",
+    "handler": "index",
+    "requestType": "DeptSyncJobIndexReq",
+    "responseType": "DeptSyncJobIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/read",
+    "handler": "read",
+    "requestType": "DeptSyncJobReadReq",
+    "responseType": "DeptSyncJob",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/sync-job/update",
+    "handler": "update",
+    "requestType": "DeptSyncJob",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/index",
+    "handler": "index",
+    "requestType": "DeptUserIndexReq",
+    "responseType": "DeptUserIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/multi-create",
+    "handler": "multiCreate",
+    "requestType": "DeptUserMultiCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dept/user/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "DeptUserMultiDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/create",
+    "handler": "create",
+    "requestType": "DictDetail",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/index",
+    "handler": "index",
+    "requestType": "DictDetailIndexReq",
+    "responseType": "DictDetailIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/read",
+    "handler": "read",
+    "requestType": "DictDetailReadReq",
+    "responseType": "DictDetail",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/detail/update",
+    "handler": "update",
+    "requestType": "DictDetail",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/create",
+    "handler": "create",
+    "requestType": "DictInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/index",
+    "handler": "index",
+    "requestType": "DictInfoIndexReq",
+    "responseType": "DictInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/multi-export",
+    "handler": "multiExport",
+    "requestType": "DictInfoMultExportReq",
+    "responseType": "DictInfoMultExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/multi-import",
+    "handler": "multiImport",
+    "requestType": "DictInfoMultImportReq",
+    "responseType": "DictInfoMultImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/read",
+    "handler": "read",
+    "requestType": "DictInfoReadReq",
+    "responseType": "DictInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/dict/info/update",
+    "handler": "update",
+    "requestType": "DictInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/cancel",
+    "handler": "cancel",
+    "requestType": "TimedTaskWithTaskID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/create",
+    "handler": "groupCreate",
+    "requestType": "TimedTaskGroup",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/delete",
+    "handler": "groupDelete",
+    "requestType": "WithCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/index",
+    "handler": "groupIndex",
+    "requestType": "TimedTaskGroupIndexReq",
+    "responseType": "TimedTaskGroupIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/read",
+    "handler": "groupRead",
+    "requestType": "WithCode",
+    "responseType": "TimedTaskGroup",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/group/update",
+    "handler": "groupUpdate",
+    "requestType": "TimedTaskGroup",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/create",
+    "handler": "infoCreate",
+    "requestType": "TimedTaskInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/delete",
+    "handler": "infoDelete",
+    "requestType": "WithGroupCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/index",
+    "handler": "infoIndex",
+    "requestType": "TimedTaskInfoIndexReq",
+    "responseType": "TimedTaskInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/read",
+    "handler": "infoRead",
+    "requestType": "WithGroupCode",
+    "responseType": "TimedTaskInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/info/update",
+    "handler": "infoUpdate",
+    "requestType": "TimedTaskInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/log/index",
+    "handler": "logIndex",
+    "requestType": "TimedTaskLogIndexReq",
+    "responseType": "TimedTaskLogIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/job/task/send",
+    "handler": "send",
+    "requestType": "TimedTaskSendReq",
+    "responseType": "TimedTaskWithTaskID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/log/login/index",
+    "handler": "loginIndex",
+    "requestType": "SysLogLoginIndexReq",
+    "responseType": "SysLogLoginIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/log/oper/index",
+    "handler": "operIndex",
+    "requestType": "SysLogOperIndexReq",
+    "responseType": "SysLogOperIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/create",
+    "handler": "create",
+    "requestType": "ModuleInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/delete",
+    "handler": "delete",
+    "requestType": "WithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/index",
+    "handler": "index",
+    "requestType": "ModuleInfoIndexReq",
+    "responseType": "ModuleInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/multi-export",
+    "handler": "multiExport",
+    "requestType": "ModuleMultiExportReq",
+    "responseType": "ModuleMultiExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/multi-import",
+    "handler": "multiImport",
+    "requestType": "ModuleMultiImportReq",
+    "responseType": "ModuleMultiImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "ModuleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/info/update",
+    "handler": "update",
+    "requestType": "ModuleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/create",
+    "handler": "create",
+    "requestType": "MenuInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/index",
+    "handler": "index",
+    "requestType": "MenuInfoIndexReq",
+    "responseType": "MenuInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/multi-export",
+    "handler": "multiExport",
+    "requestType": "MenuMultiExportReq",
+    "responseType": "MenuMultiExportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/multi-import",
+    "handler": "multiImport",
+    "requestType": "MenuMultiImportReq",
+    "responseType": "MenuMultiImportResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/module/menu/update",
+    "handler": "update",
+    "requestType": "MenuInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/create",
+    "handler": "create",
+    "requestType": "NotifyChannel",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/index",
+    "handler": "index",
+    "requestType": "NotifyChannelIndexReq",
+    "responseType": "NotifyChannelIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "NotifyChannel",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/channel/update",
+    "handler": "update",
+    "requestType": "NotifyChannel",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/create",
+    "handler": "create",
+    "requestType": "NotifyConfig",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/index",
+    "handler": "index",
+    "requestType": "NotifyConfigIndexReq",
+    "responseType": "NotifyConfigIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "NotifyConfig",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/delete",
+    "handler": "delete",
+    "requestType": "NotifyConfigTemplateDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/index",
+    "handler": "index",
+    "requestType": "NotifyConfigTemplateIndexReq",
+    "responseType": "NotifyConfigTemplateIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/template/update",
+    "handler": "update",
+    "requestType": "NotifyConfigTemplate",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/test/send",
+    "handler": "testSend",
+    "requestType": "NotifyConfigTestSendReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/tree",
+    "handler": "tree",
+    "requestType": "NotifyConfigIndexReq",
+    "responseType": "NotifyConfigTreeResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/config/update",
+    "handler": "update",
+    "requestType": "NotifyConfig",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/index",
+    "handler": "index",
+    "requestType": "MessageInfoIndexReq",
+    "responseType": "MessageInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/send",
+    "handler": "send",
+    "requestType": "MessageInfoSendReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/message/info/update",
+    "handler": "update",
+    "requestType": "MessageInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/create",
+    "handler": "create",
+    "requestType": "NotifyTemplate",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/index",
+    "handler": "index",
+    "requestType": "NotifyTemplateIndexReq",
+    "responseType": "NotifyTemplateIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "NotifyTemplate",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/notify/template/update",
+    "handler": "update",
+    "requestType": "NotifyTemplate",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/create",
+    "handler": "create",
+    "requestType": "DataOpenAccess",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/index",
+    "handler": "index",
+    "requestType": "DataOpenAccessIndexReq",
+    "responseType": "DataOpenAccessIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "DataOpenAccess",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/open/access/update",
+    "handler": "update",
+    "requestType": "DataOpenAccess",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/create",
+    "handler": "create",
+    "requestType": "OpsFeedback",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/index",
+    "handler": "index",
+    "requestType": "OpsFeedbackIndexReq",
+    "responseType": "OpsFeedbackIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/feedback/update",
+    "handler": "update",
+    "requestType": "OpsFeedback",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/create",
+    "handler": "create",
+    "requestType": "OpsWorkOrder",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/index",
+    "handler": "index",
+    "requestType": "OpsWorkOrderIndexReq",
+    "responseType": "OpsWorkOrderIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/ops/work-order/update",
+    "handler": "update",
+    "requestType": "OpsWorkOrder",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/create",
+    "handler": "create",
+    "requestType": "ProjectCrud",
+    "responseType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/delete",
+    "handler": "delete",
+    "requestType": "WithIDStr",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/index",
+    "handler": "index",
+    "requestType": "ProjectCrudIndexReq",
+    "responseType": "ProjectCrudIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/read",
+    "handler": "read",
+    "requestType": "WithIDStr",
+    "responseType": "ProjectCrud",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/crud/update",
+    "handler": "update",
+    "requestType": "ProjectCrud",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/create",
+    "handler": "create",
+    "requestType": "ProjectInfo",
+    "responseType": "ProjectWithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/delete",
+    "handler": "delete",
+    "requestType": "ProjectWithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/index",
+    "handler": "index",
+    "requestType": "ProjectInfoIndexReq",
+    "responseType": "ProjectInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/read",
+    "handler": "read",
+    "requestType": "ProjectWithID",
+    "responseType": "ProjectInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/info/update",
+    "handler": "update",
+    "requestType": "ProjectInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/index",
+    "handler": "profileIndex",
+    "requestType": "ProjectProfileIndexReq",
+    "responseType": "ProjectProfileIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/read",
+    "handler": "profileRead",
+    "requestType": "WithCode",
+    "responseType": "ProjectProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/project/profile/update",
+    "handler": "profileUpdate",
+    "requestType": "ProjectProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/access/index",
+    "handler": "index",
+    "requestType": "RoleAccessIndexReq",
+    "responseType": "RoleAccessIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/access/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "RoleAccessMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/app/index",
+    "handler": "index",
+    "requestType": "RoleAppIndexReq",
+    "responseType": "RoleAppIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/app/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "RoleAppMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/create",
+    "handler": "create",
+    "requestType": "RoleInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/index",
+    "handler": "index",
+    "requestType": "RoleInfoIndexReq",
+    "responseType": "RoleInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/info/update",
+    "handler": "update",
+    "requestType": "RoleInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/menu/index",
+    "handler": "index",
+    "requestType": "RoleMenuIndexReq",
+    "responseType": "RoleMenuIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/menu/multi-update",
+    "handler": "mulitUpdate",
+    "requestType": "RoleMenuMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/module/index",
+    "handler": "index",
+    "requestType": "RoleModuleIndexReq",
+    "responseType": "RoleModuleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/role/module/multi-update",
+    "handler": "mulitUpdate",
+    "requestType": "RoleModuleMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/create",
+    "handler": "create",
+    "requestType": "SlotInfo",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/index",
+    "handler": "index",
+    "requestType": "SlotInfoIndexReq",
+    "responseType": "SlotInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/read",
+    "handler": "read",
+    "requestType": "WithID",
+    "responseType": "SlotInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/slot/info/update",
+    "handler": "update",
+    "requestType": "SlotInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/index",
+    "handler": "index",
+    "requestType": "WithCode",
+    "responseType": "TenantAccessInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-create",
+    "handler": "multiCreate",
+    "requestType": "TenantAccessInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "TenantAccessInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/multi-update",
+    "handler": "multiUpdate",
+    "requestType": "TenantAccessInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/access/info/tree",
+    "handler": "tree",
+    "requestType": "WithCode",
+    "responseType": "TenantAccessInfoTreeResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/create",
+    "handler": "create",
+    "requestType": "TenantAgreement",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/delete",
+    "handler": "delete",
+    "requestType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/index",
+    "handler": "index",
+    "requestType": "TenantAgreementIndexReq",
+    "responseType": "TenantAgreementIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "TenantAgreement",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/agreement/update",
+    "handler": "update",
+    "requestType": "TenantAgreement",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/core/read",
+    "handler": "read",
+    "requestType": "WithCode",
+    "responseType": "AppCore",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/create",
+    "handler": "create",
+    "requestType": "TenantAppInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/delete",
+    "handler": "delete",
+    "requestType": "TenantAppWithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/index",
+    "handler": "index",
+    "requestType": "TenantAppIndexReq",
+    "responseType": "TenantAppIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/create",
+    "handler": "create",
+    "requestType": "TenantAppMenu",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/delete",
+    "handler": "delete",
+    "requestType": "WithAppCodeID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/index",
+    "handler": "index",
+    "requestType": "TenantAppMenuIndexReq",
+    "responseType": "TenantAppMenuIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/menu/update",
+    "handler": "update",
+    "requestType": "TenantAppMenu",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/create",
+    "handler": "create",
+    "requestType": "TenantModuleCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/delete",
+    "handler": "delete",
+    "requestType": "TenantModuleWithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/index",
+    "handler": "index",
+    "requestType": "TenantModuleIndexReq",
+    "responseType": "TenantModuleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/module/multi-create",
+    "handler": "multiCreate",
+    "requestType": "TenantAppModuleMultiCreate",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/app/update",
+    "handler": "update",
+    "requestType": "TenantAppInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/config/read",
+    "handler": "read",
+    "requestType": "WithCode",
+    "responseType": "TenantConfig",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/config/update",
+    "handler": "update",
+    "requestType": "TenantConfig",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/core/index",
+    "handler": "index",
+    "requestType": "TenantCoreIndexReq",
+    "responseType": "TenantCoreIndexResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/core/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "TenantCore",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/create",
+    "handler": "create",
+    "requestType": "TenantInfoCreateReq",
+    "responseType": "WithID",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/delete",
+    "handler": "delete",
+    "requestType": "WithIDOrCode",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/index",
+    "handler": "index",
+    "requestType": "TenantInfoIndexReq",
+    "responseType": "TenantInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/read",
+    "handler": "read",
+    "requestType": "WithIDOrCode",
+    "responseType": "TenantInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/tenant/info/update",
+    "handler": "update",
+    "requestType": "TenantInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/data/area/index",
+    "handler": "areaIndex",
+    "requestType": "UserDataAreaIndexReq",
+    "responseType": "DataAreaIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/data/project/index",
+    "handler": "projectIndex",
+    "requestType": "UserDataProjectIndexReq",
+    "responseType": "UserDataProjectIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/dept/multi-create",
+    "handler": "multiCreate",
+    "requestType": "UserDeptMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/dept/multi-delete",
+    "handler": "multiDelete",
+    "requestType": "UserDeptMultiSaveReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/create",
+    "handler": "create",
+    "requestType": "UserInfoCreateReq",
+    "responseType": "UserCreateResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/delete",
+    "handler": "delete",
+    "requestType": "UserInfoDeleteReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/index",
+    "handler": "Index",
+    "requestType": "UserInfoIndexReq",
+    "responseType": "UserInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/read",
+    "handler": "read",
+    "requestType": "UserInfoReadReq",
+    "responseType": "UserInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/info/update",
+    "handler": "update",
+    "requestType": "UserInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/role/index",
+    "handler": "roleIndex",
+    "requestType": "UserRoleIndexReq",
+    "responseType": "UserRoleIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/role/multi-update",
+    "handler": "roleMultiUpdate",
+    "requestType": "UserRoleMultiUpdateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/access/tree",
+    "handler": "accessTree",
+    "responseType": "AccessTreeResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/app/index",
+    "handler": "appIndex",
+    "responseType": "AppInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/app/read",
+    "handler": "appRead",
+    "requestType": "UserSelfAppReadReq",
+    "responseType": "UserSelfAppReadResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/area/apply/create",
+    "handler": "areaApplyCreate",
+    "requestType": "UserAreaApplyCreateReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/bind-account",
+    "handler": "bindAccount",
+    "requestType": "UserBindAccountReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/cancel",
+    "handler": "cancel",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/captcha",
+    "handler": "captcha",
+    "requestType": "UserCaptchaReq",
+    "responseType": "UserCaptchaResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/change-pwd",
+    "handler": "changePwd",
+    "requestType": "UserChangePwdReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/forget-pwd",
+    "handler": "forgetPwd",
+    "requestType": "UserForgetPwdReq",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/login",
+    "handler": "login",
+    "requestType": "UserLoginReq",
+    "responseType": "UserLoginResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/logout",
+    "handler": "logout",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/menu/index",
+    "handler": "menuIndex",
+    "requestType": "UserMenuIndexReq",
+    "responseType": "TenantAppMenuIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/index",
+    "handler": "messageIndex",
+    "requestType": "UserMessageIndexReq",
+    "responseType": "UserMessageIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/multi-is-read",
+    "handler": "messageMultiIsRead",
+    "requestType": "IDList",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/message/statistics",
+    "handler": "messageStatistics",
+    "responseType": "UserMessageStatisticsResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/module/index",
+    "handler": "moduleIndex",
+    "requestType": "UserModuleIndexReq",
+    "responseType": "TenantModuleInfoIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/index",
+    "handler": "profileIndex",
+    "requestType": "UserProfileIndexReq",
+    "responseType": "UserProfileIndexResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/read",
+    "handler": "profileRead",
+    "requestType": "UserProfileReadReq",
+    "responseType": "UserProfileReadResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/profile/update",
+    "handler": "profileUpdate",
+    "requestType": "UserProfile",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/push-client/report",
+    "handler": "pushClientReport",
+    "requestType": "UserPushClientReportReq",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/read",
+    "handler": "read",
+    "requestType": "UserSelfReadReq",
+    "responseType": "UserInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/register",
+    "handler": "register",
+    "requestType": "UserRegisterReq",
+    "responseType": "UserLoginResp",
+    "middlewares": [
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/update",
+    "handler": "update",
+    "requestType": "UserInfo",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "POST",
+    "fullPath": "/api/v1/system/user/self/user/search",
+    "handler": "userSearch",
+    "requestType": "UserSearchReq",
+    "responseType": "UserSearchResp",
+    "middlewares": [
+      "CheckTokenWare",
+      "InitCtxsWare"
+    ]
+  },
+  {
+    "service": "apisvr",
+    "method": "GET",
+    "fullPath": "/open/oss/download",
+    "handler": "downLoad",
+    "requestType": "DownloadReq"
+  },
+  {
+    "service": "apisvr",
+    "method": "PUT",
+    "fullPath": "/open/oss/upload",
+    "handler": "upload",
+    "requestType": "UploadReq"
+  }
+]

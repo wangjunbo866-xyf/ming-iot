@@ -1,0 +1,117 @@
+info(
+    title: "消息管理模块"
+    desc: "消息管理"
+    author: "L"
+    email: "174805676@qq.com"
+    version: "v0.1.0"
+)
+
+@server (
+    group: system/notify/message/info
+    prefix: /api/v1/system/notify/message/info
+    accessNamePrefix: "通知消息"
+    accessGroup: "消息管理"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+
+service api {
+    @doc(
+        summary: "获取消息列表"
+        description: "按通知编码、分组或全局标记分页查询站内消息记录"
+        authType: "all"
+        resource: "message"
+        action: "view"
+        group: "system/notify/message/info"
+        recordLogMode: "1"
+    )
+    @handler index
+    post /index (MessageInfoIndexReq) returns (MessageInfoIndexResp)
+
+    @doc(
+        summary: "更新消息"
+        description: "修改指定消息的主题、内容、分组与通知时间等属性"
+        authType: "all"
+        resource: "message"
+        action: "update"
+        group: "system/notify/message/info"
+        recordLogMode: "2"
+    )
+    @handler update
+    post /update (MessageInfo) returns ()
+
+    @doc(
+        summary: "删除消息"
+        description: "按主键删除站内消息记录"
+        authType: "all"
+        resource: "message"
+        action: "delete"
+        group: "system/notify/message/info"
+        recordLogMode: "2"
+    )
+    @handler delete
+    post /delete (WithID) returns ()
+
+    @doc(
+        summary: "发送消息"
+        description: "按通知编码向指定用户或全局发送站内消息，可选同时推送多通道与定时发送"
+        authType: "all"
+        resource: "message"
+        action: "send"
+        group: "system/notify/message/info"
+        recordLogMode: "2"
+    )
+    @handler send
+    post /send (MessageInfoSendReq) returns ()
+}
+
+type (
+    MessageInfoSendReq{
+      UserIDs []int64 `json:"userIDs,string,optional"` //指定用户ID
+      IsGlobal int64 `json:"isGlobal"`//全局消息
+      NotifyCode string `json:"notifyCode"`         //通知的code
+      Subject string `json:"subject"` //通知主题
+      Body string `json:"body"`
+      NotifyTime int64 `json:"notifyTime,optional"` //通知时间,不填立刻发送
+      Str1 string `json:"str1,optional"`
+      Str2 string `json:"str2,optional"`
+      Str3 string `json:"str3,optional"`
+      WithTypes []string `json:"withTypes,optional"` // 同时推送指定渠道 wxMini/message 等
+      Params map[string]string `json:"params,optional"` // 模板变量
+    }
+
+    MessageInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`                   // 分页信息,只获取一个则不填
+        NotifyCode string `json:"notifyCode,optional"`                     //
+        Group string  `json:"group,optional"` //分组
+        IsGlobal int64 `json:"isGlobal,optional"`//全局消息
+    }
+
+
+    MessageInfoIndexResp  {
+        List []*MessageInfo `json:"list"`            // 消息列表数据
+        PageResp
+    }
+
+    MessageInfo{
+         ID int64 `json:"id"`
+         Group string `json:"group"` //分组
+         NotifyCode string `json:"notifyCode"`
+         NotifyType string `json:"notifyType,optional"` //通知渠道：message / systemNotice 等
+         NotifyName string `json:"notifyName,optional"`         //通知的名称,只读
+         Subject string `json:"subject"` //主题
+         Body string `json:"body"` //内容
+         Str1 string `json:"str1"`
+         Str2 string `json:"str2"`
+         Str3 string `json:"str3"`
+         IsGlobal int64 `json:"isGlobal"`
+         NotifyTime int64 `json:"notifyTime"` //通知时间
+         CreatedTime int64 `json:"createdTime"`
+         TriggerUser *MessageTriggerUser `json:"triggerUser,optional"` //触发该消息的用户（前端字段）
+    }
+    MessageTriggerUser {
+        UserId int64 `json:"userId,string,optional"`
+        NickName string `json:"nickName,optional"`
+        Account string `json:"account,optional"`
+        TriggerType string `json:"triggerType,optional"` // manual | auto
+    }
+)

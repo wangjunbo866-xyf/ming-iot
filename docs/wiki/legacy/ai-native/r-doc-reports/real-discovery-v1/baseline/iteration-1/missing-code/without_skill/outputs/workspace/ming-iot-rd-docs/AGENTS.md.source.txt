@@ -1,0 +1,56 @@
+# ming-iot-rd-docs 协作约定
+
+本仓库是 Ming IoT 的私有研发权威，承载 RFC、规格、计划、Evidence、Review、Proposal 和历史依据。
+
+## 团队技能来源
+
+- `map-delivery` 的版本化源码由 `git:gitee.com/ming-industry/ai-native` 管理，来源契约见 `meta/SKILLS_SOURCE.json`；本仓库只保留被忽略的本机安装入口。
+- 编写或更新 map 交付时，先验证并加载该技能，再按本仓库和目标模块约定执行。技能安装位置不决定文档 worktree，显式核对本次交付所选的文档仓。
+- 在已合入的主工作树运行 `tools/setup_workspace_skills.py --workspace-root ... --product-repo ... --skills-repo ...` 注册；候选 worktree 只做隔离验证。迁移旧入口时仅使用显式的已知来源迁移选项，不覆盖未知内容。
+
+## 文档语言
+
+- `specs/` 与 `plans/` 中的正式文档只使用中文编写。
+- 中文正文直接使用不带语言后缀的 `*.md`，并作为唯一权威版本。
+- 不得为正式文档创建 `*.zh-CN.md`、`*.en.md` 或单独的语言索引；确需翻译时，必须由用户另行明确批准，且译文不得成为实施依据。
+- 文档中的命令、代码、协议字段、产品名和行业术语可以保留英文，不要求机械翻译。
+
+## 安全边界
+
+- 本仓库只允许名为 `origin` 的 Git remote，其 fetch 与 push URL 均为 `https://gitee.com/ming-industry/ming-iot-rd-docs.git`。
+- 禁止写入凭据、原始模型对话、缓存或可再生运行日志。
+- `archives/` 在摘要清单封存后视为不可变；历史材料不得重新冒充当前规范。
+- 归档过程中不得修改或删除来源仓库。
+
+## 交付文档规则
+
+- 所有准备执行的功能、缺陷、迁移和工程改造都必须关联 Gitee Delivery Issue；稳定 Delivery ID 使用 `ming-iot#<Gitee Issue ident>`。
+- `rfcs/` 只承载长期、难逆且存在真实取舍的架构决策；`proposals/` 只承载跨 Issue 的候选比较与排序，不授权编码。
+- `specs/` 定义“要做成什么”，`plans/` 定义“怎样完成”，`reviews/` 保存独立评审结论，`evidence/` 保存稳定结果摘要与原始证据指针，`adr/` 保存已生效的持久决策。
+- 普通功能和缺陷直接使用 Delivery Issue + Spec + Plan；RFC 接受只表示架构方向获准，不表示实现完成。
+- 新建 RFC、Spec、Plan、Review 和 Evidence 摘要必须使用统一 YAML Front Matter：`document_kind`、有限集合中的 `status`、稳定 `delivery_issue`、稳定 Git identity 格式的 `code_repository`，以及仅含仓库相对路径的 `related_documents`；Review 和 Evidence 还必须记录 `exact_head`。既有材料只在重新激活或实质修改时迁移。
+- Plan Task 是一个仓库级 Agent Todo 内部的实现检查点，不是 Agent Todo；一个 Agent Todo 可以覆盖多个 Plan Task，不为每个 Task 单独创建 LoopX Todo 或 User Gate。
+- 普通 Agent Todo 在获批范围内完成验证及所需独立 Review 后，自行闭环并接续已授权工作；Todo 完成本身不触发 User Gate。只有新方向、范围变更、风险接受或下文的高风险授权边界需要用户决策时才建立 Gate；已有精确 Gate 仍须满足。
+- Review Todo 指定精确候选 Head、可读 Review 路径和验证要求；Reviewer 只写获准的 Review/Evidence。接续者回读同一 Head 的有效回执后才接棒，候选变更后重新验证并提交受影响范围的 Review；等待 Review 不关闭 Reviewer lane。
+- 阶段结束更新 Agent Vision、剩余验收和授权内后继 Todo；不将队列暂空等同整个 Goal 完成。LoopX 准入与宿主续跑分别验证，同一身份不得重复拉起宿主。
+- 本仓库只记录可跨成员恢复的交付事实及必要的 LoopX 边界；LoopX 内部 Goal/Todo/Evidence schema、运行状态和编排实现留在 LoopX，不复制到仓库文档。
+
+## Git、Gitee PR 与高风险授权边界
+
+以下规则在 `ming-iot-rd-docs` 内覆盖上级工作区对每次 commit、push 单独授权的要求：
+
+- 所有 Git 跟踪文件修改必须先绑定获批的 Agent Todo、精确 `task_repository`、有界 write scope 和独立 worktree。
+- 在与变更相关的测试、文档元数据校验、归档校验和公共/私有边界扫描通过后，Agent 可自行 git add、commit、推送候选分支并创建或更新 Draft PR；已知且与本次变更无关的基线失败必须如实记录并关联独立修复事项，不得伪装为通过。
+- Draft PR 自动化统一使用 `tools/gitee_pr.py`，一次只处理一个仓库；跨 `ming-iot` 与 `ming-iot-rd-docs` 的交付分别执行并在正文中互相引用，不宣称跨仓库原子提交。
+- 所有跟踪文件变更通过 PR 进入 `master`；禁止直接 push `master`。
+- PR 默认由有权限的人在 Gitee 完成 Review 和合并；人在 Gitee 执行合并本身即为该次合并授权，不再要求单独的 LoopX User Gate。
+- 只有要求 Agent 执行 PR 合并时，才建立绑定精确 PR、Head、目标分支和合并方式的 User Gate。
+- 版本发布、生产环境变更、凭据创建、读取、轮换和权限变更必须建立绑定精确目标与动作的 User Gate。预先由用户安全配置的最小权限 `GITEE_ACCESS_TOKEN` 可由 `tools/gitee_pr.py` 用于候选分支的 Draft PR 创建或更新，但不得写入仓库、日志、命令参数或 PR 正文。
+- 禁止重写受保护分支历史；重写已发布的共享功能分支必须建立精确 User Gate。
+
+## 双仓库与 Worktree
+
+- 本仓库的稳定 Git identity 为 `git:gitee.com/ming-industry/ming-iot-rd-docs`，负责 specs、plans、proposals、evidence、reviews、references、meta 与 archives。
+- 研发文档 linked worktree 统一创建在仓库内忽略目录 `.worktrees/`；禁止重新使用工作区级 `.rd-docs-worktrees/`。
+- LoopX 文档写入型 Todo 必须把 `task_repository` 指向本仓库，并声明精确或有界的 `required_write_scopes`。
+- `.loopx/`、`.codex/` 与 `.worktrees/` 是本地运行状态，不得提交到 Gitee。

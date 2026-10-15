@@ -1,0 +1,734 @@
+diff --git a/tools/goctl/api/gogen/gencomment_test.go b/tools/goctl/api/gogen/gencomment_test.go
+index 12e78af4..8abafa4f 100644
+--- a/tools/goctl/api/gogen/gencomment_test.go
++++ b/tools/goctl/api/gogen/gencomment_test.go
+@@ -31,6 +31,15 @@ type HelloResponse {
+ }
+ 
+ service hello-api {
++	@doc(
++		summary:       "fixture 接口"
++		description:   "fixture 描述（严格校验测试样例，语义无关）"
++		authType:      "admin"
++		resource:      "fixture"
++		action:        "view"
++		group:         "fixture/test"
++		recordLogMode: "1"
++	)
+ 	@handler helloHandler
+ 	post /hello (HelloRequest) returns (HelloResponse)
+ }`
+@@ -112,9 +121,27 @@ type HelloResponse {
+ }
+ 
+ service hello-api {
++	@doc(
++		summary:       "fixture 接口"
++		description:   "fixture 描述（严格校验测试样例，语义无关）"
++		authType:      "admin"
++		resource:      "fixture"
++		action:        "view"
++		group:         "fixture/test"
++		recordLogMode: "1"
++	)
+ 	@handler helloHandler
+ 	post /hello (HelloRequest) returns (HelloResponse)
+ 
++	@doc(
++		summary:       "fixture 接口"
++		description:   "fixture 描述（严格校验测试样例，语义无关）"
++		authType:      "admin"
++		resource:      "fixture"
++		action:        "view"
++		group:         "fixture/test"
++		recordLogMode: "1"
++	)
+ 	@handler worldHandler
+ 	get /world returns (HelloResponse)
+ }`
+diff --git a/tools/goctl/api/gogen/gensse_test.go b/tools/goctl/api/gogen/gensse_test.go
+index df961a03..7ecc3244 100644
+--- a/tools/goctl/api/gogen/gensse_test.go
++++ b/tools/goctl/api/gogen/gensse_test.go
+@@ -28,6 +28,15 @@ type SseResp {
+     sse: true
+ )
+ service Test {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler Sse
+     get /sse (SseReq) returns (SseResp)
+ }
+@@ -96,6 +105,15 @@ type SseResp {
+ }
+ 
+ service Test {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler Sse
+     get /sse (SseReq) returns (SseResp)
+ }
+diff --git a/tools/goctl/api/gogen/testdata/anonymous_annotation.api b/tools/goctl/api/gogen/testdata/anonymous_annotation.api
+index 3a3399d4..ecaf9227 100644
+--- a/tools/goctl/api/gogen/testdata/anonymous_annotation.api
++++ b/tools/goctl/api/gogen/testdata/anonymous_annotation.api
+@@ -1,12 +1,21 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/another_import_api.api b/tools/goctl/api/gogen/testdata/another_import_api.api
+index 1973b80b..c4d92c43 100644
+--- a/tools/goctl/api/gogen/testdata/another_import_api.api
++++ b/tools/goctl/api/gogen/testdata/another_import_api.api
+@@ -12,6 +12,15 @@ type AnotherResponse {
+     group: greet
+ )
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler AnotherImportHandler
+     get /greet/from/another/:name(AnotherRequest) returns (AnotherResponse)
+ }
+diff --git a/tools/goctl/api/gogen/testdata/ap_ino_info.api b/tools/goctl/api/gogen/testdata/ap_ino_info.api
+index efc01bde..ecaf9227 100644
+--- a/tools/goctl/api/gogen/testdata/ap_ino_info.api
++++ b/tools/goctl/api/gogen/testdata/ap_ino_info.api
+@@ -1,14 +1,21 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+ service A-api {
+-    @server(
+-        handler: GreetHandler
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
++    @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/api_has_middleware.api b/tools/goctl/api/gogen/testdata/api_has_middleware.api
+index e126c005..db255693 100644
+--- a/tools/goctl/api/gogen/testdata/api_has_middleware.api
++++ b/tools/goctl/api/gogen/testdata/api_has_middleware.api
+@@ -1,8 +1,8 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+@@ -10,6 +10,15 @@ type Response struct {
+     middleware: TokenValidate
+ )
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/api_has_no_request.api b/tools/goctl/api/gogen/testdata/api_has_no_request.api
+index d1fdf0ec..bfeaecb2 100644
+--- a/tools/goctl/api/gogen/testdata/api_has_no_request.api
++++ b/tools/goctl/api/gogen/testdata/api_has_no_request.api
+@@ -1,4 +1,13 @@
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     post /greet/ping ()
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/api_jwt.api b/tools/goctl/api/gogen/testdata/api_jwt.api
+index f73feaf0..f33631de 100644
+--- a/tools/goctl/api/gogen/testdata/api_jwt.api
++++ b/tools/goctl/api/gogen/testdata/api_jwt.api
+@@ -1,8 +1,8 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+@@ -11,6 +11,15 @@ type Response struct {
+     signature: true
+ )
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/api_jwt_with_middleware.api b/tools/goctl/api/gogen/testdata/api_jwt_with_middleware.api
+index 5af90b14..116a820e 100644
+--- a/tools/goctl/api/gogen/testdata/api_jwt_with_middleware.api
++++ b/tools/goctl/api/gogen/testdata/api_jwt_with_middleware.api
+@@ -1,8 +1,8 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+@@ -12,6 +12,15 @@ type Response struct {
+     middleware: TokenValidate
+ )
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/api_route_test.api b/tools/goctl/api/gogen/testdata/api_route_test.api
+index 691461e4..5319bfc8 100644
+--- a/tools/goctl/api/gogen/testdata/api_route_test.api
++++ b/tools/goctl/api/gogen/testdata/api_route_test.api
+@@ -1,16 +1,52 @@
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler NormalHandler
+     get /greet/from/:name(Request) returns (Response)
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler NoResponseHandler
+     get /greet/from/:sex(Request)
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler NoRequestHandler
+     get /greet/from/request returns (Response)
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler NoRequestNoResponseHandler
+     get /greet/from
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/example.api b/tools/goctl/api/gogen/testdata/example.api
+index 656f632f..a619e4c6 100644
+--- a/tools/goctl/api/gogen/testdata/example.api
++++ b/tools/goctl/api/gogen/testdata/example.api
+@@ -78,21 +78,75 @@ type PathExampleResp {
+     maxBytes:   1048576
+ )
+ service Foo {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler ping
+     get /ping
+ 
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler update
+     post /update (UpdateReq)
+ 
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler list
+     get /list returns ([]ListItem)
+ 
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler login
+     post /login (LoginReq) returns (LoginResp)
+ 
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler formExample
+     post /form/example (FormExampleReq)
+ 
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler pathExample
+     get /path/example/:id (PathExampleReq) returns (PathExampleResp)
+ }
+diff --git a/tools/goctl/api/gogen/testdata/has_comment_api_test.api b/tools/goctl/api/gogen/testdata/has_comment_api_test.api
+index 490ecb3e..992081f7 100644
+--- a/tools/goctl/api/gogen/testdata/has_comment_api_test.api
++++ b/tools/goctl/api/gogen/testdata/has_comment_api_test.api
+@@ -1,25 +1,37 @@
+-type Inline struct {
++type Inline {
+ 
+ }
+ 
+-type Request struct {
++type Request {
+     Inline
+     Name string `path:"name,options=you|me"` // name in path
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"msg"` // message
+ }
+ 
+ service A-api {
+-    @doc ("helloworld")
+-    @server(
+-        handler: GreetHandler
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
++    @handler GreetHandler
+     get /greet/from/:name (Request) returns (Response)
+ 
+     @doc(
+-        summary: "comment comment comment"
++        summary:       "comment comment comment"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
+     @handler NoResponseHandler
+     get /greet/get (Request)
+diff --git a/tools/goctl/api/gogen/testdata/has_import_api.api b/tools/goctl/api/gogen/testdata/has_import_api.api
+index e61fc512..7380b97f 100644
+--- a/tools/goctl/api/gogen/testdata/has_import_api.api
++++ b/tools/goctl/api/gogen/testdata/has_import_api.api
+@@ -12,6 +12,15 @@ type Response {
+     group: greet
+ )
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+diff --git a/tools/goctl/api/gogen/testdata/no_struct_tag_api.api b/tools/goctl/api/gogen/testdata/no_struct_tag_api.api
+index 95bfacd7..1d1649a3 100644
+--- a/tools/goctl/api/gogen/testdata/no_struct_tag_api.api
++++ b/tools/goctl/api/gogen/testdata/no_struct_tag_api.api
+@@ -15,6 +15,15 @@ type (
+ )
+ 
+ service A-api {
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/test_api_template.api b/tools/goctl/api/gogen/testdata/test_api_template.api
+index c03ac937..be794e16 100644
+--- a/tools/goctl/api/gogen/testdata/test_api_template.api
++++ b/tools/goctl/api/gogen/testdata/test_api_template.api
+@@ -1,20 +1,18 @@
+ info(
+-    title: doc title
+-desc: ">
+-doc description first part,
+-doc description second part<"
+-version: 1.0
++    title: "doc title"
++    desc: "doc description first part, doc description second part"
++    version: "1.0"
+ )
+ 
+ // TODO: test
+ // {
+-type Request struct {  // TODO: test
++type Request {  // TODO: test
+                        // TODO
+     Name string `path:"name,options=you|me"`   // }
+ } // TODO: test
+ 
+ // TODO: test
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+@@ -25,12 +23,28 @@ type Response struct {
+     // C1
+ service A-api {
+     // C2
+-    @server( // C3
+-        handler: GreetHandler
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
++    @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)   // hello
+ 
+     // C4
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
++    )
+     @handler NoResponseHandler  // C5
+     get /greet/get(Request)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/gogen/testdata/test_multi_service_template.api b/tools/goctl/api/gogen/testdata/test_multi_service_template.api
+index eb716aeb..805cf7d1 100644
+--- a/tools/goctl/api/gogen/testdata/test_multi_service_template.api
++++ b/tools/goctl/api/gogen/testdata/test_multi_service_template.api
+@@ -1,27 +1,41 @@
+ info(
+-    title: doc title
+-desc: doc description first part
+-version: 1.0
++    title: "doc title"
++    desc: "doc description first part"
++    version: "1.0"
+ )
+ 
+-type Request struct {
++type Request {
+     Name string `path:"name,options=you|me"`
+ }
+ 
+-type Response struct {
++type Response {
+     Message string `json:"message"`
+ }
+ 
+ service A-api {
+-    @server(
+-        handler: GreetHandler
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
++    @handler GreetHandler
+     get /greet/from/:name(Request) returns (Response)
+ }
+ 
+ service A-api {
+-    @server(
+-        handler: NoResponseHandler
++    @doc(
++        summary:       "fixture 接口"
++        description:   "fixture 描述（严格校验测试样例，语义无关）"
++        authType:      "admin"
++        resource:      "fixture"
++        action:        "view"
++        group:         "fixture/test"
++        recordLogMode: "1"
+     )
++    @handler NoResponseHandler
+     get /greet/get(Request)
+ }
+\ No newline at end of file
+diff --git a/tools/goctl/api/new/newservice_test.go b/tools/goctl/api/new/newservice_test.go
+index a5d69a17..28f2a8f8 100644
+--- a/tools/goctl/api/new/newservice_test.go
++++ b/tools/goctl/api/new/newservice_test.go
+@@ -62,6 +62,15 @@ type Response {
+ }
+ 
+ service ` + tt.serviceName + `-api {
++  @doc(
++    summary:       "fixture 接口"
++    description:   "fixture 描述（严格校验测试样例，语义无关）"
++    authType:      "admin"
++    resource:      "fixture"
++    action:        "view"
++    group:         "fixture/test"
++    recordLogMode: "1"
++  )
+   @handler ` + tt.serviceName + `Handler
+   get /from/:name(Request) returns (Response)
+ }
+@@ -177,6 +186,15 @@ type Response {
+ }
+ 
+ service ` + tt.serviceName + `-api {
++  @doc(
++    summary:       "fixture 接口"
++    description:   "fixture 描述（严格校验测试样例，语义无关）"
++    authType:      "admin"
++    resource:      "fixture"
++    action:        "view"
++    group:         "fixture/test"
++    recordLogMode: "1"
++  )
+   @handler ` + tt.serviceName + `Handler
+   get /from/:name(Request) returns (Response)
+ }
+diff --git a/tools/goctl/api/spec/validate.go b/tools/goctl/api/spec/validate.go
+index 9a692cb8..c0aadefa 100644
+--- a/tools/goctl/api/spec/validate.go
++++ b/tools/goctl/api/spec/validate.go
+@@ -3,6 +3,8 @@ package spec
+ import (
+ 	"errors"
+ 	"fmt"
++	"strconv"
++	"strings"
+ )
+ 
+ var ErrMissingService = errors.New("missing service")
+@@ -105,7 +107,7 @@ func getAtDocValue(atDoc AtDoc, key string) string {
+ 	if atDoc.Properties == nil {
+ 		return ""
+ 	}
+-	return atDoc.Properties[key]
++	return unquoteDocValue(atDoc.Properties[key])
+ }
+ 
+ // 辅助函数：从 Annotation.Properties 获取值
+@@ -113,7 +115,22 @@ func getAnnotationValue(annotation Annotation, key string) string {
+ 	if annotation.Properties == nil {
+ 		return ""
+ 	}
+-	return annotation.Properties[key]
++	return unquoteDocValue(annotation.Properties[key])
++}
++
++// unquoteDocValue 规范化 @doc/@server kv 的属性值：parser 在不同
++// GoctlExperimental 开关下对带引号的 LINE_VALUE 处理不一致（experimental=off
++// 时保留外层引号，=on 时剥离），与 api/access 的 Unquote 行为对齐，保证
++// strict validator 的等值/枚举校验在两种解析路径下结果一致。值本身不含引号
++// 时原样返回。
++func unquoteDocValue(v string) string {
++	if v == "" {
++		return v
++	}
++	if unquoted, err := strconv.Unquote(v); err == nil {
++		return unquoted
++	}
++	return strings.TrimSpace(v)
+ }
+ 
+ func routeLocation(route Route) string {
+diff --git a/tools/goctl/util/ctx/gowork.go b/tools/goctl/util/ctx/gowork.go
+index 1caff945..c1c5b385 100644
+--- a/tools/goctl/util/ctx/gowork.go
++++ b/tools/goctl/util/ctx/gowork.go
+@@ -3,6 +3,7 @@ package ctx
+ import (
+ 	"errors"
+ 	"os"
++	"strings"
+ 
+ 	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
+ )
+@@ -29,5 +30,12 @@ func isGoWork(workDir string) (bool, error) {
+ 	if err != nil {
+ 		return false, err
+ 	}
++	// GOWORK=off 显式禁用 workspace：go env GOWORK 返回 "off"（非空），
++	// 但此时无 workspace 可更新，`go work use .` 会失败。把它视为"不在
++	// workspace"，使 UpdateGoWorkIfExist 成为真正的 no-op，避免在固定构建
++	// 环境（GOWORK=off）下因执行 `go work use .` 而报错或污染外部 go.work。
++	if strings.TrimSpace(goWorkPath) == "off" {
++		return false, nil
++	}
+ 	return len(goWorkPath) > 0, nil
+ }

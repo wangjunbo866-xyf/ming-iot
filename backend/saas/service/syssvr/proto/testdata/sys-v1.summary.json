@@ -1,0 +1,24 @@
+{
+  "package": "sys",
+  "services": 15,
+  "methods": 215,
+  "messages": 256,
+  "enums": 0,
+  "serviceNames": [
+    "sys.AccessManage",
+    "sys.AppManage",
+    "sys.AreaManage",
+    "sys.Common",
+    "sys.DataManage",
+    "sys.DepartmentManage",
+    "sys.DictManage",
+    "sys.Log",
+    "sys.ModuleManage",
+    "sys.NotifyManage",
+    "sys.ProjectManage",
+    "sys.RoleManage",
+    "sys.TenantManage",
+    "sys.UserManage",
+    "sys.ops"
+  ]
+}

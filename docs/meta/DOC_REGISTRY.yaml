@@ -1,0 +1,211 @@
+schema_version: 1
+status: draft
+description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效。路径相对仓库根。"
+materials:
+  - source_id: ming-iot-monorepo-migration-20261015
+    role: current_goal_migration_plan
+    status: active-plan
+    path: docs/architecture/monorepo-migration.md
+    revision: 0.4.9
+    authority: user_confirmed_direction_design_candidate
+    related:
+      - docs/changelog/2026-10-15-monorepo-inventory.md
+      - docs/wiki/team-development-outline.md
+      - docs/runbook/team-development.md
+    conflict_rule: "2026-10-15 用户单仓决定取代旧父子仓与 MQTT 独立仓迁移方向；r-doc 正式采用不再是前提。具体目录为可修订设计，历史试点原始结果保留，不代表迁移已完成。"
+  - source_id: ming-iot-monorepo-inventory-20261015
+    role: migration_source_inventory
+    status: snapshot
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: m1-1
+    authority: observed_local_snapshot
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "清单只证明采集时本地来源；远程新提交、未提交内容备份、恢复测试、全历史扫描和运行验收分别验证。"
+  - source_id: ming-iot-monorepo-m2-20261015
+    role: migration_backup_restore_rehearsal_evidence
+    status: validated_with_followups
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: m2-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "M2 保全与本地导入分别验证；verify-pr 仍 FAIL，历史引用适配交 M3。不得据备份/导入成功宣称公开发布、真实依赖验收或旧源可删除。"
+  - source_id: ming-iot-team-development-outline
+    role: candidate_team_knowledge_governance_outline
+    status: draft
+    path: docs/wiki/team-development-outline.md
+    revision: 0.1.1-draft
+    authority: proposed
+    related:
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/SKILL.md
+      - docs/specs/README.md
+      - docs/changelog/2026-10-14-ming-specs-handoff-pilot.md
+      - docs/changelog/2026-10-14-ming-specs-continuation.md
+    conflict_rule: "本提纲记录当前用户方向与待落实建议；不替代模块业务规格，不代表团队采纳、Skill 已修改或门禁已启用。用户明确决定优先。"
+  - source_id: ming-iot-team-specs-draft-v01
+    role: candidate_team_development_agreement
+    status: draft
+    path: docs/runbook/team-development.md
+    revision: 0.3.1-draft
+    authority: proposed
+    related:
+      - docs/specs/README.md
+      - .agents/skills/ming-specs/SKILL.md
+      - .agents/skills/ming-specs/references/templates.md
+    conflict_rule: "用户当前明确决定优先；本草案未采纳前不替换既有任务规格，不将旧资料自动升级为正式规范。"
+  - source_id: ming-iot-specs-skill-draft-v01
+    role: candidate_specs_maintenance_skill
+    status: draft
+    path: .agents/skills/ming-specs/SKILL.md
+    revision: 0.3.0-draft
+    authority: proposed
+    related:
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/references/templates.md
+      - .agents/skills/ming-specs/agents/openai.yaml
+    conflict_rule: "Skill 引用团队约定；Skill 可执行不等于业务确认、制度采纳或工具门禁启用。"
+  - source_id: ming-iot-specs-real-pilot-20261013
+    role: specs_pilot_evidence
+    status: candidate
+    path: docs/changelog/2026-10-13-ming-specs-pilot.md
+    revision: pilot-1
+    authority: scoped_pilot
+    related:
+      - docs/specs/engineering/api-contract/README.md
+      - docs/specs/engineering/api-contract/spec.md
+      - docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/change.md
+      - docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/check.json
+      - .agents/skills/ming-specs/scripts/preflight.py
+      - .agents/skills/ming-specs/references/pilot-regressions.md
+    conflict_rule: "用户只批准小改动试跑；observed 是现状来源状态，confirmed 限本任务。本地验证、独立 AI Review、团队采纳及合并分别记录。"
+  - source_id: ming-iot-specs-handoff-pilot-20261014
+    role: specs_clarification_handoff_pilot
+    status: candidate
+    path: docs/changelog/2026-10-14-ming-specs-handoff-pilot.md
+    revision: pilot-2
+    authority: scoped_pilot
+    related:
+      - docs/specs/saas/notification-trigger/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+      - docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/change.md
+      - docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/handoff.md
+      - docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/check.json
+    conflict_rule: "任务级授权不等于确认具体业务候选；需求决定、AI 接收演练、真人交接、代码验证与部署分别记录；不新增第二套流程权威。"
+  - source_id: ming-iot-specs-baseline-repair-20261014
+    role: baseline_verification_repair_evidence
+    status: candidate
+    path: docs/changelog/2026-10-14-ming-specs-baseline-repair.md
+    revision: repair-1
+    authority: scoped_pilot
+    related:
+      - AGENTS.md
+      - backend/tools/internal/thingsbaseline/verify_test.go
+      - docs/changelog/2026-10-13-ming-specs-pilot.md
+      - docs/changelog/2026-10-14-ming-specs-handoff-pilot.md
+    conflict_rule: "新回执绑定新候选，保留旧失败；修复基线门禁不改变通知 R2，也不等于合并、部署或团队采纳。"
+  - source_id: ming-iot-specs-continuation-20261014
+    role: specs_version_handoff_evidence
+    status: candidate
+    path: docs/changelog/2026-10-14-ming-specs-continuation.md
+    revision: n2-1
+    authority: scoped_pilot
+    related:
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/SKILL.md
+      - .agents/skills/ming-specs/scripts/preflight.py
+      - .agents/skills/ming-specs/scripts/test_preflight.py
+      - docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/change.md
+      - docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/check.json
+    conflict_rule: "确定性版本检查、历史输入适配回放、语义评审和真人接收分别留证；不修改历史结论，不据工具通过判定团队采纳。"
+  - source_id: ming-iot-monorepo-m3-20261015
+    role: monorepo_entrypoint_adaptation_evidence
+    status: validated_with_followups
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: m3-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "用户确认排除学习参考仓；Core/Share/Things 已整合。M3本地检查不授权推送、旧源删除或真实业务验收；最终结果绑定Goal中的精确候选回执。"
+  - source_id: ming-iot-monorepo-m4-20261015
+    role: monorepo_local_public_candidate_evidence
+    status: validated_with_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: m4-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "M4A本地候选、完整可达历史扫描、全新clone完整门禁与独立复审通过；四类许可缺口仍HOLD。旧历史私有保留，新候选不是旧历史延续；不授权推送、删除旧源或宣称真实业务/真人验收。"
+  - source_id: ming-iot-monorepo-rights-plan-20261015
+    role: monorepo_public_material_disposition_proposal
+    status: proposal_rights_pending
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: rights-1
+    authority: scoped_migration_proposal
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "逐文件身份和拟处置清单不等于完整权属审查；Mermaid精确来源已核实但依赖许可未闭环。公开范围、自有开放许可和远程动作分别决定，当前候选与HOLD保持不变；不授权删减、推送或删除旧源。"
+  - source_id: ming-iot-monorepo-provenance-20261015
+    role: monorepo_source_and_notice_progress
+    status: in_progress_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: provenance-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "来源与字节对应、声明文本收集不等于完整权属或运行合规。17项生成源码未重建，Jison Lex完整声明待核，600项历史材料未认定原创。候选/HOLD不变，当前Todo继续；不授新许可、不删减、不推送、不删除旧源。"
+  - source_id: ming-iot-monorepo-content-exceptions-20261015
+    role: monorepo_content_exceptions_and_generator_provenance
+    status: in_progress_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: content-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "本轮补证不等于公开放行；304词法函数/16parseError逐字及16parse语法树对应不是17生成条目完整重建。此记录保留0.4.4阶段49全文/2局部；最新覆盖及固定来源见snippet-provenance条目。5种改写差异已读；gnet来源许可已取得。候选和HOLD不变，不授新许可、不删减、不推送、不删除旧源。"
+  - source_id: ming-iot-monorepo-snippet-provenance-20261015
+    role: monorepo_historical_snippet_attribution_and_errata
+    status: in_progress_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: snippets-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "0.4.5固定对照不等于恢复原始checkout；62块中15整token/9局部/38阈值未匹配，非字节或语义证明。此条保留0.4.5的73全文/1局部/420未读；最新覆盖见history-closeout条目。Core元数据不构成全仓改许可，研究勘误不等于产品缺陷。候选/HOLD保持，不授许可、不删减、不推送或删除旧源。"
+  - source_id: ming-iot-monorepo-history-closeout-20261015
+    role: monorepo_priority_history_review_and_attribution_rehearsal
+    status: in_progress_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: history-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "0.4.6优先组85份全文完成；494正文累计86全文/1局部/407未读，不作完整事实或权属证明。11文件只在独立演练叠加，原M4A不变；技术检查通过但HOLD阻止发布。go-zero固定设计参照与当前Things依赖区分，后继仍有具体旁注及公开范围决定。不授许可、不推送或删除旧源。"
+  - source_id: ming-iot-monorepo-attribution-assembly-20261015
+    role: monorepo_notice_assembly_and_public_scope_options
+    status: in_progress_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: assembly-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "0.4.7累计17文件旁注候选独立于原M4A和旧演练；技术及完整verify-pr通过不等于全新clone或公开放行。74原文块与三处模板具体对应，不是全文权利或原始checkout证明。25/26文件公开范围未决定未执行，Jison Lex原生完整声明缺口保持；不新增许可、不推送或删除旧源。"
+  - source_id: ming-iot-monorepo-public25-20261015
+    role: monorepo_approved_public_scope_and_final_local_candidate
+    status: validated_local_publication_hold
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: public25-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "用户已确认25文件方案，覆盖旧未决定状态；本地候选另建历史，旧源完整保留。精确验证和复审以Goal登记的monorepo-public25-20261015回执为准；不新增整仓许可，不授权推送、删除或真人验收。"
+  - source_id: ming-iot-monorepo-github-delivery-20261015
+    role: monorepo_github_candidate_ci_and_review
+    status: authorized_pending_hosted_validation
+    path: docs/changelog/2026-10-15-monorepo-inventory.md
+    revision: github-1
+    authority: scoped_migration_evidence
+    related:
+      - docs/architecture/monorepo-migration.md
+    conflict_rule: "用户已授权GitHub候选推送、托管CI和独立复审；以实际远程Head和运行回执验收，保留旧源、候选和私有备份，不授权M5、删除、自动合并或版本发布。"

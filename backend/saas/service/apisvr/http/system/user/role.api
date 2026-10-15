@@ -1,0 +1,62 @@
+info(
+    title: "用户数据权限管理模块"
+    desc: "用户数据权限管理接口"
+    author: "大绵羊"
+    email: "robotyang123@163.com"
+    version: "v1"
+)
+
+
+@server (
+    group: system/user/role
+    prefix: /api/v1/system/user/role
+    accessCodePrefix: "systemUserManage"
+    accessNamePrefix: "用户信息"
+    accessGroup: "用户管理"
+    defaultAuthType: "admin"
+    defaultNeedAuth: "true"
+    middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc(
+        summary: "获取用户角色列表"
+        description: "返回指定用户当前被授予的角色清单，用于角色绑定界面回显"
+        authType: "admin"
+        resource: "user"
+        action: "view"
+        group: "system/user/role"
+        recordLogMode: "1"
+    )
+    @handler roleIndex
+    post /index (UserRoleIndexReq) returns (UserRoleIndexResp)
+    @doc(
+        summary: "更新用户的角色列表"
+        description: "整体覆盖指定用户的角色集合，决定该用户的可操作权限范围"
+        authType: "admin"
+        resource: "user"
+        action: "update"
+        group: "system/user/role"
+        recordLogMode: "2"
+    )
+    @handler roleMultiUpdate
+    post /multi-update (UserRoleMultiUpdateReq) returns ()
+
+}
+
+
+//用户级权限控制
+type (
+    UserRoleIndexReq{
+        UserID         int64  `json:"userID,string"`        // 用户id
+    }
+
+    UserRoleIndexResp{
+        List  []*RoleInfo `json:"list"`           //用户角色列表
+        PageResp
+    }
+
+    UserRoleMultiUpdateReq{
+        UserID         int64  `json:"userID,string"`        // 用户id
+        RoleIDs 		[]int64 `json:"roleIDs"` //角色编号列表
+    }
+)

@@ -1,0 +1,58 @@
+schemaVersion: 1
+loopId: L0
+source:
+  repository: https://gitee.com/unitedrhino/things
+  ref: refs/remotes/origin/master
+  commit: 243ab1aa03b8a3f106761a81cdd9bd8827d448c8
+  tree: 544b638ae3ee5e5f3a041bea22ca035dbb7e5859
+  module: gitee.com/unitedrhino/things
+  trackedFiles: 1183
+  selectedFiles: 976
+  selectedBlobBytes: 4866935
+  archiveBytes: 5754880
+  archiveSha256: 32b998e4621dd88a39b618552187cfbd1be910851925702a07c9e4c82cb4d486
+  include: [LICENSE, go.mod, go.sum, sdk/protocol, service/apisvr, service/dgsvr, service/dmsvr, share]
+  exclude: [.github, .gitignore, AGENTS.md, CLAUDE.md, Dockerfile, Makefile, README.md, README.en.md, deploy, doc, script, shell, tests, thingsEEsvr-linux-amd64, tools]
+target:
+  directory: things
+  module: gitee.com/ming-iot/things
+  saasModule: gitee.com/ming-iot/saas
+  saasRelativePath: ../saas
+  shareModule: gitee.com/ming-iot/share
+  shareVersion: v1.6.4
+transforms:
+  corePrefixCount: 94
+  thingsPrefixCount: 2726
+  credentialLineCount: 55
+  credentialFileCount: 9
+  credentialActiveLineCount: 35
+  credentialCommentedLineCount: 20
+  credentialPaths:
+    databaseDSN: 10
+    tsdbDSN: 18
+    ossAccessKeyID: 3
+    ossAccessKeySecret: 3
+    authWhiteUsersPassword: 11
+    devLinkOpenApiApiKey: 1
+    devLinkOpenApiSecretKey: 1
+    devLinkMqttOpenApiApiKey: 4
+    devLinkMqttOpenApiSecretKey: 4
+  privateKeyBlockCount: 1
+  vetFixCount: 1
+  privateKeySourceSha256: eea7f05a0fbfa2f55ce966f8f297ec8bdc2b6c0fc5aa2d63520d09c03f0233a3
+  vetSourceSha256: 828fb556f1a9de66944cdeef5fa0aa1012409a12618396b1e79fed1a55e3c72a
+  schemaFixtureIdentifierCount: 45
+  schemaFixtureSourceSha256: 0468f6ebf1426919ee8ec1f789861874490e127c279bf8a54daac0c0ddda5791
+  schemaFixtureOutputSha256: 77570823fce1f9393ce992c1303a40fb1c0f6e2b7e2f780d0965c9b4906d0c30
+  nonYamlCredentialValueCount: 5
+  cloudProtocolCredentialSourceSha256: 19d2e755a768f31eacb0584c8af9fa4626ec1c5fa72123a31eb48617cd5bba4f
+  cloudProtocolCredentialOutputSha256: 77a86ceeed33b20d2b9732caa809eb96402a8f44c094737bad7e8f890c62e913
+  productSecretSourceSha256: 71fade09cc5e2f6dc4d3dabac13d33ee198de6d0dad9d419a005cf218134e7fc
+  productSecretOutputSha256: ab26f6f167a094d6dad3f18e95ed52a1c078e37cd4709a671497e63fbf41b603
+contracts:
+  apiFiles: 34
+  protoFiles: 4
+  generatedProtoFiles: 7
+  testFiles: 23
+security:
+  maxFileBytes: 10485760

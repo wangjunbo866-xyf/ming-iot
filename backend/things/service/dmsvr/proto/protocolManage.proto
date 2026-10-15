@@ -1,0 +1,185 @@
+syntax = "proto3";
+package dm;
+option go_package = "pb/dm";
+
+import "deviceManage.proto";
+import "productManage.proto";
+import "dmShare.proto";
+import "protocolModel.proto";
+import "google/protobuf/wrappers.proto";
+message   PublishMsg  { //发布消息结构体
+    string handle =1; //对应 mqtt topic的第一个 thing ota config 等等
+    string  type =2;   //操作类型 从topic中提取 物模型下就是   property属性 event事件 action行为
+    bytes payload =3;
+    int64 timestamp =4; //毫秒时间戳
+    string  productID =5;
+    string  deviceName =6;
+    string  explain =7;      //内部使用的拓展字段
+    string  protocolCode =8; //如果有该字段则回复的时候也会带上该字段
+}
+
+service ProtocolManage {
+  //协议列表
+  rpc protocolInfoIndex(ProtocolInfoIndexReq)     returns (ProtocolInfoIndexResp);
+  //协议详情
+  rpc protocolInfoRead(WithIDCode)     returns (ProtocolInfo);
+  //协议创建
+  rpc protocolInfoCreate(ProtocolInfo)     returns (WithID);
+  //协议更新
+  rpc protocolInfoUpdate(ProtocolInfo)     returns (Empty);
+  //协议删除
+  rpc protocolInfoDelete(WithID)     returns (Empty);
+
+  //更新服务状态,只给服务调用
+  rpc protocolServiceUpdate(ProtocolService)returns(Empty);
+  rpc protocolServiceDelete(WithID)returns(Empty);
+  rpc protocolServiceIndex(ProtocolServiceIndexReq)returns(ProtocolServiceIndexResp);
+
+  //协议列表
+  rpc protocolScriptIndex(ProtocolScriptIndexReq)     returns (ProtocolScriptIndexResp);
+  //协议详情
+  rpc protocolScriptRead(WithID)     returns (ProtocolScript);
+  //协议创建
+  rpc protocolScriptCreate(ProtocolScript)     returns (WithID);
+  //协议更新
+  rpc protocolScriptUpdate(ProtocolScript)     returns (Empty);
+  //协议删除
+  rpc protocolScriptDelete(WithID)     returns (Empty);
+
+  rpc protocolScriptDebug(ProtocolScriptDebugReq)     returns (ProtocolScriptDebugResp);
+
+
+  //协议列表
+  rpc protocolScriptDeviceIndex(ProtocolScriptDeviceIndexReq)     returns (ProtocolScriptDeviceIndexResp);
+  //协议详情
+  rpc protocolScriptDeviceRead(WithID)     returns (ProtocolScriptDevice);
+  //协议创建
+  rpc protocolScriptDeviceCreate(ProtocolScriptDevice)     returns (WithID);
+  //协议更新
+  rpc protocolScriptDeviceUpdate(ProtocolScriptDevice)     returns (Empty);
+  //协议删除
+  rpc protocolScriptDeviceDelete(WithID)     returns (Empty);
+
+  rpc protocolScriptMultiImport(ProtocolScriptImportReq) returns(ImportResp); //产品导入
+  rpc protocolScriptMultiExport(ProtocolScriptExportReq) returns(ProtocolScriptExportResp); //产品导出
+}
+
+message ProtocolScriptImportReq{
+  string scripts =1;//脚本信息列表
+}
+
+message  ProtocolScriptExportReq{
+  repeated int64 ids = 5; //标识符列表
+}
+
+message  ProtocolScriptExportResp{
+  string scripts =1;//脚本信息列表
+}
+
+message ProtocolScriptDebugReq{
+  int64 triggerDir =2;    //1:up 2:down
+  int64 triggerTimer =3;  //收到前处理1:before 2:after
+  string script =6;//脚本内容
+  PublishMsg req =8;//请求
+  PublishMsg resp =9;//回复
+}
+
+message ProtocolScriptDebugResp{
+  PublishMsg out =1;
+  repeated string logs =2;
+}
+
+message ProtocolScript{
+  string tenantCode =11;//租户号,common 为公共的产品,公共的大家都可以看,但是只有default可以修改
+  int64  id = 1;
+  string  name = 2; //名称
+  int64 triggerDir =3;    //1:up 2:down
+  int64 triggerTimer =4;  //收到前处理1:before 2:after
+  string triggerHandle =5; //对应 mqtt topic的第一个 thing ota config 等等
+  string triggerType =6;    // 操作类型 从topic中提取 物模型下就是   property属性 event事件 action行为
+  google.protobuf.StringValue  desc = 7; //描述
+  string script =8;//脚本内容
+  int64 status =9;//状态:是否启用
+  int64 createdTime = 10;//创建时间
+}
+
+message ProtocolScriptIndexReq{
+  PageInfo page = 1;
+  string  name = 2;
+  int64 triggerDir =3;    //1:up 2:down
+  int64 triggerTimer =4;  //收到前处理1:before 2:after
+  string triggerHandle =5;
+  string triggerType =6;
+  int64 status =7;//状态:是否启用
+}
+
+message ProtocolScriptIndexResp{
+  repeated ProtocolScript list = 1;
+  int64 total = 2;
+}
+
+message ProtocolScriptDevice{
+  string tenantCode =12;//租户号,common 为公共的产品,公共的大家都可以看,但是只有default可以修改
+  int64  id = 1;
+  int64 triggerSrc =2;    //产品:1 设备:2
+  string productID =3;
+  string deviceName =4;
+  int64 scriptID = 5;//脚本对应的ID
+  int64 priority =6;//执行优先级 大于0
+  int64 status =7;//状态:是否启用
+  int64 createdTime = 8;//创建时间
+  ProtocolScript script =9;//脚本信息
+  ProductInfo product = 10;//withDevice时,绑定的是产品返回
+  DeviceInfo device =11;//withDevice时,绑定的是设备返回
+}
+
+message ProtocolScriptDeviceIndexReq{
+  PageInfo page = 1;
+  int64 triggerSrc = 2;    //product:1 device:2
+  string productID = 3;  //
+  string deviceName = 4; //
+  int64 status = 5;//状态:是否启用
+  int64 scriptID = 6;//脚本对应的ID
+  bool withDevice = 7;//同时返回产品或设备信息
+  bool withScript =8;// 同时返回脚本信息
+}
+
+message ProtocolScriptDeviceIndexResp{
+  repeated ProtocolScriptDevice list = 1;
+  int64 total = 2;
+}
+
+message ProtocolInfoIndexReq{
+  PageInfo page = 1;
+  string  name = 2;
+  string  code =3;//  iThings,iThings-thingsboard,wumei,aliyun,huaweiyun,tuya
+  string type =4;//协议类型
+  string  transProtocol = 5;// 传输协议: mqtt,tcp,udp
+  repeated string notCodes =6;//排除的协议包
+  repeated string  codes =7;
+}
+
+message ProtocolInfoIndexResp{
+  repeated ProtocolInfo list = 1;
+  int64 total = 2;
+}
+
+message ProtocolServiceIndexReq{
+  PageInfo page = 1;
+  string  code =2;//  iThings,iThings-thingsboard,wumei,aliyun,huaweiyun,tuya
+}
+
+message ProtocolServiceIndexResp{
+  repeated ProtocolService list = 1;
+  int64 total = 2;
+}
+
+message ProtocolService {
+  int64  id = 1;
+  string code =2;//协议code
+  string ip =3;// 协议服务的ip地址
+  int64 port =4;//监听的端口,如果没有填0即可
+  int64 status =5;//服务状态
+  int64 updatedTime =6;//更新时间
+  int64 createdTime = 7;//首次加入时间
+}

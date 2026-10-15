@@ -1,0 +1,1562 @@
+[
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/access",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/login",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/register",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth/root-check",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth5/access",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/auth5/login",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/edge/send/:handle/:type",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/gateway/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/group/multi-update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind/token/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/bind/token/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/can-bind",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/count",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/move",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-bind",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/multi-update-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/ota/upgrade",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/pair-confirm",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/pair-grant",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/transfer",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/unbind",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/info/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-resp",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/action-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/gateway-get-found-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/gateway-notify-bind-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-multi-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-control-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-get-report-multi-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/interact/property-get-report-send",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/abnormal-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/event-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/gateway-can-bind-index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/hub-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-agg/by-device/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-agg/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-latest-agg/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-latest/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-agg/by-device/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-agg/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log-latest/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/property-log/multi-index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/sdk-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/send-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/shadow/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/msg/status-log/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/profile/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/multi-create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/multi-delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/tsl-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/schema/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/secure-control/key-grant",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/version/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/device/version/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/device/multi-update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/group/info/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/cancel",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/confirm",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/device/retry",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/firmware/job/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/ota/module/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/multi-export",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/schema/multi-update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/category/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/config/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/custom/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/custom/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/init",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/multi-export",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/bind",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/binding-index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/property/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/unbind",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-module/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/activate",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/publish",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/model-release/tsl-read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/lastest-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/remote-config/push-all",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/multi-create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/tsl-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/tsl-read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/product/schema/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/info/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/debug",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/device/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/multi-export",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/read",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/script/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/service/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/service/index",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/sync/device",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/protocol/sync/product",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/create",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/delete",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/init",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/multi-export",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/multi-import",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/schema/common/update",
+    "effectiveAuthType": "admin",
+    "effectiveNeedAuth": true,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/area/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/area/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/slot/user/subscribe",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/collect/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-accept",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-create",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "add",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-delete",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "delete",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-delete-token",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-get-token-list",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/multi-index",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/read",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "find",
+    "managedByAccess": true
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/token/check",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "other",
+    "managedByAccess": false
+  },
+  {
+    "method": "POST",
+    "fullPath": "/api/v1/things/user/device/share/update",
+    "effectiveAuthType": "all",
+    "effectiveNeedAuth": false,
+    "effectiveOperType": "modify",
+    "managedByAccess": true
+  }
+]

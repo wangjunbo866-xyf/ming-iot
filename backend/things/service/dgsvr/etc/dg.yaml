@@ -1,0 +1,41 @@
+Name: dg.rpc
+ListenOn: 0.0.0.0:6166
+#Etcd:
+#  Hosts:
+#  - 127.0.0.1:2379
+#  Key: dg.rpc
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass:
+    Type: node
+
+DevLink:
+  Mode: mqtt
+  SubMode: emq
+  OpenApi:
+    Host: http://127.0.0.1:18083
+    ApiKey: ${THINGS_EMQX_API_KEY}
+    SecretKey: ${THINGS_EMQX_SECRET_KEY}
+  Mqtt:
+    ClientID: dg.rpc
+    Pass: iThings
+    User: dgsvr
+    Brokers:
+      - tcp://127.0.0.1:1883
+DmRpc:
+  Enable: true
+  Mode: grpc
+  Conf:
+    Timeout: 1000000
+    Endpoints:
+      - 127.0.0.1:9081
+Telemetry:
+  Name: dd
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+Event:
+  
+  Nats:
+    Url: nats://127.0.0.1:4222
+    Consumer: dgsvr

@@ -1,0 +1,114 @@
+info(
+    title: "设备分组"
+    desc: "设备分组"
+    author: "lbs"
+    email: "174805676@qq.com"
+    version: "v1"
+)
+
+
+@server(
+     group: things/group/info
+     prefix: /api/v1/things/group/info
+     middleware:  CheckTokenWare,InitCtxsWare
+    accessCodePrefix: "thingsDeviceGroup"
+    accessNamePrefix: "设备分组"
+    accessGroup: "设备管理"
+)
+
+service api {
+    @doc "创建分组"
+    @handler create
+    post /create (GroupInfo) returns (WithID)
+
+    @doc "获取分组列表"
+    @handler index
+    post /index (GroupInfoIndexReq) returns (GroupInfoIndexResp)
+
+    @doc "获取分组详情信息"
+    @handler read
+    post /read (GroupInfoReadReq) returns (GroupInfo)
+
+    @doc "更新分组信息"
+    @handler update
+    post /update (GroupInfo) returns ()
+
+    @doc "删除分组"
+    @handler delete
+    post /delete (WithID) returns ()
+}
+
+@server(
+     group: things/group/device
+     prefix: /api/v1/things/group/device
+     middleware:  CheckTokenWare,InitCtxsWare
+)
+service api {
+    @doc "添加分组设备"
+    @handler multiCreate
+    post /multi-create (GroupDeviceMultiSaveReq) returns ()
+
+    @doc "更新分组设备"
+    @handler multiUpdate
+    post /multi-update (GroupDeviceMultiSaveReq) returns ()
+
+    @doc "删除分组设备"
+    @handler multiDelete
+    post /multi-delete (GroupDeviceMultiDeleteReq) returns ()
+}
+
+type (
+
+    GroupInfo{
+        ID   int64  `json:"id,optional"`           //分组ID
+        IDPath   string  `json:"idPath,optional"`           //分组ID路径
+        Purpose string `json:"purpose,optional"`//用途 不填默认为default
+        ParentID  int64 `json:"parentID,optional"`          //父组ID
+        ProjectID  int64 `json:"projectID,string,optional,omitempty"`         //项目ID
+        AreaID int64 `json:"areaID,string,optional,omitempty"`                    //区域ID
+        Name string `json:"name,optional"`                //分组名称
+        ProductID string `json:"productID,optional"`       //产品ID
+        ProductName string `json:"productName,optional,omitempty"`       //产品ID
+        CreatedTime int64  `json:"createdTime,string,optional"`     //创建时间
+        Desc string `json:"desc,optional,omitempty"`   //分组描述
+        DeviceCount int64 `json:"deviceCount,optional,omitempty"` //设备数量统计
+        IsLeaf int64 `json:"isLeaf,optional"`
+        Tags []*Tag `json:"tags,optional,omitempty"`                 //分组tag
+        Files map[string]string `json:"files,optional,omitempty"` //key 是用途, value是文件的路径,
+        Devices []*DeviceCore `json:"devices,optional,omitempty"` // withDevices=true 时返回分组下设备核心信息
+        Children []*GroupInfo `json:"children,optional,omitempty"`
+    }
+
+
+    GroupInfoReadReq{
+        ID int64 `json:"id"`         // id
+        Purpose string `json:"purpose,optional"`//用途 不填默认为default
+        WithChildren bool `json:"withChildren,optional"`
+        WithDevices bool `json:"withDevices,optional"` // true 时返回 devices 设备核心信息
+    }
+    GroupInfoIndexReq  {
+        Page *PageInfo `json:"page,optional"`             //分页信息 只获取一个则不填
+        AreaID int64 `json:"areaID,string,optional"`                    //区域ID
+        ParentID int64 `json:"parentID,optional"`                  //父组ID
+        ProductID string `json:"productID,optional"`                         //产品ID
+        Name string `json:"name,optional"`          //分组名称
+        Tags []*Tag `json:"tags,optional"`                    //分组tag
+        Purpose string `json:"purpose,optional"`//用途 不填默认为default
+        WithDevices bool `json:"withDevices,optional"` // true 时返回 list[].devices 设备核心信息
+    }
+
+    GroupInfoIndexResp  {
+        List []*GroupInfo `json:"list"`    //分组信息
+        PageResp
+    }
+
+    GroupDeviceMultiSaveReq  {
+        GroupID   int64  `json:"groupID"`            //分组ID
+        List []*DeviceCore `json:"list,optional"`   //分组tag
+    }
+
+    GroupDeviceMultiDeleteReq  {
+        GroupID   int64  `json:"groupID"`            //分组ID
+        List []*DeviceCore `json:"list,optional"`   //分组tag
+    }
+)

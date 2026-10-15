@@ -1,0 +1,271 @@
+package devicemanagelogic
+
+import (
+	"context"
+	"sort"
+	"time"
+
+	"gitee.com/ming-iot/saas/service/syssvr/sysExport"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/sdk/protocol"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/deviceLog"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/deviceStatus"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/product"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/application"
+	"gitee.com/ming-iot/things/share/domain/deviceAuth"
+	"gitee.com/ming-iot/things/share/userSubscribe"
+	"github.com/spf13/cast"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type DeviceOnlineMultiFixLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewDeviceOnlineMultiFixLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeviceOnlineMultiFixLogic {
+	return &DeviceOnlineMultiFixLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *DeviceOnlineMultiFixLogic) DeviceOnlineMultiFix(in *dm.DeviceOnlineMultiFixReq) (*dm.Empty, error) {
+	ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+		var insertList []*deviceStatus.ConnectMsg
+		for _, device := range in.Devices {
+			ld := device.Device
+			t := time.Now()
+			if device.ConnectAt != 0 {
+				t = time.UnixMilli(device.ConnectAt)
+			}
+			action := devices.ActionConnected
+			if device.IsOnline == def.False {
+				action = devices.ActionDisconnected
+			}
+			insertList = append(insertList, &deviceStatus.ConnectMsg{
+				Device: devices.Core{
+					ProductID:  ld.ProductID,
+					DeviceName: ld.DeviceName,
+				},
+				Timestamp: t,
+				Action:    action,
+				Reason:    "在线状态修复",
+			})
+		}
+		err := HandleOnlineFix(ctx, l.svcCtx, insertList...)
+		if err != nil {
+			logx.WithContext(ctx).Error(err)
+		}
+	})
+
+	return &dm.Empty{}, nil
+}
+
+func HandleOnlineFix(ctx context.Context, svcCtx *svc.ServiceContext, insertList ...*deviceStatus.ConnectMsg) (err error) {
+	ctx = ctxs.WithRoot(ctx)
+	type pendingOfflineUpdate struct {
+		id          int64
+		device      devices.Core
+		afterUpdate func()
+	}
+	var ( //这里是最后更新数据库状态的设备列表
+		offlineByID     = make(map[int64]pendingOfflineUpdate)
+		subDeviceInsert []*deviceStatus.ConnectMsg
+		firstErr        error
+	)
+	recordError := func(updateErr error) {
+		if updateErr != nil && firstErr == nil {
+			firstErr = updateErr
+		}
+	}
+
+	var log = logx.WithContext(ctx)
+
+	handleMsg := func(msg *deviceStatus.ConnectMsg) {
+		if msg.Timestamp.IsZero() {
+			msg.Timestamp = time.Now()
+		}
+		status := int64(def.ConnectedStatus)
+		if msg.Action == devices.ActionDisconnected {
+			status = def.DisConnectedStatus
+		}
+		var ld *deviceAuth.LoginDevice
+		if msg.Device.DeviceName != "" {
+			ld = &deviceAuth.LoginDevice{
+				ProductID:  msg.Device.ProductID,
+				DeviceName: msg.Device.DeviceName,
+			}
+		} else {
+			ld, err = deviceAuth.GetClientIDInfo(msg.ClientID)
+			if err != nil {
+				log.Error(err)
+				return
+			}
+		}
+		appMsg := application.ConnectMsg{
+			Device: devices.Core{
+				ProductID:  ld.ProductID,
+				DeviceName: ld.DeviceName,
+			},
+			Status:    status,
+			Timestamp: msg.Timestamp.UnixMilli(),
+		}
+
+		dev := devices.Core{
+			ProductID:  ld.ProductID,
+			DeviceName: ld.DeviceName,
+		}
+		di, err := svcCtx.DeviceCache.GetData(ctx, dev)
+		if err != nil {
+			log.Error(err)
+			return
+		}
+		pi, err := svcCtx.ProductCache.GetData(ctx, di.ProductID)
+		if err != nil {
+			log.Error(err)
+			return
+		}
+		if pi.OnlineHandle == product.OnlineHandleAlways {
+			return
+		}
+		push := func(appMsg application.ConnectMsg, di *dm.DeviceInfo) {
+			err = svcCtx.StatusRepo.Insert(ctx, &deviceLog.Status{
+				ProductID:  appMsg.Device.ProductID,
+				Status:     status,
+				Timestamp:  msg.Timestamp, // 操作时间
+				DeviceName: appMsg.Device.DeviceName,
+			})
+			if err != nil {
+				log.Errorf("%s.HubLogRepo.insert productID:%v deviceName:%v err:%v",
+					utils.FuncName(), ld.ProductID, ld.DeviceName, err)
+			}
+
+			err = svcCtx.PubApp.DeviceStatusDisConnected(ctx, appMsg)
+			if err != nil {
+				log.Errorf("%s.pubApp productID:%v deviceName:%v err:%v",
+					utils.FuncName(), ld.ProductID, ld.DeviceName, err)
+			}
+			err = svcCtx.WebHook.Publish(svcCtx.WithDeviceTenant(ctx, appMsg.Device), func() string {
+				if status == def.ConnectedStatus {
+					return sysExport.CodeDmDeviceConn
+				}
+				return sysExport.CodeDmDeviceDisConn
+			}(), appMsg)
+			if err != nil {
+				log.Error(err)
+			}
+			if di == nil {
+				di, err = svcCtx.DeviceCache.GetData(ctx, dev)
+				if err != nil {
+					log.Error(err)
+					return
+				}
+			}
+			err = svcCtx.UserSubscribe.Publish(ctx, userSubscribe.DeviceConn, appMsg, map[string]any{
+				"productID":  appMsg.Device.ProductID,
+				"deviceName": appMsg.Device.DeviceName,
+			}, map[string]any{
+				"projectID": di.ProjectID,
+			}, map[string]any{
+				"projectID": cast.ToString(di.ProjectID),
+				"areaID":    cast.ToString(di.AreaID),
+			})
+			if err != nil {
+				log.Error(err)
+			}
+		}
+		if status == def.ConnectedStatus {
+			updateErr := relationDB.NewDeviceInfoRepo(ctx).UpdateConnectivityOnlineByID(
+				ctx, di.Id, msg.Timestamp, msg.Address, di.FirstLogin == 0)
+			if updateErr != nil {
+				log.Error(updateErr)
+				recordError(updateErr)
+				return
+			}
+			err = svcCtx.DeviceCache.SetData(ctx, dev, nil)
+			if err != nil {
+				log.Error(err)
+				recordError(err)
+			}
+			if di.IsOnline != def.True {
+				push(appMsg, di)
+			}
+			protocol.UpdateDeviceActivity(ctx, dev)
+		} else {
+			if !utils.SliceIn(msg.Reason, "takeovered", "takenover", "discard", "discarded") { //连接还在的时候被别人顶了,忽略这种下线
+				if di.DeviceType == def.DeviceTypeGateway && pi.SubDeviceOnlineHandle != product.SubDeviceOnlineHandleIndependent { //如果是网关类型下线,则需要把子设备全部下线
+					subDevs, err := relationDB.NewGatewayDeviceRepo(ctx).FindByFilter(ctx,
+						relationDB.GatewayDeviceFilter{Gateway: &dev}, nil)
+					if err != nil {
+						log.Error(err)
+					} else {
+						for _, v := range subDevs {
+							subDeviceInsert = append(subDeviceInsert, &deviceStatus.ConnectMsg{Action: msg.Action,
+								Device: devices.Core{ProductID: v.ProductID, DeviceName: v.DeviceName}})
+						}
+					}
+				}
+				offlineByID[di.Id] = pendingOfflineUpdate{
+					id:     di.Id,
+					device: dev,
+					afterUpdate: func() {
+						if di.IsOnline == def.True {
+							push(appMsg, di)
+						}
+						protocol.DeleteDeviceActivity(ctx, dev)
+					},
+				}
+			}
+		}
+
+	}
+	for _, msg := range insertList {
+		handleMsg(msg)
+	}
+	if len(subDeviceInsert) != 0 {
+		//子设备下线
+		log.Infof("子设备下线: %v", utils.Fmt(subDeviceInsert))
+		for _, msg := range subDeviceInsert {
+			handleMsg(msg)
+		}
+	}
+	diDB := relationDB.NewDeviceInfoRepo(ctx)
+	if len(offlineByID) > 0 {
+		offlineDevices := make([]pendingOfflineUpdate, 0, len(offlineByID))
+		for _, pending := range offlineByID {
+			offlineDevices = append(offlineDevices, pending)
+		}
+		sort.Slice(offlineDevices, func(i, j int) bool { return offlineDevices[i].id < offlineDevices[j].id })
+		for start := 0; start < len(offlineDevices); start += relationDB.DeviceStatusUpdateBatchSize {
+			end := min(start+relationDB.DeviceStatusUpdateBatchSize, len(offlineDevices))
+			batch := offlineDevices[start:end]
+			ids := make([]int64, 0, len(batch))
+			for _, pending := range batch {
+				ids = append(ids, pending.id)
+			}
+			if updateErr := diDB.UpdateConnectivityOfflineByIDs(ctx, ids, time.Now()); updateErr != nil {
+				log.Error(updateErr)
+				return updateErr
+			}
+			for _, pending := range batch {
+				if cacheErr := svcCtx.DeviceCache.SetData(ctx, pending.device, nil); cacheErr != nil {
+					log.Error(cacheErr)
+					recordError(cacheErr)
+				}
+				pending.afterUpdate()
+			}
+		}
+	}
+	return firstErr
+}

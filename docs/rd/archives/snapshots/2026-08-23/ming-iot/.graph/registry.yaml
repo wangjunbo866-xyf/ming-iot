@@ -1,0 +1,17 @@
+apiVersion: graph.ming.io/v1
+kind: Registry
+schema: .graph/schemas/loop-v1.schema.json
+loopsDir: .graph/loops
+runtimeDir: .graph/runtime
+controlPlane:
+  ownerLoop: G0-rd-graph-control-plane
+  globalImpact:
+    - .graph/registry.yaml
+    - .graph/schemas/**
+    - .githooks/**
+    - AGENTS.md
+    - .gitignore
+    - backend/tools/cmd/graphctl/**
+    - backend/tools/internal/graphctl/**
+    - backend/tools/go.mod
+    - backend/tools/go.sum

@@ -1,0 +1,21 @@
+package oss
+
+import (
+	"gitee.com/ming-iot/share/conf"
+	"gitee.com/ming-iot/share/def"
+)
+
+func newOssManager(setting conf.OssConf) (sm Handle, err error) {
+	OssType := setting.OssType
+	switch OssType {
+	case def.OssAliyun:
+		sm, err = newAliYunOss(conf.AliYunConf{OssConf: setting})
+	case def.OssMinio:
+		sm, err = newMinio(conf.MinioConf{OssConf: setting})
+	case def.OssLocal:
+		sm, err = newLocal(setting)
+	case def.OssAws:
+		sm, err = newAws(conf.AwsConf{OssConf: setting})
+	}
+	return sm, err
+}

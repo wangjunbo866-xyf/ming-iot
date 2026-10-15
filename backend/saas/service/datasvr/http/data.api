@@ -1,0 +1,183 @@
+syntax = "v1"
+
+@server (
+	group:      data/staticstics/info
+	prefix:     /api/v1/data/staticstics/info
+	middleware: CheckTokenWare,InitCtxsWare
+)
+service data {
+	@doc(
+		summary: "获取统计数据"
+		description: "按配置编码执行单条统计查询，支持过滤、分组、聚合与分页，返回结果列表"
+		authType: "all"
+		resource: "data"
+		action: "view"
+		group: "data/staticstics/info"
+		recordLogMode: "1"
+	)
+	@handler read
+	post /read (StaticsticsInfoReadReq) returns (StaticsticsInfoReadResp)
+
+	@doc(
+		summary: "批量获取统计数据"
+		description: "一次性提交多个统计查询并按顺序返回每组结果，减少前端往返请求"
+		authType: "all"
+		resource: "data"
+		action: "view"
+		group: "data/staticstics/info"
+		recordLogMode: "1"
+	)
+	@handler index
+	post /index (StaticsticsInfoIndexReq) returns (StaticsticsInfoIndexResp)
+}
+
+@server (
+	group:      data/staticstics/manage
+	prefix:     /api/v1/data/staticstics/manage
+	middleware: CheckTokenWare,InitCtxsWare
+)
+service data {
+	@doc(
+		summary: "添加数据统计配置"
+		description: "新建一条统计查询配置，定义查询类型、表名或 SQL、过滤规则与租户项目区域过滤开关"
+		authType: "all"
+		resource: "data"
+		action: "create"
+		group: "data/staticstics/manage"
+		recordLogMode: "2"
+	)
+	@handler create
+	post /create (DataStatisticsManage) returns (WithID)
+
+	@doc(
+		summary: "获取数据统计配置列表"
+		description: "分页查询已配置的统计查询定义清单"
+		authType: "all"
+		resource: "data"
+		action: "view"
+		group: "data/staticstics/manage"
+		recordLogMode: "1"
+	)
+	@handler index
+	post /index (DataStatisticsManageIndexReq) returns (DataStatisticsManageIndexResp)
+
+	@doc(
+		summary: "获取数据统计配置详情"
+		description: "按主键读取单条统计查询配置的完整定义"
+		authType: "all"
+		resource: "data"
+		action: "view"
+		group: "data/staticstics/manage"
+		recordLogMode: "1"
+	)
+	@handler read
+	post /read (WithID) returns (DataStatisticsManage)
+
+	@doc(
+		summary: "更新数据统计配置"
+		description: "修改指定统计查询配置的查询类型、SQL、过滤规则与排序等属性"
+		authType: "all"
+		resource: "data"
+		action: "update"
+		group: "data/staticstics/manage"
+		recordLogMode: "2"
+	)
+	@handler update
+	post /update (DataStatisticsManage)
+
+	@doc(
+		summary: "删除数据统计配置"
+		description: "按主键删除统计查询配置，对应的统计编码将不再可用"
+		authType: "all"
+		resource: "data"
+		action: "delete"
+		group: "data/staticstics/manage"
+		recordLogMode: "2"
+	)
+	@handler delete
+	post /delete (WithID)
+}
+
+type (
+	DataStatisticsManage {
+		ID              int64                     `json:"id,optional"` // 编号
+		IsFilterTenant  int64                     `json:"isFilterTenant"` //是否要过滤租户默认为过滤
+		IsFilterProject int64                     `json:"isFilterProject"` //是否要过滤项目1 是 2 否  默认为否
+		IsFilterArea    int64                     `json:"isFilterArea"` //是否要过滤区域 默认为否
+		IsSoftDelete    int64                     `json:"isSoftDelete"` //是否是软删除,是的话会默认加过滤 ,默认为是
+		Code            string                    `json:"code"` //查询的code
+		Type            string                    `json:"type"` //查询的类别: sql:sql模板替换查询   table: 直接查表
+		Table           string                    `json:"table"` //table类型查询的表名
+		Omits           string                    `json:"omits"` //忽略的字段列表,table类型需要
+		IsToHump        int64                     `json:"isToHump"` //是否转换为驼峰,入参转换为下划线
+		Sql             string                    `json:"sql"` //sql类型的sql内容
+		OrderBy         string                    `json:"orderBy"` //默认排序 aaa desc
+		Filter          map[string]FilterKeywords `json:"filter"` //结构体类型,key是需要定制过滤的列,或关键字,value是{"sql":"aaa=?","valNum":3(问号的数量),"type":"time"(time:时间类型时间戳 date: 日期类型的字符串,可选,需要格式化才需要填)}
+		FilterSlotCode  string                    `json:"filterSlotCode"` //第三方过滤插槽code
+	}
+	FilterKeywords {
+		Sql    string `json:"sql"`
+		ValNum int64  `json:"valNum"` //问号的数量
+		Type   string `json:"type"` //time:时间类型时间戳 date: 日期类型的字符串
+	}
+	DataStatisticsManageIndexReq {
+		Page *PageInfo `json:"page,optional"` // 分页信息,只获取一个则不填
+	}
+	DataStatisticsManageIndexResp {
+		List []*DataStatisticsManage `json:"list"` // 列表数据
+		PageResp
+	}
+)
+
+type (
+	PageInfo {
+		Page   int64      `json:"page,optional" form:"page,optional"` // 页码
+		Size   int64      `json:"size,optional" form:"size,optional"` // 每页大小
+		Orders []*OrderBy `json:"orders,optional"` //排序
+	}
+	PageResp {
+		Page     int64 `json:"page,optional"` // 页码
+		PageSize int64 `json:"pageSize,optional"` // 每页大小
+		Total    int64 `json:"total"`
+	}
+	WithID {
+		ID int64 `json:"id,optional"` // id
+	}
+	OrderBy {
+		Field string `json:"field,optional"` ////排序的字段名
+		Sort  int64  `json:"sort,optional"` //排序方式：0 从小到大, 1 从大到小
+	}
+	StaticsticsInfoExportReq {
+		Columns []Column `json:"columns"`
+		Format  string   `json:"format"` //默认xslx
+	}
+	Column {
+		Column   string `json:"column"` //导出的列
+		ShowName string `json:"showName"` //展示的名字
+	}
+	// StaticsticsInfoIndexReq {
+	//  Reqs []*StaticsticsInfo `json:"reqs"`
+	// }
+	StaticsticsInfoReadResp {
+		List []map[string]interface{} `json:"list"` //如果返回的是个列表
+	}
+	Aggregation {
+		Func   string `json:"argFunc,optional"`
+		Column string `json:"column,optional"`
+	}
+	StaticsticsInfoReadReq {
+		Code         string                 `json:"code"`
+		Page         *PageInfo              `json:"page,optional"`
+		Filter       map[string]interface{} `json:"filter,optional"`
+		Aggregations []Aggregation          `json:"aggregations,optional"`
+		GroupBy      string                 `json:"groupBy,optional"`
+		Columns      string                 `json:"columns,optional"`
+	}
+	StaticsticsInfoIndexReq {
+		Finds []*StaticsticsInfoReadReq `json:"finds"`
+	}
+	StaticsticsInfoIndexResp {
+		Lists [][]map[string]interface{} `json:"list"`
+	}
+)
+

@@ -1,0 +1,8114 @@
+[
+  {
+    "name": "AreaInfo",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "AreaName",
+        "type": "string",
+        "tag": "`json:\"areaName,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "CodeReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaDeleteReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaExportReq",
+    "fields": [
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaExportResp",
+    "fields": [
+      {
+        "name": "Schemas",
+        "type": "string",
+        "tag": "`json:\"schemas\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaImportReq",
+    "fields": [
+      {
+        "name": "Schemas",
+        "type": "string",
+        "tag": "`json:\"schemas\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Types",
+        "type": "[]int64",
+        "tag": "`json:\"types,optional\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      },
+      {
+        "name": "ProductIDs",
+        "type": "[]string",
+        "tag": "`json:\"productIDs,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "productCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "productCategoryWithFather",
+        "type": "bool",
+        "tag": "`json:\"productCategoryWithFather,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID,optional\"`"
+      },
+      {
+        "name": "GroupIDs",
+        "type": "[]int64",
+        "tag": "`json:\"groupIDs,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,optional,string\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,optional,string\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "PropertyMode",
+        "type": "string",
+        "tag": "`json:\"propertyMode,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      },
+      {
+        "name": "ProductSceneMode",
+        "type": "string",
+        "tag": "`json:\"productSceneMode,optional\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*CommonSchemaInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "CommonSchemaInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier,optional\"`"
+      },
+      {
+        "name": "ExtendConfig",
+        "type": "string",
+        "tag": "`json:\"extendConfig,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "*string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Required",
+        "type": "int64",
+        "tag": "`json:\"required,optional\"`"
+      },
+      {
+        "name": "Affordance",
+        "type": "*string",
+        "tag": "`json:\"affordance,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "RecordMode",
+        "type": "int64",
+        "tag": "`json:\"recordMode,optional\"`"
+      },
+      {
+        "name": "IsPassword",
+        "type": "int64",
+        "tag": "`json:\"isPassword,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "Compare",
+    "fields": [
+      {
+        "name": "CmpTYpe",
+        "type": "string",
+        "tag": "`json:\"cmpType\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value\"`"
+      },
+      {
+        "name": "CastTo",
+        "type": "string",
+        "tag": "`json:\"castTo\"`"
+      }
+    ]
+  },
+  {
+    "name": "CompareInt64",
+    "fields": [
+      {
+        "name": "CmpType",
+        "type": "string",
+        "tag": "`json:\"cmpType\"`"
+      },
+      {
+        "name": "Value",
+        "type": "int64",
+        "tag": "`json:\"value,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DevInit",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "DeptID",
+        "type": "int64",
+        "tag": "`json:\"deptID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuth5AccessReq",
+    "fields": [
+      {
+        "name": "Username",
+        "type": "string",
+        "tag": "`json:\"username,omitempty\"`"
+      },
+      {
+        "name": "Topic",
+        "type": "string",
+        "tag": "`json:\"topic,omitempty\"`"
+      },
+      {
+        "name": "ClientID",
+        "type": "string",
+        "tag": "`json:\"clientID,omitempty\"`"
+      },
+      {
+        "name": "Action",
+        "type": "string",
+        "tag": "`json:\"action,omitempty\"`"
+      },
+      {
+        "name": "Ip",
+        "type": "string",
+        "tag": "`json:\"ip,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuth5AccessResp",
+    "fields": [
+      {
+        "name": "Result",
+        "type": "string",
+        "tag": "`json:\"result\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuth5LoginReq",
+    "fields": [
+      {
+        "name": "Username",
+        "type": "string",
+        "tag": "`json:\"username\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional\"`"
+      },
+      {
+        "name": "ClientID",
+        "type": "string",
+        "tag": "`json:\"clientID\"`"
+      },
+      {
+        "name": "Ip",
+        "type": "string",
+        "tag": "`json:\"ip\"`"
+      },
+      {
+        "name": "Certificate",
+        "type": "string",
+        "tag": "`json:\"certificate,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuth5LoginResp",
+    "fields": [
+      {
+        "name": "Result",
+        "type": "string",
+        "tag": "`json:\"result\"`"
+      },
+      {
+        "name": "IsSuperuser",
+        "type": "bool",
+        "tag": "`json:\"is_superuser,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuthAccessReq",
+    "fields": [
+      {
+        "name": "Username",
+        "type": "string",
+        "tag": "`json:\"username,omitempty\"`"
+      },
+      {
+        "name": "Topic",
+        "type": "string",
+        "tag": "`json:\"topic,omitempty\"`"
+      },
+      {
+        "name": "ClientID",
+        "type": "string",
+        "tag": "`json:\"clientID,omitempty\"`"
+      },
+      {
+        "name": "Access",
+        "type": "string",
+        "tag": "`json:\"access,omitempty\"`"
+      },
+      {
+        "name": "Ip",
+        "type": "string",
+        "tag": "`json:\"ip,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuthLoginReq",
+    "fields": [
+      {
+        "name": "Username",
+        "type": "string",
+        "tag": "`json:\"username\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional\"`"
+      },
+      {
+        "name": "ClientID",
+        "type": "string",
+        "tag": "`json:\"clientID\"`"
+      },
+      {
+        "name": "Ip",
+        "type": "string",
+        "tag": "`json:\"ip\"`"
+      },
+      {
+        "name": "Certificate",
+        "type": "string",
+        "tag": "`json:\"certificate,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceAuthRootCheckReq",
+    "fields": [
+      {
+        "name": "Username",
+        "type": "string",
+        "tag": "`json:\"username,omitempty\"`"
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "tag": "`json:\"password,optional,omitempty\"`"
+      },
+      {
+        "name": "ClientID",
+        "type": "string",
+        "tag": "`json:\"clientID,omitempty\"`"
+      },
+      {
+        "name": "Ip",
+        "type": "string",
+        "tag": "`json:\"ip,omitempty\"`"
+      },
+      {
+        "name": "Certificate",
+        "type": "[]byte",
+        "tag": "`json:\"certificate,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceBindTokenInfo",
+    "fields": [
+      {
+        "name": "Token",
+        "type": "string",
+        "tag": "`json:\"token,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceBindTokenReadReq",
+    "fields": [
+      {
+        "name": "Token",
+        "type": "string",
+        "tag": "`json:\"token\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceCore",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceCountInfo",
+    "fields": [
+      {
+        "name": "RangeID",
+        "type": "int64",
+        "tag": "`json:\"rangeID,string\"`"
+      },
+      {
+        "name": "Count",
+        "type": "map[string]int64",
+        "tag": "`json:\"count\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceCountReq",
+    "fields": [
+      {
+        "name": "CountTypes",
+        "type": "[]string",
+        "tag": "`json:\"countTypes\"`"
+      },
+      {
+        "name": "RangeType",
+        "type": "int64",
+        "tag": "`json:\"rangeType,string\"`"
+      },
+      {
+        "name": "RangeIDs",
+        "type": "[]int64",
+        "tag": "`json:\"rangeIDs,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceCountResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceCountInfo",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceError",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code,omitempty\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceGateWayIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "GateWayProductID",
+        "type": "string",
+        "tag": "`json:\"gateWayProductID\"`"
+      },
+      {
+        "name": "GateWayDeviceName",
+        "type": "string",
+        "tag": "`json:\"gateWaydeviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceGateWayIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceGateWayMultiCreateReq",
+    "fields": [
+      {
+        "name": "GateWayProductID",
+        "type": "string",
+        "tag": "`json:\"gateWayProductID\"`"
+      },
+      {
+        "name": "GateWayDeviceName",
+        "type": "string",
+        "tag": "`json:\"gateWaydeviceName\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceGateWayMultiDeleteReq",
+    "fields": [
+      {
+        "name": "GateWayProductID",
+        "type": "string",
+        "tag": "`json:\"gateWayProductID\"`"
+      },
+      {
+        "name": "GateWayDeviceName",
+        "type": "string",
+        "tag": "`json:\"gateWaydeviceName\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceGroupMultiSaveReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "GroupIDs",
+        "type": "[]int64",
+        "tag": "`json:\"groupIDs,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,omitempty\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceType",
+        "type": "int64",
+        "tag": "`json:\"deviceType,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductImg",
+        "type": "string",
+        "tag": "`json:\"productImg,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "DeviceAlias",
+        "type": "*string",
+        "tag": "`json:\"deviceAlias,optional\"`"
+      },
+      {
+        "name": "Secret",
+        "type": "string",
+        "tag": "`json:\"secret,optional,omitempty\"`"
+      },
+      {
+        "name": "Cert",
+        "type": "string",
+        "tag": "`json:\"cert,optional,omitempty\"`"
+      },
+      {
+        "name": "Imei",
+        "type": "string",
+        "tag": "`json:\"imei,optional,omitempty\"`"
+      },
+      {
+        "name": "Mac",
+        "type": "string",
+        "tag": "`json:\"mac,optional,omitempty\"`"
+      },
+      {
+        "name": "CategoryID",
+        "type": "int64",
+        "tag": "`json:\"categoryID,optional,omitempty\"`"
+      },
+      {
+        "name": "Version",
+        "type": "*string",
+        "tag": "`json:\"version,optional,omitempty\"`"
+      },
+      {
+        "name": "HardInfo",
+        "type": "string",
+        "tag": "`json:\"hardInfo,optional,omitempty\"`"
+      },
+      {
+        "name": "SoftInfo",
+        "type": "string",
+        "tag": "`json:\"softInfo,optional,omitempty\"`"
+      },
+      {
+        "name": "MobileOperator",
+        "type": "int64",
+        "tag": "`json:\"mobileOperator,optional,range=[0:10],omitempty\"`"
+      },
+      {
+        "name": "Phone",
+        "type": "*string",
+        "tag": "`json:\"phone,optional,omitempty\"`"
+      },
+      {
+        "name": "Iccid",
+        "type": "*string",
+        "tag": "`json:\"iccid,optional,omitempty\"`"
+      },
+      {
+        "name": "Position",
+        "type": "*Point",
+        "tag": "`json:\"position,optional,omitempty\"`"
+      },
+      {
+        "name": "Address",
+        "type": "*string",
+        "tag": "`json:\"address,optional,omitempty\"`"
+      },
+      {
+        "name": "Adcode",
+        "type": "*string",
+        "tag": "`json:\"adcode,optional,omitempty\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "SchemaAlias",
+        "type": "map[string]string",
+        "tag": "`json:\"schemaAlias,optional,omitempty\"`"
+      },
+      {
+        "name": "IsOnline",
+        "type": "int64",
+        "tag": "`json:\"isOnline,optional,range=[0:2],omitempty\"`"
+      },
+      {
+        "name": "FirstLogin",
+        "type": "int64",
+        "tag": "`json:\"firstLogin,optional,string,omitempty\"`"
+      },
+      {
+        "name": "FirstBind",
+        "type": "int64",
+        "tag": "`json:\"firstBind,optional,string,omitempty\"`"
+      },
+      {
+        "name": "LastBind",
+        "type": "int64",
+        "tag": "`json:\"lastBind,optional,string,omitempty\"`"
+      },
+      {
+        "name": "LastLogin",
+        "type": "int64",
+        "tag": "`json:\"lastLogin,optional,string,omitempty\"`"
+      },
+      {
+        "name": "LastOffline",
+        "type": "int64",
+        "tag": "`json:\"lastOffline,optional,string,omitempty\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "*int64",
+        "tag": "`json:\"expTime,optional,string,omitempty\"`"
+      },
+      {
+        "name": "LogLevel",
+        "type": "int64",
+        "tag": "`json:\"logLevel,optional,range=[0:5],omitempty\"`"
+      },
+      {
+        "name": "Rssi",
+        "type": "int64",
+        "tag": "`json:\"rssi,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional,string,omitempty\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,omitempty\"`"
+      },
+      {
+        "name": "IsEnable",
+        "type": "int64",
+        "tag": "`json:\"isEnable,optional,omitempty\"`"
+      },
+      {
+        "name": "WithProperties",
+        "type": "map[string]*DeviceInfoWithProperty",
+        "tag": "`json:\"withProperties,optional,omitempty\"`"
+      },
+      {
+        "name": "ProtocolConf",
+        "type": "[]*Tag",
+        "tag": "`json:\"protocolConf,optional,omitempty\"`"
+      },
+      {
+        "name": "SubProtocolConf",
+        "type": "[]*Tag",
+        "tag": "`json:\"subProtocolConf,optional,omitempty\"`"
+      },
+      {
+        "name": "Profiles",
+        "type": "map[string]string",
+        "tag": "`json:\"profiles,optional,omitempty\"`"
+      },
+      {
+        "name": "Owner",
+        "type": "*UserCore",
+        "tag": "`json:\"owner,optional,omitempty\"`"
+      },
+      {
+        "name": "RatedPower",
+        "type": "int64",
+        "tag": "`json:\"ratedPower,optional,omitempty\"`"
+      },
+      {
+        "name": "NetType",
+        "type": "int64",
+        "tag": "`json:\"netType,optional,range=[0:10],omitempty\"`"
+      },
+      {
+        "name": "NeedConfirmVersion",
+        "type": "string",
+        "tag": "`json:\"needConfirmVersion,optional,omitempty\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "LastIp",
+        "type": "string",
+        "tag": "`json:\"lastIp,optional,omitempty\"`"
+      },
+      {
+        "name": "LastLocalIp",
+        "type": "string",
+        "tag": "`json:\"lastLocalIp,optional,omitempty\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceImg",
+        "type": "string",
+        "tag": "`json:\"deviceImg,omitempty,optional\"`"
+      },
+      {
+        "name": "IsUpdateDeviceImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateDeviceImg,omitempty,optional\"`"
+      },
+      {
+        "name": "File",
+        "type": "string",
+        "tag": "`json:\"file,omitempty,optional\"`"
+      },
+      {
+        "name": "IsUpdateFile",
+        "type": "bool",
+        "tag": "`json:\"isUpdateFile,omitempty,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "Distributor",
+        "type": "*IDPath",
+        "tag": "`json:\"distributor,optional,omitempty\"`"
+      },
+      {
+        "name": "Gateway",
+        "type": "*DeviceInfo",
+        "tag": "`json:\"gateway,optional,omitempty\"`"
+      },
+      {
+        "name": "Area",
+        "type": "*AreaInfo",
+        "tag": "`json:\"area,optional,omitempty\"`"
+      },
+      {
+        "name": "Groups",
+        "type": "[]*GroupCore",
+        "tag": "`json:\"groups,optional,omitempty\"`"
+      },
+      {
+        "name": "GroupPurpose",
+        "type": "string",
+        "tag": "`json:\"groupPurpose,optional,omitempty\"`"
+      },
+      {
+        "name": "GroupIDs",
+        "type": "[]int64",
+        "tag": "`json:\"groupIDs,optional,string,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoBindReq",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,optional,string\"`"
+      },
+      {
+        "name": "Token",
+        "type": "string",
+        "tag": "`json:\"token,optional\"`"
+      },
+      {
+        "name": "Expand",
+        "type": "map[string]string",
+        "tag": "`json:\"expand,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoCanBindReq",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoDeleteReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductIDs",
+        "type": "[]string",
+        "tag": "`json:\"productIDs,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional\"`"
+      },
+      {
+        "name": "DeviceNameOrAlias",
+        "type": "string",
+        "tag": "`json:\"deviceNameOrAlias,optional\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "*CompareInt64",
+        "tag": "`json:\"expTime,optional\"`"
+      },
+      {
+        "name": "RatedPower",
+        "type": "*CompareInt64",
+        "tag": "`json:\"ratedPower,optional\"`"
+      },
+      {
+        "name": "Rssi",
+        "type": "*CompareInt64",
+        "tag": "`json:\"rssi,optional\"`"
+      },
+      {
+        "name": "DeviceAlias",
+        "type": "string",
+        "tag": "`json:\"deviceAlias,optional\"`"
+      },
+      {
+        "name": "DeviceTypes",
+        "type": "[]int64",
+        "tag": "`json:\"deviceTypes,optional\"`"
+      },
+      {
+        "name": "Position",
+        "type": "*Point",
+        "tag": "`json:\"position,optional\"`"
+      },
+      {
+        "name": "Range",
+        "type": "int64",
+        "tag": "`json:\"range,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional\"`"
+      },
+      {
+        "name": "WithProperties",
+        "type": "[]string",
+        "tag": "`json:\"withProperties,optional\"`"
+      },
+      {
+        "name": "PropertyIgnoreEmpty",
+        "type": "bool",
+        "tag": "`json:\"propertyIgnoreEmpty,optional\"`"
+      },
+      {
+        "name": "WithProfiles",
+        "type": "[]string",
+        "tag": "`json:\"withProfiles,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "AreaIDPaths",
+        "type": "[]string",
+        "tag": "`json:\"areaIDPaths,optional\"`"
+      },
+      {
+        "name": "IsOnline",
+        "type": "int64",
+        "tag": "`json:\"isOnline,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "ProductCategoryIDs",
+        "type": "[]int64",
+        "tag": "`json:\"productCategoryIDs,optional\"`"
+      },
+      {
+        "name": "WithShared",
+        "type": "int64",
+        "tag": "`json:\"withShared,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "WithCollect",
+        "type": "int64",
+        "tag": "`json:\"withCollect,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "Versions",
+        "type": "[]string",
+        "tag": "`json:\"versions,optional\"`"
+      },
+      {
+        "name": "NotVersion",
+        "type": "string",
+        "tag": "`json:\"notVersion,optional\"`"
+      },
+      {
+        "name": "Gateway",
+        "type": "*DeviceCore",
+        "tag": "`json:\"gateway,optional\"`"
+      },
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID,optional,string\"`"
+      },
+      {
+        "name": "GroupIDs",
+        "type": "[]int64",
+        "tag": "`json:\"groupIDs,optional,string\"`"
+      },
+      {
+        "name": "GroupIDPaths",
+        "type": "[]string",
+        "tag": "`json:\"groupIDPaths,optional\"`"
+      },
+      {
+        "name": "GroupIDPath",
+        "type": "string",
+        "tag": "`json:\"groupIDPath,optional\"`"
+      },
+      {
+        "name": "NotGroupID",
+        "type": "int64",
+        "tag": "`json:\"notGroupID,optional,string\"`"
+      },
+      {
+        "name": "ParentGroupID",
+        "type": "int64",
+        "tag": "`json:\"parentGroupID,optional,string\"`"
+      },
+      {
+        "name": "GroupPurpose",
+        "type": "string",
+        "tag": "`json:\"groupPurpose,optional\"`"
+      },
+      {
+        "name": "GroupName",
+        "type": "string",
+        "tag": "`json:\"groupName,optional\"`"
+      },
+      {
+        "name": "NotAreaID",
+        "type": "int64",
+        "tag": "`json:\"notAreaID,optional,string\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Statuses",
+        "type": "[]int64",
+        "tag": "`json:\"statuses,optional\"`"
+      },
+      {
+        "name": "WithOwner",
+        "type": "bool",
+        "tag": "`json:\"withOwner,optional\"`"
+      },
+      {
+        "name": "WithGateway",
+        "type": "bool",
+        "tag": "`json:\"withGateway,optional\"`"
+      },
+      {
+        "name": "HasOwner",
+        "type": "int64",
+        "tag": "`json:\"hasOwner,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "NetType",
+        "type": "int64",
+        "tag": "`json:\"netType,optional,range=[0:8]\"`"
+      },
+      {
+        "name": "WithArea",
+        "type": "bool",
+        "tag": "`json:\"withArea,optional\"`"
+      },
+      {
+        "name": "IsOnlyCore",
+        "type": "bool",
+        "tag": "`json:\"isOnlyCore,optional\"`"
+      },
+      {
+        "name": "Iccid",
+        "type": "string",
+        "tag": "`json:\"iccid,optional,omitempty\"`"
+      },
+      {
+        "name": "WithGroups",
+        "type": "[]string",
+        "tag": "`json:\"withGroups,optional\"`"
+      },
+      {
+        "name": "Property",
+        "type": "map[string]*Compare",
+        "tag": "`json:\"property,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoMultiBindReq",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,optional,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoMultiBindResp",
+    "fields": [
+      {
+        "name": "Errs",
+        "type": "[]*DeviceError",
+        "tag": "`json:\"errs\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoMultiUpdateReq",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "RatedPower",
+        "type": "int64",
+        "tag": "`json:\"ratedPower,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "WithProperties",
+        "type": "[]string",
+        "tag": "`json:\"withProperties,optional\"`"
+      },
+      {
+        "name": "PropertyIgnoreEmpty",
+        "type": "bool",
+        "tag": "`json:\"propertyIgnoreEmpty,optional\"`"
+      },
+      {
+        "name": "WithProfiles",
+        "type": "[]string",
+        "tag": "`json:\"withProfiles,optional\"`"
+      },
+      {
+        "name": "WithOwner",
+        "type": "bool",
+        "tag": "`json:\"withOwner,optional\"`"
+      },
+      {
+        "name": "WithGateway",
+        "type": "bool",
+        "tag": "`json:\"withGateway,optional\"`"
+      },
+      {
+        "name": "WithArea",
+        "type": "bool",
+        "tag": "`json:\"withArea,optional\"`"
+      },
+      {
+        "name": "IsOnlyCore",
+        "type": "bool",
+        "tag": "`json:\"isOnlyCore,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoTransferReq",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "*DeviceCore",
+        "tag": "`json:\"device,optional\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "SrcProjectID",
+        "type": "int64",
+        "tag": "`json:\"srcProjectID,string,optional\"`"
+      },
+      {
+        "name": "TransferTo",
+        "type": "int64",
+        "tag": "`json:\"transferTo\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "IsCleanData",
+        "type": "int64",
+        "tag": "`json:\"isCleanData\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoUnbindReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "SecretType",
+        "type": "string",
+        "tag": "`json:\"secretType,optional\"`"
+      },
+      {
+        "name": "Signature",
+        "type": "string",
+        "tag": "`json:\"signature,optional\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,optional\"`"
+      },
+      {
+        "name": "SignType",
+        "type": "string",
+        "tag": "`json:\"signType,optional\"`"
+      },
+      {
+        "name": "Nonce",
+        "type": "int64",
+        "tag": "`json:\"nonce,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInfoWithProperty",
+    "fields": [
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractActionRespReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      },
+      {
+        "name": "OutputParams",
+        "type": "string",
+        "tag": "`json:\"outputParams,optional\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractEdgeSendReq",
+    "fields": [
+      {
+        "name": "Handle",
+        "type": "string",
+        "tag": "`path:\"handle\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`path:\"type\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`header:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`header:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Authorization",
+        "type": "string",
+        "tag": "`header:\"authorization\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractEdgeSendResp",
+    "fields": null
+  },
+  {
+    "name": "DeviceInteractMultiSendPropertyMsg",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      },
+      {
+        "name": "SysCode",
+        "type": "int64",
+        "tag": "`json:\"sysCode\"`"
+      },
+      {
+        "name": "sysMsg",
+        "type": "string",
+        "tag": "`json:\"sysMsg\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractMultiSendPropertyReq",
+    "fields": [
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID,string,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "IsAsync",
+        "type": "bool",
+        "tag": "`json:\"isAsync,optional\"`"
+      },
+      {
+        "name": "SyncTimeout",
+        "type": "int64",
+        "tag": "`json:\"syncTimeout,optional\"`"
+      },
+      {
+        "name": "ShadowControl",
+        "type": "int64",
+        "tag": "`json:\"shadowControl,optional\"`"
+      },
+      {
+        "name": "Data",
+        "type": "string",
+        "tag": "`json:\"data\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractMultiSendPropertyResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceInteractMultiSendPropertyMsg",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractPropertyGetReportMultiSendReq",
+    "fields": [
+      {
+        "name": "DataIDs",
+        "type": "[]string",
+        "tag": "`json:\"dataIDs,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractPropertyGetReportMultiSendResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceInteractPropertyGetReportSendMsg",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractPropertyGetReportSendMsg",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "SysCode",
+        "type": "int64",
+        "tag": "`json:\"sysCode\"`"
+      },
+      {
+        "name": "sysMsg",
+        "type": "string",
+        "tag": "`json:\"sysMsg\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractPropertyGetReportSendReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "DataIDs",
+        "type": "[]string",
+        "tag": "`json:\"dataIDs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractPropertyGetReportSendResp",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractRespReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractSendActionReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "ActionID",
+        "type": "string",
+        "tag": "`json:\"actionID\"`"
+      },
+      {
+        "name": "InputParams",
+        "type": "string",
+        "tag": "`json:\"inputParams,optional\"`"
+      },
+      {
+        "name": "OutputParams",
+        "type": "string",
+        "tag": "`json:\"outputParams,optional\"`"
+      },
+      {
+        "name": "IsAsync",
+        "type": "bool",
+        "tag": "`json:\"isAsync,optional\"`"
+      },
+      {
+        "name": "Option",
+        "type": "*SendOption",
+        "tag": "`json:\"option,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractSendActionResp",
+    "fields": [
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      },
+      {
+        "name": "OutputParams",
+        "type": "string",
+        "tag": "`json:\"outputParams\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractSendPropertyReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Data",
+        "type": "string",
+        "tag": "`json:\"data\"`"
+      },
+      {
+        "name": "IsAsync",
+        "type": "bool",
+        "tag": "`json:\"isAsync,optional\"`"
+      },
+      {
+        "name": "SyncTimeout",
+        "type": "int64",
+        "tag": "`json:\"syncTimeout,optional\"`"
+      },
+      {
+        "name": "ShadowControl",
+        "type": "int64",
+        "tag": "`json:\"shadowControl,optional\"`"
+      },
+      {
+        "name": "WithProfile",
+        "type": "*WithProfile",
+        "tag": "`json:\"withProfile,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceInteractSendPropertyResp",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      },
+      {
+        "name": "MsgToken",
+        "type": "string",
+        "tag": "`json:\"msgToken\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceModuleVersion",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional\"`"
+      },
+      {
+        "name": "FirmwareModuleCode",
+        "type": "string",
+        "tag": "`json:\"firmwareModuleCode,optional\"`"
+      },
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceModuleVersionIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional\"`"
+      },
+      {
+        "name": "FirmwareModuleCode",
+        "type": "string",
+        "tag": "`json:\"firmwareModuleCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceModuleVersionIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceModuleVersion",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceModuleVersionReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional\"`"
+      },
+      {
+        "name": "FirmwareModuleCode",
+        "type": "string",
+        "tag": "`json:\"firmwareModuleCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMoveReq",
+    "fields": [
+      {
+        "name": "Old",
+        "type": "*DeviceCore",
+        "tag": "`json:\"old\"`"
+      },
+      {
+        "name": "New",
+        "type": "*DeviceCore",
+        "tag": "`json:\"new\"`"
+      },
+      {
+        "name": "withTarget",
+        "type": "[]string",
+        "tag": "`json:\"withTarget,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgAbnormalLogIndexReq",
+    "fields": [
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Action",
+        "type": "int64",
+        "tag": "`json:\"action,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgAbnormalLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgAbnormalLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgAbnormalLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Action",
+        "type": "int64",
+        "tag": "`json:\"action,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "TraceID",
+        "type": "string",
+        "tag": "`json:\"traceID,optional\"`"
+      },
+      {
+        "name": "Reason",
+        "type": "string",
+        "tag": "`json:\"reason,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgEventLogIndexReq",
+    "fields": [
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Types",
+        "type": "[]string",
+        "tag": "`json:\"types,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgEventLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgEventLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgEventLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,omitempty\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgHubLogIndexReq",
+    "fields": [
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Actions",
+        "type": "[]string",
+        "tag": "`json:\"actions,optional\"`"
+      },
+      {
+        "name": "Topics",
+        "type": "[]string",
+        "tag": "`json:\"topics,optional\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content,optional\"`"
+      },
+      {
+        "name": "RequestID",
+        "type": "string",
+        "tag": "`json:\"requestID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgHubLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgHubLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgHubLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string\"`"
+      },
+      {
+        "name": "Action",
+        "type": "string",
+        "tag": "`json:\"action\"`"
+      },
+      {
+        "name": "RequestID",
+        "type": "string",
+        "tag": "`json:\"requestID\"`"
+      },
+      {
+        "name": "TraceID",
+        "type": "string",
+        "tag": "`json:\"traceID\"`"
+      },
+      {
+        "name": "Topic",
+        "type": "string",
+        "tag": "`json:\"topic\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content\"`"
+      },
+      {
+        "name": "ResultCode",
+        "type": "int64",
+        "tag": "`json:\"resultCode,string\"`"
+      },
+      {
+        "name": "RespPayload",
+        "type": "string",
+        "tag": "`json:\"respPayload\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyAgg",
+    "fields": [
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,omitempty\"`"
+      },
+      {
+        "name": "ArgFuncs",
+        "type": "[]string",
+        "tag": "`json:\"argFuncs\"`"
+      },
+      {
+        "name": "Fill",
+        "type": "string",
+        "tag": "`json:\"fill,optional\"`"
+      },
+      {
+        "name": "NoFirstTs",
+        "type": "bool",
+        "tag": "`json:\"noFirstTs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyAggByDevice",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,omitempty\"`"
+      },
+      {
+        "name": "ArgFuncs",
+        "type": "[]string",
+        "tag": "`json:\"argFuncs\"`"
+      },
+      {
+        "name": "Fill",
+        "type": "string",
+        "tag": "`json:\"fill,optional\"`"
+      },
+      {
+        "name": "NoFirstTs",
+        "type": "bool",
+        "tag": "`json:\"noFirstTs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyAggByDeviceIndexReq",
+    "fields": [
+      {
+        "name": "Interval",
+        "type": "int64",
+        "tag": "`json:\"interval,optional\"`"
+      },
+      {
+        "name": "IntervalUnit",
+        "type": "string",
+        "tag": "`json:\"intervalUnit,optional\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "PartitionBy",
+        "type": "string",
+        "tag": "`json:\"partitionBy,optional\"`"
+      },
+      {
+        "name": "Aggs",
+        "type": "[]*DeviceMsgPropertyAggByDevice",
+        "tag": "`json:\"aggs\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgPropertyLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLatestAggIndexReq",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty,optional\"`"
+      },
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "PartitionBy",
+        "type": "string",
+        "tag": "`json:\"partitionBy,optional\"`"
+      },
+      {
+        "name": "Aggs",
+        "type": "[]*DeviceMsgPropertyAgg",
+        "tag": "`json:\"aggs\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLatestAggIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgPropertyLatestAggResp",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLatestAggResp",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "Values",
+        "type": "[]*DeviceMsgPropertyLatestAggRespDetail",
+        "tag": "`json:\"values\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLatestAggRespDetail",
+    "fields": [
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID\"`"
+      },
+      {
+        "name": "DataName",
+        "type": "string",
+        "tag": "`json:\"dataName\"`"
+      },
+      {
+        "name": "values",
+        "type": "map[string]string",
+        "tag": "`json:\"values\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLatestIndexReq",
+    "fields": [
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      },
+      {
+        "name": "DataIDs",
+        "type": "[]string",
+        "tag": "`json:\"dataIDs,optional,omitempty\"`"
+      },
+      {
+        "name": "IgnoreEmpty",
+        "type": "bool",
+        "tag": "`json:\"ignoreEmpty,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogAggIndexReq",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "Interval",
+        "type": "int64",
+        "tag": "`json:\"interval\"`"
+      },
+      {
+        "name": "IntervalUnit",
+        "type": "string",
+        "tag": "`json:\"intervalUnit,optional\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty,optional\"`"
+      },
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "PartitionBy",
+        "type": "string",
+        "tag": "`json:\"partitionBy,optional\"`"
+      },
+      {
+        "name": "Aggs",
+        "type": "[]*DeviceMsgPropertyAgg",
+        "tag": "`json:\"aggs\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogAggIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgPropertyLogAggResp",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogAggResp",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "Values",
+        "type": "[]*DeviceMsgPropertyLogAggRespDetail",
+        "tag": "`json:\"values\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogAggRespDataDetail",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,omitempty,string\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogAggRespDetail",
+    "fields": [
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID\"`"
+      },
+      {
+        "name": "DataName",
+        "type": "string",
+        "tag": "`json:\"dataName\"`"
+      },
+      {
+        "name": "TimeWindow",
+        "type": "int64",
+        "tag": "`json:\"timeWindow,string\"`"
+      },
+      {
+        "name": "values",
+        "type": "map[string]*DeviceMsgPropertyLogAggRespDataDetail",
+        "tag": "`json:\"values\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogIndexReq",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty,optional\"`"
+      },
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,omitempty\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Interval",
+        "type": "int64",
+        "tag": "`json:\"interval,optional\"`"
+      },
+      {
+        "name": "IntervalUnit",
+        "type": "string",
+        "tag": "`json:\"intervalUnit,optional\"`"
+      },
+      {
+        "name": "ArgFunc",
+        "type": "string",
+        "tag": "`json:\"argFunc,optional\"`"
+      },
+      {
+        "name": "Fill",
+        "type": "string",
+        "tag": "`json:\"fill,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "PartitionBy",
+        "type": "string",
+        "tag": "`json:\"partitionBy,optional\"`"
+      },
+      {
+        "name": "NoFirstTs",
+        "type": "bool",
+        "tag": "`json:\"noFirstTs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID\"`"
+      },
+      {
+        "name": "DataName",
+        "type": "string",
+        "tag": "`json:\"dataName\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value,omitempty\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional,omitempty\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "BelongGroup",
+        "type": "map[string]IDsInfo",
+        "tag": "`json:\"belongGroup,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyLogMultiIndexReq",
+    "fields": [
+      {
+        "name": "Reqs",
+        "type": "[]*DeviceMsgPropertyLogIndexReq",
+        "tag": "`json:\"reqs\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgPropertyMultiIndexResp",
+    "fields": [
+      {
+        "name": "Lists",
+        "type": "[][]*DeviceMsgPropertyLogInfo",
+        "tag": "`json:\"lists\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSdkIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgSdkInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSdkInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string\"`"
+      },
+      {
+        "name": "Loglevel",
+        "type": "int64",
+        "tag": "`json:\"loglevel\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSdkLogIndexReq",
+    "fields": [
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional,omitempty\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional,omitempty\"`"
+      },
+      {
+        "name": "LogLevel",
+        "type": "int",
+        "tag": "`json:\"logLevel,optional\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSendLogIndexReq",
+    "fields": [
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaIDs",
+        "type": "[]int64",
+        "tag": "`json:\"areaIDs,string,optional,omitempty\"`"
+      },
+      {
+        "name": "GroupIDPaths",
+        "type": "[]string",
+        "tag": "`json:\"groupIDPaths,optional,omitempty\"`"
+      },
+      {
+        "name": "GroupIDs",
+        "type": "[]int64",
+        "tag": "`json:\"groupIDs,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "Actions",
+        "type": "[]string",
+        "tag": "`json:\"actions,optional\"`"
+      },
+      {
+        "name": "ResultCode",
+        "type": "int64",
+        "tag": "`json:\"resultCode,optional\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,optional\"`"
+      },
+      {
+        "name": "DataIDs",
+        "type": "[]string",
+        "tag": "`json:\"dataIDs,optional\"`"
+      },
+      {
+        "name": "WithUser",
+        "type": "bool",
+        "tag": "`json:\"withUser,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSendLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgSendLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgSendLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string,optional\"`"
+      },
+      {
+        "name": "Account",
+        "type": "string",
+        "tag": "`json:\"account,optional\"`"
+      },
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Action",
+        "type": "string",
+        "tag": "`json:\"action,optional\"`"
+      },
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID,optional\"`"
+      },
+      {
+        "name": "TraceID",
+        "type": "string",
+        "tag": "`json:\"traceID,optional\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content,optional\"`"
+      },
+      {
+        "name": "ResultCode",
+        "type": "int64",
+        "tag": "`json:\"resultCode,optional\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgShadowIndex",
+    "fields": [
+      {
+        "name": "DataID",
+        "type": "string",
+        "tag": "`json:\"dataID\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value\"`"
+      },
+      {
+        "name": "UpdatedDeviceTime",
+        "type": "int64",
+        "tag": "`json:\"updatedDeviceTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgShadowIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgShadowIndex",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgStatusLogIndexReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "TimeStart",
+        "type": "int64",
+        "tag": "`json:\"timeStart,string,optional\"`"
+      },
+      {
+        "name": "TimeEnd",
+        "type": "int64",
+        "tag": "`json:\"timeEnd,string,optional\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgStatusLogIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceMsgStatusLogInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceMsgStatusLogInfo",
+    "fields": [
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,optional,string\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,omitempty\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMultiImportReq",
+    "fields": null
+  },
+  {
+    "name": "DeviceMultiImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "Headers",
+        "type": "*DeviceMultiImportRow",
+        "tag": "`json:\"headers\"`"
+      },
+      {
+        "name": "Errdata",
+        "type": "[]*DeviceMultiImportRow",
+        "tag": "`json:\"errdata\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMultiImportRow",
+    "fields": [
+      {
+        "name": "Row",
+        "type": "int64",
+        "tag": "`json:\"row\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "DeviceAlias",
+        "type": "string",
+        "tag": "`json:\"deviceAlias\"`"
+      },
+      {
+        "name": "Secret",
+        "type": "string",
+        "tag": "`json:\"secret\"`"
+      },
+      {
+        "name": "GatewayProductID",
+        "type": "string",
+        "tag": "`json:\"gatewayProductID\"`"
+      },
+      {
+        "name": "GatewayDeviceName",
+        "type": "string",
+        "tag": "`json:\"gatewayDeviceName\"`"
+      },
+      {
+        "name": "LogLevel",
+        "type": "string",
+        "tag": "`json:\"logLevel\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "string",
+        "tag": "`json:\"tags\"`"
+      },
+      {
+        "name": "Position",
+        "type": "string",
+        "tag": "`json:\"position\"`"
+      },
+      {
+        "name": "Address",
+        "type": "string",
+        "tag": "`json:\"address\"`"
+      },
+      {
+        "name": "Tips",
+        "type": "string",
+        "tag": "`json:\"tips\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMultiUpdateImportError",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "Code",
+        "type": "int64",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Msg",
+        "type": "string",
+        "tag": "`json:\"msg\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceMultiUpdateImportReq",
+    "fields": null
+  },
+  {
+    "name": "DeviceMultiUpdateImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "ErrDetail",
+        "type": "[]DeviceMultiUpdateImportError",
+        "tag": "`json:\"errDetail\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceOtaUpgradeReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceOtaUpgradeResp",
+    "fields": [
+      {
+        "name": "Firmware",
+        "type": "*OtaUpgradeData",
+        "tag": "`json:\"firmware\"`"
+      }
+    ]
+  },
+  {
+    "name": "DevicePairConfirmReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Mac",
+        "type": "string",
+        "tag": "`json:\"mac\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "GrantToken",
+        "type": "string",
+        "tag": "`json:\"grantToken\"`"
+      },
+      {
+        "name": "PairAckPayload",
+        "type": "string",
+        "tag": "`json:\"pairAckPayload\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,optional,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "DevicePairConfirmResp",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Mac",
+        "type": "string",
+        "tag": "`json:\"mac\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "BindEpoch",
+        "type": "int64",
+        "tag": "`json:\"bindEpoch\"`"
+      },
+      {
+        "name": "BleSecVer",
+        "type": "int64",
+        "tag": "`json:\"bleSecVer\"`"
+      },
+      {
+        "name": "BlePairKey",
+        "type": "string",
+        "tag": "`json:\"blePairKey\"`"
+      },
+      {
+        "name": "Message",
+        "type": "string",
+        "tag": "`json:\"message\"`"
+      }
+    ]
+  },
+  {
+    "name": "DevicePairGrantReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Mac",
+        "type": "string",
+        "tag": "`json:\"mac\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "ObservedBindEpoch",
+        "type": "int64",
+        "tag": "`json:\"observedBindEpoch,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DevicePairGrantResp",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Mac",
+        "type": "string",
+        "tag": "`json:\"mac\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "GrantToken",
+        "type": "string",
+        "tag": "`json:\"grantToken\"`"
+      },
+      {
+        "name": "Nonce",
+        "type": "string",
+        "tag": "`json:\"nonce\"`"
+      },
+      {
+        "name": "AuthTag",
+        "type": "string",
+        "tag": "`json:\"authTag\"`"
+      },
+      {
+        "name": "BlePairKey",
+        "type": "string",
+        "tag": "`json:\"blePairKey\"`"
+      },
+      {
+        "name": "TtlSec",
+        "type": "int64",
+        "tag": "`json:\"ttlSec\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceProfile",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceProfileIndexReq",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "*DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceProfileIndexResp",
+    "fields": [
+      {
+        "name": "Profiles",
+        "type": "[]*DeviceProfile",
+        "tag": "`json:\"profiles,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceProfileReadReq",
+    "fields": [
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceRegisterReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Nonce",
+        "type": "int64",
+        "tag": "`json:\"nonce\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp\"`"
+      },
+      {
+        "name": "Signature",
+        "type": "string",
+        "tag": "`json:\"signature\"`"
+      },
+      {
+        "name": "RetEnc",
+        "type": "string",
+        "tag": "`json:\"retEnc,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceRegisterResp",
+    "fields": [
+      {
+        "name": "Len",
+        "type": "int64",
+        "tag": "`json:\"len\"`"
+      },
+      {
+        "name": "Payload",
+        "type": "string",
+        "tag": "`json:\"payload\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchema",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "Tag",
+        "type": "int64",
+        "tag": "`json:\"tag\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier\"`"
+      },
+      {
+        "name": "ExtendConfig",
+        "type": "string",
+        "tag": "`json:\"extendConfig,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "*string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Required",
+        "type": "int64",
+        "tag": "`json:\"required,optional\"`"
+      },
+      {
+        "name": "Affordance",
+        "type": "*string",
+        "tag": "`json:\"affordance,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "RecordMode",
+        "type": "int64",
+        "tag": "`json:\"recordMode,optional\"`"
+      },
+      {
+        "name": "IsPassword",
+        "type": "int64",
+        "tag": "`json:\"isPassword,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Types",
+        "type": "[]int64",
+        "tag": "`json:\"types,optional\"`"
+      },
+      {
+        "name": "Tag",
+        "type": "int64",
+        "tag": "`json:\"tag,optional\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "PropertyMode",
+        "type": "string",
+        "tag": "`json:\"propertyMode,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      },
+      {
+        "name": "WithProductSchema",
+        "type": "bool",
+        "tag": "`json:\"withProductSchema,optional\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*DeviceSchema",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaMultiCreateReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*DeviceSchema",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaMultiDeleteReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaTslReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSchemaTslReadResp",
+    "fields": [
+      {
+        "name": "Tsl",
+        "type": "string",
+        "tag": "`json:\"tsl\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSecureControlKeyGrantReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "KeyVersion",
+        "type": "int64",
+        "tag": "`json:\"keyVersion,optional\"`"
+      },
+      {
+        "name": "AuthAlg",
+        "type": "string",
+        "tag": "`json:\"authAlg,optional\"`"
+      },
+      {
+        "name": "AppKeyWrapPub",
+        "type": "string",
+        "tag": "`json:\"appKeyWrapPub,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceSecureControlKeyGrantResp",
+    "fields": [
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "AuthAlg",
+        "type": "string",
+        "tag": "`json:\"authAlg\"`"
+      },
+      {
+        "name": "KeyVersion",
+        "type": "int64",
+        "tag": "`json:\"keyVersion\"`"
+      },
+      {
+        "name": "KeyEncoding",
+        "type": "string",
+        "tag": "`json:\"keyEncoding\"`"
+      },
+      {
+        "name": "AppControlKey",
+        "type": "string",
+        "tag": "`json:\"appControlKey,optional,omitempty\"`"
+      },
+      {
+        "name": "WrappedKey",
+        "type": "string",
+        "tag": "`json:\"wrappedKey,optional,omitempty\"`"
+      },
+      {
+        "name": "WrapNonce",
+        "type": "string",
+        "tag": "`json:\"wrapNonce,optional,omitempty\"`"
+      },
+      {
+        "name": "ServerWrapPub",
+        "type": "string",
+        "tag": "`json:\"serverWrapPub,optional,omitempty\"`"
+      },
+      {
+        "name": "ScopeBits",
+        "type": "string",
+        "tag": "`json:\"scopeBits\"`"
+      },
+      {
+        "name": "TtlSec",
+        "type": "int64",
+        "tag": "`json:\"ttlSec\"`"
+      }
+    ]
+  },
+  {
+    "name": "DeviceShareInfo",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional,omitempty\"`"
+      },
+      {
+        "name": "ProductImg",
+        "type": "string",
+        "tag": "`json:\"productImg,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "DeviceAlias",
+        "type": "string",
+        "tag": "`json:\"deviceAlias,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "FirmwareCreateReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version\"`"
+      },
+      {
+        "name": "SignMethod",
+        "type": "string",
+        "tag": "`json:\"signMethod\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "IsDiff",
+        "type": "int64",
+        "tag": "`json:\"isDiff\"`"
+      },
+      {
+        "name": "SrcVersion",
+        "type": "string",
+        "tag": "`json:\"srcVersion\"`"
+      },
+      {
+        "name": "IsNeedToVerify",
+        "type": "int64",
+        "tag": "`json:\"isNeedToVerify\"`"
+      },
+      {
+        "name": "Extra",
+        "type": "string",
+        "tag": "`json:\"extra,optional\"`"
+      },
+      {
+        "name": "FirmwareModuleCode",
+        "type": "string",
+        "tag": "`json:\"firmwareModuleCode,optional\"`"
+      },
+      {
+        "name": "FilePaths",
+        "type": "[]string",
+        "tag": "`json:\"filePaths\"`"
+      }
+    ]
+  },
+  {
+    "name": "FirmwareFile",
+    "fields": [
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "FilePath",
+        "type": "string",
+        "tag": "`json:\"filePath\"`"
+      },
+      {
+        "name": "FileMd5",
+        "type": "string",
+        "tag": "`json:\"fileMd5\"`"
+      },
+      {
+        "name": "Signature",
+        "type": "string",
+        "tag": "`json:\"signature\"`"
+      }
+    ]
+  },
+  {
+    "name": "FirmwareIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "FirmwareIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]FirmwareInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "FirmwareInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      },
+      {
+        "name": "SignMethod",
+        "type": "string",
+        "tag": "`json:\"signMethod\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc\"`"
+      },
+      {
+        "name": "Extra",
+        "type": "string",
+        "tag": "`json:\"extra\"`"
+      },
+      {
+        "name": "IsDiff",
+        "type": "int64",
+        "tag": "`json:\"isDiff\"`"
+      },
+      {
+        "name": "IsNeedToVerify",
+        "type": "int64",
+        "tag": "`json:\"isNeedToVerify\"`"
+      },
+      {
+        "name": "FirmwareModuleCode",
+        "type": "string",
+        "tag": "`json:\"firmwareModuleCode\"`"
+      },
+      {
+        "name": "FileList",
+        "type": "[]*FirmwareFile",
+        "tag": "`json:\"fileList\"`"
+      }
+    ]
+  },
+  {
+    "name": "FirmwareUpdateReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Extra",
+        "type": "*string",
+        "tag": "`json:\"extra,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "GatewayCanBindIndexReq",
+    "fields": [
+      {
+        "name": "Gateway",
+        "type": "*DeviceCore",
+        "tag": "`json:\"gateway\"`"
+      }
+    ]
+  },
+  {
+    "name": "GatewayCanBindIndexResp",
+    "fields": [
+      {
+        "name": "SubDevices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"subDevices\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "GatewayGetFoundReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "GatewayNotifyBindSendReq",
+    "fields": [
+      {
+        "name": "Gateway",
+        "type": "*DeviceCore",
+        "tag": "`json:\"gateway\"`"
+      },
+      {
+        "name": "SubDevices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"subDevices\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupCore",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupDeviceMultiDeleteReq",
+    "fields": [
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupDeviceMultiSaveReq",
+    "fields": [
+      {
+        "name": "GroupID",
+        "type": "int64",
+        "tag": "`json:\"groupID\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "IDPath",
+        "type": "string",
+        "tag": "`json:\"idPath,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional,omitempty\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional,omitempty\"`"
+      },
+      {
+        "name": "IsLeaf",
+        "type": "int64",
+        "tag": "`json:\"isLeaf,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional,omitempty\"`"
+      },
+      {
+        "name": "Files",
+        "type": "map[string]string",
+        "tag": "`json:\"files,optional,omitempty\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional,omitempty\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*GroupInfo",
+        "tag": "`json:\"children,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "WithDevices",
+        "type": "bool",
+        "tag": "`json:\"withDevices,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "GroupInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*GroupInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "GroupInfoReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Purpose",
+        "type": "string",
+        "tag": "`json:\"purpose,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      },
+      {
+        "name": "WithDevices",
+        "type": "bool",
+        "tag": "`json:\"withDevices,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "IDPath",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "IDPath",
+        "type": "string",
+        "tag": "`json:\"idPath,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "IDsInfo",
+    "fields": [
+      {
+        "name": "IDs",
+        "type": "[]string",
+        "tag": "`json:\"ids,optional,omitempty\"`"
+      },
+      {
+        "name": "IDPaths",
+        "type": "[]string",
+        "tag": "`json:\"idPaths,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ImportResp",
+    "fields": [
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      },
+      {
+        "name": "ErrCount",
+        "type": "int64",
+        "tag": "`json:\"errCount\"`"
+      },
+      {
+        "name": "IgnoreCount",
+        "type": "int64",
+        "tag": "`json:\"ignoreCount\"`"
+      },
+      {
+        "name": "SuccCount",
+        "type": "int64",
+        "tag": "`json:\"succCount\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleCreateReq",
+    "fields": [
+      {
+        "name": "ModelModuleCode",
+        "type": "string",
+        "tag": "`json:\"modelModuleCode\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Description",
+        "type": "string",
+        "tag": "`json:\"description,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleDeleteReq",
+    "fields": [
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ModelModuleIDs",
+        "type": "[]int64",
+        "tag": "`json:\"modelModuleIDs,optional\"`"
+      },
+      {
+        "name": "ModelModuleCode",
+        "type": "string",
+        "tag": "`json:\"modelModuleCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ModelModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleInfo",
+    "fields": [
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "ModelModuleCode",
+        "type": "string",
+        "tag": "`json:\"modelModuleCode\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Description",
+        "type": "string",
+        "tag": "`json:\"description,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyCreateReq",
+    "fields": [
+      {
+        "name": "",
+        "type": "*ModelModulePropertyInfo",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyDeleteReq",
+    "fields": [
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "ModelModulePropertyID",
+        "type": "int64",
+        "tag": "`json:\"modelModulePropertyID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ModelModulePropertyInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyInfo",
+    "fields": [
+      {
+        "name": "ModelModulePropertyID",
+        "type": "int64",
+        "tag": "`json:\"modelModulePropertyID,string,optional\"`"
+      },
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Description",
+        "type": "string",
+        "tag": "`json:\"description,optional\"`"
+      },
+      {
+        "name": "Tag",
+        "type": "int64",
+        "tag": "`json:\"tag,optional\"`"
+      },
+      {
+        "name": "Required",
+        "type": "int64",
+        "tag": "`json:\"required,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      },
+      {
+        "name": "RecordMode",
+        "type": "int64",
+        "tag": "`json:\"recordMode,optional\"`"
+      },
+      {
+        "name": "IsPassword",
+        "type": "int64",
+        "tag": "`json:\"isPassword,optional\"`"
+      },
+      {
+        "name": "Affordance",
+        "type": "string",
+        "tag": "`json:\"affordance\"`"
+      },
+      {
+        "name": "ExtendConfig",
+        "type": "string",
+        "tag": "`json:\"extendConfig,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ModelModulePropertyUpdateReq",
+    "fields": [
+      {
+        "name": "",
+        "type": "*ModelModulePropertyInfo",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ModelModuleUpdateReq",
+    "fields": [
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "ModelModuleCode",
+        "type": "string",
+        "tag": "`json:\"modelModuleCode\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Description",
+        "type": "string",
+        "tag": "`json:\"description,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OrderBy",
+    "fields": [
+      {
+        "name": "Field",
+        "type": "string",
+        "tag": "`json:\"field,optional\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFile",
+    "fields": [
+      {
+        "name": "Size",
+        "type": "int64",
+        "tag": "`json:\"size\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "FileUrl",
+        "type": "string",
+        "tag": "`json:\"fileUrl\"`"
+      },
+      {
+        "name": "FileMd5",
+        "type": "string",
+        "tag": "`json:\"fileMd5\"`"
+      },
+      {
+        "name": "Signature",
+        "type": "string",
+        "tag": "`json:\"signature\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceCancelReq",
+    "fields": [
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID\"`"
+      },
+      {
+        "name": "JobID",
+        "type": "int64",
+        "tag": "`json:\"jobID\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceConfirmReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "JobID",
+        "type": "int64",
+        "tag": "`json:\"jobID,optional\"`"
+      },
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "SrcVersion",
+        "type": "string",
+        "tag": "`json:\"srcVersion,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "IsOnline",
+        "type": "int64",
+        "tag": "`json:\"isOnline,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*OtaFirmwareDeviceInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID\"`"
+      },
+      {
+        "name": "JobID",
+        "type": "int64",
+        "tag": "`json:\"jobID\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName\"`"
+      },
+      {
+        "name": "SrcVersion",
+        "type": "string",
+        "tag": "`json:\"srcVersion\"`"
+      },
+      {
+        "name": "DestVersion",
+        "type": "string",
+        "tag": "`json:\"destVersion\"`"
+      },
+      {
+        "name": "Step",
+        "type": "int64",
+        "tag": "`json:\"step\"`"
+      },
+      {
+        "name": "Detail",
+        "type": "string",
+        "tag": "`json:\"detail\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime\"`"
+      },
+      {
+        "name": "IsOnline",
+        "type": "int64",
+        "tag": "`json:\"isOnline,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareDeviceRetryReq",
+    "fields": [
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID\"`"
+      },
+      {
+        "name": "JobID",
+        "type": "int64",
+        "tag": "`json:\"jobID\"`"
+      },
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareJobDynamic",
+    "fields": [
+      {
+        "name": "DynamicMode",
+        "type": "int64",
+        "tag": "`json:\"dynamicMode,optional,range=[0:2]\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareJobIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page\"`"
+      },
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareJobInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "FirmwareID",
+        "type": "int64",
+        "tag": "`json:\"firmwareID,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,range=[0:4]\"`"
+      },
+      {
+        "name": "UpgradeType",
+        "type": "int64",
+        "tag": "`json:\"upgradeType,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "SrcVersions",
+        "type": "[]string",
+        "tag": "`json:\"srcVersions,optional\"`"
+      },
+      {
+        "name": "RetryInterval",
+        "type": "int64",
+        "tag": "`json:\"retryInterval,optional\"`"
+      },
+      {
+        "name": "RetryCount",
+        "type": "int64",
+        "tag": "`json:\"retryCount,optional\"`"
+      },
+      {
+        "name": "TimeoutInMinutes",
+        "type": "int64",
+        "tag": "`json:\"timeoutInMinutes,optional\"`"
+      },
+      {
+        "name": "MaximumPerMinute",
+        "type": "int64",
+        "tag": "`json:\"maximumPerMinute,optional\"`"
+      },
+      {
+        "name": "IsOverwriteMode",
+        "type": "int64",
+        "tag": "`json:\"isOverwriteMode,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "IsNeedPush",
+        "type": "int64",
+        "tag": "`json:\"isNeedPush,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "IsNeedConfirm",
+        "type": "int64",
+        "tag": "`json:\"isNeedConfirm,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "Target",
+        "type": "string",
+        "tag": "`json:\"target,optional\"`"
+      },
+      {
+        "name": "TargetSelection",
+        "type": "int64",
+        "tag": "`json:\"targetSelection,optional,range=[0:4]\"`"
+      },
+      {
+        "name": "TenantCodes",
+        "type": "[]string",
+        "tag": "`json:\"tenantCodes,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "",
+        "type": "OtaFirmwareJobDynamic",
+        "tag": ""
+      },
+      {
+        "name": "",
+        "type": "OtaFirmwareJobStatic",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareJobInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*OtaFirmwareJobInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "OtaFirmwareJobStatic",
+    "fields": [
+      {
+        "name": "TargetDeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"targetDeviceNames,optional\"`"
+      },
+      {
+        "name": "ScheduleFinishTime",
+        "type": "int64",
+        "tag": "`json:\"scheduleFinishTime,optional\"`"
+      },
+      {
+        "name": "ScheduleTime",
+        "type": "int64",
+        "tag": "`json:\"scheduleTime,optional\"`"
+      },
+      {
+        "name": "GrayPercent",
+        "type": "int64",
+        "tag": "`json:\"grayPercent,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaModuleInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaModuleInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "OtaModuleInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*OtaModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "OtaUpgradeData",
+    "fields": [
+      {
+        "name": "Version",
+        "type": "string",
+        "tag": "`json:\"version\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc\"`"
+      },
+      {
+        "name": "IsDiff",
+        "type": "int64",
+        "tag": "`json:\"isDiff\"`"
+      },
+      {
+        "name": "SignMethod",
+        "type": "string",
+        "tag": "`json:\"signMethod\"`"
+      },
+      {
+        "name": "Extra",
+        "type": "string",
+        "tag": "`json:\"extra\"`"
+      },
+      {
+        "name": "Files",
+        "type": "[]*OtaFile",
+        "tag": "`json:\"files\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageInfo",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\" form:\"page,optional\"`"
+      },
+      {
+        "name": "Size",
+        "type": "int64",
+        "tag": "`json:\"size,optional\" form:\"size,optional\"`"
+      },
+      {
+        "name": "Orders",
+        "type": "[]*OrderBy",
+        "tag": "`json:\"orders,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "PageResp",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "int64",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "PageSize",
+        "type": "int64",
+        "tag": "`json:\"pageSize,optional\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total\"`"
+      }
+    ]
+  },
+  {
+    "name": "Point",
+    "fields": [
+      {
+        "name": "Longitude",
+        "type": "float64",
+        "tag": "`json:\"longitude,range=[0:180]\"`"
+      },
+      {
+        "name": "Latitude",
+        "type": "float64",
+        "tag": "`json:\"latitude,range=[0:90]\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategory",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "IDPath",
+        "type": "[]int64",
+        "tag": "`json:\"idPath,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "HeadImg",
+        "type": "string",
+        "tag": "`json:\"headImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateHeadImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateHeadImg,omitempty,optional\"`"
+      },
+      {
+        "name": "IsLeaf",
+        "type": "int64",
+        "tag": "`json:\"isLeaf,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      },
+      {
+        "name": "Children",
+        "type": "[]*ProductCategory",
+        "tag": "`json:\"children,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategoryExportReq",
+    "fields": [
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategoryExportResp",
+    "fields": [
+      {
+        "name": "Categories",
+        "type": "string",
+        "tag": "`json:\"categories\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategoryImportReq",
+    "fields": [
+      {
+        "name": "Categories",
+        "type": "string",
+        "tag": "`json:\"categories\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategoryIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "ParentID",
+        "type": "int64",
+        "tag": "`json:\"parentID,optional\"`"
+      },
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategoryIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductCategory",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      },
+      {
+        "name": "Num",
+        "type": "int64",
+        "tag": "`json:\"num,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategorySchemaIndexReq",
+    "fields": [
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID\"`"
+      },
+      {
+        "name": "WithFather",
+        "type": "bool",
+        "tag": "`json:\"withFather,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategorySchemaIndexResp",
+    "fields": [
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCategorySchemaMultiSaveReq",
+    "fields": [
+      {
+        "name": "ProductCategoryID",
+        "type": "int64",
+        "tag": "`json:\"productCategoryID\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductConfig",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "DevInit",
+        "type": "DevInit",
+        "tag": "`json:\"devInit,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCustom",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "TransformScript",
+        "type": "*string",
+        "tag": "`json:\"transformScript,optional\"`"
+      },
+      {
+        "name": "LoginAuthScript",
+        "type": "*string",
+        "tag": "`json:\"loginAuthScript,optional\"`"
+      },
+      {
+        "name": "ScriptLang",
+        "type": "int64",
+        "tag": "`json:\"scriptLang,optional\"`"
+      },
+      {
+        "name": "CustomTopics",
+        "type": "[]*ProductCustomTopic",
+        "tag": "`json:\"customTopics,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCustomReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCustomTopic",
+    "fields": [
+      {
+        "name": "Topic",
+        "type": "string",
+        "tag": "`json:\"topic\"`"
+      },
+      {
+        "name": "Direction",
+        "type": "int64",
+        "tag": "`json:\"direction\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductCustomUi",
+    "fields": [
+      {
+        "name": "Path",
+        "type": "string",
+        "tag": "`json:\"path\"`"
+      },
+      {
+        "name": "Version",
+        "type": "int64",
+        "tag": "`json:\"version,optional\"`"
+      },
+      {
+        "name": "IsUpdateUi",
+        "type": "bool",
+        "tag": "`json:\"isUpdateUi,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductID",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfo",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional,string\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional\"`"
+      },
+      {
+        "name": "ProductImg",
+        "type": "string",
+        "tag": "`json:\"productImg,optional\"`"
+      },
+      {
+        "name": "IsUpdateProductImg",
+        "type": "bool",
+        "tag": "`json:\"isUpdateProductImg,omitempty,optional\"`"
+      },
+      {
+        "name": "AuthMode",
+        "type": "int64",
+        "tag": "`json:\"authMode,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "DeviceType",
+        "type": "int64",
+        "tag": "`json:\"deviceType,optional,range=[0:4]\"`"
+      },
+      {
+        "name": "DeviceSchemaMode",
+        "type": "int64",
+        "tag": "`json:\"deviceSchemaMode,optional,range=[0:4]\"`"
+      },
+      {
+        "name": "CategoryID",
+        "type": "int64",
+        "tag": "`json:\"categoryID,optional\"`"
+      },
+      {
+        "name": "NetType",
+        "type": "int64",
+        "tag": "`json:\"netType,optional\"`"
+      },
+      {
+        "name": "ProtocolCode",
+        "type": "string",
+        "tag": "`json:\"protocolCode,optional\"`"
+      },
+      {
+        "name": "SubProtocolCode",
+        "type": "*string",
+        "tag": "`json:\"subProtocolCode,optional\"`"
+      },
+      {
+        "name": "AutoRegister",
+        "type": "int64",
+        "tag": "`json:\"autoRegister,optional,range=[0:4]\"`"
+      },
+      {
+        "name": "OnlineHandle",
+        "type": "int64",
+        "tag": "`json:\"onlineHandle,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "SubDeviceOnlineHandle",
+        "type": "int64",
+        "tag": "`json:\"subDeviceOnlineHandle,optional,range=[0:2]\"`"
+      },
+      {
+        "name": "Secret",
+        "type": "string",
+        "tag": "`json:\"secret,optional\"`"
+      },
+      {
+        "name": "TrialTime",
+        "type": "*int64",
+        "tag": "`json:\"trialTime,optional,string\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional,optional\"`"
+      },
+      {
+        "name": "SceneMode",
+        "type": "string",
+        "tag": "`json:\"sceneMode,optional,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional,optional\"`"
+      },
+      {
+        "name": "BindLevel",
+        "type": "int64",
+        "tag": "`json:\"bindLevel,optional,optional\"`"
+      },
+      {
+        "name": "ProtocolConf",
+        "type": "[]*Tag",
+        "tag": "`json:\"protocolConf,optional,omitempty\"`"
+      },
+      {
+        "name": "SubProtocolConf",
+        "type": "[]*Tag",
+        "tag": "`json:\"subProtocolConf,optional,omitempty\"`"
+      },
+      {
+        "name": "Protocol",
+        "type": "*ProtocolInfo",
+        "tag": "`json:\"protocol,optional,omitempty\"`"
+      },
+      {
+        "name": "Category",
+        "type": "*ProductCategory",
+        "tag": "`json:\"category,optional,omitempty\"`"
+      },
+      {
+        "name": "Config",
+        "type": "*ProductConfig",
+        "tag": "`json:\"config,optional,omitempty\"`"
+      },
+      {
+        "name": "CustomUi",
+        "type": "map[string]*ProductCustomUi",
+        "tag": "`json:\"customUi,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoExportReq",
+    "fields": [
+      {
+        "name": "ProductIDs",
+        "type": "[]string",
+        "tag": "`json:\"productIDs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoExportResp",
+    "fields": [
+      {
+        "name": "Products",
+        "type": "string",
+        "tag": "`json:\"products\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoImportReq",
+    "fields": [
+      {
+        "name": "Products",
+        "type": "string",
+        "tag": "`json:\"products\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ProductName",
+        "type": "string",
+        "tag": "`json:\"productName,optional\"`"
+      },
+      {
+        "name": "DeviceType",
+        "type": "int64",
+        "tag": "`json:\"deviceType,optional,range=[0:3]\"`"
+      },
+      {
+        "name": "DeviceTypes",
+        "type": "[]int64",
+        "tag": "`json:\"deviceTypes,optional\"`"
+      },
+      {
+        "name": "ProductIDs",
+        "type": "[]string",
+        "tag": "`json:\"productIDs,optional\"`"
+      },
+      {
+        "name": "Tags",
+        "type": "[]*Tag",
+        "tag": "`json:\"tags,optional\"`"
+      },
+      {
+        "name": "ProtocolCode",
+        "type": "string",
+        "tag": "`json:\"protocolCode,optional\"`"
+      },
+      {
+        "name": "ProtocolType",
+        "type": "string",
+        "tag": "`json:\"protocolType,optional\"`"
+      },
+      {
+        "name": "WithProtocol",
+        "type": "bool",
+        "tag": "`json:\"withProtocol,optional\"`"
+      },
+      {
+        "name": "WithCategory",
+        "type": "bool",
+        "tag": "`json:\"withCategory,optional\"`"
+      },
+      {
+        "name": "SceneModes",
+        "type": "[]string",
+        "tag": "`json:\"sceneModes,optional\"`"
+      },
+      {
+        "name": "SceneMode",
+        "type": "string",
+        "tag": "`json:\"sceneMode,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "Statuses",
+        "type": "[]int64",
+        "tag": "`json:\"statuses,optional\"`"
+      },
+      {
+        "name": "NetType",
+        "type": "int64",
+        "tag": "`json:\"netType,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "AreaIDPath",
+        "type": "string",
+        "tag": "`json:\"areaIDPath,optional\"`"
+      },
+      {
+        "name": "CategoryIDs",
+        "type": "[]int64",
+        "tag": "`json:\"categoryIDs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductInfoReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "WithProtocol",
+        "type": "bool",
+        "tag": "`json:\"withProtocol,optional\"`"
+      },
+      {
+        "name": "WithCategory",
+        "type": "bool",
+        "tag": "`json:\"withCategory,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductInitReq",
+    "fields": [
+      {
+        "name": "ProductIDs",
+        "type": "[]string",
+        "tag": "`json:\"productIDs,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelModuleBindReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelModuleIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelModuleIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductModelModuleInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductModelModuleInfo",
+    "fields": [
+      {
+        "name": "BindingID",
+        "type": "int64",
+        "tag": "`json:\"bindingID,string\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "ModelModule",
+        "type": "*ModelModuleInfo",
+        "tag": "`json:\"modelModule,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelModuleUnbindReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ModelModuleID",
+        "type": "int64",
+        "tag": "`json:\"modelModuleID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseActivateReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ReleaseID",
+        "type": "int64",
+        "tag": "`json:\"releaseID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductModelReleaseInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseInfo",
+    "fields": [
+      {
+        "name": "ReleaseID",
+        "type": "int64",
+        "tag": "`json:\"releaseID,string\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ReleaseNo",
+        "type": "int64",
+        "tag": "`json:\"releaseNo\"`"
+      },
+      {
+        "name": "SchemaVersion",
+        "type": "int64",
+        "tag": "`json:\"schemaVersion\"`"
+      },
+      {
+        "name": "Bundle",
+        "type": "string",
+        "tag": "`json:\"bundle\"`"
+      },
+      {
+        "name": "BundleHash",
+        "type": "string",
+        "tag": "`json:\"bundleHash\"`"
+      },
+      {
+        "name": "Status",
+        "type": "string",
+        "tag": "`json:\"status\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleasePublishReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ReleaseID",
+        "type": "int64",
+        "tag": "`json:\"releaseID,string\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseTslReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "ReleaseID",
+        "type": "int64",
+        "tag": "`json:\"releaseID,string,optional\"`"
+      },
+      {
+        "name": "Active",
+        "type": "bool",
+        "tag": "`json:\"active,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductModelReleaseTslReadResp",
+    "fields": [
+      {
+        "name": "Tsl",
+        "type": "string",
+        "tag": "`json:\"tsl\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfig",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content\"`"
+      },
+      {
+        "name": "CreateTime",
+        "type": "string",
+        "tag": "`json:\"createTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigCreateReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Content",
+        "type": "string",
+        "tag": "`json:\"content\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigIndexReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductRemoteConfig",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigLastestReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigLastestReadResp",
+    "fields": [
+      {
+        "name": "",
+        "type": "ProductRemoteConfig",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductRemoteConfigPushAllReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaCreateReq",
+    "fields": [
+      {
+        "name": "",
+        "type": "*ProductSchemaInfo",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaDeleteReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Types",
+        "type": "[]int64",
+        "tag": "`json:\"types,optional\"`"
+      },
+      {
+        "name": "Tag",
+        "type": "int64",
+        "tag": "`json:\"tag,optional\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "PropertyMode",
+        "type": "string",
+        "tag": "`json:\"propertyMode,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProductSchemaInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaInfo",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "int64",
+        "tag": "`json:\"type\"`"
+      },
+      {
+        "name": "Tag",
+        "type": "int64",
+        "tag": "`json:\"tag\"`"
+      },
+      {
+        "name": "Identifier",
+        "type": "string",
+        "tag": "`json:\"identifier\"`"
+      },
+      {
+        "name": "ExtendConfig",
+        "type": "string",
+        "tag": "`json:\"extendConfig,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "*string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Required",
+        "type": "int64",
+        "tag": "`json:\"required,optional\"`"
+      },
+      {
+        "name": "Affordance",
+        "type": "*string",
+        "tag": "`json:\"affordance,optional\"`"
+      },
+      {
+        "name": "IsCanSceneLinkage",
+        "type": "int64",
+        "tag": "`json:\"isCanSceneLinkage,optional\"`"
+      },
+      {
+        "name": "FuncGroup",
+        "type": "int64",
+        "tag": "`json:\"funcGroup,optional\"`"
+      },
+      {
+        "name": "UserPerm",
+        "type": "int64",
+        "tag": "`json:\"userPerm,optional\"`"
+      },
+      {
+        "name": "RecordMode",
+        "type": "int64",
+        "tag": "`json:\"recordMode,optional\"`"
+      },
+      {
+        "name": "IsPassword",
+        "type": "int64",
+        "tag": "`json:\"isPassword,optional\"`"
+      },
+      {
+        "name": "Order",
+        "type": "int64",
+        "tag": "`json:\"order,optional\"`"
+      },
+      {
+        "name": "ControlMode",
+        "type": "int64",
+        "tag": "`json:\"controlMode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaMultiCreateReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Identifiers",
+        "type": "[]string",
+        "tag": "`json:\"identifiers,optional\"`"
+      },
+      {
+        "name": "List",
+        "type": "[]*ProductSchemaInfo",
+        "tag": "`json:\"list,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaTslImportReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      },
+      {
+        "name": "Tsl",
+        "type": "string",
+        "tag": "`json:\"tsl\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaTslReadReq",
+    "fields": [
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaTslReadResp",
+    "fields": [
+      {
+        "name": "Tsl",
+        "type": "string",
+        "tag": "`json:\"tsl\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProductSchemaUpdateReq",
+    "fields": [
+      {
+        "name": "",
+        "type": "*ProductSchemaInfo",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProtocolConfigField",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Group",
+        "type": "string",
+        "tag": "`json:\"group\"`"
+      },
+      {
+        "name": "Key",
+        "type": "string",
+        "tag": "`json:\"key\"`"
+      },
+      {
+        "name": "Label",
+        "type": "string",
+        "tag": "`json:\"label\"`"
+      },
+      {
+        "name": "IsRequired",
+        "type": "bool",
+        "tag": "`json:\"isRequired\"`"
+      },
+      {
+        "name": "Sort",
+        "type": "int64",
+        "tag": "`json:\"sort\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolConfigInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Config",
+        "type": "map[string]string",
+        "tag": "`json:\"config\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "TransProtocol",
+        "type": "string",
+        "tag": "`json:\"transProtocol,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "Endpoints",
+        "type": "[]string",
+        "tag": "`json:\"endpoints,optional\"`"
+      },
+      {
+        "name": "EtcdKey",
+        "type": "string",
+        "tag": "`json:\"etcdKey,optional\"`"
+      },
+      {
+        "name": "IsEnableSyncProduct",
+        "type": "int64",
+        "tag": "`json:\"isEnableSyncProduct\"`"
+      },
+      {
+        "name": "IsEnableSyncDevice",
+        "type": "int64",
+        "tag": "`json:\"isEnableSyncDevice\"`"
+      },
+      {
+        "name": "ConfigFields",
+        "type": "[]*ProtocolConfigField",
+        "tag": "`json:\"configFields,optional\"`"
+      },
+      {
+        "name": "ConfigInfos",
+        "type": "[]*ProtocolConfigInfo",
+        "tag": "`json:\"configInfos,optional\"`"
+      },
+      {
+        "name": "ProductFields",
+        "type": "[]*ProtocolConfigField",
+        "tag": "`json:\"productFields,optional\"`"
+      },
+      {
+        "name": "DeviceFields",
+        "type": "[]*ProtocolConfigField",
+        "tag": "`json:\"deviceFields,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolInfoIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      },
+      {
+        "name": "Codes",
+        "type": "[]string",
+        "tag": "`json:\"codes,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "TransProtocol",
+        "type": "string",
+        "tag": "`json:\"transProtocol,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolInfoIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProtocolInfo",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScript",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "*string",
+        "tag": "`json:\"desc,optional\"`"
+      },
+      {
+        "name": "TriggerDir",
+        "type": "int64",
+        "tag": "`json:\"triggerDir,optional\"`"
+      },
+      {
+        "name": "TriggerTimer",
+        "type": "int64",
+        "tag": "`json:\"triggerTimer,optional\"`"
+      },
+      {
+        "name": "TriggerHandle",
+        "type": "string",
+        "tag": "`json:\"triggerHandle,optional\"`"
+      },
+      {
+        "name": "TriggerType",
+        "type": "string",
+        "tag": "`json:\"triggerType,optional\"`"
+      },
+      {
+        "name": "Script",
+        "type": "string",
+        "tag": "`json:\"script,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptDebugReq",
+    "fields": [
+      {
+        "name": "TriggerDir",
+        "type": "int64",
+        "tag": "`json:\"triggerDir\"`"
+      },
+      {
+        "name": "TriggerTimer",
+        "type": "int64",
+        "tag": "`json:\"triggerTimer\"`"
+      },
+      {
+        "name": "Script",
+        "type": "string",
+        "tag": "`json:\"script\"`"
+      },
+      {
+        "name": "Req",
+        "type": "*PublishMsg",
+        "tag": "`json:\"req\"`"
+      },
+      {
+        "name": "Resp",
+        "type": "*PublishMsg",
+        "tag": "`json:\"resp,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptDebugResp",
+    "fields": [
+      {
+        "name": "Out",
+        "type": "*PublishMsg",
+        "tag": "`json:\"out\"`"
+      },
+      {
+        "name": "Logs",
+        "type": "[]string",
+        "tag": "`json:\"logs\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptDevice",
+    "fields": [
+      {
+        "name": "TenantCode",
+        "type": "string",
+        "tag": "`json:\"tenantCode,optional\"`"
+      },
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      },
+      {
+        "name": "TriggerSrc",
+        "type": "int64",
+        "tag": "`json:\"triggerSrc,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "ScriptID",
+        "type": "int64",
+        "tag": "`json:\"scriptID,optional\"`"
+      },
+      {
+        "name": "Priority",
+        "type": "int64",
+        "tag": "`json:\"priority,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "Script",
+        "type": "*ProtocolScript",
+        "tag": "`json:\"script,optional\"`"
+      },
+      {
+        "name": "Product",
+        "type": "*ProductInfo",
+        "tag": "`json:\"product,optional\"`"
+      },
+      {
+        "name": "Device",
+        "type": "*DeviceInfo",
+        "tag": "`json:\"device,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptDeviceIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "TriggerSrc",
+        "type": "int64",
+        "tag": "`json:\"triggerSrc,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      },
+      {
+        "name": "ScriptID",
+        "type": "int64",
+        "tag": "`json:\"scriptID,string,optional\"`"
+      },
+      {
+        "name": "WithScript",
+        "type": "bool",
+        "tag": "`json:\"withScript,optional\"`"
+      },
+      {
+        "name": "WithDevice",
+        "type": "bool",
+        "tag": "`json:\"withDevice,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptDeviceIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProtocolScriptDevice",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptExportReq",
+    "fields": [
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptExportResp",
+    "fields": [
+      {
+        "name": "Scripts",
+        "type": "string",
+        "tag": "`json:\"scripts\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptImportReq",
+    "fields": [
+      {
+        "name": "Scripts",
+        "type": "string",
+        "tag": "`json:\"scripts\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "tag": "`json:\"name,optional\"`"
+      },
+      {
+        "name": "TriggerDir",
+        "type": "int64",
+        "tag": "`json:\"triggerDir,optional\"`"
+      },
+      {
+        "name": "TriggerTimer",
+        "type": "int64",
+        "tag": "`json:\"triggerTimer,optional\"`"
+      },
+      {
+        "name": "TriggerHandle",
+        "type": "string",
+        "tag": "`json:\"triggerHandle,optional\"`"
+      },
+      {
+        "name": "TriggerType",
+        "type": "string",
+        "tag": "`json:\"triggerType,optional\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolScriptIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProtocolScript",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "",
+        "type": "PageResp",
+        "tag": ""
+      }
+    ]
+  },
+  {
+    "name": "ProtocolService",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "IP",
+        "type": "string",
+        "tag": "`json:\"ip\"`"
+      },
+      {
+        "name": "Port",
+        "type": "int64",
+        "tag": "`json:\"port\"`"
+      },
+      {
+        "name": "Status",
+        "type": "int64",
+        "tag": "`json:\"status\"`"
+      },
+      {
+        "name": "UpdatedTime",
+        "type": "int64",
+        "tag": "`json:\"updatedTime\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolServiceIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolServiceIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*ProtocolService",
+        "tag": "`json:\"list\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolSyncDeviceReq",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID\"`"
+      }
+    ]
+  },
+  {
+    "name": "ProtocolSyncDeviceResp",
+    "fields": [
+      {
+        "name": "DeviceNames",
+        "type": "[]string",
+        "tag": "`json:\"deviceNames\"`"
+      }
+    ]
+  },
+  {
+    "name": "PublishMsg",
+    "fields": [
+      {
+        "name": "Handle",
+        "type": "string",
+        "tag": "`json:\"handle,optional\"`"
+      },
+      {
+        "name": "Type",
+        "type": "string",
+        "tag": "`json:\"type,optional\"`"
+      },
+      {
+        "name": "Payload",
+        "type": "[]byte",
+        "tag": "`json:\"payload,optional\"`"
+      },
+      {
+        "name": "Timestamp",
+        "type": "int64",
+        "tag": "`json:\"timestamp,string,optional\"`"
+      },
+      {
+        "name": "ProductID",
+        "type": "string",
+        "tag": "`json:\"productID,optional\"`"
+      },
+      {
+        "name": "DeviceName",
+        "type": "string",
+        "tag": "`json:\"deviceName,optional\"`"
+      },
+      {
+        "name": "Explain",
+        "type": "string",
+        "tag": "`json:\"explain,optional\"`"
+      },
+      {
+        "name": "ProtocolCode",
+        "type": "string",
+        "tag": "`json:\"protocolCode,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SendOption",
+    "fields": [
+      {
+        "name": "TimeoutToFail",
+        "type": "int64",
+        "tag": "`json:\"timeoutToFail,optional\"`"
+      },
+      {
+        "name": "RequestTimeout",
+        "type": "int64",
+        "tag": "`json:\"requestTimeout,optional\"`"
+      },
+      {
+        "name": "RetryInterval",
+        "type": "int64",
+        "tag": "`json:\"retryInterval,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SharePerm",
+    "fields": [
+      {
+        "name": "Perm",
+        "type": "int64",
+        "tag": "`json:\"perm,optional,default=3\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotAreaSaveReq",
+    "fields": [
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "AreaID",
+        "type": "int64",
+        "tag": "`json:\"areaID,string,optional\"`"
+      },
+      {
+        "name": "ParentAreaID",
+        "type": "int64",
+        "tag": "`json:\"parentAreaID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotUserSubscribe",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "map[string]interface{}",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  },
+  {
+    "name": "SlotUserSubscribeResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]map[string]interface{}",
+        "tag": "`json:\"list\"`"
+      }
+    ]
+  },
+  {
+    "name": "Tag",
+    "fields": [
+      {
+        "name": "Key",
+        "type": "string",
+        "tag": "`json:\"key\"`"
+      },
+      {
+        "name": "Value",
+        "type": "string",
+        "tag": "`json:\"value\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCollectDeviceInfo",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceInfo",
+        "tag": "`json:\"devices\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCollectDeviceSave",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserCore",
+    "fields": [
+      {
+        "name": "UserID",
+        "type": "int64",
+        "tag": "`json:\"userID,string,optional\"`"
+      },
+      {
+        "name": "UserName",
+        "type": "string",
+        "tag": "`json:\"userName,optional\"`"
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "tag": "`json:\"email,optional\"`"
+      },
+      {
+        "name": "Phone",
+        "type": "string",
+        "tag": "`json:\"phone,optional\"`"
+      },
+      {
+        "name": "LastIP",
+        "type": "string",
+        "tag": "`json:\"lastIP,optional\"`"
+      },
+      {
+        "name": "RegIP",
+        "type": "string",
+        "tag": "`json:\"regIP,optional\"`"
+      },
+      {
+        "name": "NickName",
+        "type": "string",
+        "tag": "`json:\"nickName,optional\"`"
+      },
+      {
+        "name": "HeadImg",
+        "type": "string",
+        "tag": "`json:\"headImg,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareIndexReq",
+    "fields": [
+      {
+        "name": "Page",
+        "type": "*PageInfo",
+        "tag": "`json:\"page,optional\"`"
+      },
+      {
+        "name": "Device",
+        "type": "*DeviceCore",
+        "tag": "`json:\"device,optional\"`"
+      },
+      {
+        "name": "WithUser",
+        "type": "bool",
+        "tag": "`json:\"withUser,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareIndexResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*UserDeviceShareInfo",
+        "tag": "`json:\"list,optional\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareInfo",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      },
+      {
+        "name": "Device",
+        "type": "DeviceCore",
+        "tag": "`json:\"device,optional\"`"
+      },
+      {
+        "name": "SharedUserID",
+        "type": "int64",
+        "tag": "`json:\"sharedUserID,string,optional\"`"
+      },
+      {
+        "name": "SharedUserAccount",
+        "type": "string",
+        "tag": "`json:\"sharedUserAccount,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "SchemaPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"schemaPerm,optional\"`"
+      },
+      {
+        "name": "AccessPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"accessPerm,optional\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "*int64",
+        "tag": "`json:\"expTime,optional,string\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "User",
+        "type": "*UserCore",
+        "tag": "`json:\"user,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiAcceptInfo",
+    "fields": [
+      {
+        "name": "ShareToken",
+        "type": "string",
+        "tag": "`json:\"shareToken,optional\"`"
+      },
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiDeleteReq",
+    "fields": [
+      {
+        "name": "IDs",
+        "type": "[]int64",
+        "tag": "`json:\"ids,optional\"`"
+      },
+      {
+        "name": "ProjectID",
+        "type": "int64",
+        "tag": "`json:\"projectID,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiDeleteTokenReq",
+    "fields": [
+      {
+        "name": "ShareToken",
+        "type": "string",
+        "tag": "`json:\"shareToken\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiGetTokenListResp",
+    "fields": [
+      {
+        "name": "List",
+        "type": "[]*UserDeviceShareMultiListItem",
+        "tag": "`json:\"list,optional\"`"
+      },
+      {
+        "name": "Total",
+        "type": "int64",
+        "tag": "`json:\"total,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiIndexResp",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceShareInfo",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "SchemaPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"schemaPerm,optional\"`"
+      },
+      {
+        "name": "AccessPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"accessPerm,optional\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "int64",
+        "tag": "`json:\"expTime,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiInfo",
+    "fields": [
+      {
+        "name": "Devices",
+        "type": "[]*DeviceCore",
+        "tag": "`json:\"devices,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "SchemaPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"schemaPerm,optional\"`"
+      },
+      {
+        "name": "AccessPerm",
+        "type": "map[string]*SharePerm",
+        "tag": "`json:\"accessPerm,optional\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "int64",
+        "tag": "`json:\"expTime,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiListItem",
+    "fields": [
+      {
+        "name": "ShareToken",
+        "type": "string",
+        "tag": "`json:\"shareToken,optional\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "ExpTime",
+        "type": "int64",
+        "tag": "`json:\"expTime,optional\"`"
+      },
+      {
+        "name": "AuthType",
+        "type": "int64",
+        "tag": "`json:\"authType,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareMultiToken",
+    "fields": [
+      {
+        "name": "ShareToken",
+        "type": "string",
+        "tag": "`json:\"shareToken,optional\"`"
+      },
+      {
+        "name": "LinkExpireAt",
+        "type": "int64",
+        "tag": "`json:\"linkExpireAt,optional\"`"
+      },
+      {
+        "name": "AuthExpireAt",
+        "type": "int64",
+        "tag": "`json:\"authExpireAt,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareReadReq",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Device",
+        "type": "*DeviceCore",
+        "tag": "`json:\"device,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareTokenCheckReq",
+    "fields": [
+      {
+        "name": "ShareToken",
+        "type": "string",
+        "tag": "`json:\"shareToken\"`"
+      }
+    ]
+  },
+  {
+    "name": "UserDeviceShareTokenCheckResp",
+    "fields": [
+      {
+        "name": "Valid",
+        "type": "bool",
+        "tag": "`json:\"valid\"`"
+      },
+      {
+        "name": "Reason",
+        "type": "string",
+        "tag": "`json:\"reason,optional\"`"
+      },
+      {
+        "name": "LinkExpireAt",
+        "type": "int64",
+        "tag": "`json:\"linkExpireAt,optional\"`"
+      },
+      {
+        "name": "AuthExpireAt",
+        "type": "int64",
+        "tag": "`json:\"authExpireAt,optional\"`"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "int64",
+        "tag": "`json:\"createdTime,optional\"`"
+      },
+      {
+        "name": "UseBy",
+        "type": "string",
+        "tag": "`json:\"useBy,optional,omitempty\"`"
+      },
+      {
+        "name": "Desc",
+        "type": "string",
+        "tag": "`json:\"desc,optional,omitempty\"`"
+      },
+      {
+        "name": "DeviceCount",
+        "type": "int64",
+        "tag": "`json:\"deviceCount,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithID",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithIDChildren",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "WithChildren",
+        "type": "bool",
+        "tag": "`json:\"withChildren,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithIDOrCode",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,optional\"`"
+      },
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithIDStr",
+    "fields": [
+      {
+        "name": "ID",
+        "type": "int64",
+        "tag": "`json:\"id,string,optional\"`"
+      }
+    ]
+  },
+  {
+    "name": "WithProfile",
+    "fields": [
+      {
+        "name": "Code",
+        "type": "string",
+        "tag": "`json:\"code\"`"
+      },
+      {
+        "name": "Params",
+        "type": "string",
+        "tag": "`json:\"params\"`"
+      }
+    ]
+  }
+]

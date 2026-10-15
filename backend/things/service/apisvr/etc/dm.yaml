@@ -1,0 +1,5 @@
+#设备管理模块配置-dmsvr
+Name: dm.rpc
+ListenOn: 0.0.0.0:9081
+
+

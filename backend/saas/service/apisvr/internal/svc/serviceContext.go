@@ -1,0 +1,205 @@
+package svc
+
+import (
+	"os"
+	"time"
+
+	"gitee.com/ming-iot/saas/service/apisvr/internal/config"
+	"gitee.com/ming-iot/saas/service/syssvr/client/accessmanage"
+	app "gitee.com/ming-iot/saas/service/syssvr/client/appmanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/areamanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/common"
+	"gitee.com/ming-iot/saas/service/syssvr/client/datamanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/departmentmanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/dictmanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/log"
+	module "gitee.com/ming-iot/saas/service/syssvr/client/modulemanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/notifymanage"
+	"gitee.com/ming-iot/saas/service/syssvr/client/ops"
+	"gitee.com/ming-iot/saas/service/syssvr/client/projectmanage"
+	role "gitee.com/ming-iot/saas/service/syssvr/client/rolemanage"
+	tenant "gitee.com/ming-iot/saas/service/syssvr/client/tenantmanage"
+	user "gitee.com/ming-iot/saas/service/syssvr/client/usermanage"
+	"gitee.com/ming-iot/saas/service/syssvr/sysExport"
+	"gitee.com/ming-iot/saas/service/syssvr/sysdirect"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/client/timedmanage"
+	"gitee.com/ming-iot/saas/service/timed/timedjobsvr/timedjobdirect"
+	"gitee.com/ming-iot/saas/service/timed/timedschedulersvr/client/timedscheduler"
+	"gitee.com/ming-iot/saas/service/timed/timedschedulersvr/timedschedulerdirect"
+	"gitee.com/ming-iot/saas/share/middlewares"
+	ws "gitee.com/ming-iot/saas/share/websocket"
+	"gitee.com/ming-iot/share/caches"
+	"gitee.com/ming-iot/share/conf"
+	"gitee.com/ming-iot/share/eventBus"
+	"gitee.com/ming-iot/share/oss"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/share/verify"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/rest"
+)
+
+type SvrClient struct {
+	TenantRpc      tenant.TenantManage
+	UserRpc        user.UserManage
+	RoleRpc        role.RoleManage
+	AppRpc         app.AppManage
+	ModuleRpc      module.ModuleManage
+	LogRpc         log.Log
+	ProjectM       projectmanage.ProjectManage
+	AreaM          areamanage.AreaManage
+	DictM          dictmanage.DictManage
+	NotifyM        notifymanage.NotifyManage
+	Common         common.Common
+	Slot           sysExport.SlotCacheT
+	AccessRpc      accessmanage.AccessManage
+	DataM          datamanage.DataManage
+	Timedscheduler timedscheduler.Timedscheduler
+	TimedJob       timedmanage.TimedManage
+	Ops            ops.Ops
+	DeptM          departmentmanage.DepartmentManage
+}
+
+type ServiceContext struct {
+	SvrClient
+	Ws             *ws.Server
+	Config         config.Config
+	UserCache      sysExport.UserCacheT
+	ProjectCache   sysExport.ProjectCacheT
+	AreaCache      sysExport.AreaCacheT
+	CheckTokenWare rest.Middleware
+	InitCtxsWare   rest.Middleware
+	Captcha        *verify.Captcha
+	OssClient      *oss.Client
+	NodeID         int64
+	ServerMsg      *eventBus.FastEvent
+}
+
+func NewServiceContext(c config.Config) *ServiceContext {
+	var (
+		appRpc        app.AppManage
+		projectM      projectmanage.ProjectManage
+		areaM         areamanage.AreaManage
+		sysCommon     common.Common
+		timedSchedule timedscheduler.Timedscheduler
+		timedJob      timedmanage.TimedManage
+		tenantM       tenant.TenantManage
+		DataM         datamanage.DataManage
+		DictM         dictmanage.DictManage
+		accessM       accessmanage.AccessManage
+		Ops           ops.Ops
+		NotifyM       notifymanage.NotifyManage
+		DeptM         departmentmanage.DepartmentManage
+	)
+	var ur user.UserManage
+	var ro role.RoleManage
+	var me module.ModuleManage
+	var lo log.Log
+
+	caches.InitStore(c.CacheRedis)
+	nodeID := utils.GetNodeID(c.CacheRedis, c.Name)
+	serverMsg, err := eventBus.NewFastEvent(c.Event, c.Name, nodeID)
+	if err != nil {
+		logx.Errorf("eventBus.NewFastEvent cfg:%v err:%v", utils.Fmt(c.Event), err)
+		os.Exit(-1)
+	}
+	ws.StartWsDp(false, nodeID, serverMsg, c.CacheRedis)
+	if c.SysRpc.Enable {
+		if c.SysRpc.Mode == conf.ClientModeGrpc {
+			projectM = projectmanage.NewProjectManage(c.SysRpc.MustNewClient())
+			areaM = areamanage.NewAreaManage(c.SysRpc.MustNewClient())
+			ur = user.NewUserManage(c.SysRpc.MustNewClient())
+			ro = role.NewRoleManage(c.SysRpc.MustNewClient())
+			me = module.NewModuleManage(c.SysRpc.MustNewClient())
+			lo = log.NewLog(c.SysRpc.MustNewClient())
+			sysCommon = common.NewCommon(c.SysRpc.MustNewClient())
+			appRpc = app.NewAppManage(c.SysRpc.MustNewClient())
+			tenantM = tenant.NewTenantManage(c.SysRpc.MustNewClient())
+			DataM = datamanage.NewDataManage(c.SysRpc.MustNewClient())
+			accessM = accessmanage.NewAccessManage(c.SysRpc.MustNewClient())
+			DictM = dictmanage.NewDictManage(c.SysRpc.MustNewClient())
+			Ops = ops.NewOps(c.SysRpc.MustNewClient())
+			NotifyM = notifymanage.NewNotifyManage(c.SysRpc.MustNewClient())
+			DeptM = departmentmanage.NewDepartmentManage(c.SysRpc.MustNewClient())
+		} else {
+			projectM = sysdirect.NewProjectManage(c.SysRpc.RunProxy)
+			areaM = sysdirect.NewAreaManage(c.SysRpc.RunProxy)
+			ur = sysdirect.NewUser(c.SysRpc.RunProxy)
+			ro = sysdirect.NewRole(c.SysRpc.RunProxy)
+			me = sysdirect.NewModule(c.SysRpc.RunProxy)
+			lo = sysdirect.NewLog(c.SysRpc.RunProxy)
+			sysCommon = sysdirect.NewCommon(c.SysRpc.RunProxy)
+			appRpc = sysdirect.NewApp(c.SysRpc.RunProxy)
+			tenantM = sysdirect.NewTenantManage(c.SysRpc.RunProxy)
+			DataM = sysdirect.NewData(c.SysRpc.RunProxy)
+			accessM = sysdirect.NewAccess(c.SysRpc.RunProxy)
+			DictM = sysdirect.NewDict(c.SysRpc.RunProxy)
+			Ops = sysdirect.NewOps(c.SysRpc.RunProxy)
+			NotifyM = sysdirect.NewNotify(c.SysRpc.RunProxy)
+			DeptM = sysdirect.NewDeptM(c.SysRpc.RunProxy)
+		}
+	}
+
+	if c.TimedSchedulerRpc.Enable {
+		if c.TimedSchedulerRpc.Mode == conf.ClientModeGrpc {
+			timedSchedule = timedscheduler.NewTimedscheduler(c.TimedSchedulerRpc.MustNewClient())
+		} else {
+			timedSchedule = timedschedulerdirect.NewScheduler(c.TimedSchedulerRpc.RunProxy)
+		}
+	}
+	if c.TimedJobRpc.Enable {
+		if c.TimedJobRpc.Mode == conf.ClientModeGrpc {
+			timedJob = timedmanage.NewTimedManage(c.TimedJobRpc.MustNewClient())
+		} else {
+			timedJob = timedjobdirect.NewTimedJob(c.TimedJobRpc.RunProxy)
+		}
+	}
+	Slot, err := sysExport.NewSlotCache(sysCommon)
+	logx.Must(err)
+	ossClient, err := oss.NewOssClient(c.OssConf)
+	if err != nil {
+		logx.Errorf("NewOssClient err err:%v", err)
+		os.Exit(-1)
+	}
+	userCache, err := sysExport.NewUserInfoCache(ur, serverMsg)
+	logx.Must(err)
+	projectCache, err := sysExport.NewProjectInfoCache(projectM, serverMsg)
+	logx.Must(err)
+	areaCache, err := sysExport.NewAreaInfoCache(areaM, serverMsg)
+	logx.Must(err)
+	captcha := verify.NewCaptcha(c.Captcha.ImgHeight, c.Captcha.ImgWidth,
+		c.Captcha.KeyLong, c.CacheRedis, time.Duration(c.Captcha.KeepTime)*time.Second)
+	return &ServiceContext{
+		Config:         c,
+		CheckTokenWare: middlewares.NewCheckTokenWareMiddleware(ur, ro, tenantM, lo).Handle,
+		InitCtxsWare:   middlewares.InitMiddleware,
+		UserCache:      userCache,
+		ProjectCache:   projectCache,
+		AreaCache:      areaCache,
+		Captcha:        captcha,
+		OssClient:      ossClient,
+		Ws:             ws.MustNewServer(c.RestConf),
+		NodeID:         nodeID,
+		ServerMsg:      serverMsg,
+		SvrClient: SvrClient{
+			TenantRpc:      tenantM,
+			AppRpc:         appRpc,
+			UserRpc:        ur,
+			RoleRpc:        ro,
+			ModuleRpc:      me,
+			Slot:           Slot,
+			LogRpc:         lo,
+			AccessRpc:      accessM,
+			NotifyM:        NotifyM,
+			Timedscheduler: timedSchedule,
+			TimedJob:       timedJob,
+			DeptM:          DeptM,
+			ProjectM:       projectM,
+			AreaM:          areaM,
+			DataM:          DataM,
+			DictM:          DictM,
+			Common:         sysCommon,
+			Ops:            Ops,
+		},
+		//OSS:        ossClient,
+	}
+}

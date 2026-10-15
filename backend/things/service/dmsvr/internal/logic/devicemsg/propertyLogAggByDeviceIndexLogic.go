@@ -1,0 +1,117 @@
+package devicemsglogic
+
+import (
+	"context"
+	"sync"
+
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/logic"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/deviceMsg/msgThing"
+	"gitee.com/ming-iot/things/share/domain/schema"
+	"golang.org/x/sync/errgroup"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type PropertyLogAggByDeviceIndexLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewPropertyLogAggByDeviceIndexLogic(ctx context.Context, svcCtx *svc.ServiceContext) *PropertyLogAggByDeviceIndexLogic {
+	return &PropertyLogAggByDeviceIndexLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *PropertyLogAggByDeviceIndexLogic) PropertyLogAggByDeviceIndex(in *dm.PropertyLogAggByDeviceIndexReq) (*dm.PropertyLogAggIndexResp, error) {
+	var (
+		//diDatas    []*dm.PropertyLogInfo
+		dd  = l.svcCtx.SchemaManaRepo
+		err error
+	)
+	uc := ctxs.GetUserCtxNoNil(l.ctx)
+	if !uc.IsAdmin {
+		for _, dev := range in.Aggs {
+			_, err := logic.SchemaAccess(l.ctx, l.svcCtx, def.AuthRead, devices.Core{
+				ProductID:  dev.Device.ProductID,
+				DeviceName: dev.Device.DeviceName,
+			}, nil)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	var diDatas []*dm.PropertyLogAggResp
+	var mutex sync.Mutex
+	var wg errgroup.Group
+	for _, agg2 := range in.Aggs {
+		agg := agg2
+		wg.Go(func() error {
+			defer utils.Recover(l.ctx)
+			t, err := l.svcCtx.DeviceSchemaRepo.GetData(l.ctx, devices.Core{ProductID: agg.Device.ProductID, DeviceName: agg.Device.DeviceName})
+			if err != nil {
+				return err
+			}
+			dds, err := dd.GetPropertyLogAgg(l.ctx, t, msgThing.FilterLogAggOpt{
+				TimeStart: in.TimeStart,
+				TimeEnd:   in.TimeEnd,
+				Filter: msgThing.Filter{
+					ProductID:    agg.Device.ProductID,
+					DeviceNames:  []string{agg.Device.DeviceName},
+					Interval:     in.Interval,
+					IntervalUnit: def.TimeUnit(in.IntervalUnit),
+					PartitionBy:  in.PartitionBy,
+				}, Aggs: []msgThing.PropertyAgg{utils.Copy2[msgThing.PropertyAgg](agg)},
+			})
+			if err != nil {
+				l.Errorf("%s.GetPropertyDataByID err=%v", utils.FuncName(), err)
+				return err
+			}
+			mutex.Lock()
+			defer mutex.Unlock()
+			for _, devData := range dds {
+				diData := dm.PropertyLogAggResp{
+					ProductID:  agg.Device.ProductID,
+					DeviceName: agg.Device.DeviceName,
+				}
+				for _, v1 := range devData.Values {
+					var dv = dm.PropertyLogAggRespDetail{
+						DataID:     v1.Identifier,
+						DataName:   schema.GetDataName(t, v1.Identifier),
+						TimeWindow: v1.TsWindow.UnixMilli(),
+						Values:     map[string]*dm.PropertyLogAggRespDataDetail{}}
+					for k2, v2 := range v1.Values {
+						dv2 := dm.PropertyLogAggRespDataDetail{Timestamp: v2.TimeStamp.UnixMilli()}
+						if dv2.Timestamp < 0 {
+							dv2.Timestamp = 0
+						}
+						var payload []byte
+						if param, ok := v2.Param.(string); ok {
+							payload = []byte(param)
+						} else {
+							payload = []byte(utils.ToString(v2.Param))
+						}
+						dv2.Value = string(payload)
+						dv.Values[k2] = &dv2
+					}
+					diData.Values = append(diData.Values, &dv)
+				}
+				diDatas = append(diDatas, &diData)
+			}
+			return nil
+		})
+	}
+	err = wg.Wait()
+
+	return &dm.PropertyLogAggIndexResp{List: diDatas}, err
+
+}

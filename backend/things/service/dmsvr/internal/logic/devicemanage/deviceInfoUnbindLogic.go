@@ -1,0 +1,226 @@
+package devicemanagelogic
+
+import (
+	"context"
+	"encoding/base64"
+	"fmt"
+	"time"
+
+	"gitee.com/ming-iot/saas/service/syssvr/pb/sys"
+	"gitee.com/ming-iot/saas/share/dataType"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/errors"
+	"gitee.com/ming-iot/share/stores"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/domain/product"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/logic"
+	devicemsglogic "gitee.com/ming-iot/things/service/dmsvr/internal/logic/devicemsg"
+	"gitee.com/ming-iot/things/service/dmsvr/internal/repo/relationDB"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/topics"
+	"gorm.io/gorm"
+
+	"gitee.com/ming-iot/things/service/dmsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type DeviceInfoUnbindLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewDeviceInfoUnbindLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeviceInfoUnbindLogic {
+	return &DeviceInfoUnbindLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *DeviceInfoUnbindLogic) DeviceInfoUnbind(in *dm.DeviceInfoUnbindReq) (*dm.Empty, error) {
+	diDB := relationDB.NewDeviceInfoRepo(l.ctx)
+	dev := devices.Core{ProductID: in.ProductID, DeviceName: in.DeviceName}
+	di, err := diDB.FindOneByFilter(ctxs.WithRoot(l.ctx), relationDB.DeviceFilter{
+		ProductID:   in.ProductID,
+		DeviceNames: []string{in.DeviceName},
+	})
+	if err != nil {
+		return nil, err
+	}
+	if di.ProjectID <= def.NotClassified {
+		return nil, errors.DeviceNotBound.WithMsg("设备已解绑")
+	}
+	uc := ctxs.GetUserCtxNoNil(l.ctx)
+	pi, err := l.svcCtx.ProjectM.ProjectInfoRead(l.ctx, &sys.ProjectWithID{ProjectID: int64(di.ProjectID)})
+	if err != nil && !errors.Cmp(err, errors.NotFind) { //解绑的时候家庭已经不存在了也需要能正确解绑
+		return nil, err
+	}
+	adminUserID := di.UserID
+	if pi != nil {
+		adminUserID = pi.AdminUserID
+	}
+	pc, err := l.svcCtx.ProductCache.GetData(l.ctx, di.ProductID)
+	if err != nil {
+		return nil, err
+	}
+	//如果是超管有全部权限
+	if !uc.IsAdmin && (di.TenantCode != di.TenantCode || adminUserID != uc.UserID || int64(di.ProjectID) != uc.ProjectID) {
+		switch pc.BindLevel {
+		case product.BindLeveWeak3: //弱绑定谁都可以解绑
+		case product.BindLeveMiddle2:
+			if in.Signature == "" {
+				return nil, errors.Permissions
+			}
+			var secert string
+			ret, err := devicemsglogic.NewPropertyLatestIndexLogic(ctxs.WithRoot(l.ctx), l.svcCtx).PropertyLatestIndex(&dm.PropertyLatestIndexReq{
+				ProductID:  di.ProductID,
+				DeviceName: di.DeviceName,
+				DataIDs:    []string{in.SecretType},
+			})
+			if err != nil {
+				return nil, err
+			}
+			secert = ret.List[0].Value
+			sig := getSignature(in.SignType, secert, fmt.Sprintf("deviceName=%s&nonce=%d&productID=%s&timestamp=%d",
+				in.DeviceName, in.Nonce, in.ProductID, in.Timestamp))
+			if sig != in.Signature {
+				return nil, errors.Parameter.AddMsg("无效签名")
+			}
+		default:
+			return nil, errors.Permissions
+		}
+
+	}
+	//dpi, err := l.svcCtx.TenantCache.GetData(l.ctx, def.TenantCodeDefault)
+	//if err != nil {
+	//	return nil, err
+	//}
+	// 保存旧区域和项目ID，事务后触发重算
+	oldAreaID := int64(di.AreaID)
+	oldProjectID := int64(di.ProjectID)
+	oldOwnerUserID := di.UserID
+
+	di.TenantCode = def.TenantCodeDefault
+	di.ProjectID = def.NotClassified
+	di.UserID = def.RootNode
+	di.AreaID = dataType.AreaID(def.NotClassified)
+	di.AreaIDPath = def.NotClassifiedPath
+	di.DeviceAlias = pc.ProductName
+	if di.FirstBind.Valid && di.FirstBind.Time.After(time.Now().AddDate(0, 0, -1)) { //绑定一天内的不算绑定时间
+		if pc.TrialTime != nil && di.ExpTime.Valid { //如果设备的有效期大于从当前算起的有效期,那说明充值过,这时候不能清除过期时间
+			expTime := time.Now().Add(time.Hour * 24 * time.Duration(pc.TrialTime.GetValue()))
+			if expTime.After(di.ExpTime.Time) {
+				di.FirstBind.Valid = false
+				di.ExpTime.Valid = false
+			}
+		}
+	}
+	err = stores.GetTenantConn(l.ctx).Transaction(func(tx *gorm.DB) error {
+		err := relationDB.NewDeviceInfoRepo(tx).Update(ctxs.WithRoot(l.ctx), di)
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewUserDeviceShareRepo(tx).DeleteByFilter(l.ctx, relationDB.UserDeviceShareFilter{
+			ProductID:  di.ProductID,
+			DeviceName: di.DeviceName,
+		})
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewDeviceProfileRepo(tx).DeleteByFilter(ctxs.WithRoot(l.ctx),
+			relationDB.DeviceProfileFilter{Device: dev})
+		if err != nil {
+			return err
+		}
+		err = relationDB.NewUserDeviceCollectRepo(tx).DeleteByFilter(l.ctx, relationDB.UserDeviceCollectFilter{Cores: []*devices.Core{
+			&dev,
+		}})
+		if err != nil {
+			return err
+		}
+		err = logic.UpdateDevice(l.ctx, l.svcCtx, []*devices.Core{
+			{ProductID: di.ProductID, DeviceName: di.DeviceName}}, devices.Affiliation{
+			TenantCode: string(di.TenantCode), ProjectID: int64(di.ProjectID),
+			AreaID: int64(di.AreaID), AreaIDPath: string(di.AreaIDPath)})
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	// 解绑成功后撤销主人和本次操作者生成的相关分享 Token。
+	// Token 清理失败不回滚已完成的解绑；接收接口还会按设备当前归属做最终校验。
+	if tokenErr := l.svcCtx.UserMultiDeviceShare.DeleteDeviceTokens(
+		l.ctx,
+		uc.TenantCode,
+		oldOwnerUserID,
+		in.ProductID,
+		in.DeviceName,
+	); tokenErr != nil {
+		l.Errorf("撤销设备分享 Token 失败: %v", tokenErr)
+	}
+	if uc.UserID != oldOwnerUserID {
+		if tokenErr := l.svcCtx.UserMultiDeviceShare.DeleteDeviceTokens(
+			l.ctx,
+			uc.TenantCode,
+			uc.UserID,
+			in.ProductID,
+			in.DeviceName,
+		); tokenErr != nil {
+			l.Errorf("撤销操作者设备分享 Token 失败: %v", tokenErr)
+		}
+	}
+	// 解绑后触发重算旧区域和旧项目设备数
+	if oldAreaID > def.NotClassified {
+		oldArea, _ := l.svcCtx.AreaCache.GetData(l.ctx, oldAreaID)
+		if oldArea != nil {
+			logic.FillAreaDeviceCount(l.ctx, l.svcCtx, oldArea)
+		}
+	}
+	if oldProjectID > def.NotClassified {
+		logic.FillProjectDeviceCount(l.ctx, l.svcCtx, oldProjectID)
+	}
+	l.svcCtx.DeviceCache.SetData(l.ctx, dev, nil)
+	err = DeleteDeviceTimeData(l.ctx, l.svcCtx, in.ProductID, in.DeviceName, DeleteModeThing, true)
+	err = l.svcCtx.FastEvent.Publish(l.ctx, topics.DmDeviceInfoUnbind, &dev)
+	if err != nil {
+		l.Error(err)
+	}
+	BindChange(l.ctx, l.svcCtx, pc, dev, int64(di.ProjectID))
+
+	if di.DeviceType == def.DeviceTypeGateway { //网关类型的需要解绑子设备
+		ctxs.GoNewCtx(l.ctx, func(ctx context.Context) {
+			subs, err := relationDB.NewGatewayDeviceRepo(ctx).FindByFilter(l.ctx, relationDB.GatewayDeviceFilter{Gateway: &devices.Core{
+				ProductID:  di.ProductID,
+				DeviceName: di.DeviceName,
+			}}, nil)
+			if err != nil {
+				logx.WithContext(ctx).Error(err)
+				return
+			}
+			for _, sub := range subs {
+				_, err := NewDeviceInfoUnbindLogic(ctx, l.svcCtx).DeviceInfoUnbind(&dm.DeviceInfoUnbindReq{
+					ProductID:  sub.ProductID,
+					DeviceName: sub.DeviceName,
+				})
+				if err != nil {
+					logx.WithContext(ctx).Error(err)
+					continue
+				}
+			}
+		})
+	}
+	return &dm.Empty{}, err
+}
+
+// 计算签名: 使用 HMAC-sha1 算法对目标串 dest 进行加密，密钥为 secret,将生成的结果进行 Base64 编码
+func getSignature(sigType string, secret string, dest string) string {
+	if secret == "" || dest == "" {
+		return ""
+	}
+	str := utils.Hmac(sigType, dest, []byte(secret))
+	return base64.StdEncoding.EncodeToString([]byte(str))
+}

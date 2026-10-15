@@ -1,0 +1,198 @@
+package onlineCheck
+
+import (
+	"context"
+	"encoding/json"
+	"time"
+
+	"gitee.com/ming-iot/share/caches"
+	"gitee.com/ming-iot/share/ctxs"
+	"gitee.com/ming-iot/share/def"
+	"gitee.com/ming-iot/share/utils"
+	"gitee.com/ming-iot/things/sdk/protocol"
+	"gitee.com/ming-iot/things/service/dgsvr/internal/svc"
+	"gitee.com/ming-iot/things/service/dmsvr/pb/dm"
+	"gitee.com/ming-iot/things/share/clients"
+	"gitee.com/ming-iot/things/share/devices"
+	"gitee.com/ming-iot/things/share/domain/protocols"
+	"github.com/zeromicro/go-zero/core/logx"
+	"go.uber.org/atomic"
+)
+
+type CheckEvent struct {
+	svcCtx *svc.ServiceContext
+	logx.Logger
+	ctx context.Context
+}
+
+func NewOnlineCheckEvent(svcCtx *svc.ServiceContext, ctx context.Context) *CheckEvent {
+	return &CheckEvent{
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+		ctx:    ctx,
+	}
+}
+
+var isRun atomic.Bool
+
+func (o *CheckEvent) Check(isAll bool) error {
+	ctx := ctxs.WithRoot(o.ctx) // 使用 root 上下文，绕过租户过滤
+	logx.WithContext(ctx).Infof("online_sync")
+	if !isRun.CompareAndSwap(false, true) {
+		logx.WithContext(ctx).Infof("online_sync other run")
+		return nil
+	}
+	defer isRun.Store(false)
+	var devs = map[devices.Core]struct{}{}
+	var err error
+	pis, err := o.svcCtx.ProductM.ProductInfoIndex(ctx, &dm.ProductInfoIndexReq{ProtocolTrans: protocols.ProtocolMqtt})
+	if err != nil {
+		return err
+	}
+	if len(pis.List) == 0 {
+		return nil
+	}
+	var pSet = map[string]struct{}{}
+	var productIDs []string
+	for _, pi := range pis.List {
+		if pi.OnlineHandle == 2 { //永远在线的产品不需要检查
+			continue
+		}
+		productIDs = append(productIDs, pi.ProductID)
+		pSet[pi.ProductID] = struct{}{}
+	}
+	if !isAll {
+		devs2, err := protocol.GetActivityDevices(ctx)
+		if err != nil {
+			logx.WithContext(ctx).Error(err)
+			return err
+		}
+		for dev := range devs2 {
+			if _, ok := pSet[dev.ProductID]; !ok {
+				continue
+			}
+			devs[dev] = struct{}{}
+		}
+	} else {
+		var page int64 = 0
+		var limit int64 = 500
+		var total int64 = 999999
+		for page*limit < total {
+			page++
+			ret, err := o.svcCtx.DeviceM.DeviceInfoIndex(ctx, &dm.DeviceInfoIndexReq{IsOnline: def.True, ProductIDs: productIDs, Page: &dm.PageInfo{
+				Page:   page,
+				Size:   limit,
+				Orders: []*dm.PageInfo_OrderBy{{Field: "createdTime", Sort: 1}},
+			}})
+			if err != nil {
+				logx.WithContext(ctx).Error(err)
+				return err
+			}
+			total = ret.Total
+			for _, dev := range ret.List {
+				devs[devices.Core{ProductID: dev.ProductID, DeviceName: dev.DeviceName}] = struct{}{}
+			}
+		}
+	}
+	var total int64 = 10000
+	var limit int64 = 500
+	var page int64 = 0
+	var needOnlineDevices []*dm.DeviceOnlineMultiFix
+	for page*limit < total {
+		page++
+		infos, to, err := o.svcCtx.MqttClient.GetOnlineClients(ctx, clients.GetOnlineClientsFilter{}, &clients.PageInfo{
+			Page: page,
+			Size: limit,
+		})
+		if err != nil {
+			logx.WithContext(ctx).Error(err)
+			return err
+		}
+		o.Infof("GetOnlineClients page:%v total:%v", page, total)
+		total = to
+		for _, info := range infos {
+			devStr, err := caches.GetStore().HgetCtx(ctx, protocol.DeviceMqttClientID, info.ClientID)
+			if err != nil {
+				continue
+			}
+			var dev devices.DevConn
+			err = json.Unmarshal([]byte(devStr), &dev)
+			if err != nil {
+				continue
+			}
+			c := devices.Core{
+				ProductID:  dev.ProductID,
+				DeviceName: dev.DeviceName,
+			}
+			di, err := o.svcCtx.DeviceCache.GetData(ctx, c)
+			if err != nil {
+				continue
+			}
+			pi, err := o.svcCtx.ProductCache.GetData(ctx, di.ProductID)
+			if err != nil {
+				continue
+			}
+			if pi.Protocol != nil && pi.Protocol.TransProtocol != protocols.ProtocolMqtt {
+				delete(devs, c)
+				continue
+			}
+			if pi.SubProtocol != nil && pi.SubProtocol.TransProtocol != protocols.ProtocolMqtt {
+				delete(devs, c)
+				continue
+			}
+			delete(devs, c)
+			if _, ok := pSet[dev.ProductID]; !ok {
+				continue
+			}
+			//给3分钟的缓冲时间
+			if di.IsOnline != def.True && (di.LastLogin == 0 || time.Unix(di.LastOffline, 0).Before(time.Now().Add(-time.Minute*3))) {
+				needOnlineDevices = append(needOnlineDevices, &dm.DeviceOnlineMultiFix{
+					Device: &dm.DeviceCore{
+						ProductID:  di.ProductID,
+						DeviceName: di.DeviceName,
+					},
+					IsOnline:  def.True,
+					ConnectAt: info.Timestamp,
+				})
+			}
+		}
+	}
+
+	if len(devs) > 0 { //如果全部过滤完了这里还有在线的,同时在emq上是离线的,那么需要下线该设备
+		logx.WithContext(ctx).Infof("fixOffLine %v", utils.Fmt(devs))
+		logx.WithContext(ctx).Infof("pSet %v productIDs %v", utils.Fmt(pSet), utils.Fmt(productIDs))
+		for dev := range devs {
+			di, err := o.svcCtx.DeviceCache.GetData(ctx, dev)
+			if err != nil {
+				logx.WithContext(ctx).Infof("fixOffLine skip %v err=%v", utils.Fmt(dev), err)
+				continue
+			}
+			if di.DeviceType == def.DeviceTypeSubset {
+				logx.WithContext(ctx).Infof("fixOffLine skip %v subset", utils.Fmt(dev))
+				continue
+			}
+			if _, ok := pSet[dev.ProductID]; !ok {
+				logx.WithContext(ctx).Infof("fixOffLine skip %v not in pSet", utils.Fmt(dev))
+				continue
+			}
+			if di.IsOnline == def.True {
+				logx.WithContext(ctx).Infof("fixOffLine add %v isOnline=%v", utils.Fmt(dev), di.IsOnline)
+				needOnlineDevices = append(needOnlineDevices, &dm.DeviceOnlineMultiFix{
+					Device: &dm.DeviceCore{
+						ProductID:  di.ProductID,
+						DeviceName: di.DeviceName,
+					},
+					IsOnline:  def.False,
+					ConnectAt: 0,
+				})
+			} else {
+				logx.WithContext(ctx).Infof("fixOffLine skip %v already offline isOnline=%v", utils.Fmt(dev), di.IsOnline)
+			}
+		}
+	}
+	logx.WithContext(ctx).Infof("fixOnline %v", utils.Fmt(needOnlineDevices))
+	if len(needOnlineDevices) > 0 {
+		_, err = o.svcCtx.DeviceM.DeviceOnlineMultiFix(ctx, &dm.DeviceOnlineMultiFixReq{Devices: needOnlineDevices})
+	}
+	return err
+}

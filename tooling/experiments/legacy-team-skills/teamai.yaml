@@ -1,0 +1,32 @@
+team: ming-iot
+description: Ming IoT team skills and rules
+# This is the existing repository's verified Git origin.
+# The isolated pilot replaces it with a synthetic local-only URL.
+repo: "https://gitee.com/ming-industry/ai-native.git"
+provider: git
+autoUpdate: false
+usageReport: false
+submodules: false
+sharing:
+  rules:
+    enforced: []
+  docs:
+    localDir: ./.teamai/docs
+  env:
+    injectShellProfile: false
+  hooks:
+    autoApply: false
+    requireTeamScripts: true
+  mcp:
+    autoApply: false
+  recall:
+    enabled: false
+  contributeHint:
+    enabled: false
+  webhooks:
+    enabled: false
+    endpoints: []
+toolPaths:
+  codex:
+    skills: .agents/skills
+    rules: .codex/rules
