@@ -1,13 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "module": "engineering.api-contract",
   "task": "todo_3af9f9234500",
   "type": "patch",
-  "status": "confirmed",
   "claim": "docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/change.md",
   "confirmation_source": "当前用户在本会话授权选取小改动并试跑；不代表合并或全团队采纳",
   "spec": "docs/specs/engineering/api-contract/spec.md#lint-select",
-  "spec_version": "observed-v0",
+  "spec_version": "current-v1",
   "backlink": "docs/specs/engineering/api-contract/README.md#lint-selection-patches",
   "write_scope": [
     "backend/tools/cmd/apicheck/main.go",

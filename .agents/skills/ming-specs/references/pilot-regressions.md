@@ -1,15 +1,15 @@
 # 真实 Patch 试跑与回归
 
-本资料记录试跑方法，不另建业务权威。真实行为和验收以 [Patch](../../../../docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/change.md) 为准。
+本资料记录试跑方法，不另建业务权威。当前行为和验收从 [API 主规格](../../../../docs/specs/engineering/api-contract/spec.md)与[通知主规格](../../../../docs/specs/saas/notification-trigger/spec.md)读取，已吸收 Patch 只作追溯。
 
 ## 手动检查
 
-在目标 ming-iot 工作树根运行（`BASE` 使用实际比较基线）：
+在目标 ming-iot 工作树根运行。`<本次Patch投影>`、`<新仓实际基线SHA>` 必须替换为本次真实输入；旧试点的认领不覆盖任意后续差异。没有适用投影时按约定审查完整实际 diff，不硬套历史范围：
 
 ```bash
 python3 .agents/skills/ming-specs/scripts/preflight.py \
-  --change docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/check.json \
-  --base da80f056941e5f5e2ea1de38538ea2a062be8853 --staged
+  --change <本次Patch投影> \
+  --base <新仓实际基线SHA> --staged
 python3 -B -m unittest discover -s .agents/skills/ming-specs/scripts -p 'test_*.py' -v
 go -C backend/tools test ./cmd/apicheck -run '^TestCLILint' -count=1
 make verify-pr
@@ -19,7 +19,9 @@ make verify-pr
 
 `check.json` 是试跑的认领投影。v1 保留原有状态字段；v2 只保存 module/task、确认来源、类型、claim、spec#anchor、spec_version、backlink#anchor、write_scope，当前 status/revision 从 Change 开头元数据读取。路径相对仓库根，链接使用普通相对 Markdown 链接，条款使用显式 `<a id="..."></a>`；不支持所有 Markdown 语法。`write_scope` 为 Python fnmatch 模式（`*` 可跨 `/`），优先使用精确文件或明确目录的 `/**`，不把它当权限边界。
 
-只检查已指定的 Patch，不自动发现全部模块，不校验人的身份、审批、状态转换、并发冲突或 Spec-Code 语义。工具退出 0 的结果仍为 `STRUCTURE_OK_REVIEW_REQUIRED`、`semantic_review=NOT_RUN`、`authorization=NOT_VERIFIED`。工具不检测门禁配置，输出 `hook_ci=NOT_VERIFIED`；本次项目事实另行记录为新规格 Hook/CI 未安装，与项目原有代码门禁分开。
+只检查已指定的 Patch，不自动发现全部模块，不校验人的身份、审批、状态转换、并发冲突或 Spec-Code 语义。工具退出 0 的结果仍为 `STRUCTURE_OK_REVIEW_REQUIRED`、`semantic_review=NOT_RUN`、`authorization=NOT_VERIFIED`。工具不检测门禁配置，输出 `hook_ci=NOT_VERIFIED`。当前 `knowledge-check` 已运行检查器回归，但实际 PR 的 base/head 与 Patch 映射尚未接入；不能混称规格门禁已启用。远程合并规则需另行回读。
+
+新仓参考基线为 `c165a56531f58421a870a0b8794f24556b60d3b2`，S1 记录绑定本轮候选。旧仓 SHA 无法解析时保留旧回执；零差异检查只核验指针/字段，不证明实际修改范围、业务语义或回归通过。跨模块全差异目前需人工/AI 审查，不放宽旧认领来取得绿色。
 
 ## 必须保留的反例
 
@@ -37,7 +39,7 @@ make verify-pr
 
 ## 固定版本交接
 
-仅对已选择 v2、状态为 confirmed/effective 的 Patch 生成实施快照。Change 开头示例：
+普通接手无需本节。仅在离线、跨权限或特定外部交付需要冻结输入，且已选择 v2、状态为 confirmed/effective 的 Patch 时生成实施快照。absorbed 历史 Patch 不再生成实施快照。Change 开头示例：
 
 ```yaml
 ---
@@ -72,6 +74,6 @@ python3 .agents/skills/ming-specs/scripts/preflight.py \
 
 ## 新会话交接检查
 
-独立检查者只给仓库、候选 commit 和本 Skill 入口：确认能找到认领、现状与候选的区别、Patch 正反指针、验证命令；实际运行 preflight 和相关测试，报告语义差异与未配置的门禁。不能仅复述实施者报告。
+独立检查者只给仓库、候选 commit 和本 Skill 入口：从地图与模块 README 找到完整当前规则、版本、责任缺口及验证命令，按需读取在途 Patch 和历史原因。复跑相关测试；仅对适用的当前投影运行真实差异 preflight，并说明工具未覆盖部分。报告语义差异及配置未知项，不能仅复述实施者报告。
 
-skill-up 0.12.0 在本机可用；本次未配置其独立 Engine 的 API 凭据，框架运行记为 NOT_RUN。实际试跑、确定性回归和宿主原生独立评审分别留证，不将它们改称 skill-up 批量评测通过。
+历史试跑记录：当时 skill-up 0.12.0 在本机可用，但未配置其独立 Engine 的 API 凭据，框架运行记为 NOT_RUN；不把该时点配置视为当前事实。实际试跑、确定性回归和宿主原生独立评审分别留证，不将它们改称 skill-up 批量评测通过。

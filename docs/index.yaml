@@ -2,6 +2,19 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-current-baseline-20261015
+    role: current_specs_consolidation_and_new_repository_baseline
+    status: local_candidate
+    path: docs/changelog/2026-10-15-specs-current-baseline.md
+    revision: s1-1
+    authority: user_authorized_scoped_consolidation
+    related:
+      - docs/specs/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+      - docs/specs/engineering/api-contract/spec.md
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/SKILL.md
+    conflict_rule: "S1 只收敛两模块已实现规则与协作方法，适用新仓源码 c165a56531f58421a870a0b8794f24556b60d3b2。最终文档候选与验证由任务外部回执绑定；旧 observed、历史回执及备份保留。不是业务变化、全团队采纳、实际 PR 规格门禁启用或生产验收，不恢复小黄任务。"
   - source_id: ming-iot-post-migration-governance-plan-20261015
     role: post_migration_knowledge_and_team_workflow_assessment
     status: proposal
@@ -47,7 +60,7 @@ materials:
     role: candidate_team_knowledge_governance_outline
     status: draft
     path: docs/wiki/team-development-outline.md
-    revision: 0.1.1-draft
+    revision: 0.2.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -55,12 +68,12 @@ materials:
       - docs/specs/README.md
       - docs/changelog/2026-10-14-ming-specs-handoff-pilot.md
       - docs/changelog/2026-10-14-ming-specs-continuation.md
-    conflict_rule: "本提纲记录当前用户方向与待落实建议；不替代模块业务规格，不代表团队采纳、Skill 已修改或门禁已启用。用户明确决定优先。"
+    conflict_rule: "本提纲保留设计依据；S1 已同步部分约定与 Skill 候选，实际状态见 S1 条目。不替代模块业务规格，不代表全团队采纳或门禁启用。用户明确决定优先。"
   - source_id: ming-iot-team-specs-draft-v01
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.3.1-draft
+    revision: 0.4.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -71,7 +84,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.3.0-draft
+    revision: 0.4.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
