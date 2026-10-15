@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "modules": [
+    {
+      "id": "saas.notification-trigger",
+      "paths": [
+        "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams.go",
+        "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams_test.go",
+        "backend/saas/service/syssvr/internal/logic/notifymanage/appPush.go",
+        "backend/saas/service/syssvr/internal/logic/notifymanage/sendMsg.go",
+        "docs/specs/saas/notification-trigger/**"
+      ],
+      "spec": "docs/specs/saas/notification-trigger/spec.md",
+      "entry": "docs/specs/saas/notification-trigger/README.md"
+    },
+    {
+      "id": "engineering.api-contract",
+      "paths": ["backend/tools/cmd/apicheck/**", "docs/specs/engineering/api-contract/**"],
+      "spec": "docs/specs/engineering/api-contract/spec.md",
+      "entry": "docs/specs/engineering/api-contract/README.md"
+    }
+  ]
+}

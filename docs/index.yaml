@@ -2,6 +2,18 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-pr-check-20261016
+    role: actual_pr_diff_module_mapping_and_regressions
+    status: local_candidate
+    path: docs/changelog/2026-10-16-specs-pr-check.md
+    revision: s2-1
+    authority: user_authorized_scoped_implementation
+    related:
+      - tooling/specs-map.json
+      - tooling/specs_pr.py
+      - .agents/skills/ming-specs/references/pr-check.md
+      - docs/runbook/team-development.md
+    conflict_rule: "S2 接入完整 PR 差异、模块条款、轻量声明与历史归档。最终 Head、验证及独立复审由 Goal 外部回执绑定；候选配置和本地事件回放不是托管运行、远程必需检查或业务语义批准。保留 S1、旧仓、备份和历史回执；不恢复小黄任务。"
   - source_id: ming-iot-specs-current-baseline-20261015
     role: current_specs_consolidation_and_new_repository_baseline
     status: local_candidate

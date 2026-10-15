@@ -1,7 +1,7 @@
 ---
 status: draft
-version: 0.4.0-draft
-date: 2026-10-15
+version: 0.5.0-draft
+date: 2026-10-16
 ---
 
 # Ming IoT 团队开发约定（草案）
@@ -15,6 +15,7 @@ date: 2026-10-15
 - 按 2026-10-15 用户决定，将工作区全部项目迁入 GitHub ming-iot 并收敛为一个 monorepo，Insight 在仓内统一维护。巡检先作为同仓独立业务模块；MQTT 网关保留可复用组件边界，代码与基本契约同仓。当前迁移依据见[单仓迁移方案](../architecture/monorepo-migration.md)，不以 r-doc 正式采用为前提。
 - ming-iot-rd-docs、iot-doc、ai-native 是迁移来源资料。旧文件中的规则、状态及代理指令不会因复制或引用而自动生效。OpenSpec 仍是候选，不是本约定的依赖。
 - 2026-10-15 用户授权 S1：收敛通知与 API 校验的主规格，建立新仓验证基线，同步修订本约定与 Skill。见 [S1 记录](../changelog/2026-10-15-specs-current-baseline.md)。此轮不改变业务行为，也不代表全团队采纳；小黄反馈任务保持废弃。
+- 2026-10-16 用户授权 S2：接入实际 PR 差异与模块映射、多模块检查、轻量路径及历史归档。见 [S2 记录](../changelog/2026-10-16-specs-pr-check.md)。工作流在候选中配置，托管结果与远程强制规则单独验证。
 - 本稿的试跑范围由实际任务明确；现有任务沿用其已确认的规格和交付入口。切换时按模块登记新入口与旧入口的替代关系，避免双重权威。
 - 项目事实、业务规则和人的决定保存在项目文档或明确引用的任务记录中；Skill 负责操作步骤，LoopX 如被采用只管理任务调度及执行状态。
 
@@ -173,23 +174,28 @@ Blueprint 使用 exploring、promoted、closed。模块入口列出当前基线�
 
 ## 哪些依靠工具强制检查
 
-以下是检查契约。现有 [手动 preflight](../../.agents/skills/ming-specs/scripts/preflight.py) 检查明确指定的 Patch 和固定候选，可核对按需生成的实施快照。单仓 CI 的 `verify-pr → contract-static → knowledge-check` 已运行文档检查及 preflight 自身回归；**尚未把实际 PR 的 base/head 和 Patch 映射接到规格检查器**。本轮不新增门禁；远程分支保护未回读，不推断为存在或不存在。
+以下是检查契约。[完整 PR 检查器](../../tooling/specs_pr.py) 从 PR 事件取得 base/head 和声明，比较 merge-base 至 Head 的所有路径。[模块映射](../../tooling/specs-map.json) 只投影路径、当前规格和入口，不保存第二份业务规则。当前仅登记通知与 API 校验；文件被映射不代表文件内全部行为已有规格。其他产品路径显式列为归属缺口，不能自动放行。
 
+PR 说明使用一个 `ming-specs` JSON 块，具体格式见 [PR 检查约定](../../.agents/skills/ming-specs/references/pr-check.md)。多个模块取认领范围的并集，共享路径分别取得相关模块覆盖。行为变化须指向当前 Patch revision 并同步主规格；规则不变的小修复在 PR 中写条款和理由即可。归档核对源/目标的实际删除新增与完全相同的内容、文件模式；不将旧文档的内部断链当现行规则检查。
+
+未改动且未被本次认领的 absorbed/withdrawn 历史 Patch 保留当时版本，不强迫随新规格重写。当前入口和主规格、活动 Patch 以及本次新增/修改/引用的 Patch 仍检查指针。工具按声明验证结构；是否确属“规则不变”、历史分类是否合理、映射是否准确由评审判断。
+
+单仓 CI 的 `verify-pr → contract-static → knowledge-check` 运行检查器回归；独立的 Specs PR check 工作流对 opened/synchronize/reopened/edited 事件调用完整差异入口。当前为本地候选，尚无该工作流的托管运行证据；远程分支保护未回读，不推断为存在或不存在。原 [手动 preflight](../../.agents/skills/ming-specs/scripts/preflight.py) 保留单 Patch/staged 提前反馈和按需实施快照。
 | 检查 | 程序可确定检查的部分 | 仍需 AI/人判断的部分 | 本稿状态 |
 | --- | --- | --- | --- |
 | 认领完整性 | 任务/模块、确认来源字段、候选路径在声明范围内 | 身份和授权真实性、分工合理性、并发冲突、共享影响 | LOCAL_PARTIAL：字段与范围；不验证人和排他认领 |
 | 类型与状态 | Patch 的枚举与必要字段 | 类型是否合理、状态转换条件是否满足 | LOCAL_PARTIAL：仅 Patch 静态字段；完整状态机未实现 |
-| 双向指针 | 明示链接、显式条款锚点、规格版本及反向链接存在 | 覆盖语义准确性、重叠 Patch 的关系 | LOCAL_PARTIAL：显式给定的一个 Patch；全库冲突检查未实现 |
+| 双向指针 | 明示链接、显式条款锚点、规格版本及反向链接存在 | 覆盖语义准确性、重叠 Patch 的关系 | CANDIDATE：登记模块当前入口及活动/本次 Patch；语义冲突检查未实现 |
 | 候选与证据 | tree/commit、diff 与输入指纹、所有变更路径列表 | 语义一致性、证据充分性及实际最终版本评审 | LOCAL_PARTIAL：身份指纹；测试/Review 回执仍需独立核验 |
 | 实施交接快照 | 固定 commit/tree、基线、Change revision/status、认领范围和输入指纹逐项一致；接收工作树与候选一致 | 决定是否真实、业务是否理解、包的可信来源及运行结果是否充分 | LOCAL_PARTIAL：v2 Patch；仅本地手动检查，非签名或授权验证 |
-| 提交与 PR 检查 | Hook/CI 对实际变更调用约定检查 | 差异处理与需求取舍 | PARTIAL：已有检查器回归 CI；实际 PR 范围与条款检查 NOT_CONFIGURED |
+| 提交与 PR 检查 | Hook/CI 对实际变更调用约定检查 | 差异处理与需求取舍 | CANDIDATE：实际 PR 事件接线及本地回放；托管运行 NOT_RUN，Hook 未安装 |
 | 合并限制 | 必需检查、负责人评审、实际候选更新后的再评审 | 有权限者作出接受或退回决定 | NOT_VERIFIED：远程规则未回读；仓内未登记 CODEOWNERS |
 
 校验程序必须能区分“字段里写了一个确认”与“从受信评审/任务来源验证到确认”。仅检查字段存在不能充当批准证明。CI 负责执行可验证条件，AI 的自然语言自评不能直接变成自动放行凭据。
 
 本地 Hook 用于提前反馈；服务端合并规则承担团队强制要求。Git 的 pre-commit 可被跳过；GitHub 的 CODEOWNERS 也需要与负责人评审和分支保护配置配合。将来接入时验证失败确实阻止合并，不能只验证绿色路径。
 
-手动检查用法与限制见 Skill 的 [试跑回归说明](../../.agents/skills/ming-specs/references/pilot-regressions.md)。它不会安装 Hook、不自动寻找所有 Patch，也不验证 `check.json` 是否擅自放宽范围；认领投影本身的修改仍需按真实授权评审。
+单 Patch 手动检查用法与限制见 Skill 的 [试跑回归说明](../../.agents/skills/ming-specs/references/pilot-regressions.md)。它不会安装 Hook、不自动寻找所有 Patch，也不验证 `check.json` 是否擅自放宽范围；认领投影本身的修改仍需按真实授权评审。
 
 ## 交付与交接
 
