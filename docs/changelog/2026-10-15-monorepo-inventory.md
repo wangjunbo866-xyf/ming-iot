@@ -63,7 +63,7 @@ ming-iot 候选 `b8435c6704c4f32a7d0ea110a1240522c47546b8` 比主线领先 13 �
 
 以上是源码对比的风险清单，尚未判断每个旧增量应采用还是被目标替代。M2 为每项补齐行为、依赖、测试和处理决定。
 
-来源证据：[Core 来源](../superpowers/evidence/2026-07-23-core-source-baseline.md)、[Share SOURCE](../../backend/share/SOURCE.json)、[Things PROVENANCE](../../backend/things/PROVENANCE.yaml)。保留现有 `backend/go.work` 的四个模块；托管平台迁移与 Go import 改名分开处理。
+来源证据：[Core 来源](../wiki/legacy/superpowers/evidence/2026-07-23-core-source-baseline.md)、[Share SOURCE](../../backend/share/SOURCE.json)、[Things PROVENANCE](../../backend/things/PROVENANCE.yaml)。保留现有 `backend/go.work` 的四个模块；托管平台迁移与 Go import 改名分开处理。
 
 ## 脏改动、未跟踪与忽略内容
 
@@ -170,7 +170,7 @@ M2 证明可恢复及本地导入路径，不表示 M3 构建门禁已通过、�
 
 实施内容：
 
-- 旧 Share 引用检查使用 `docs/meta/HISTORICAL_REFERENCES.json` 逐文件核对限定路径、内容摘要和历史理由；不按目录全部豁免。新活动代码、未登记历史文件、摘要变化和越界/符号链接继续失败。
+- 旧 Share 引用检查使用 `tooling/policy/HISTORICAL_REFERENCES.json` 逐文件核对限定路径、内容摘要和历史理由；不按目录全部豁免。新活动代码、未登记历史文件、摘要变化和越界/符号链接继续失败。
 - 新增 `tooling/knowledge.py` 与 `make knowledge-check`，在任意检出目录定位本仓正文并调用原 ming-specs 检查；`verify-pr` 的原七个阶段保留，在静态契约阶段增加知识入口与回归检查。
 - 根 README、AGENTS、docs 导航给出当前模块、命令、关键约定和状态。旧团队分发与研发工具放入 experiments；不要求邻接旧仓、不自动安装旧 Skill/Hook。r-doc 候选移入保留上游层级的实验目录，补齐备份中可核对的测试夹具、辅助程序和依赖声明，适配失活模板链接；不覆盖原候选代码/回归，不改变未正式采用的结论。
 - 修复 SaaS 任务管理图片和本地联调入口；42 份旧 Core/Things 附属材料按来源摘要保存，执行性内容以 `.source.txt` 保留。私有配置/私钥示例不导入；旧 SQL、云函数和远端脚本不执行。areastat 保持停用，业务语义缺口见对应说明。
@@ -293,7 +293,7 @@ M2 证明可恢复及本地导入路径，不表示 M3 构建门禁已通过、�
 
 ### LIC-01：外部文章及六图
 
-范围：docs/rd/references/unitedrhino-tech-arch-02.md 及其 assets/unitedrhino-tech-arch-02/ 六图，均在清单逐项记录摘要。来源为联犀官方文章 https://doc.unitedrhino.com/blog/tech-arch-02/ 。本轮查阅该页面，没有找到覆盖本仓全文/图片再分发的明确声明；这只是所查页面的结果，不代表已经穷举所有权利证据，也不认定侵权。
+范围：docs/wiki/legacy/rd/references/unitedrhino-tech-arch-02.md 及其 assets/unitedrhino-tech-arch-02/ 六图，均在清单逐项记录摘要。来源为联犀官方文章 https://doc.unitedrhino.com/blog/tech-arch-02/ 。本轮查阅该页面，没有找到覆盖本仓全文/图片再分发的明确声明；这只是所查页面的结果，不代表已经穷举所有权利证据，也不认定侵权。
 
 具体方案：保留私有完整副本及备份；拟公开原位置改为我们自己的短摘要，说明其用于工程组织参考，保留作者、日期和链接，删除公开文件对本地六图的引用。摘要写法示例：“该资料作为代码生成、模块划分与统一工程入口的外部参考。Ming IoT 的实施要求以本仓当前规格为准。”正式替换须在公开范围决定后实施；本轮没有修改正文或文件树。
 
@@ -708,3 +708,36 @@ PUBLICATION_POLICY将LIC-01..04的旧待决状态转成精确范围处置记录�
 用户明确批准向GitHub `wangjunbo866-xyf/ming-iot` 推送已审候选并完成GitHub CI和独立复审。基线为 `de45752d63f6f701eade27a550c86aaa58bbe7ff`，保留旧仓、所有既有候选和私有备份。单仓分支经PR交付；本次只覆盖候选推送及验证，不包括M5、合并、版本发布或源仓删除。原本地阶段HOLD由本次明确远程授权替代，内容来源与验证局限继续有效。
 
 证据包 `monorepo-github-delivery-20261015` 将绑定实际远程Head、CI运行/attempt、失败与修复记录及最终独立复审。未取得托管结果前不声明GitHub CI通过。
+
+### M4D 推送尝试与权限阻塞
+
+固定候选 Head `26e5d63d2ff469648409b5cf6e2c0184fec7d51a`，树 `2f714087ab1538a9854573d73cd77908cdaf159b`。相对已审 M4C 只改9份文档/状态文件，无新增、删除或模式变化；其余3948文件原样。CI工具、workflow静态检查、publication-ready与完整verify-pr全部通过；完整verify-pr耗时174.35秒。独立推送前复审已核对同一Head及四份日志，未发现阻塞项。
+
+实际使用原子推送，仅请求把空根放到main、固定候选放到codex/monorepo-migration。GitHub拒绝工作流写入，明确指出当前OAuth凭据缺workflow scope；整个原子事务失败。拒绝后远程heads/tags读取为空，没有分支落地，没有创建PR，托管CI状态为NOT_RUN，不得标为PASS。该权限缺口与用户已有交付授权分别记录。
+
+证据包 `monorepo-github-delivery-20261015` 保存授权、四项检查、独立预推复审、实际拒绝日志与远程空refs回读。候选保持干净，旧源和私有备份保留。用户更新当前Git凭据权限后接续原任务；不通过删除CI文件或替换身份规避拒绝。尚未完成GitHub交付和最终远程复审，不关闭当前Todo或整个Goal，不执行M5、合并、发布或删除。
+
+### M4D 托管交付回执
+
+前述权限阻塞已恢复：用户通过私有输入入口更新同账号 Git 凭据，验证目标账号和 workflow 权限后重试成功。保留两次原始失败记录；未删减 CI、替换身份或覆盖旧凭据。
+
+| 核验项 | 实际结果 |
+| --- | --- |
+| 候选 Head | `c98f327cfafaeb40a74bf129042f616f5b5d07f1` |
+| 候选 tree | `bd3dd06f06fcbf95def07d5da74f4a7f4a92d479` |
+| 远程 refs | 只推送空根 main 和 codex/monorepo-migration；没有 mirror、旧源 refs 或私有历史推送 |
+| PR | [#1](https://github.com/wangjunbo866-xyf/ming-iot/pull/1)，base=main，head=codex/monorepo-migration，open/draft，未合并 |
+| GitHub CI | 首轮 run 38657216626 失败；第二轮 run 38659416232 显示成功但独立复审发现扫描假绿，未验收；最终 [run 38661089656](https://github.com/wangjunbo866-xyf/ming-iot/actions/runs/38661089656)，event=pull_request，attempt=1，job=116182240148，success，扫描执行已核实 |
+| CI 代码绑定 | run head 为上述候选；实际合成 merge tree 与候选 tree 相同 |
+| 检查范围 | workflow、完整可达历史/公开边界、完整 verify-pr、publication status 均成功 |
+| 独立复审 | `PASS_HOSTED_SCOPED_DELIVERY`；远程/PR/CI/日志/候选及保留范围经独立核对，无本次阻塞项 |
+| 保留边界 | 旧仓、原候选、私有备份保持；未执行 M5、自动合并、版本发布、生产操作或源仓删除 |
+
+证据包仍为 `monorepo-github-delivery-20261015`。完整运行/日志与独立复审在私有证据包保存；本记录只保存可公开摘要。
+
+| 证据 | SHA-256 |
+| --- | --- |
+| `hosted-final-evidence.json` | `b0f0cec2044b40b9db0649aa51c0287d2f97c5acec747c1c9b48230592206cf6` |
+| `hosted-final-review.json` | `68db287f73f7e9caf50877d5004e74e9a5cc42af761e9c996a2018be59ad153b` |
+
+M4D 范围内交付完成，整个迁移/知识治理 Goal 仍保留后续边界。已有许可证、Jison Lex 材料及17项生成文件未重建限制继续有效；CI 不证明所有历史权属、生产部署、真实依赖联调或真人验收。小黄反馈仍为独立未完成项。

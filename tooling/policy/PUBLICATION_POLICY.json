@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "publication_status": "ready",
-  "scope": "User-authorized GitHub candidate push, hosted CI and independent review only. Preserve old repositories and private backups. No merge, release, M5 runtime cutover, source deletion or production action.",
+  "scope": "User-authorized M5 merge of PR 1 and daily development, documentation and tooling cutover. Preserve old repositories and private backups; no source deletion, version release or production action.",
   "history_strategy": "New isolated history from attribution assembly plus approved 25-file scope. Original complete histories, candidates and backups remain private; never push their refs wholesale.",
   "source_head": "302170043c6ce8dd81ff2a9826156d941ea7deb7",
   "source_tree": "7acc3768b9d5b8aa1ba60048db16e3ab767a4635",
@@ -59,7 +59,7 @@
   "limitations": [
     "Pattern scanning is not proof of absence of every secret or personal datum. Media rights/content and transitive runtime compliance are not certified.",
     "Local-address and historical workstation path references remain source context, not active configuration or permission to connect.",
-    "No production, device, human handoff, hosted GitHub Actions or branch-protection verification performed.",
+    "No production, device or human handoff acceptance, or branch-protection configuration verification. Hosted GitHub CI evidence is recorded in the M4D migration log.",
     "Historical coverage remains bounded:85 priority files read;86 full,1 partial,407 unread unique bodies overall. Not complete factual or rights certification.",
     "Jison Lex complete native license text was not located in the bounded evidence search; known MIT label and author retained.",
     "Scope decision does not license third-party material or certify every transitive runtime obligation."
@@ -68,13 +68,13 @@
     {
       "id": "LIC-01",
       "status": "approved_scope_applied",
-      "evidence": "docs/meta/PUBLIC_SCOPE.json",
+      "evidence": "tooling/policy/PUBLIC_SCOPE.json",
       "result": "External article replaced by original summary; six images excluded from reachable candidate history."
     },
     {
       "id": "LIC-02",
       "status": "approved_bounded_scope_applied",
-      "evidence": "docs/meta/PUBLIC_SCOPE.md",
+      "evidence": "docs/changelog/2026-10-15-public-scope.md",
       "result": "18 selected historical originals private only; known snippets and templates attributed. Remaining mixed material is not declared wholly original or fully rights-certified."
     },
     {
@@ -101,13 +101,13 @@
       "push verified candidate branch",
       "create migration PR",
       "run hosted CI",
-      "independent exact-head review"
+      "independent exact-head review",
+      "merge verified PR 1 into main",
+      "deliver verified M5 documentation and team-tool cutover through PR"
     ],
     "permitted_followups": "Necessary delivery metadata or CI corrections must be validated and independently reviewed for their final exact head.",
     "excluded_actions": [
-      "merge",
       "version release",
-      "M5 runtime cutover",
       "delete source repositories or backups",
       "production operations"
     ]

@@ -12,7 +12,7 @@ version: 0.2.0-draft
 - [团队开发约定](../runbook/team-development.md)：人、AI、Skill 和工具的责任，认领、变更、生效与交付规则。
 - [ming-specs Skill](../../.agents/skills/ming-specs/SKILL.md)：按任务执行认领、变更、差异检查和收敛。
 - [记录模板](../../.agents/skills/ming-specs/references/templates.md)：只在实际需要的环节使用。
-- [草案材料目录](../meta/DOC_REGISTRY.yaml)：本次草案的正文定位与采纳状态。
+- [草案材料目录](../index.yaml)：本次草案的正文定位与采纳状态。
 
 ## 模块地图
 

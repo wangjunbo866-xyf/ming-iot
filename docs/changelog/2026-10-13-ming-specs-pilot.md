@@ -48,7 +48,7 @@ go -C backend/tools run ./cmd/apicheck lint --backend .. \
 | docs/specs/README.md | 登记该模块及真实采纳状态 |
 | docs/runbook/team-development.md | 试跑所得治理约定修订；不改变业务行为 |
 | .agents/skills/ming-specs/** | 执行流程、有限的手动检查器及隔离回归；不改变业务契约 |
-| docs/meta/DOC_REGISTRY.yaml、本报告 | 正文映射和证据导航；不改变业务契约 |
+| docs/index.yaml、本报告 | 正文映射和证据导航；不改变业务契约；索引在 M5 调整位置 |
 
 ## 验证与评审
 

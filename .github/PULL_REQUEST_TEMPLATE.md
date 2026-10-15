@@ -13,4 +13,4 @@
 
 ## 发布边界
 
-技术检查通过不代表允许公开、合并或发布；公开前还须通过 `make publication-ready`，并取得绑定候选和动作的授权。许可证待确认项见 `docs/meta/PUBLICATION_POLICY.json`。
+技术检查通过不代表允许公开、合并或发布；公开前还须通过 `make publication-ready`，并取得绑定候选和动作的授权。许可证待确认项见 `tooling/policy/PUBLICATION_POLICY.json`。

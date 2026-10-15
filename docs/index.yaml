@@ -1,12 +1,12 @@
 schema_version: 1
 status: draft
-description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效。路径相对仓库根。"
+description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
   - source_id: ming-iot-monorepo-migration-20261015
     role: current_goal_migration_plan
     status: active-plan
     path: docs/architecture/monorepo-migration.md
-    revision: 0.4.9
+    revision: 0.5.0
     authority: user_confirmed_direction_design_candidate
     related:
       - docs/changelog/2026-10-15-monorepo-inventory.md
@@ -202,10 +202,22 @@ materials:
     conflict_rule: "用户已确认25文件方案，覆盖旧未决定状态；本地候选另建历史，旧源完整保留。精确验证和复审以Goal登记的monorepo-public25-20261015回执为准；不新增整仓许可，不授权推送、删除或真人验收。"
   - source_id: ming-iot-monorepo-github-delivery-20261015
     role: monorepo_github_candidate_ci_and_review
-    status: authorized_pending_hosted_validation
+    status: hosted_verified_draft_pr
     path: docs/changelog/2026-10-15-monorepo-inventory.md
-    revision: github-1
+    revision: github-3
     authority: scoped_migration_evidence
     related:
       - docs/architecture/monorepo-migration.md
     conflict_rule: "用户已授权GitHub候选推送、托管CI和独立复审；以实际远程Head和运行回执验收，保留旧源、候选和私有备份，不授权M5、删除、自动合并或版本发布。"
+
+  - source_id: ming-iot-monorepo-m5-20261015
+    role: daily_development_cutover
+    status: in_progress_with_routing_gap
+    path: docs/changelog/2026-10-15-m5-cutover.md
+    revision: m5-1
+    authority: user_authorized_scoped_delivery
+    related:
+      - docs/runbook/daily-development.md
+      - docs/architecture/monorepo-migration.md
+      - tooling/policy/README.md
+    conflict_rule: "M5 授权覆盖此前暂不合并/切换状态；PR1已合并，小黄反馈及依赖项已废弃且未验收。旧仓和私有备份保留。新入口转发不等于 SQLite canonical 注册位置迁移，该缺口仍待正式接口支持。"

@@ -6,10 +6,10 @@
 | --- | --- |
 | backend/saas | [AGPL v3](backend/saas/LICENSE)、[NOTICE](backend/saas/NOTICE) |
 | backend/things | [AGPL v3](backend/things/LICENSE)、[NOTICE](backend/things/NOTICE)、[来源](backend/things/PROVENANCE.yaml) |
-| backend/share | [Apache-2.0](backend/share/LICENSE)、[来源](backend/share/SOURCE.json)；冻结版本再发布授权见[原有确认](docs/rd/specs/2026-08-27-ming-iot-local-share-migration-activation-design.md)，保留文件中的第三方署名 |
+| backend/share | [Apache-2.0](backend/share/LICENSE)、[来源](backend/share/SOURCE.json)；冻结版本再发布授权见[原有确认](docs/wiki/legacy/rd/specs/2026-08-27-ming-iot-local-share-migration-activation-design.md)，保留文件中的第三方署名 |
 | tooling/experiments/r-doc-v3、r-doc-v4 | 各自 LICENSE、UPSTREAM-LICENSE 保留 RiESA 版权与 MIT 正文；均为未正式采纳的实验 |
 | 原创工具、Specs 与团队文档 | 本次不新增开放许可，不从其他组件许可证推断；不是整仓原创或权属认证 |
-| 转载文章、图片、旧 Mermaid bundle、历史资料 | 按已确认的 [25文件范围](docs/meta/PUBLIC_SCOPE.md) 处理；Mermaid与历史摘录保留已整理声明和明确限制 |
+| 转载文章、图片、旧 Mermaid bundle、历史资料 | 按已确认的 [25文件范围](docs/changelog/2026-10-15-public-scope.md) 处理；Mermaid与历史摘录保留已整理声明和明确限制 |
 
 许可证/NOTICE 的固定摘要由 `make publication-check` 核验。该命令只证明技术扫描和声明保留；`make publication-ready` 在待确认项存在时返回失败。任何公开操作还须获得用户针对候选和动作的授权。
 

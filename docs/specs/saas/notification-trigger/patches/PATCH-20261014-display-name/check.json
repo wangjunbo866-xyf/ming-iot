@@ -13,7 +13,7 @@
     "docs/specs/README.md",
     "docs/specs/saas/notification-trigger/**",
     "docs/changelog/2026-10-14-ming-specs-handoff-pilot.md",
-    "docs/meta/DOC_REGISTRY.yaml",
+    "docs/index.yaml",
     ".agents/skills/ming-specs/**",
     "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams.go",
     "backend/saas/service/syssvr/internal/logic/notifymanage/triggerUserParams_test.go"

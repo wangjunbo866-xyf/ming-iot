@@ -164,7 +164,7 @@ def publication_ready(policy):
 def check(root):
     if git(root, "status", "--porcelain", "--untracked-files=all").strip():
         raise ValueError("check requires a clean committed candidate")
-    policy = json.loads((root / "docs/meta/PUBLICATION_POLICY.json").read_text())
+    policy = json.loads((root / "tooling/policy/PUBLICATION_POLICY.json").read_text())
     for item in policy["retained_notices"]:
         if hashlib.sha256((root / item["path"]).read_bytes()).hexdigest() != item["sha256"]:
             raise ValueError("license/source notice changed: " + item["path"])
@@ -172,7 +172,7 @@ def check(root):
     expected = json.loads((root / "tooling/ci-tools.json").read_text())["gitleaks"]["version"]
     if subprocess.check_output([str(scanner), "version"], text=True).strip() != expected:
         raise ValueError("unexpected gitleaks version; run make ci-tools")
-    exceptions = json.loads((root / "docs/meta/SCAN_EXCEPTIONS.json").read_text())["exceptions"]
+    exceptions = json.loads((root / "tooling/policy/SCAN_EXCEPTIONS.json").read_text())["exceptions"]
     with tempfile.TemporaryDirectory(prefix="ming-publication-") as temp:
         work = Path(temp)
         blobs = work / "objects"
@@ -212,7 +212,7 @@ def main():
     try:
         if args.action == "check":
             return check(ROOT)
-        policy = json.loads((ROOT / "docs/meta/PUBLICATION_POLICY.json").read_text())
+        policy = json.loads((ROOT / "tooling/policy/PUBLICATION_POLICY.json").read_text())
         print(json.dumps({k: policy[k] for k in ("publication_status", "pending_decisions")}, ensure_ascii=False, indent=2))
         if args.action == "ready" and not publication_ready(policy):
             return 2
