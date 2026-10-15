@@ -2,6 +2,18 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-post-migration-governance-plan-20261015
+    role: post_migration_knowledge_and_team_workflow_assessment
+    status: proposal
+    path: docs/changelog/2026-10-15-post-migration-governance-plan.md
+    revision: 0.1.0
+    authority: user_requested_assessment_and_next_step_proposal
+    related:
+      - docs/specs/README.md
+      - docs/runbook/team-development.md
+      - docs/wiki/team-development-outline.md
+      - .agents/skills/ming-specs/SKILL.md
+    conflict_rule: "基于迁移后main的时点盘点与后续计划，不代表规则已修订、Skill正式采纳或门禁已启用。优先收敛现行规格和方法；不重新创建Goal，不恢复小黄任务，旧仓及私有备份继续保留。历史试点结论保持原适用范围。"
   - source_id: ming-iot-monorepo-migration-20261015
     role: current_goal_migration_plan
     status: active-plan
