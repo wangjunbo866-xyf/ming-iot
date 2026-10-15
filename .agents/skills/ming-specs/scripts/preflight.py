@@ -28,19 +28,55 @@ def read_at(tree, path):
     return git("show", f"{tree}:{repo_path(path)}").decode("utf-8")
 
 
+def without_fenced_examples(content):
+    """Discard Markdown fenced examples, including longer and indented fences."""
+    output, fence = [], None
+    for line in content.splitlines(keepends=True):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line.rstrip("\r\n"))
+        if fence:
+            if marker and marker[1][0] == fence[0] and len(marker[1]) >= len(fence) and not marker[2].strip():
+                fence = None
+            continue
+        if marker:
+            fence = marker[1]
+        else:
+            output.append(line)
+    return "".join(output)
+
+
+def stable_anchors(content):
+    # The supported contract uses standalone explicit anchors, never code examples.
+    return set(re.findall(r'^ {0,3}<a id="([^"\n]+)"></a>[ \t]*$', without_fenced_examples(content), re.M))
+
+
+def current_spec_version(content):
+    # New specs use frontmatter; legacy v1 fixtures use one top-level version line.
+    if content.startswith("---\n"):
+        if "\n---\n" not in content[4:]:
+            raise ValueError("规格元数据未闭合")
+        header = content[4:].split("\n---\n", 1)[0]
+    else:
+        header = without_fenced_examples(content)
+    definitions = [line for line in header.splitlines() if re.match(r"\s*version\s*:", line)]
+    value = re.fullmatch(r"version: ([A-Za-z0-9_.-]+)", definitions[0]) if len(definitions) == 1 else None
+    if value is None:
+        raise ValueError("规格须有且只有一个简单标量 version")
+    return value[1]
+
+
 def reference(tree, ref):
     path, sep, anchor = ref.partition("#")
     if not sep or not anchor:
         raise ValueError(f"缺少稳定锚点：{ref}")
     content = read_at(tree, path)
-    if f'<a id="{anchor}"></a>' not in content:
+    if anchor not in stable_anchors(content):
         raise ValueError(f"锚点不存在：{ref}")
     return path, content
 
 
 def links(path, content):
     result = set()
-    for target in re.findall(r"\]\(([^\s)]+)\)", content):
+    for target in re.findall(r"\]\(([^\s)]+)\)", without_fenced_examples(content)):
         if "://" in target:
             continue
         name, sep, anchor = target.partition("#")
@@ -104,7 +140,7 @@ def check_structure(manifest, tree):
         raise ValueError("Patch 缺少指向反向入口的导航")
     if claim_path not in links(back_path, back):
         raise ValueError("模块入口缺少指向 Patch 的反向指针")
-    if f'version: {record["spec_version"]}\n' not in spec:
+    if current_spec_version(spec) != record["spec_version"]:
         raise ValueError("规格版本与认领声明不一致")
     return {
         "result": "STRUCTURE_ONLY_REVIEW_REQUIRED",

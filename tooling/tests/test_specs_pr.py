@@ -128,6 +128,35 @@ class SpecsPRTest(unittest.TestCase):
         self.edit('docs/specs/a/README.md', '[Current](spec.md)', '[Current](missing.md)'); self.commit()
         self.bad(self.decl(self.claim()), 'does not link current spec')
 
+    def test_example_only_clause_and_backlink_cannot_satisfy_contract(self):
+        self.edit('docs/specs/a/spec.md', '<a id="rule"></a>', '   ````html\n<a id="rule"></a>\n```\n   ````')
+        self.commit()
+        self.bad(self.decl(self.claim()), '锚点不存在')
+
+    def test_example_only_entry_or_backlink_is_not_navigation(self):
+        self.edit('docs/specs/a/README.md', '[Patch](patches/P1/change.md)', '~~~md\n[Patch](patches/P1/change.md)\n~~~')
+        self.commit()
+        self.bad(self.decl(self.claim()), '反向指针')
+
+    def test_example_only_light_clause_blocks_without_active_patch(self):
+        self.edit('docs/specs/a/patches/P1/change.md', 'confirmed', 'absorbed'); self.base = self.commit()
+        self.edit('docs/specs/a/spec.md', '<a id="rule"></a>', '```html\n<a id="rule"></a>\n```')
+        self.commit()
+        self.bad(self.decl(self.claim()), 'stable clause')
+
+    def test_old_version_in_example_cannot_satisfy_active_patch(self):
+        name = 'docs/specs/a/spec.md'
+        self.edit(name, 'version: v1', 'version: v2')
+        self.write(name, (self.root/name).read_text()+'\n```yaml\nversion: v1\n```\n')
+        self.commit()
+        claim = self.claim(); claim['spec_version'] = 'v2'
+        self.bad(self.decl(claim), '规格版本与认领声明不一致')
+
+    def test_duplicate_version_metadata_is_ambiguous(self):
+        self.edit('docs/specs/a/spec.md', 'version: v1', 'version: v1\nversion: "v1"')
+        self.commit()
+        self.bad(self.decl(self.claim()), '只有一个')
+
     def test_light_claim_requires_current_version_and_clause(self):
         self.change_code(); self.commit()
         claim = self.claim(); claim['spec_version'] = 'v0'

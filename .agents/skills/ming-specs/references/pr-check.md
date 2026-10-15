@@ -80,7 +80,7 @@ GitHub 使用 `python3 tooling/specs_pr.py --event "$GITHUB_EVENT_PATH"`。工�
 
 模块当前入口/主规格的站内链接与锚点始终检查。活动 Patch，以及本 PR 新增、修改、引用的 Patch，检查结构和版本。未修改且未被引用的 absorbed/withdrawn Patch 保留原适用版本，不要求为了新规格改写历史。输出 historical_projections_not_revalidated 明示其未按当前规格重新验证；旧的独立 preflight 仍可对原提交核验。
 
-链接检测支持当前文档使用的行内 Markdown、标题与显式锚点，忽略 fenced 示例，不是完整 Markdown 渲染器；不访问外部链接。历史资料正文不递归纳入当前断链检查。
+链接检测支持当前文档使用的行内 Markdown、标题与独占一行的显式锚点，忽略 fenced 示例，不是完整 Markdown 渲染器；不访问外部链接。历史资料正文不递归纳入当前断链检查。
 
 成功仅表示 `STRUCTURE_OK_REVIEW_REQUIRED`；semantic_review=NOT_RUN、authorization=NOT_VERIFIED、server_merge_rules=NOT_VERIFIED。测试和语义 Review 的有效性由实际回执核对。`make verify-pr` 包含检查器回归，完整 PR 检查另需真实 base/head/声明。零差异只可作结构检查，不能作为某个非空 PR 已检查的证据。
 

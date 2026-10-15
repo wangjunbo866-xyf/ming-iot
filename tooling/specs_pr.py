@@ -92,6 +92,8 @@ class Snapshot:
 def field(body, key):
     if not body.startswith('---\n') or '\n---\n' not in body[4:]:
         raise ValueError('current spec requires frontmatter')
+    if key == 'version':
+        return patch.current_spec_version(body)
     values = re.findall(rf'^{re.escape(key)}: ([A-Za-z0-9_.-]+)$', body[4:].split('\n---\n', 1)[0], re.M)
     if len(values) != 1:
         raise ValueError(f'current spec requires one simple {key}')
@@ -123,11 +125,11 @@ def module_map(snapshot, optional=False):
 
 
 def strip_examples(body):
-    return re.sub(r'(?ms)^(```|~~~).*?^\1[^\n]*$', '', body)
+    return patch.without_fenced_examples(body)
 
 
 def anchors(body):
-    result = set(re.findall(r'<a\s+id="([^"]+)"', body))
+    result = patch.stable_anchors(body)
     counts = {}
     for h in re.findall(r'^#{1,6}\s+(.+?)\s*#*$', strip_examples(body), re.M):
         slug = re.sub(r'[^\w\-\s]', '', h.lower()).replace(' ', '-')
@@ -260,7 +262,7 @@ def check(base_ref, head_ref, declaration):
             if not isinstance(clauses, list) or not clauses:
                 raise ValueError(mid + ': current clauses required')
             for clause in clauses:
-                if not isinstance(clause, str) or f'<a id="{clause}"></a>' not in after.read(m['spec']):
+                if not isinstance(clause, str) or clause not in patch.stable_anchors(after.read(m['spec'])):
                     raise ValueError(mid + ': missing stable clause anchor')
             scope = patterns(claim.get('paths'))
             selected = [p for p in changed if mid in owners(p, maps) and matches(p, scope)]
