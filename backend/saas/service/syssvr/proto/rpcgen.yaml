@@ -1,6 +1,6 @@
 # rpcgen manifest — syssvr 多 proto 生成清单。
 # 由 backend/tools/cmd/rpcgen 读取，不使用 glob 推断领域和顺序。
-# 参见 docs/superpowers/specs/2026-07-23-core-goctl-migration-design.md §10.1。
+# 参见 docs/wiki/legacy/superpowers/specs/2026-07-23-core-goctl-migration-design.md §10.1。
 version: 1
 runtime: syssvr
 protoDir: service/syssvr/proto

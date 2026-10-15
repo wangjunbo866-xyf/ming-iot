@@ -193,6 +193,6 @@ M4A 候选保持不动。后续全量逐文件表覆盖 3,964 项路径/摘要/�
 
 第二轮 [run 38659416232](https://github.com/wangjunbo866-xyf/ming-iot/actions/runs/38659416232) 虽显示 success，独立复审从日志发现 `rg` 缺失，而部署 Makefile 的反向命令将错误视为通过；首条扫描命中也可能被后续结果覆盖。因此该运行未被接受为最终验收。后续修复明确只接受退出码 1（无匹配），命中、工具缺失与读取错误均失败；CI 显式安装 ripgrep，保留原扫描规则和完整 profile。新增实际 Make 目标的八种退出场景回归及真实 rg 的正常/危险 SQL/非空示例/缺失输入演练，修复前失败、修复后通过。最终托管日志确认两条扫描实际执行完成。
 
-[Monorepo checks](https://github.com/wangjunbo866-xyf/ming-iot/actions/runs/38661089656) 的 attempt 1、job `116182240148` 已成功，包含完整可达历史/公开边界检查、workflow 静态检查和完整 `make verify-pr`。PR 测试使用合成 merge commit，文件树与固定候选 `bd3dd06f06fcbf95def07d5da74f4a7f4a92d479` 相同。最终独立复审核对实际远程、PR、运行和日志，并绑定同一候选；证据见迁移记录的 M4D 托管交付回执。首次失败及修复前后日志均保留。相关包的本地聚焦命令通过，日志中既有静态 ELF 夹具跳过项按原样记录，不据此宣称所有测试断言均运行。
+[Monorepo checks](https://github.com/wangjunbo866-xyf/ming-iot/actions/runs/38661089656) 的 attempt 1、job `116182240148` 已成功，包含完整可达历史/公开边界检查、workflow 静态检查和完整 `make verify-pr`。PR 测试使用合成 merge commit，文件树与固定候选 Head `c98f327cfafaeb40a74bf129042f616f5b5d07f1` 相同，tree 为 `bd3dd06f06fcbf95def07d5da74f4a7f4a92d479`。最终独立复审核对实际远程、PR、运行和日志，并绑定同一候选；证据见迁移记录的 M4D 托管交付回执。首次失败及修复前后日志均保留。相关包的本地聚焦命令通过，日志中既有静态 ELF 夹具跳过项按原样记录，不据此宣称所有测试断言均运行。
 
 M4D 候选推送、托管 CI 和本次独立复审已完成。旧源、原候选和私有备份保留；M5、自动合并、版本发布及删除旧源仍未授权。真实 Kafka/数据库/设备验证及小黄的真人接收反馈未由本次 CI 代替，整个 Goal 不因此自动完成。
