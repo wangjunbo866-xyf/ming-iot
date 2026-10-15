@@ -29,7 +29,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Prepare audit tools
-        run: python3 tooling/install_ci_tools.py
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y ripgrep
+          rg --version
+          python3 tooling/install_ci_tools.py
       - name: Validate workflow
         run: .cache/ci-tools/actionlint -shellcheck= .github/workflows/monorepo.yml
       - name: Check complete reachable history and publication boundary

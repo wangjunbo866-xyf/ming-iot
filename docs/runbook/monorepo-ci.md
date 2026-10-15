@@ -1,6 +1,8 @@
 # 单仓本地与 CI 验证
 
-适用 Linux amd64，Go 1.25.4、Python 3.12、Git、Make、curl、unzip、Docker Compose v2。`verify-pr` 仅用 Compose 校验配置，不启动服务；Kafka、数据库、设备测试仍需单独运行并记录。
+适用 Linux amd64，Go 1.25.4、Python 3.12、Git、Make、curl、unzip、ripgrep（`rg`）、Docker Compose v2。`verify-pr` 仅用 Compose 校验配置，不启动服务；Kafka、数据库、设备测试仍需单独运行并记录。
+
+CI 从 Ubuntu 软件源安装 ripgrep。部署静态扫描只把退出码 1（无匹配）视为通过；发现禁止内容、工具缺失或读取失败均使检查失败。两条扫描实际完成后才输出 `Things baseline safety scans PASS`。
 
 现有 Things baseline 测试构造 0755 的公开模板目录，验证进程使用 umask 022；私有证据父目录仍保持 0700。
 

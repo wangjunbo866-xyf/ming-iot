@@ -14,14 +14,23 @@ KAFKA_COMPOSE := docker compose --project-directory $(KAFKA_PROFILE) -f $(KAFKA_
 
 things-baseline-contract:
 	@set -eu -o pipefail; \
+	check_absent() { \
+		if rg -n -- "$$@"; then scan_status=0; else scan_status=$$?; fi; \
+		case "$$scan_status" in \
+			1) return 0 ;; \
+			0) printf '%s\n' 'Forbidden content found in Things baseline inputs' >&2; return 1 ;; \
+			*) printf 'Things baseline scan failed (rg exit %s)\n' "$$scan_status" >&2; return 1 ;; \
+		esac; \
+	}; \
 	contract_env="$$(mktemp /tmp/ming-iot-things-contract.XXXXXX)"; \
 	trap 'rm -f "$$contract_env"' EXIT; \
 	cp $(EXAMPLE_ENV) "$$contract_env"; \
 	chmod 0600 "$$contract_env"; \
 	$(BASELINE) contract --contract $(CONTRACT) --env-file "$$contract_env"; \
 	THINGS_BASELINE_ENV_FILE="$$contract_env" docker compose --project-directory $(PROFILE) --env-file "$$contract_env" -f $(PROFILE)/compose.yaml config --quiet; \
-	! rg -n '(^|[/@])iThings([?[:space:]/]|$$)|DROP DATABASE|DROP ROLE|TRUNCATE' $(PROFILE)/compose.yaml $(PROFILE)/config $(PROFILE)/scripts; \
-	! rg -n '(POSTGRES_ADMIN_PASSWORD|THINGS_BASELINE_DB_PASSWORD|CORE_USER_TOKEN_SECRET|THINGS_INTERNAL_AUTH_PASSWORD|THINGS_EMQX_API_KEY|THINGS_EMQX_SECRET_KEY)=[^[:space:]]+' $(EXAMPLE_ENV)
+	check_absent '(^|[/@])iThings([?[:space:]/]|$$)|DROP DATABASE|DROP ROLE|TRUNCATE' $(PROFILE)/compose.yaml $(PROFILE)/config $(PROFILE)/scripts; \
+	check_absent '(POSTGRES_ADMIN_PASSWORD|THINGS_BASELINE_DB_PASSWORD|CORE_USER_TOKEN_SECRET|THINGS_INTERNAL_AUTH_PASSWORD|THINGS_EMQX_API_KEY|THINGS_EMQX_SECRET_KEY)=[^[:space:]]+' $(EXAMPLE_ENV); \
+	printf '%s\n' 'Things baseline safety scans PASS'
 
 things-baseline-build:
 	$(MAKE) -C $(ROOT)/backend/saas build.baseline
