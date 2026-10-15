@@ -33,7 +33,7 @@ lint 不改写输入、业务树或 golden。正常成功退出 0，发现元数
 ## 实现、验收与验证入口
 
 - [CLI 实现](../../../../backend/tools/cmd/apicheck/main.go)：`cmdLint`、`lintFileSelection`。
-- [CLI 回归](../../../../backend/tools/cmd/apicheck/main_test.go)：编译后运行命令；不是仅测试选择 helper。
+- [CLI 回归](../../../../backend/tools/cmd/apicheck/main_test.go)：包含编译后 CLI 与通过 `go run` 执行的用例；不是仅测试选择 helper。
 - [底层元数据检查](../../../../backend/tools/internal/apicontract/metadata.go)：既有约束来源；本轮不重新定义其全部语义。
 
 从新仓根运行，不需要旧仓 commit：
@@ -46,7 +46,7 @@ go -C backend/tools test ./cmd/apicheck -count=1
 | --- | --- |
 | LINT-SELECT | `TestCLILintFileSelection`：缺失/空白/混合/目录/越界/绝对路径、规范化去重；`TestCLILintCleanFile`：真实树合法文件 |
 | LINT-META | `TestCLILintNormalizedSelectionStillChecksMetadata`：规范化后仍识别问题，纯类型可通过 |
-| LINT-READONLY | 上述编译 CLI 用例核对退出码、输入及 golden 字节；仅覆盖用例范围 |
+| LINT-READONLY | `TestCLILintFileSelection` 用编译 CLI 核对退出码/输出；`TestCLILintNormalizedSelectionStillChecksMetadata` 通过 `go run` 核对成功/失败及临时输入文件字节，包括 `keep.json` 哨兵；实际 golden 文件字节未专项验证 |
 
 不要用 `-short` 声称完成真实树用例。该包的测试不是整个平台 API、数据库或运行中服务的验收。长期模块负责人未分配；本次责任见 [模块入口](README.md)。
 
