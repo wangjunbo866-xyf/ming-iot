@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.3.0-draft
+version: 0.3.1-draft
 ---
 
 # Ming IoT 业务地图与规格入口（草案）
@@ -21,7 +21,7 @@ version: 0.3.0-draft
 | engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
 | saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
 
-两份主规格适用新仓源码 `c165a56531f58421a870a0b8794f24556b60d3b2`；文档本身为 S1 候选，验证及未覆盖项见 [S1 记录](../changelog/2026-10-15-specs-current-baseline.md)。历史 observed 原文在各模块保留，不是当前入口。
+两份主规格以 `c165a56531f58421a870a0b8794f24556b60d3b2` 为来源基线，已随 PR #5 合并。核对至 main `56006502324800448c9775944d28478254be6142`，两个模块相关实现未变，继续适用 `current-v1`；当前合并验证与环境缺口见 [PR #6 后续记录](../changelog/2026-10-17-governance-merged-next-plan.md)。[S1 记录](../changelog/2026-10-15-specs-current-baseline.md)及各模块 observed 原文保留原时点，不作为当前候选或部署状态。业务地图整体仍是两个模块的试点，不表示全平台规格已完成。
 
 由模块负责人确认新条目；AI 可以起草地图，但不能虚构负责人、路由或有效状态。同一业务模块跨仓时，在条目中分别给出仓库与契约版本，不复制多份权威正文。
 
