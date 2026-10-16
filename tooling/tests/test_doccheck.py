@@ -90,6 +90,22 @@ class DocumentTests(unittest.TestCase):
         self.put('README.md', '[current]: docs/current.md\n\n[current]')
         self.assertEqual(self.run_check()['result'], 'PASS')
 
+    def test_duplicate_reference_uses_first_definition(self):
+        self.put('README.md', '[current][id]\n\n[id]: missing.md\n[id]: docs/current.md\n')
+        result = self.run_check()
+        self.assertIn('invalid-link', self.codes(result))
+        self.assertIn('unreachable-document', self.codes(result))
+
+    def test_blank_paragraph_cannot_create_navigation(self):
+        self.put('README.md', '[current](docs/current.md\n\n)\n')
+        self.assertIn('unreachable-document', self.codes(self.run_check()))
+
+    def test_parentheses_in_titles_do_not_change_destination(self):
+        for title in ['"hello ("', "'hello )'", '(ordinary title)', '"hello )"']:
+            with self.subTest(title=title):
+                self.put('README.md', f'[current](docs/current.md {title})\n')
+                self.assertEqual(self.run_check()['result'], 'PASS')
+
     def test_isolated_cycle_remains_unreachable(self):
         self.put('README.md', '# root')
         self.put('docs/other.md', '[current](current.md)')

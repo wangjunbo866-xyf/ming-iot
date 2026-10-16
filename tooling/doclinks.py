@@ -111,7 +111,7 @@ def markdown_targets(text: str) -> list[MarkdownTarget]:
                 break
         if raw_target:
             key = " ".join(match.group(1).split()).casefold()
-            definitions[key] = raw_target
+            definitions.setdefault(key, raw_target)
             line = text.count("\n", 0, match.start()) + 1
             targets.append((match.start(), MarkdownTarget(raw_target, line, is_definition=True, definition_key=key)))
             definition_spans.append((match.start(), match.end()))
@@ -133,26 +133,31 @@ def markdown_targets(text: str) -> list[MarkdownTarget]:
             raw_target = text[cursor : end + 1]
             close = suffix.end() - 1
         else:
+            start_target = cursor
             depth = 0
-            escaped = False
-            close = -1
             while cursor < len(lexical_text):
                 character = lexical_text[cursor]
-                if escaped:
-                    escaped = False
-                elif character == "\\":
-                    escaped = True
-                elif character == "(":
+                if character == "\\" and cursor + 1 < len(lexical_text):
+                    cursor += 2
+                    continue
+                if character.isspace():
+                    break
+                if character == "(":
                     depth += 1
                 elif character == ")":
                     if depth == 0:
-                        close = cursor
                         break
                     depth -= 1
                 cursor += 1
-            if close < 0:
+            if depth:
                 continue
-            raw_target = text[match.end() : close]
+            # A title is separate from the destination; parentheses inside a
+            # quoted title must not change destination nesting or the close.
+            suffix = ANGLE_LINK_SUFFIX.match(lexical_text, cursor)
+            if suffix is None or re.search(r"\n[ \t\r]*\n", lexical_text[match.end() : suffix.end()]):
+                continue
+            raw_target = text[start_target:cursor]
+            close = suffix.end() - 1
         line = text.count("\n", 0, match.start()) + 1
         targets.append((match.start(), MarkdownTarget(raw_target, line, is_image=text[match.start()] == "!")))
 
