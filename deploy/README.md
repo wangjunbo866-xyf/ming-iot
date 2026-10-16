@@ -9,12 +9,14 @@ make verify-fast VERIFY_SCOPE=tools
 make verify-pr
 make verify-integration VERIFY_SUITE=kafka
 make verify-integration VERIFY_SUITE=things-startup
+make verify-integration VERIFY_SUITE=notification
 MING_HEAVY_VERIFY=1 make verify-release
 ```
 
 `verify-pr` 只执行构建、Go 测试、vet 和仓库静态合同，不启动 Kafka、Things 或其他
 外部服务。`verify-integration` 才会启动显式选择的本地 suite，并通过 shell trap 在成功或
-失败后运行安全 `down`；它不删除卷、不重置数据库，也不连接生产环境。
+失败后停止所选专属环境（notification 用 `stop`，其余 suite 用安全 `down`）；
+它不删除卷、不重置数据库，也不连接生产环境。
 
 `things-startup` 要求 `deploy/profiles/things-baseline/.env.local` 已存在、不是符号链接且
 权限为 `0600`。条件不足时命令以 `NOT_RUN` 和非零状态退出，不会降级成 PASS。
@@ -134,3 +136,45 @@ saas 通过 `confSuffix=Deploy` 加载 `*Deploy.yaml`：
 - `apisvr/etc/sysDeploy.yaml` ← syssvr（`sysdirect` 加载）
 
 密钥通过环境变量注入（`${CORE_DB_DSN}` 等占位由 `os.ExpandEnv` 展开）；最小环境用占位值，生产须替换为强随机值。
+
+## 隔离通知运行基线
+
+`deploy/profiles/notification-baseline` 提供真实 syssvr gRPC 到站内消息持久化的本机验证。
+它使用独立 Compose 项目、internal 网络及专属持久卷，不映射宿主端口，不连接旧环境。
+PostGIS 是 syssvr 全量 AutoMigrate 的实际依赖；普通 PostgreSQL 缺少 geometry 类型。
+此 profile 只使用本机已缓存镜像与本仓静态构建产物；无需 etcd，关闭外部短信、UniPush 和定时任务。
+
+```bash
+make notification-baseline-contract
+make notification-baseline-build
+make notification-baseline-up
+make notification-baseline-verify
+make notification-baseline-stop
+make notification-baseline-up
+make notification-baseline-verify
+```
+
+`stop` 只停止专属容器并保留数据，第二次 verify 的 `previous_smoke_records` 应包含第一次记录。
+每次验证新增带唯一标记的数据，不覆盖、清空或删除旧记录。失败时查看 `make notification-baseline-logs`。
+测试覆盖 manual、auto、deviceButton 的 message/systemNotice 分支，校验正文、触发字段和接收用户关系。
+systemNotice 仅验证持久化与正文，UniPush 禁用，不代表实际系统栏推送。
+真实通知发送不经过 Eventbus；单独 syssvr 没有调用 FastEvent.Start，本验证不宣称覆盖 NATS 消费、设备告警、场景生产者或 Kafka。
+
+统一集成入口包含构建、启动、四分支验证、消息与接收人字段快照、stop→up、旧快照逐字段比较、再次验证，最终停止专属环境并保留卷；任何中途失败也保留日志并停止专属容器。它不自动加入 verify-release。
+
+```bash
+make verify-integration VERIFY_SUITE=notification
+```
+
+证据默认保存到 `deploy/profiles/notification-baseline/.runtime/repeats/repeat-*`，每次新建目录，不覆盖历史。可用 `NOTIFICATION_BASELINE_EVIDENCE_DIR=/绝对路径 make verify-integration VERIFY_SUITE=notification` 指定证据父目录。
+
+新开发机需先在有网络的准备阶段缓存以下三个固定 digest 镜像（不启动容器，不访问旧基础设施）；本机 Docker socket 必须可用：
+
+```bash
+docker --host unix:///var/run/docker.sock pull postgis/postgis:17-3.5@sha256:30f0632e34063d8ad3897d172273c44393eb483cd2e974e472b4353df7b6d6ee
+docker --host unix:///var/run/docker.sock pull redis:7.4-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf
+docker --host unix:///var/run/docker.sock pull nats:2-alpine@sha256:c11af972c99ae542de8925e6a7d9c533aa1eb039660420d2074beed6089b3bf0
+go -C backend/saas mod download
+```
+
+Go 构建依赖使用本机 Go 工具链与 `backend/go.work`，依赖未缓存时需在准备阶段允许模块下载。运行 profile 的镜像策略仍为 never，网络仍为 internal，无宿主端口；不会自动拉起或复用旧环境。镜像更新需要明确修改固定 digest 后重新验证。

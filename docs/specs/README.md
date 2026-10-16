@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.3.1-draft
+version: 0.4.0-draft
 ---
 
 # Ming IoT 业务地图与规格入口（草案）
@@ -14,14 +14,17 @@ version: 0.3.1-draft
 - [记录模板](../../.agents/skills/ming-specs/references/templates.md)：只在实际需要的环节使用。
 - [草案材料目录](../index.yaml)：本次草案的正文定位与采纳状态。
 
+首次收到目标时，按[受理到交付操作页](../runbook/requirement-to-delivery.md)进入模块；本轮新增 Eventbus 的 observed 现状与 Kafka 需求草稿，尚未确认为有效规则。
+
 ## 模块地图
 
 | 模块 ID / 业务能力 | 模块入口 | 人的负责人 | 前台 / 后台 / 代码范围 | 当前基线及有效补丁 | 在途变更 |
 | --- | --- | --- | --- | --- | --- |
+| platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户确认迁移方向及一次切换 | Share、SaaS、Things 与 SDK；具体认领见 R1 | [observed-v0](platform/eventbus/spec.md)，仅源码现状 | [Kafka 迁移 R1](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，draft |
 | engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
 | saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
 
-两份主规格以 `c165a56531f58421a870a0b8794f24556b60d3b2` 为来源基线，已随 PR #5 合并。核对至 main `56006502324800448c9775944d28478254be6142`，两个模块相关实现未变，继续适用 `current-v1`；当前合并验证与环境缺口见 [PR #6 后续记录](../changelog/2026-10-17-governance-merged-next-plan.md)。[S1 记录](../changelog/2026-10-15-specs-current-baseline.md)及各模块 observed 原文保留原时点，不作为当前候选或部署状态。业务地图整体仍是两个模块的试点，不表示全平台规格已完成。
+两份主规格以 `c165a56531f58421a870a0b8794f24556b60d3b2` 为来源基线，已随 PR #5 合并。核对至 main `56006502324800448c9775944d28478254be6142`，两个模块相关实现未变，继续适用 `current-v1`；当前合并验证与环境缺口见 [PR #6 后续记录](../changelog/2026-10-17-governance-merged-next-plan.md)。[S1 记录](../changelog/2026-10-15-specs-current-baseline.md)及各模块 observed 原文保留原时点，不作为当前候选或部署状态。业务地图目前有两个已收敛试点及一个 observed 受理模块，不表示全平台规格已完成。
 
 由模块负责人确认新条目；AI 可以起草地图，但不能虚构负责人、路由或有效状态。同一业务模块跨仓时，在条目中分别给出仓库与契约版本，不复制多份权威正文。
 

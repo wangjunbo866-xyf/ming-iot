@@ -251,7 +251,9 @@ class DocumentCheck:
                     raise ValueError('historical revision is a snapshot label; do not bind it to current body metadata')
                 for key, binding in bindings.items():
                     body = self.body(p)
-                    if (key, binding) in (('revision', 'frontmatter.version'), ('status', 'frontmatter.status')):
+                    if (key, binding) in (('revision', 'frontmatter.version'),
+                                          ('revision', 'frontmatter.revision'),
+                                          ('status', 'frontmatter.status')):
                         actual = frontmatter(body).get(binding.split('.')[1])
                     elif binding == 'skill.version' and key == 'revision':
                         found = re.findall(r'^版本：([A-Za-z0-9_.-]+)', body, re.M)

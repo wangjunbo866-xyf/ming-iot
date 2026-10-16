@@ -41,7 +41,13 @@
     "docs/specs/engineering/api-contract/spec.md",
     "docs/project-charter.md",
     "docs/runbook/document-checks.md",
-    "tooling/vendor/rdoc/README.md"
+    "tooling/vendor/rdoc/README.md",
+    "docs/runbook/requirement-to-delivery.md",
+    "docs/runbook/notification-baseline.md",
+    "docs/specs/platform/eventbus/README.md",
+    "docs/specs/platform/eventbus/raw.md",
+    "docs/specs/platform/eventbus/spec.md",
+    "docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

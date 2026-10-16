@@ -1,0 +1,69 @@
+# 专属无外联网络、无宿主端口、无既有卷复用的通知运行基线。
+name: ming-iot-notification-baseline
+services:
+  postgres:
+    image: postgis/postgis:17-3.5@sha256:30f0632e34063d8ad3897d172273c44393eb483cd2e974e472b4353df7b6d6ee
+    pull_policy: never
+    environment:
+      POSTGRES_USER: notification
+      POSTGRES_PASSWORD: notification-local-only
+      POSTGRES_DB: notification
+    volumes: [postgres_postgis_data:/var/lib/postgresql/data]
+    networks: [isolated]
+    healthcheck:
+      test: [CMD-SHELL, "psql -U notification -d notification -c 'SELECT postgis_version()' >/dev/null"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  redis:
+    image: redis:7.4-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf
+    pull_policy: never
+    command: [redis-server, --save, '', --appendonly, 'no']
+    volumes: [redis_data:/data]
+    networks: [isolated]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  nats:
+    image: nats:2-alpine@sha256:c11af972c99ae542de8925e6a7d9c533aa1eb039660420d2074beed6089b3bf0
+    pull_policy: never
+    command: [-js, -sd, /data]
+    volumes: [nats_data:/data]
+    networks: [isolated]
+  syssvr:
+    image: ming-iot-notification-baseline:local
+    pull_policy: never
+    command: [/app/syssvr]
+    environment:
+      CORE_LOCAL_SKIP_STARTUP_SIDE_EFFECTS: '1'
+      CORE_LOCAL_SKIP_AUTO_MIGRATE: '0'
+      UNIPUSH_ENABLED: 'false'
+    networks: [isolated]
+    read_only: true
+    tmpfs: [/tmp]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      nats: {condition: service_started}
+    healthcheck:
+      test: [CMD, /app/probe, ready]
+      interval: 3s
+      timeout: 5s
+      retries: 40
+  probe:
+    image: ming-iot-notification-baseline:local
+    pull_policy: never
+    command: [/app/probe, verify]
+    profiles: [verify]
+    networks: [isolated]
+    read_only: true
+    tmpfs: [/tmp]
+networks:
+  isolated:
+    internal: true
+volumes:
+  postgres_postgis_data: {}
+  nats_data: {}
+  redis_data: {}

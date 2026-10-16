@@ -33,7 +33,7 @@ help:
 		'  contract-static                            run repository-only contract checks' \
 		'  verify-fast VERIFY_SCOPE=<scope>           test and vet one of: share, saas, things, tools' \
 		'  verify-pr                                  run the complete service-free PR gate' \
-		'  verify-integration VERIFY_SUITE=<suite>    run one of: kafka, things-startup (heavy)' \
+		'  verify-integration VERIFY_SUITE=<suite>    run one of: kafka, things-startup, notification (heavy)' \
 		'  verify-release MING_HEAVY_VERIFY=1         run PR and all release-required suites (heavy)'
 
 context:
@@ -102,8 +102,8 @@ verify-pr: context diff-check build test vet contract-static boundary-scan
 
 verify-integration:
 	@case '$(VERIFY_SUITE)' in \
-		kafka|things-startup) ;; \
-		'') printf '%s\n' 'VERIFY_SUITE is required (kafka or things-startup)' >&2; exit 2 ;; \
+		kafka|things-startup|notification) ;; \
+		'') printf '%s\n' 'VERIFY_SUITE is required (kafka, things-startup or notification)' >&2; exit 2 ;; \
 		*) printf 'unknown VERIFY_SUITE: %s\n' '$(VERIFY_SUITE)' >&2; exit 2 ;; \
 	esac
 	@if [[ '$(VERIFY_SUITE)' == things-startup ]]; then \
@@ -131,6 +131,9 @@ verify-integration:
 			$(MAKE) -C $(ROOT)/deploy kafka-up; \
 			$(MAKE) -C $(ROOT)/deploy kafka-ready; \
 			$(GO) -C $(BACKEND) run ./tools/cmd/kafkacontract --repo-root .. --integration --format text \
+			;; \
+		notification) \
+			$(ROOT)/deploy/profiles/notification-baseline/run.sh repeat \
 			;; \
 		things-startup) \
 			set -eu -o pipefail; \
@@ -173,3 +176,8 @@ publication-check:
 
 publication-ready: publication-check
 	@python3 tooling/publication.py ready
+
+# 显式选择真实依赖通知验证，不并入默认无服务 PR 检查。
+.PHONY: notification-baseline-contract notification-baseline-build notification-baseline-up notification-baseline-verify notification-baseline-stop notification-baseline-logs
+notification-baseline-contract notification-baseline-build notification-baseline-up notification-baseline-verify notification-baseline-stop notification-baseline-logs:
+	$(MAKE) -C deploy $@
