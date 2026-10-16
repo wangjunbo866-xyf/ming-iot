@@ -41,7 +41,8 @@
     "docs/specs/engineering/api-contract/spec.md",
     "docs/changelog/2026-10-16-specs-pr-check.md",
     "docs/changelog/2026-10-16-specs-clean-clone-takeover.md",
-    "docs/changelog/2026-10-16-specs-github-delivery.md"
+    "docs/changelog/2026-10-16-specs-github-delivery.md",
+    "docs/changelog/2026-10-16-specs-merged-next-plan.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

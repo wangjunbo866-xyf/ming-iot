@@ -2,6 +2,16 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
+    role: specs_merge_acceptance_and_next_plan
+    status: proposal
+    path: docs/changelog/2026-10-16-specs-merged-next-plan.md
+    revision: merge-plan-1
+    authority: user_authorized_merge_verification_and_planning
+    related:
+      - docs/changelog/2026-10-16-specs-github-delivery.md
+      - docs/runbook/team-development.md
+    conflict_rule: "本轮用户授权 PR5 合并、main 同步验证与后续规划；具体结果以本文及同一 Goal 回执为准。后续保护规则、责任分配和 S4 业务实现仍为提案；旧阶段记录保留当时状态，不恢复小黄任务，不删除旧仓、私有备份或历史。"
   - source_id: ming-iot-specs-github-delivery-20261016
     role: specs_s1_s3_github_delivery_and_acceptance_contract
     status: delivery_candidate
