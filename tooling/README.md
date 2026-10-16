@@ -1,10 +1,12 @@
 # 仓内工具入口
 
-从仓库根运行；命令只使用当前检出的文件，不要求相邻的 ai-native 或 ming-iot-rd-docs 仓库。
+从仓库根运行；命令只使用当前检出的文件，不要求相邻的 ai-native 或 ming-iot-rd-docs 仓库。首次在自己的 Python 环境安装 `python3 -m pip install -r tooling/requirements-docs.txt`；检查器本身不下载或安装依赖。
+
+文档分类、失败含义和未验证边界见[文档检查说明](../docs/runbook/document-checks.md)。Markdown 解析的选择性复用及许可见[r-doc 来源记录](vendor/rdoc/README.md)。
 
 | 命令 | 用途与边界 |
 | --- | --- |
-| `make knowledge-check` | 核对维护中的文档链接、声明的 Skill 文件、参考仓排除边界，并运行入口和现有 ming-specs 回归 |
+| `make knowledge-check` | 按显式范围检查链接/锚点、入口可达性、来源索引和替代关系，并运行工具及 ming-specs 回归 |
 | `python3 tooling/knowledge.py where` | 输出当前检出内的知识入口 |
 | `python3 tooling/knowledge.py specs -- --change <check.json> --base <commit> --head <commit>` | 调用现有 ming-specs 提交差异检查；暂存检查改用 `--staged`，不自动确认业务语义 |
 | `python3 tooling/specs_pr.py --base <target-tip> --head <commit> --declaration <JSON路径>` | 检查完整 PR 三点差异、模块/条款、Patch 指针及历史归档；格式见 [PR 约定](../.agents/skills/ming-specs/references/pr-check.md) |
