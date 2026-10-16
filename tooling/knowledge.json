@@ -1,6 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "entrypoints": {
+    "charter": "docs/project-charter.md",
     "knowledge": "docs/README.md",
     "specs": "docs/specs/README.md",
     "rules": "docs/runbook/team-development.md",
@@ -31,7 +32,6 @@
     "LICENSES.md",
     "docs/runbook/monorepo-ci.md",
     "docs/runbook/daily-development.md",
-    "docs/changelog/2026-10-15-m5-cutover.md",
     "docs/wiki/legacy/superpowers/README.md",
     "tooling/policy/README.md",
     ".agents/skills/ming-specs/references/pr-check.md",
@@ -39,9 +39,9 @@
     "docs/specs/saas/notification-trigger/spec.md",
     "docs/specs/engineering/api-contract/README.md",
     "docs/specs/engineering/api-contract/spec.md",
-    "docs/changelog/2026-10-16-specs-pr-check.md",
-    "docs/changelog/2026-10-16-specs-clean-clone-takeover.md",
-    "docs/changelog/2026-10-16-specs-github-delivery.md"
+    "docs/project-charter.md",
+    "docs/runbook/document-checks.md",
+    "tooling/vendor/rdoc/README.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"
@@ -51,5 +51,25 @@
     "third_party/thingsboard",
     "AirMQ",
     "thingsboard"
-  ]
+  ],
+  "document_scope": {
+    "schema_version": 1,
+    "discovery_roots": [
+      "docs"
+    ],
+    "navigation_roots": [
+      "AGENTS.md",
+      "README.md"
+    ],
+    "historical": [
+      "docs/changelog/**",
+      "docs/wiki/legacy/**",
+      "docs/specs/**/spec.observed-v0.md",
+      "docs/specs/engineering/api-contract/patches/PATCH-20261013-lint-selection/**",
+      "docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/**"
+    ],
+    "reference": [
+      "docs/vendor/**"
+    ]
+  }
 }

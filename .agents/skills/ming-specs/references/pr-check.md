@@ -1,6 +1,6 @@
 # 完整 PR 差异检查
 
-适用于 ming-specs 0.5.0-draft 的 S2 候选。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
+适用于 ming-specs 0.6.0-draft，沿用 S2 检查协议。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
 
 ## 谁维护什么
 
@@ -34,6 +34,8 @@ GitHub 使用 `python3 tooling/specs_pr.py --event "$GITHUB_EVENT_PATH"`。工�
 | 历史材料新增/整理 | kind=history | 只允许 legacy 中仍存在的路径；不能豁免删去的源文件 |
 | 旧资料完整迁入 legacy | archives 中 from、to、reason | 实际删除源/新增目标、相同 blob 和模式；当前 spec/模块入口不能被静默归档 |
 | 产品路径还没有登记模块 | kind=unmapped，paths、reason、reference | 只限 backend/deploy/apps/components，reference 为候选内可读文件；单独报告待评审缺口 |
+
+`no_behavior_change` 的判定对象是约定的预期行为。修复错误实现可以改变错误输出，但要引用被恢复的现行条款；测试通过或同文件已有其他条款不能替代这一依据。规则有歧义或新增预期时按[小修改处理步骤](../../../../docs/runbook/team-development.md#small-changes)澄清和分类。权限、数据、兼容等高影响修复仍须对应验证，本声明不减免代码 PR 的现行检查。
 
 `unmapped` 是明确暴露的治理缺口，不是“没有 Spec 就不用审”。未声明、越界或已登记模块试图用例外绕过会失败。相同路径属于多个模块时，必须分别解释其对每个模块的影响；单个宽范围认领不能替代其他模块。
 

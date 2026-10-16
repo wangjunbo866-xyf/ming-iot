@@ -4,62 +4,48 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-import re
 import subprocess
 import sys
-from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
+# Support both script execution and importlib-based repository regression tests.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from doccheck import DocumentCheck, read_text, safe_path, strings
+
+
 def local_path(root: Path, value: str) -> Path:
-    if not isinstance(value, str) or not value or '\\' in value:
-        raise ValueError(f'invalid repository path: {value!r}')
-    path = Path(value)
-    if path.is_absolute() or '..' in path.parts:
-        raise ValueError(f'path must stay in repository: {value}')
-    target = (root / path).resolve()
-    if not target.is_relative_to(root.resolve()) or not target.is_file():
-        raise ValueError(f'missing or external file: {value}')
-    return target
+    return safe_path(root.resolve(), value)
 
 
 def check(root: Path) -> dict:
-    config = json.loads((root / 'tooling/knowledge.json').read_text(encoding='utf-8'))
-    if config.get('schema_version') != 1:
-        raise ValueError('unsupported knowledge manifest')
+    root = root.resolve()
+    config = json.loads(read_text(root, 'tooling/knowledge.json'))
+    if not isinstance(config, dict) or config.get('schema_version') != 2:
+        raise ValueError('unsupported knowledge manifest; expected schema_version 2')
+    if not isinstance(config.get('entrypoints'), dict):
+        raise ValueError('entrypoints must be a mapping')
     problems = []
-    for name in config['entrypoints']:
+    for value in config['entrypoints'].values():
         try:
-            local_path(root, config['entrypoints'][name])
+            local_path(root, value)
         except ValueError as exc:
             problems.append(str(exc))
-    for value in config['maintained_documents']:
-        try:
-            document = local_path(root, value)
-            # Fenced examples are not live navigation links.
-            body = re.sub(r'(?ms)^```.*?^```[^\n]*$', '', document.read_text(encoding='utf-8'))
-            for link in re.findall(r'!?\[[^\]]*\]\(([^\n()]*)\)', body):
-                link = link.strip()
-                link = link[1:link.index('>')] if link.startswith('<') and '>' in link else link.split(' "', 1)[0]
-                parsed = urlsplit(link)
-                if parsed.scheme or parsed.netloc or not parsed.path:
-                    continue
-                target = (document.parent / unquote(parsed.path)).resolve()
-                if not target.is_relative_to(root.resolve()) or not target.exists():
-                    problems.append(f'{value}: unresolved local link: {link}')
-        except (ValueError, OSError) as exc:
-            problems.append(str(exc))
+    report = DocumentCheck(root, config).run()
+    problems.extend(f"{f['code']}: {f['path']}: {f['detail']}" for f in report['findings'])
     discovered = sorted(p.relative_to(root).as_posix() for p in (root / '.agents/skills').rglob('SKILL.md'))
-    if discovered != sorted(config['discovered_skills']):
+    if discovered != sorted(strings(config.get('discovered_skills'), 'discovered_skills')):
         problems.append(f'Skill discovery differs from declared candidates: {discovered}')
-    for value in config['excluded_reference_directories']:
-        if (root / value).exists():
+    for value in strings(config.get('excluded_reference_directories'), 'excluded_reference_directories'):
+        path = Path(value)
+        if path.is_absolute() or '..' in path.parts:
+            raise ValueError('reference exclusion must stay in repository')
+        if (root / path).exists():
             problems.append(f'learning reference repository must remain outside product: {value}')
-    return {'result': 'FAIL' if problems else 'PASS', 'entrypoints': config['entrypoints'],
-            'documents_checked': len(config['maintained_documents']), 'discovered_skills': discovered,
-            'scope': 'Local navigation and candidate Skill files; not host loading or business acceptance.',
-            'problems': problems}
+    return {**report, 'result': 'FAIL' if problems else 'PASS', 'entrypoints': config['entrypoints'],
+            'documents_checked': report['classification_counts'].get('maintained', 0),
+            'discovered_skills': discovered, 'problems': problems}
 
 
 def main() -> int:
@@ -74,7 +60,7 @@ def main() -> int:
         parser.error('check/where do not accept additional arguments')
     try:
         result = check(ROOT)
-    except (ValueError, OSError, KeyError) as exc:
+    except (ValueError, OSError, KeyError, TypeError) as exc:
         print(json.dumps({'result': 'FAIL', 'error': str(exc)}, ensure_ascii=False)); return 1
     if args.command == 'where':
         result['repository_root'] = str(ROOT)
