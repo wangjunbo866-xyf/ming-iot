@@ -1,7 +1,18 @@
 schema_version: 1
 status: draft
-description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
+description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；总目标、当前进度与优先级以 ming-iot-project-charter 为准；阶段条目保留原时点状态。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-project-charter
+    role: current_goal_direction_and_acceptance
+    status: direction-baseline
+    path: docs/project-charter.md
+    revision: 1.0.0
+    authority: user_authorized_consolidation_of_confirmed_decisions
+    related:
+      - docs/runbook/team-development.md
+      - docs/wiki/team-development-outline.md
+      - docs/changelog/2026-10-16-specs-merged-next-plan.md
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。本轮先梳理方向，不新增工具门禁，不推送或合并；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     role: specs_merge_acceptance_and_next_plan
     status: proposal

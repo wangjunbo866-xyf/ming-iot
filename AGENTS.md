@@ -3,6 +3,7 @@
 ## 仓库地图与快速命令
 
 - 业务代码：`backend/saas`、`backend/share`、`backend/things`；Core/Share/Things 已并入，不再寻找同名兄弟仓实现。
+- 规划阶段、调整目标或判断 Goal 是否完成时，先读 [AI 协作研发总纲](docs/project-charter.md)；旧阶段计划只说明原时点，执行当前 Todo 前核对其与总纲的范围。
 - 查规格或变更时，从 [知识导航](docs/README.md) 进入模块当前正文；查历史时按 [来源表](docs/index.yaml) 区分适用版本。
 - 本地入口：`make knowledge-check`、`make verify-pr`；具体边界见 [工具说明](tooling/README.md) 和 [部署说明](deploy/README.md)。
 - 当前状态：迁移与日常入口切换已完成，同一 Goal 注册迁移及首次真实定时接续已验证；ThingsBoard/AirMQ 为仓外学习参考，不迁入；r-doc 与旧分发工具未采纳。验收边界见 [M5 记录](docs/changelog/2026-10-15-m5-cutover.md)。
@@ -68,7 +69,7 @@
 
 以下规则在 `ming-iot` 内覆盖上级工作区对每次 commit、push 单独授权的要求：
 
-- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；本轮已明确授权 GitHub 候选推送、PR、CI 与独立复审；具体范围见 `tooling/policy/PUBLICATION_POLICY.json`。
+- 已绑定获批 Agent Todo、精确 `task_repository`、write scope 和独立 worktree 的工作，Agent 可在验证和公共/私有边界扫描通过后自行 commit。只有当前任务允许远程交付时才推送候选分支或创建/更新 PR；既有发布回执只覆盖当时的候选，当前操作范围以本次用户指令和 Todo 为准；公开边界见 `tooling/policy/PUBLICATION_POLICY.json`。
 - 所有跟踪文件变更通过 PR 进入默认分支；禁止直接 push 默认分支的产品变更。首次空仓可建立不含文件的根提交作为 PR 基线。
 - PR 默认由有权限的人在目标托管平台完成 Review 和合并；人执行合并本身即为该次合并授权，不再要求单独的 LoopX User Gate。
 - 只有要求 Agent 执行 PR 合并时，才建立绑定精确 PR、Head、目标分支和合并方式的 User Gate。

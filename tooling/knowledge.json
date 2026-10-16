@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "entrypoints": {
+    "charter": "docs/project-charter.md",
     "knowledge": "docs/README.md",
     "specs": "docs/specs/README.md",
     "rules": "docs/runbook/team-development.md",
@@ -42,7 +43,9 @@
     "docs/changelog/2026-10-16-specs-pr-check.md",
     "docs/changelog/2026-10-16-specs-clean-clone-takeover.md",
     "docs/changelog/2026-10-16-specs-github-delivery.md",
-    "docs/changelog/2026-10-16-specs-merged-next-plan.md"
+    "docs/changelog/2026-10-16-specs-merged-next-plan.md",
+    "docs/project-charter.md",
+    "docs/changelog/2026-10-15-post-migration-governance-plan.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

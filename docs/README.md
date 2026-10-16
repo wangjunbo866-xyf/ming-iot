@@ -1,13 +1,14 @@
 # Ming IoT 知识导航
 
-需要理解业务时先定位模块当前规格，需要追溯来源时再进入历史材料。文件被迁入不等于其内容成为当前约定。
+先读 [AI 协作研发总纲](project-charter.md)，了解总目标、设计原则、阶段路线、当前进度和完成标准。需要理解业务时进入模块当前规格，追溯来源时再读历史材料。文件被迁入不等于其内容成为当前约定。
 
 | 任务 | 入口 |
 | --- | --- |
+| 总目标、路线、进度与完成标准 | [总纲](project-charter.md) |
 | 日常开发、工具与 LoopX 接入 | [开发入口](runbook/daily-development.md) |
 | 查业务模块、主规格与在途变更 | [specs](specs/README.md) |
 | 团队协作、认领、需求确认与提交检查 | [团队开发约定](runbook/team-development.md) |
-| 开发思路与待落实治理项 | [维护提纲](wiki/team-development-outline.md) |
+| 详细设计讨论与方法来源 | [维护提纲](wiki/team-development-outline.md)；当前路线看总纲 |
 | 当前仓库迁移决定 | [单仓迁移方案](architecture/monorepo-migration.md) |
 | M1/M2/M3 证据和遗留 | [迁移记录](changelog/2026-10-15-monorepo-inventory.md) |
 | 正文归属与有效状态 | [文档来源索引](index.yaml) |

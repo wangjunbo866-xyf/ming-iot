@@ -1,5 +1,7 @@
 # 日常开发入口
 
+目标、阶段进度和完成标准统一从 [总纲](../project-charter.md) 读取；本页只维护日常操作入口。
+
 产品源码、当前文档、团队工具和 CI 的入口统一为 [ming-iot](https://github.com/wangjunbo866-xyf/ming-iot)。从 `main` 创建分支和独立工作树；改动通过 PR 合入。
 
 ```sh

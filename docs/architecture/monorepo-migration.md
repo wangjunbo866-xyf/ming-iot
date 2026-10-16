@@ -7,6 +7,8 @@ goal: ming-iot-knowledge-pilot
 
 # Ming IoT 全项目单仓迁移
 
+**2026-10-16 状态索引：** M1–M5 已完成已提供来源的迁移与同一 Goal 路由切换，见 [M5 回执](../changelog/2026-10-15-m5-cutover.md)。本文保留分阶段设计和历史条件；当前总目标、进度和下一步以 [总纲](../project-charter.md) 为准，旧仓及私有备份继续保留。
+
 ## 当前 Goal 与决定
 
 2026-10-15 用户确认：继续使用 `ming-iot-knowledge-pilot`，将当前工作区的产品与知识项目迁入 [wangjunbo866-xyf/ming-iot](https://github.com/wangjunbo866-xyf/ming-iot)，收敛为一个 monorepo。以现有 ming-iot 为主体，统一代码、文档、工具和交付入口，不继续父子仓或多项目并列组织。本文件记录当前迁移主线和分阶段完成条件；原 r-doc 试点记录继续作为历史证据。
