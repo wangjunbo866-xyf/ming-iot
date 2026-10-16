@@ -1,20 +1,14 @@
-# HTTP API 契约校验
+# engineering.api-contract：HTTP API 契约校验
 
-- 模块 ID：`engineering.api-contract`；这是研发工具能力，不是 SaaS 业务域。
-- 长期模块负责人：未分配。本次任务由当前用户委托，Codex 实施；不据此授予长期所有权。
-- 代码：`backend/tools/cmd/apicheck/`；底层 `internal/apicontract/` 仅阅读。
-- 基线：[spec.md](spec.md)，`observed-v0`，由既有代码、说明及实测重建，尚未整体批准为正式需求。
-- 本次认领及候选：[PATCH-20261013-lint-selection](patches/PATCH-20261013-lint-selection/change.md)。
-- 范围外：业务 API、鉴权语义、golden、生成器和部署；其他规格入口维持原状。
-
-## 当前适用关系
+- 当前规则：[spec.md@current-v1](spec.md)，只覆盖 `apicheck lint` 的选择、元数据与只读退出契约。
+- 适用源码：新仓 main `c165a56531f58421a870a0b8794f24556b60d3b2`；本轮文档为 S1 候选，不等于已合并或部署。
+- 人的长期负责人：未分配。原修复来自用户任务级委托，本轮用户授权主规格收敛；不据此授予长期所有权。
+- 实现、验收与验证命令在主规格；范围外为业务 API 行为、生成器、鉴权策略调整和部署。
+- 当前无须叠加的有效覆盖或未完成业务 Patch。新仓验证与候选状态见 [S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)。
 
 <a id="lint-selection-patches"></a>
+## 历史与吸收关系
 
-`LINT-SELECT` 的旧行为见 [基线条款](spec.md#lint-select)。
-候选 [PATCH-20261013-lint-selection](patches/PATCH-20261013-lint-selection/change.md)
-状态为 `confirmed`，拟替换该条；尚未标记 effective 或 absorbed。
-`LINT-META`、`LINT-READONLY` 保持不变。本次无其他已生效覆盖。
+[PATCH-20261013-lint-selection](patches/PATCH-20261013-lint-selection/change.md) 已 absorbed 到 current-v1 的 LINT-SELECT，LINT-META 与 LINT-READONLY 保持既有约束。
 
-本地候选的测试及评审见 [试跑报告](../../../changelog/2026-10-13-ming-specs-pilot.md)。
-本地实现完成、合并、制度采纳和部署分别记录；不能用本入口的存在证明已经上线。
+[observed-v0 原文快照](spec.observed-v0.md)仅描述修复前现状。[原试跑记录](../../../changelog/2026-10-13-ming-specs-pilot.md)保留当时证据；旧仓 SHA 不保证在新仓解析。不要重写旧回执来证明新候选，也不需要从这些历史资料拼接当前规则。

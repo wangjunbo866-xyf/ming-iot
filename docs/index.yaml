@@ -2,6 +2,65 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-github-delivery-20261016
+    role: specs_s1_s3_github_delivery_and_acceptance_contract
+    status: delivery_candidate
+    path: docs/changelog/2026-10-16-specs-github-delivery.md
+    revision: github-1
+    authority: user_authorized_scoped_delivery
+    related:
+      - docs/changelog/2026-10-15-specs-current-baseline.md
+      - docs/changelog/2026-10-16-specs-pr-check.md
+      - docs/changelog/2026-10-16-specs-clean-clone-takeover.md
+      - docs/runbook/monorepo-ci.md
+    conflict_rule: "用户授权 S1–S3 推送、创建 PR、托管 CI 和独立复审，暂不合并。本文定义候选与验收口径，最终远程 Head、运行及 Review 以 PR 和同一 Goal 的外部回执为准；历史阶段状态保持原样，不恢复小黄任务，不删除旧源、私有备份或历史。"
+  - source_id: ming-iot-specs-clean-clone-takeover-20261016
+    role: clean_clone_notification_takeover_and_documentation_correction
+    status: local_candidate
+    path: docs/changelog/2026-10-16-specs-clean-clone-takeover.md
+    revision: s3-1
+    authority: user_authorized_scoped_validation
+    related:
+      - docs/specs/saas/notification-trigger/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+    conflict_rule: "S3 是无聊天历史的独立 AI 接手演练，调用边界仅为适用源码现状。最终 Head、验证及复审由 Goal 回执绑定；不代表真人验收、长期收益、业务变化、托管运行或生产验收。保留候选、旧仓、备份和历史；小黄任务保持废弃。"
+  - source_id: ming-iot-specs-pr-check-20261016
+    role: actual_pr_diff_module_mapping_and_regressions
+    status: local_candidate
+    path: docs/changelog/2026-10-16-specs-pr-check.md
+    revision: s2-1
+    authority: user_authorized_scoped_implementation
+    related:
+      - tooling/specs-map.json
+      - tooling/specs_pr.py
+      - .agents/skills/ming-specs/references/pr-check.md
+      - docs/runbook/team-development.md
+    conflict_rule: "S2 接入完整 PR 差异、模块条款、轻量声明与历史归档。最终 Head、验证及独立复审由 Goal 外部回执绑定；候选配置和本地事件回放不是托管运行、远程必需检查或业务语义批准。保留 S1、旧仓、备份和历史回执；不恢复小黄任务。"
+  - source_id: ming-iot-specs-current-baseline-20261015
+    role: current_specs_consolidation_and_new_repository_baseline
+    status: local_candidate
+    path: docs/changelog/2026-10-15-specs-current-baseline.md
+    revision: s1-1
+    authority: user_authorized_scoped_consolidation
+    related:
+      - docs/specs/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+      - docs/specs/engineering/api-contract/spec.md
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/SKILL.md
+    conflict_rule: "S1 只收敛两模块已实现规则与协作方法，适用新仓源码 c165a56531f58421a870a0b8794f24556b60d3b2。最终文档候选与验证由任务外部回执绑定；旧 observed、历史回执及备份保留。不是业务变化、全团队采纳、实际 PR 规格门禁启用或生产验收，不恢复小黄任务。"
+  - source_id: ming-iot-post-migration-governance-plan-20261015
+    role: post_migration_knowledge_and_team_workflow_assessment
+    status: proposal
+    path: docs/changelog/2026-10-15-post-migration-governance-plan.md
+    revision: 0.1.0
+    authority: user_requested_assessment_and_next_step_proposal
+    related:
+      - docs/specs/README.md
+      - docs/runbook/team-development.md
+      - docs/wiki/team-development-outline.md
+      - .agents/skills/ming-specs/SKILL.md
+    conflict_rule: "基于迁移后main的时点盘点与后续计划，不代表规则已修订、Skill正式采纳或门禁已启用。优先收敛现行规格和方法；不重新创建Goal，不恢复小黄任务，旧仓及私有备份继续保留。历史试点结论保持原适用范围。"
   - source_id: ming-iot-monorepo-migration-20261015
     role: current_goal_migration_plan
     status: active-plan
@@ -35,7 +94,7 @@ materials:
     role: candidate_team_knowledge_governance_outline
     status: draft
     path: docs/wiki/team-development-outline.md
-    revision: 0.1.1-draft
+    revision: 0.2.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -43,12 +102,12 @@ materials:
       - docs/specs/README.md
       - docs/changelog/2026-10-14-ming-specs-handoff-pilot.md
       - docs/changelog/2026-10-14-ming-specs-continuation.md
-    conflict_rule: "本提纲记录当前用户方向与待落实建议；不替代模块业务规格，不代表团队采纳、Skill 已修改或门禁已启用。用户明确决定优先。"
+    conflict_rule: "本提纲保留设计依据；S1 已同步部分约定与 Skill 候选，实际状态见 S1 条目。不替代模块业务规格，不代表全团队采纳或门禁启用。用户明确决定优先。"
   - source_id: ming-iot-team-specs-draft-v01
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.3.1-draft
+    revision: 0.5.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -59,7 +118,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.3.0-draft
+    revision: 0.5.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md

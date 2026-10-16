@@ -1,13 +1,19 @@
+---
+status: absorbed
+revision: R1
+---
+
 # PATCH-20261013-lint-selection：拒绝未实际选择文件的 lint 成功
 
 - 类型：patch；原因：开发工具缺陷修复。
-- 状态：confirmed，限本地试跑与修复范围，尚未 effective。
+- 已吸收：[current-v1#lint-select](../../spec.md#lint-select)，LINT-META / LINT-READONLY 保持原约束；2026-10-15 用户授权 S1，原验收未变。
+- 适用新仓源码：`c165a56531f58421a870a0b8794f24556b60d3b2`；文档候选与验证见 [S1 记录](../../../../../changelog/2026-10-15-specs-current-baseline.md)。
 - 任务：`todo_3af9f9234500`；模块：`engineering.api-contract`。
-- 基线：[spec.md@observed-v0#LINT-SELECT](../../spec.md#lint-select)，代码来源 `da80f056941e5f5e2ea1de38538ea2a062be8853`。
+- 基线：[observed-v0#LINT-SELECT](../../spec.observed-v0.md#lint-select)，代码来源 `da80f056941e5f5e2ea1de38538ea2a062be8853`。
 - 变化：替换 `LINT-SELECT` 的文件选择规则；不变约束：[LINT-META](../../spec.md#lint-meta)、[LINT-READONLY](../../spec.md#lint-readonly)。
 - 主规格反向入口：[模块入口](../../README.md#lint-selection-patches)，主规格相应位置也有回链。
 - 依赖与并行：无前置 Patch；当前可见工作树和 LoopX 在途任务未发现相同代码范围的认领。不宣称已检查不可见团队任务。
-- 适用代码版本：待候选及评审回执；部署：本次不涉及。
+- 下文为 2026-10-13 原试跑记录；其中尚未生效/未合并/待吸收和工具状态只适用于当时，不是当前状态。机器投影改用 v2，只从本文开头读取状态/revision；原回执不改写。
 
 ## 原始需求与确认
 

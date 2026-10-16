@@ -13,7 +13,7 @@ make ci-tools
 make publication-check
 umask 022
 make verify-pr
-.cache/ci-tools/actionlint -shellcheck= .github/workflows/monorepo.yml
+.cache/ci-tools/actionlint -shellcheck= .github/workflows/*.yml
 ```
 
 `ci-tools` 从官方发行包下载固定版本及校验和，仅写入忽略的 `.cache/ci-tools`。Protobuf 工具从空 `backend/bin/protobuf-tools` 自动安装，版本/摘要由现有 lock 固定；允许使用 Go 模块与编译缓存，但无需任何旧源仓文件。
@@ -27,3 +27,13 @@ GitHub workflow 使用普通 pull_request 和 main/master push、只读 contents
 公开前另运行 `make publication-ready`。它在发布清单不是 ready 或存在待决项时失败，不因技术 CI 通过而改变。25文件范围及本次远程授权已记录；已有来源限制继续保留。许可清单与发布状态的权威是 [PUBLICATION_POLICY.json](../../tooling/policy/PUBLICATION_POLICY.json)。
 
 迁移采用独立的新历史；M3 及其完整源历史保留在已恢复验证的私有备份中。全新 clone 验证只针对本轮拟公开 refs，不把私有历史一并传入。候选发生变化后，重新绑定完整 Head、验证和独立 Review。
+
+## S2 实际 PR 规格检查（候选）
+
+[Specs PR check](../../.github/workflows/specs-pr.yml) 使用普通 `pull_request` 的 opened、synchronize、reopened、edited 事件；修改 PR 正文会重跑。它检出事件指定的 head，读取事件文件中的 base/head 和 `ming-specs` JSON 块，正文只作为数据读取，不拼接到 shell。不使用 `pull_request_target`、秘密或写权限。
+
+完整差异取目标分支 tip 与 head 的唯一 merge-base 至 head；目标分支后续独有提交不会混入 PR。声明覆盖所有新增、修改、删除与重命名两端路径；共享模块取各自声明，不把多模块变更塞入一个 Patch。格式、轻量路径、历史归档及明确缺口见 [PR 检查约定](../../.agents/skills/ming-specs/references/pr-check.md)。
+
+`make verify-pr` 运行工具回归，不自动知道某个 PR 的正文和目标分支。提交候选后另用明确 base/head/declaration 运行完整差异入口，或由 GitHub 事件执行。检查结果绑定候选、差异、声明和映射指纹；语义、授权及 Review 必须另核验。
+
+S2 本地阶段仅完成事件回放和工作流静态校验，当时托管运行 NOT_RUN；后续 [S1–S3 交付](../changelog/2026-10-16-specs-github-delivery.md) 按实际 PR Head、运行及复审回执验收，不用历史本地结果替代。尚未将该 job 配为远程必需检查，也未配置 CODEOWNERS。仓内工作流和检查器自身的修改仍需可信评审；它不是对恶意 PR 的独立安全边界。启用服务端强制限制前另核验权限、实际失败是否阻止合并，以及正文或目标分支变化后的检查时效。

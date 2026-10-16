@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.1.1-draft
+version: 0.2.0-draft
 date: 2026-10-15
 ---
 
@@ -10,7 +10,7 @@ date: 2026-10-15
 
 > 一次变更结束后，下一位开发者能否直接找到该模块当前有效、边界清晰、有人负责、可验证的完整知识，而不用重新拼接过去所有人的开发记录？
 
-本提纲是后续修订[团队开发约定](../runbook/team-development.md)和 [ming-specs](../../.agents/skills/ming-specs/SKILL.md) 的设计依据。已有业务决定继续以模块规格和相应变更为准；提纲中的新增检查、收敛规则尚待落实到约定和工具。保存本稿不代表已启用 Hook、CI 门禁或完整 AI-DLC。
+本提纲是后续修订[团队开发约定](../runbook/team-development.md)和 [ming-specs](../../.agents/skills/ming-specs/SKILL.md) 的设计依据。已有业务决定继续以模块规格和相应变更为准；S1 已将主规格收敛、轻量路径和普通接手方式写入约定/Skill 候选；工具门禁仍按实际配置另行验证，见 [S1 记录](../changelog/2026-10-15-specs-current-baseline.md)。保存本稿不代表已启用 Hook、CI 门禁或完整 AI-DLC。
 
 ## 一 文档治理目标与边界
 
@@ -182,7 +182,7 @@ Patch 指向所属模块、基线版本和受影响条款；模块入口列出�
 
 ## 十 用真实案例验证收益与维护成本
 
-沿用[通知触发人展示试跑](../changelog/2026-10-14-ming-specs-handoff-pilot.md)及其[后续验证记录](../changelog/2026-10-14-ming-specs-continuation.md)。该规则的权威候选仍在[通知模块 Patch](../specs/saas/notification-trigger/patches/PATCH-20261014-display-name/change.md)，这里仅说明如何验证治理方法。
+沿用[通知触发人展示试跑](../changelog/2026-10-14-ming-specs-handoff-pilot.md)及其[后续验证记录](../changelog/2026-10-14-ming-specs-continuation.md)。当前规则入口已收敛为[通知主规格 current-v1](../specs/saas/notification-trigger/spec.md)，原 Patch 与回执保留历史；这里仅说明如何验证治理方法。
 
 已确认的变化仅作用于手动触发的昵称优先显示；其他触发方式保持原行为。此前独立评审发现“旧格式”测试错误使用昵称，漏掉真实旧账号行，说明测试通过仍可能遗漏兼容规则。该缺口最终回到原验收要求、实现和真实旧格式回归用例，而非改写需求来适应代码。
 
@@ -206,4 +206,4 @@ Patch 指向所属模块、基线版本和受影响条款；模块入口列出�
 
 本提纲后续在原文件持续维护。团队约定承接正式要求，Skill 承接执行方法，工具承接确定性检查；落实后在此保留设计依据和导航，不继续复制各处动态状态。
 
-下一轮需要同步的差异：主规格从“稳定后收敛”调整为合并完成条件；取消普通任务的强制交接包；补齐轻量修改路径、测试有效性审查及缺陷回流。当前仅形成提纲，以上条款尚未写入既有约定或 Skill。
+S1 已把主规格合并前收敛、普通任务不强制交接包、轻量修改路径、测试有效性审查及缺陷回流写入团队约定与 ming-specs 0.4.0-draft 候选。实施状态、验证与后继范围统一见 [S1 记录](../changelog/2026-10-15-specs-current-baseline.md)；该修订不自动启用新门禁或证明团队长期收益。

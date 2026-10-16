@@ -6,7 +6,7 @@
   "claim": "docs/specs/saas/notification-trigger/patches/PATCH-20261014-display-name/change.md",
   "confirmation_source": "user-reply:2026-10-14:Q1:manual-nickname-first; Q2:independent-ai-handoff; change:R2",
   "spec": "docs/specs/saas/notification-trigger/spec.md#display-name",
-  "spec_version": "observed-v0",
+  "spec_version": "current-v1",
   "backlink": "docs/specs/saas/notification-trigger/README.md#display-name-patches",
   "write_scope": [
     "docs/runbook/team-development.md",

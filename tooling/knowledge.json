@@ -6,7 +6,9 @@
     "rules": "docs/runbook/team-development.md",
     "migration": "docs/architecture/monorepo-migration.md",
     "source_registry": "docs/index.yaml",
-    "preflight": ".agents/skills/ming-specs/scripts/preflight.py"
+    "preflight": ".agents/skills/ming-specs/scripts/preflight.py",
+    "specs_pr": "tooling/specs_pr.py",
+    "specs_map": "tooling/specs-map.json"
   },
   "maintained_documents": [
     "README.md",
@@ -31,7 +33,15 @@
     "docs/runbook/daily-development.md",
     "docs/changelog/2026-10-15-m5-cutover.md",
     "docs/wiki/legacy/superpowers/README.md",
-    "tooling/policy/README.md"
+    "tooling/policy/README.md",
+    ".agents/skills/ming-specs/references/pr-check.md",
+    "docs/specs/saas/notification-trigger/README.md",
+    "docs/specs/saas/notification-trigger/spec.md",
+    "docs/specs/engineering/api-contract/README.md",
+    "docs/specs/engineering/api-contract/spec.md",
+    "docs/changelog/2026-10-16-specs-pr-check.md",
+    "docs/changelog/2026-10-16-specs-clean-clone-takeover.md",
+    "docs/changelog/2026-10-16-specs-github-delivery.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

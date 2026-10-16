@@ -35,7 +35,7 @@ jobs:
           rg --version
           python3 tooling/install_ci_tools.py
       - name: Validate workflow
-        run: .cache/ci-tools/actionlint -shellcheck= .github/workflows/monorepo.yml
+        run: .cache/ci-tools/actionlint -shellcheck= .github/workflows/*.yml
       - name: Check complete reachable history and publication boundary
         run: make publication-check
       - name: Run complete service-free PR profile

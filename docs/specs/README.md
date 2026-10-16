@@ -1,11 +1,11 @@
 ---
 status: draft
-version: 0.2.0-draft
+version: 0.3.0-draft
 ---
 
 # Ming IoT 业务地图与规格入口（草案）
 
-本入口随 [团队开发约定](../runbook/team-development.md) 起草，包含工具模块试跑与通知展示规则候选，尚未整体迁移业务规格。以实际采纳范围为实施依据，不能把目录存在视为业务已实现。
+本入口随 [团队开发约定](../runbook/team-development.md) 起草，已收敛工具校验和通知展示两个局部模块的 current-v1，尚未整体迁移业务规格。以实际采纳范围为实施依据，不能把目录存在视为业务已实现。
 
 ## 当前材料
 
@@ -18,14 +18,16 @@ version: 0.2.0-draft
 
 | 模块 ID / 业务能力 | 模块入口 | 人的负责人 | 前台 / 后台 / 代码范围 | 当前基线及有效补丁 | 在途变更 |
 | --- | --- | --- | --- | --- | --- |
-| engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | observed-v0 现状基线，无有效覆盖 | [lint 文件选择 Patch](engineering/api-contract/patches/PATCH-20261013-lint-selection/change.md)，confirmed、本地试跑 |
-| saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | observed-v0 现状基线，无有效覆盖 | [展示名称 Patch](saas/notification-trigger/patches/PATCH-20261014-display-name/change.md)，confirmed、R2、本地试跑 |
+| engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
+| saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
+
+两份主规格适用新仓源码 `c165a56531f58421a870a0b8794f24556b60d3b2`；文档本身为 S1 候选，验证及未覆盖项见 [S1 记录](../changelog/2026-10-15-specs-current-baseline.md)。历史 observed 原文在各模块保留，不是当前入口。
 
 由模块负责人确认新条目；AI 可以起草地图，但不能虚构负责人、路由或有效状态。同一业务模块跨仓时，在条目中分别给出仓库与契约版本，不复制多份权威正文。
 
 ## 建议结构
 
-下面是创建真实模块时的模板，目录尚未按示例创建：
+下面是可选结构；按任务需要创建，不要求每个小修改新建 raw、design 或 Patch 文件：
 
 ```text
 docs/specs/<业务域>/<模块>/
@@ -39,6 +41,6 @@ docs/specs/<业务域>/<模块>/
 docs/wiki/blue-print/<蓝图ID>.md # 探索材料，正式采纳前不并入现行规格
 ```
 
-模块入口展示“基线 + 已生效覆盖”，并把草稿/已确认未实现的候选单独列出。`changelog` 只导航到变更及证据，`architecture` 保留跨模块架构决策的单一正文。原始资料可以留在 wiki 的来源区，提炼后以来源链接连接。
+模块入口默认指向完整当前主规格，在途候选与历史另列。已有“基线 + 已生效覆盖”仅为待收敛过渡状态；新行为在同一候选内完成主规格收敛再合并。`changelog` 只导航到变更及证据，`architecture` 保留跨模块架构决策的单一正文。原始资料可以留在 wiki 的来源区，提炼后以来源链接连接。
 
 现有 `backend/saas`、`backend/share`、`backend/things` 是代码组织线索；业务地图仍需按实际能力细分。巡检的同仓设计方向不代表它已经有实现或已确认的业务规格。

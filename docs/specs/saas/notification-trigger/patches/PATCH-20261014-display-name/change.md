@@ -1,18 +1,17 @@
 ---
-status: confirmed
+status: absorbed
 revision: R2
 ---
 
 # PATCH-20261014-display-name：触发人名称优先级
 
-- 类型：patch；原因：候选需求调整。
-- 任务：`todo_60ac9c3f4982`；状态和 revision 以文件开头元数据为准。
-- 基线：[observed-v0#display-name](../../spec.md#display-name)。
-- 反向入口：[模块候选](../../README.md#display-name-patches)。
-- 适用代码：本地实现候选 `824849b041882c20dbb0a4acdee092f50ea9793a`；observed 来源仍为 `7d4063ef3c0407e87fdc010ea86960ed5b050368`，本 Patch 尚未 effective。
-- 当前授权：用户允许完善约定、选择真实规则并试跑；Q1/Q2 已在当前会话直接回答，范围见 D2/D3。本地候选已实现，未合并或部署；实际检查见[试跑报告](../../../../../changelog/2026-10-14-ming-specs-handoff-pilot.md)。
+- 类型：patch；业务 revision 仍为 R2，原决定及 AC 未改变。
+- 原任务：`todo_60ac9c3f4982`；原基线：[observed-v0#display-name](../../spec.observed-v0.md#display-name)。
+- 已吸收位置：[current-v1#display-name](../../spec.md#display-name)、BODY-COMPATIBILITY、BOUNDARY；反向入口：[历史导航](../../README.md#display-name-patches)。
+- 收敛依据：2026-10-15 用户授权 S1；适用新仓源码 `c165a56531f58421a870a0b8794f24556b60d3b2`，验证与文档候选见 [S1 记录](../../../../../changelog/2026-10-15-specs-current-baseline.md)。
+- 下文记录原试跑时的认领、澄清、决定及验证；其中候选、待评审和未合并措辞只适用于当时。旧实现候选 `824849b041882c20dbb0a4acdee092f50ea9793a` 及 observed 来源 `7d4063ef3c0407e87fdc010ea86960ed5b050368` 保留为历史，不当作新仓基线。
 
-## 认领
+## 历史认领（2026-10-14）
 
 需求负责人：当前用户（姓名未核验）；长期模块负责人未分配。本次 AI 协调与资料执行者为 `ming-specs-draft-codex`；接收实施者为 `notification_rule_implementer`，独立评审者为 `ming_specs_contract_review`，版本与结论记入回执；没有真人同事参与接收。
 
