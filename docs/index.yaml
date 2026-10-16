@@ -6,7 +6,7 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.0
+    revision: 1.0.1
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
@@ -115,7 +115,7 @@ materials:
     role: candidate_team_knowledge_governance_outline
     status: draft
     path: docs/wiki/team-development-outline.md
-    revision: 0.2.0-draft
+    revision: 0.2.1-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -128,7 +128,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.5.0-draft
+    revision: 0.6.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -139,7 +139,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.5.0-draft
+    revision: 0.6.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
