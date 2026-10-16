@@ -57,7 +57,7 @@ python3 .agents/skills/ming-specs/scripts/preflight.py \
   --change <仓库相对check.json> --base <实际基线commit> --staged
 ```
 
-该入口是单 Patch 范围检查；多模块 PR 用完整差异入口，不能把整个 PR 塞进一个历史 Patch。详细反例与例外快照见[试跑回归说明](references/pilot-regressions.md)。历史零差异结构检查不能证明当前 PR 范围；新仓使用新证据，旧仓 SHA 与历史回执原样保留。S2 的工作流属于本地候选配置，托管运行及远程合并限制仍须分别取得实际证据。
+该入口是单 Patch 范围检查；多模块 PR 用完整差异入口，不能把整个 PR 塞进一个历史 Patch。详细反例与例外快照见[试跑回归说明](references/pilot-regressions.md)。历史零差异结构检查不能证明当前 PR 范围；新仓使用新证据，旧仓 SHA 与历史回执原样保留。S2 工作流已随 PR #5 合并并有[托管检查记录](../../../docs/changelog/2026-10-16-specs-merged-next-plan.md)；本轮新增流程仍是本地候选。远程必需检查与新候选 CI 需分别核验。
 
 ## 日常接手与例外交付
 

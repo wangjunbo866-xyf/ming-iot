@@ -86,4 +86,4 @@ GitHub 使用 `python3 tooling/specs_pr.py --event "$GITHUB_EVENT_PATH"`。工�
 
 成功仅表示 `STRUCTURE_OK_REVIEW_REQUIRED`；semantic_review=NOT_RUN、authorization=NOT_VERIFIED、server_merge_rules=NOT_VERIFIED。测试和语义 Review 的有效性由实际回执核对。`make verify-pr` 包含检查器回归，完整 PR 检查另需真实 base/head/声明。零差异只可作结构检查，不能作为某个非空 PR 已检查的证据。
 
-S2 工作流与检查器是可供评审的候选；本地事件回放不等于托管运行，不自动启用服务器必需检查。本工具使用候选中的检查代码及映射，对它们的变更必须可信评审；不能充当抵抗恶意 PR 的安全边界。
+S2 工作流与检查器已随 PR #5 合并，真实托管结果见[合并记录](../../../../docs/changelog/2026-10-16-specs-merged-next-plan.md)；本地事件回放仍不能替代新候选的托管运行，也不自动启用服务器必需检查。本工具使用候选中的检查代码及映射，对它们的变更必须可信评审；不能充当抵抗恶意 PR 的安全边界。

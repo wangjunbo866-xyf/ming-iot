@@ -236,7 +236,7 @@ PR 说明使用一个 `ming-specs` JSON 块，具体格式见 [PR 检查约定](
 
 未改动且未被本次认领的 absorbed/withdrawn 历史 Patch 保留当时版本，不强迫随新规格重写。当前入口和主规格、活动 Patch 以及本次新增/修改/引用的 Patch 仍检查指针。工具按声明验证结构；是否确属“规则不变”、历史分类是否合理、映射是否准确由评审判断。
 
-单仓 CI 的 `verify-pr → contract-static → knowledge-check` 运行检查器回归；独立的 Specs PR check 工作流对 opened/synchronize/reopened/edited 事件调用完整差异入口。当前为本地候选，尚无该工作流的托管运行证据；远程分支保护未回读，不推断为存在或不存在。原 [手动 preflight](../../.agents/skills/ming-specs/scripts/preflight.py) 保留单 Patch/staged 提前反馈和按需实施快照。
+单仓 CI 的 `verify-pr → contract-static → knowledge-check` 运行检查器回归；独立的 Specs PR check 工作流对 opened/synchronize/reopened/edited 事件调用完整差异入口。S2 已随 PR #5 合并并取得实际托管检查证据，见[合并记录](../changelog/2026-10-16-specs-merged-next-plan.md)；本轮新增流程与索引绑定仍为本地候选。远程分支保护未回读，不推断为存在或不存在。原 [手动 preflight](../../.agents/skills/ming-specs/scripts/preflight.py) 保留单 Patch/staged 提前反馈和按需实施快照。
 | 检查 | 程序可确定检查的部分 | 仍需 AI/人判断的部分 | 本稿状态 |
 | --- | --- | --- | --- |
 | 认领完整性 | 任务/模块、确认来源字段、候选路径在声明范围内 | 身份和授权真实性、分工合理性、并发冲突、共享影响 | LOCAL_PARTIAL：字段与范围；不验证人和排他认领 |
