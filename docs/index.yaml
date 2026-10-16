@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.2
+    revision: 1.0.3
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。方向已收敛；有界文档检查的 GitHub 交付已获授权，具体范围见本轮交付条目和公开策略；不自动去重、归档、启用全库门禁或合并；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录，旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -378,3 +378,15 @@ materials:
       - docs/runbook/monorepo-ci.md
       - tooling/policy/PUBLICATION_POLICY.json
     conflict_rule: "本轮授权将三个已验证候选一起推送、创建 PR、运行真实 CI 与独立复审；最终 Head/运行/结论以 PR 及同一 Goal 回执为准。不授权合并、自动去重归档、全库门禁或删除旧源与私有备份；历史实验和采用边界保留。"
+  - source_id: ming-iot-governance-pr6-merged-next-plan-20261017
+    lifecycle: historical
+    role: governance_merge_acceptance_and_next_plan
+    status: proposal
+    path: docs/changelog/2026-10-17-governance-merged-next-plan.md
+    revision: merge-plan-1
+    authority: user_authorized_merge_verification_and_planning
+    related:
+      - docs/project-charter.md
+      - docs/changelog/2026-10-17-knowledge-governance-delivery.md
+      - docs/runbook/team-development.md
+    conflict_rule: "用户授权合并已验证 PR6、同步并验证 main、梳理后续计划；本文记录当前事实与建议，当前总纲决定方向。S4 业务任务、责任分配及后续工具增强尚未启动；保留旧仓、私有备份与历史，不恢复小黄任务，不自动去重归档或启用全库门禁。"
