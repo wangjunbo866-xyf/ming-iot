@@ -2,6 +2,18 @@ schema_version: 1
 status: draft
 description: "迁移主线、团队规格草案及真实试跑的正文映射；各来源按明确授权范围生效，历史阶段条目保留当时状态；当前迁移决定以 M5 条目及迁移方案开头为准。路径相对仓库根。"
 materials:
+  - source_id: ming-iot-specs-github-delivery-20261016
+    role: specs_s1_s3_github_delivery_and_acceptance_contract
+    status: delivery_candidate
+    path: docs/changelog/2026-10-16-specs-github-delivery.md
+    revision: github-1
+    authority: user_authorized_scoped_delivery
+    related:
+      - docs/changelog/2026-10-15-specs-current-baseline.md
+      - docs/changelog/2026-10-16-specs-pr-check.md
+      - docs/changelog/2026-10-16-specs-clean-clone-takeover.md
+      - docs/runbook/monorepo-ci.md
+    conflict_rule: "用户授权 S1–S3 推送、创建 PR、托管 CI 和独立复审，暂不合并。本文定义候选与验收口径，最终远程 Head、运行及 Review 以 PR 和同一 Goal 的外部回执为准；历史阶段状态保持原样，不恢复小黄任务，不删除旧源、私有备份或历史。"
   - source_id: ming-iot-specs-clean-clone-takeover-20261016
     role: clean_clone_notification_takeover_and_documentation_correction
     status: local_candidate
