@@ -364,3 +364,17 @@ materials:
       - tooling/doclinks.py
       - tooling/vendor/rdoc/README.md
     conflict_rule: "仅检查显式当前文档、来源索引与替代关系；历史正文不递归审计。工具通过不代表语义、真人验收、r-doc 正式采用或远程 CI 已运行。不自动去重、归档、启用全库门禁或删除旧源与私有备份。"
+  - source_id: ming-iot-knowledge-governance-delivery-20261017
+    lifecycle: historical
+    role: charter_small_change_and_document_checks_github_delivery
+    status: delivery_candidate
+    path: docs/changelog/2026-10-17-knowledge-governance-delivery.md
+    revision: delivery-1
+    authority: user_authorized_scoped_delivery
+    related:
+      - docs/project-charter.md
+      - docs/runbook/team-development.md
+      - docs/runbook/document-checks.md
+      - docs/runbook/monorepo-ci.md
+      - tooling/policy/PUBLICATION_POLICY.json
+    conflict_rule: "本轮授权将三个已验证候选一起推送、创建 PR、运行真实 CI 与独立复审；最终 Head/运行/结论以 PR 及同一 Goal 回执为准。不授权合并、自动去重归档、全库门禁或删除旧源与私有备份；历史实验和采用边界保留。"

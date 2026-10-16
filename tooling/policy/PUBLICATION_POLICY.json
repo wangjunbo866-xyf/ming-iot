@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "publication_status": "ready",
-  "scope": "User-authorized S1-S3 candidate delivery through one GitHub PR with hosted CI and independent final-head review. No merge, source deletion, version release or production action; preserve old repositories, backups and receipts.",
+  "scope": "User-authorized delivery of the consolidated charter, small-change workflow and bounded documentation checks through one GitHub PR with hosted CI and independent review. No merge, automatic deduplication/archive, whole-repo gate, source deletion, version release or production action.",
   "history_strategy": "New isolated history from attribution assembly plus approved 25-file scope. Original complete histories, candidates and backups remain private; never push their refs wholesale.",
   "source_head": "302170043c6ce8dd81ff2a9826156d941ea7deb7",
   "source_tree": "7acc3768b9d5b8aa1ba60048db16e3ab767a4635",
@@ -53,6 +53,10 @@
     {
       "path": "tooling/experiments/r-doc-v4/skills/r-doc/UPSTREAM-LICENSE",
       "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
+    },
+    {
+      "path": "tooling/vendor/rdoc/LICENSE",
+      "sha256": "21902bb748188254e39957588f459c3d0fa52252a295f063d6a2c61a5346aded"
     }
   ],
   "pending_decisions": [],
@@ -91,23 +95,25 @@
     }
   ],
   "remote_authorization": {
-    "date": "2026-10-16",
+    "date": "2026-10-17",
     "source": "explicit_user_request",
     "repository": "https://github.com/wangjunbo866-xyf/ming-iot",
-    "reviewed_base_head": "c165a56531f58421a870a0b8794f24556b60d3b2",
-    "candidate_branch": "codex/specs-s1-s3-delivery",
-    "preserved_s3_head": "c54d15b7572c5f7bf295ec18a17df6dfaf30a9bc",
+    "reviewed_base_head": "e41d45fe6beec8a832e7bd2bc33fc58862d7e835",
+    "candidate_branch": "codex/goal-charter-20261016",
+    "preserved_candidate_head": "c4d42d6033b28353b28c74963c721a83e673b731",
     "allowed_actions": [
-      "push verified S1-S3 candidate branch",
-      "create or update the S1-S3 PR",
-      "run hosted CI",
-      "independent exact-head Standards and Spec review"
+      "push verified charter, small-change and bounded-document-check candidate together",
+      "create or update one delivery PR",
+      "run and inspect hosted CI",
+      "independent full-diff review bound to final exact head"
     ],
-    "permitted_followups": "Necessary delivery metadata or CI corrections must be validated and independently reviewed for their final exact head.",
+    "permitted_followups": "Necessary delivery metadata, dependency guidance or CI corrections require validation and independent review on the final exact head.",
     "excluded_actions": [
-      "merge the PR",
-      "rewrite published shared history",
-      "delete source repositories, backups or historical receipts",
+      "merge the PR or enable auto-merge",
+      "automatic deduplication or archive",
+      "enable whole-repository document gates",
+      "rewrite shared history",
+      "delete old repositories, private backups or historical receipts",
       "version release",
       "production operations"
     ]
@@ -132,6 +138,28 @@
       "excluded_actions": [
         "version release",
         "delete source repositories or backups",
+        "production operations"
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "source": "explicit_user_request",
+      "repository": "https://github.com/wangjunbo866-xyf/ming-iot",
+      "reviewed_base_head": "c165a56531f58421a870a0b8794f24556b60d3b2",
+      "candidate_branch": "codex/specs-s1-s3-delivery",
+      "preserved_s3_head": "c54d15b7572c5f7bf295ec18a17df6dfaf30a9bc",
+      "allowed_actions": [
+        "push verified S1-S3 candidate branch",
+        "create or update the S1-S3 PR",
+        "run hosted CI",
+        "independent exact-head Standards and Spec review"
+      ],
+      "permitted_followups": "Necessary delivery metadata or CI corrections must be validated and independently reviewed for their final exact head.",
+      "excluded_actions": [
+        "merge the PR",
+        "rewrite published shared history",
+        "delete source repositories, backups or historical receipts",
+        "version release",
         "production operations"
       ]
     }
