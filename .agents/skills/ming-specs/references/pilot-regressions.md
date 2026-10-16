@@ -19,9 +19,9 @@ make verify-pr
 
 `check.json` 是试跑的认领投影。v1 保留原有状态字段；v2 只保存 module/task、确认来源、类型、claim、spec#anchor、spec_version、backlink#anchor、write_scope，当前 status/revision 从 Change 开头元数据读取。路径相对仓库根，链接使用普通相对 Markdown 链接，条款使用显式 `<a id="..."></a>`；不支持所有 Markdown 语法。`write_scope` 为 Python fnmatch 模式（`*` 可跨 `/`），优先使用精确文件或明确目录的 `/**`，不把它当权限边界。
 
-只检查已指定的 Patch，不自动发现全部模块，不校验人的身份、审批、状态转换、并发冲突或 Spec-Code 语义。工具退出 0 的结果仍为 `STRUCTURE_OK_REVIEW_REQUIRED`、`semantic_review=NOT_RUN`、`authorization=NOT_VERIFIED`。工具不检测门禁配置，输出 `hook_ci=NOT_VERIFIED`。当前 `knowledge-check` 已运行检查器回归，但实际 PR 的 base/head 与 Patch 映射尚未接入；不能混称规格门禁已启用。远程合并规则需另行回读。
+本节的单 Patch `preflight.py` 只检查已指定的 Patch，不自动发现全部模块，不校验人的身份、审批、状态转换、并发冲突或 Spec-Code 语义。工具退出 0 的结果仍为 `STRUCTURE_OK_REVIEW_REQUIRED`、`semantic_review=NOT_RUN`、`authorization=NOT_VERIFIED`。工具不检测门禁配置，输出 `hook_ci=NOT_VERIFIED`。完整 PR 的 base/head、模块映射和跨模块路径覆盖使用 S2 新增的独立入口，见 [完整 PR 差异检查](pr-check.md)。`knowledge-check` 运行两类检查器的回归；具体 PR 的声明、托管运行和远程合并规则仍需分别核验。
 
-新仓参考基线为 `c165a56531f58421a870a0b8794f24556b60d3b2`，S1 记录绑定本轮候选。旧仓 SHA 无法解析时保留旧回执；零差异检查只核验指针/字段，不证明实际修改范围、业务语义或回归通过。跨模块全差异目前需人工/AI 审查，不放宽旧认领来取得绿色。
+新仓参考基线为 `c165a56531f58421a870a0b8794f24556b60d3b2`，S1 记录绑定其阶段候选。旧仓 SHA 无法解析时保留旧回执；零差异检查只核验指针/字段，不证明实际修改范围、业务语义或回归通过。完整 PR 结构检查之后，跨模块业务影响仍需人工/AI 语义审查，不放宽旧认领来取得绿色。
 
 ## 必须保留的反例
 
