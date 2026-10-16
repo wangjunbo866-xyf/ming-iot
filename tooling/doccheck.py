@@ -282,8 +282,9 @@ class DocumentCheck:
                     if a == b:
                         raise ValueError('supersession endpoints must have distinct document paths')
                     for src, dst in ((a, b), (b, a)):
-                        if not isinstance(src, str) or src.startswith('docs/wiki/legacy/'):
-                            raise ValueError('supersession body must be an explicitly readable non-legacy document')
+                        if (not isinstance(src, str) or src.startswith('docs/wiki/legacy/')
+                                or self.classify(src) not in ('maintained', 'historical')):
+                            raise ValueError('supersession body must be maintained or historical, and non-legacy')
                         safe_path(self.root, src);safe_path(self.root, dst)
                         self.relation_reads.add(src)
                         links = {t[0] for x in navigation_targets(self.body(src)) if (t := target_name(src, x.raw_target)) is not None}

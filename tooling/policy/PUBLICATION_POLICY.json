@@ -107,7 +107,7 @@
       "run and inspect hosted CI",
       "independent full-diff review bound to final exact head"
     ],
-    "permitted_followups": "Necessary delivery metadata, dependency guidance or CI corrections require validation and independent review on the final exact head.",
+    "permitted_followups": "Necessary delivery metadata, dependency guidance, checker correctness or CI corrections require validation and independent review on the final exact head.",
     "excluded_actions": [
       "merge the PR or enable auto-merge",
       "automatic deduplication or archive",

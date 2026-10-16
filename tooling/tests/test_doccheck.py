@@ -207,6 +207,24 @@ class DocumentTests(unittest.TestCase):
         self.assertEqual(result['supersession_bodies_read'], ['docs/current.md', 'docs/history/old.md'])
         self.assertNotIn('docs/history/unrelated.md', result['bodies_read'])
 
+    def test_supersession_cannot_read_reference_or_unclassified_body(self):
+        for target in ['docs/vendor/reference.md', 'guides/unclassified.md']:
+            with self.subTest(target=target):
+                self.put(target, '[current](../current.md)')
+                self.put('docs/current.md', '---\nversion: "1.0"\nstatus: draft\n---\n# 规则\n'
+                         f'[previous](../{target})')
+                self.materials = [self.item, {'source_id': 'previous', 'path': target,
+                    'status': 'snapshot', 'revision': 'old-1', 'lifecycle': 'historical'}]
+                self.item['supersedes'] = [{'source_id': 'previous', 'scope': 'priorities'}]
+                original = doccheck.read_text
+                def guarded(root, path):
+                    self.assertNotEqual(path, target, 'supersession crossed body read scope')
+                    return original(root, path)
+                with patch.object(doccheck, 'read_text', side_effect=guarded):
+                    result = self.run_check()
+                self.assertIn('supersession-read', self.codes(result))
+                self.assertNotIn(target, result['bodies_read'])
+
     def test_supersession_requires_backlinks_target_and_no_self_or_cycle(self):
         self.relation()
         self.put('docs/history/old.md', 'no backlink')

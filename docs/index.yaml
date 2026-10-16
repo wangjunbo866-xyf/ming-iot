@@ -21,7 +21,7 @@ materials:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。方向已收敛；本轮授权有界文档检查，不自动去重、归档或启用全库门禁，不推送或合并；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。方向已收敛；有界文档检查的 GitHub 交付已获授权，具体范围见本轮交付条目和公开策略；不自动去重、归档、启用全库门禁或合并；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan

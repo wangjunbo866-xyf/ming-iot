@@ -20,6 +20,7 @@ goal_id: ming-iot-knowledge-pilot
 - 目标仓库：`wangjunbo866-xyf/ming-iot`；目标分支 `main`，交付分支 `codex/goal-charter-20261016`。
 - 当前目标基线：`e41d45fe6beec8a832e7bd2bc33fc58862d7e835`。
 - 保留的既有验证候选：`c4d42d6033b28353b28c74963c721a83e673b731`。其完整本地验证与独立复审已通过；这些结果不能代替随后交付 Head 的验证。
+- 本轮独立复审发现并修正：替代关系不得绕过 reference 分类读取外部参考正文；同时将总纲来源条目的旧本地限制对齐本次交付授权，保留初审回执。
 - 本轮补充公开范围记录、r-doc 选择性复用许可的固定摘要，以及 [CI 复现说明](../runbook/monorepo-ci.md)中的依赖安装步骤。
 - 授权以 [公开策略](../../tooling/policy/PUBLICATION_POLICY.json) 的本次记录为准；以往 S1–S3 的授权留在历史，不沿用为当前动作的理由。
 
