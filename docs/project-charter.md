@@ -1,6 +1,6 @@
 ---
 status: direction-baseline
-version: 1.0.6
+version: 1.0.7
 date: 2026-10-17
 goal_id: ming-iot-knowledge-pilot
 ---
@@ -75,7 +75,7 @@ goal_id: ming-iot-knowledge-pilot
 | 方向收敛 | 让所有人能说明目标、进度与何时算完成 | 总纲及小修改规则已随 PR #6 合并，完整验证与独立复审通过 | 不代表整个 Goal 已验收 |
 | 有界文档检查 | 避免维护正文断链、找不到入口、索引或替代关系漂移 | 已随 PR #6 合并，范围见[检查说明](runbook/document-checks.md)，合并后验证见[本轮记录](changelog/2026-10-17-governance-merged-next-plan.md) | 不含语义去重、自动归档、全库门禁或正式采用 |
 | S4 前置：最小联调基线 | 在真实需求改动前验证相关服务与依赖 | 隔离 syssvr 的四种通知 RPC→持久化分支与停止/重启复验已通过，见[本轮记录](changelog/2026-10-17-notification-runtime-baseline.md)；最终候选与复审见 Goal 回执 | 不含 HTTP 鉴权、设备告警上游、外部推送、Eventbus 消费或 Kafka 迁移 |
-| S4：连续业务演进 | 真实需求推进时知识仍完整且维护负担合理 | [Kafka R2](specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)已受理，用户确认仅开发测试、一次切换；R2 已给出十类调用、可靠性和旧消息选项及 V1–V8 验收；关键政策待用户确认 | Kafka 实施、连续演进效果、日常维护成本及正式采用结论 |
+| S4：连续业务演进 | 真实需求推进时知识仍完整且维护负担合理 | [Kafka R3](specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)已受理，用户确认仅开发测试、一次切换，并确认 D6–D8：可靠补处理、超时待核实默认不重发、旧消息不自动导入；R3 已连接调用、V1–V8 验收与实施切片，均未实施 | Kafka 实施、连续演进效果、日常维护成本及正式采用结论 |
 | 按需扩域与强化 | 将有效方法用于下一业务域，修复已观察到的工具缺口 | 后续提案，按真实任务和证据决定 | 不预先批量补齐全平台规格或启用全套门禁 |
 
 PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记录](changelog/2026-10-16-specs-merged-next-plan.md)。它记录的“先补服务端门禁”是此前建议，**本次已改为先收敛方向，再用真实业务验证方法与成本；门禁按必要性单独决定。** 历史建议保留，不能作为当前执行顺序。
@@ -84,7 +84,7 @@ PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记
 
 1. **受理路径已落到仓内。** [流程与 harness](runbook/requirement-to-delivery.md)定义原话、现状、决定、候选规格、代码和证据的连接；团队约定与 ming-specs 同步指向它。通知/API 入口修正及本轮新增材料均为本地候选，尚未推送。
 2. **沿用已验证的隔离通知基线。** 按[启动与验证说明](runbook/notification-baseline.md)复跑既有行为。该路径不经过 Eventbus，只作为无关行为回归；Kafka 需要另选真实事件链和故障验收。
-3. **细化已选定的 Kafka 需求。** 从 [Eventbus 模块](specs/platform/eventbus/README.md)进入当前 observed 及 R2。按真实调用清单确认迁移覆盖、消息可靠性、旧消息处理与首条事件验收；一次切换已确认，不重复提问。方案成熟后补实施映射与检查投影，在同一模块持续演进主规格，不将草稿当作已批准的实现。
+3. **沿同一 Kafka Patch 推进。** 从 [Eventbus 模块](specs/platform/eventbus/README.md)进入 observed 及 R3。三项政策 D6–D8 已确认，不重复提问；下一实施批次建议 P0/P1：补逐调用映射、受控契约和广播验证，再推进真实设备上报与事实补处理。当前只完成文档与计划，实现仍需后续授权；检查投影、运行证据与主规格按实际阶段收敛。
 4. **记录成本，再决定扩展。** 在原任务记录定位、文档维护、重复填写、追问、误报和返工；首次环境/工具建设与日常成本分开，缺数据记 unknown。通过这次真实需求评估流程，而不是先扩建门禁。
 
 服务端必需检查、CODEOWNERS、新 Hook、其他变更类型的自动化与新框架选型都不作为本轮工作。若实际协作暴露出需要，再提出具体配置、收益、成本和验收；涉及权限的操作遵守原授权边界。

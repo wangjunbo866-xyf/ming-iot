@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.4.1-draft
+version: 0.4.2-draft
 ---
 
 # Ming IoT 业务地图与规格入口（草案）
@@ -14,13 +14,13 @@ version: 0.4.1-draft
 - [记录模板](../../.agents/skills/ming-specs/references/templates.md)：只在实际需要的环节使用。
 - [草案材料目录](../index.yaml)：本次草案的正文定位与采纳状态。
 
-首次收到目标时，按[受理到交付操作页](../runbook/requirement-to-delivery.md)进入模块；本轮新增 Eventbus 的 observed 现状与 Kafka 需求草稿，尚未确认为有效规则。
+首次收到目标时，按[受理到交付操作页](../runbook/requirement-to-delivery.md)进入模块；本轮新增 Eventbus 的 observed 现状与 Kafka 需求草稿，已确认的目标决定见同一 Patch，尚未实施为当前运行规则。
 
 ## 模块地图
 
 | 模块 ID / 业务能力 | 模块入口 | 人的负责人 | 前台 / 后台 / 代码范围 | 当前基线及有效补丁 | 在途变更 |
 | --- | --- | --- | --- | --- | --- |
-| platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户确认迁移方向及一次切换 | Share、SaaS、Things 与 SDK；具体认领见当前 Patch | [observed-v0](platform/eventbus/spec.md)，仅源码现状 | [Kafka 迁移 R2](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，draft |
+| platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户已确认方向、一次切换和 D6–D8 | Share、SaaS、Things 与 SDK；具体认领见当前 Patch | [observed-v0](platform/eventbus/spec.md)，仅源码现状 | [Kafka 迁移 R3](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，draft |
 | engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
 | saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
 
