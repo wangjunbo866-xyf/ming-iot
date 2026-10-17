@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.8
+    revision: 1.0.9
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；R4 在同一Patch试跑可选分析方法；技术方案及实施计划仍是草稿，本轮不实施或推送。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；可选分析首轮已在同一Patch R5 写回 Q5/Q6 的真实选择及验收影响；技术方案及实施计划仍是草稿，本轮不实施或推送。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -395,7 +395,7 @@ materials:
     role: requirement_intake_to_delivery_workflow
     status: draft
     path: docs/runbook/requirement-to-delivery.md
-    revision: 0.1.3
+    revision: 0.1.4
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -424,7 +424,7 @@ materials:
     role: eventbus_kafka_requirement_and_decisions
     status: draft
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R4
+    revision: R5
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,7 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "用户确认迁移目标、开发测试一次切换和 RAW-005 的三项政策 D6–D8；R4 沿用这些决定，在同一Patch记录可选分析试跑与新增业务澄清；具体设计仍为提案。不得把局部确认等同整个草稿批准；本轮不实施切换、推送或操作旧环境数据。"
+    conflict_rule: "用户确认迁移目标、开发测试一次切换和 RAW-005 的三项政策 D6–D8；R5 沿用这些决定，按 RAW-007 将 Q5/Q6 记录为 D10/D11 并关联验收；具体设计仍为提案。不得把局部确认等同整个草稿批准；本轮不实施切换、推送或操作旧环境数据。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction

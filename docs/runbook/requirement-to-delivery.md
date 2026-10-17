@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.1.3
+version: 0.1.4
 date: 2026-10-17
 ---
 
@@ -41,7 +41,7 @@ docs/specs/platform/eventbus/
 
 R3 已将用户对三个业务例子的答复追加为 RAW-005，并记录为 D6/D7/D8：重要事实可靠补处理；操作超时待核实，默认不自动重发；保留旧现场且不自动导入旧消息。每项决定都连接到现有调用、验收用例和实施切片。技术提案仍可调整，本文和 Patch 保持 draft；确认三项政策不等于批准整个设计或启动实现。spec 仍描述当前源码，不提前写成“Kafka 已生效”；逐 subject 映射、具体接口和机器检查投影待进一步落实，不创建空文件占位。
 
-可选分析方法按[接入与写回约定](team-development.md#optional-analysis-skills)嵌入第 2–3 步。当前 R4 用 `grill-with-docs` 对同一 Kafka Patch 试跑：源码核查由 AI 完成，新增业务取舍由实际负责人回答，术语、疑问、决定和验收影响回到同一正文。Skill 的默认输出目录不会自动成为新规格入口；未回答的问题保留 pending。
+可选分析方法按[接入与写回约定](team-development.md#optional-analysis-skills)嵌入第 2–3 步。本例 R4 用 `grill-with-docs` 对同一 Kafka Patch 试跑：AI 核查四项事实，用户回答两个新增业务问题，R5 将真实答复写成 D10/D11，并同步对应验收及步骤；具体规则只在该 Patch 维护。Skill 的默认输出目录不会自动成为新规格入口；未回答的问题保留 pending。
 
 后续开发仍回到这个模块：确认目标语义后实施，在同一候选形成完整新主规格，再把本次 Patch 标为 absorbed 并注明吸收版本。架构图、启动说明和回执各司其职，引用这份规格中的业务规则。
 
