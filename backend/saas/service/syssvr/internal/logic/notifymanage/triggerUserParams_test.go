@@ -96,6 +96,59 @@ func TestCompactRuleSceneActionBody(t *testing.T) {
 	}
 }
 
+func TestCompactRuleSceneActionBodyCountsRunesNotBytes(t *testing.T) {
+	// 按 Unicode 字符数而非字节数比较："ab" 为 2 字符 2 字节，"中" 为 1 字符 3 字节，按字节会得出相反结果。
+	tests := []struct {
+		name string
+		body string
+		want string
+	}{
+		{"cjk bytes first", "中\nab", "ab"},
+		{"cjk bytes later", "ab\n中", "ab"},
+		{"cjk bytes middle", "a\n中中\nabcd", "abcd"},
+		{"cjk bytes exceed latin runes", "开关开开\nremote", "remote"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := compactRuleSceneActionBody(tt.body); got != tt.want {
+				t.Fatalf("got %q want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestCompactRuleSceneActionBodyEqualRunesKeepsFirst(t *testing.T) {
+	// 相同 Unicode 字符数取首个非空行："abcd" 与 "中文中文" 同为 4 字符但字节数不同。
+	tests := []struct {
+		name string
+		body string
+		want string
+	}{
+		{"same runes and bytes", "一二三\n四五六", "一二三"},
+		{"same runes different bytes", "abcd\n中文中文", "abcd"},
+		{"winner repeated later", "abcd\n中文中文\nabcd", "abcd"},
+		{"blank lines and padding", "  abcd  \n\n\t中文中文\t\n", "abcd"},
+		{"three way tie", "abc\n中文中\ndef", "abc"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := compactRuleSceneActionBody(tt.body); got != tt.want {
+				t.Fatalf("got %q want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRuleSceneNotifyLinePicksRuneLongestAction(t *testing.T) {
+	fields := triggerUserFields{Type: triggerTypeDeviceButton, Account: "13800138000", UserID: 42}
+	if got := FormatRuleSceneNotifyLine(fields, "中\nab"); got != "13800138000触发了ab" {
+		t.Fatalf("rune count=%q", got)
+	}
+	if got := FormatRuleSceneNotifyLine(fields, "abcd\n中文中文"); got != "13800138000触发了abcd" {
+		t.Fatalf("equal runes first=%q", got)
+	}
+}
+
 func TestPrependTriggerUserLine(t *testing.T) {
 	got := PrependTriggerUserLine("设备已联动", triggerUserFields{Type: triggerTypeManual, Nick: "张三"})
 	want := "由 张三 手动触发\n设备已联动"

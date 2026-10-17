@@ -79,7 +79,7 @@ go -C backend/saas test ./service/syssvr/internal/logic/notifymanage -count=1
 | 条款 | 现有验证 |
 | --- | --- |
 | DISPLAY-NAME | `TestFormatTriggerUserLine*`：同时有昵称/账号、空白、ID、匿名、非 manual 账号优先 |
-| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior` |
+| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestCompactRuleSceneActionBodyCountsRunesNotBytes`、`TestCompactRuleSceneActionBodyEqualRunesKeepsFirst`、`TestRuleSceneNotifyLinePicksRuneLongestAction`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior`：账号优先的动作格式；多行取 Unicode 字符数最长的非空行且区别于按字节比较；同字符数取首行（含空白行与首尾空白清理用例）；deviceButton 入口级选取与非正 UserID 回退 |
 | BODY-COMPATIBILITY | `TestPrependTriggerUserLine`、`TestManualTriggerBodyCompatibility`、`TestNonManualTriggerBodyPreservesManualAccountLine` |
 | BOUNDARY | 格式化函数值参数由源码核对；不将此核对冒充数据库或输入不变的专门运行测试 |
 
