@@ -1,13 +1,13 @@
 ---
 status: draft
-revision: R5
+revision: R6
 ---
 
 # PATCH-20261017-kafka-migration：跨服务 Eventbus 从 NATS 迁往 Kafka
 
 - 类型：patch；替换既有跨服务事件传输并补齐目标契约，不能声明“规格无变化”。
 - 模块：[platform.eventbus](../../README.md)；当前基线：[observed-v0](../../spec.md) 的 BUS-SCOPE、BUS-ENVELOPE、BUS-DISPATCH、BUS-DELIVERY、BUS-VERIFY。模块 README 反向指向本 Patch。
-- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11。D1–D9 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
+- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11；R6 按 RAW-008 核对 ThingsBoard 通道与消息模型，形成第 8 节建议及 Q7。D1–D11 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
 - 本轮认领：用户决定业务取舍；`rdoc-pilot-codex` 盘点与维护文档；独立 AI 复核源码、方案与候选。长期模块负责人未分配。共享影响含 Share、SaaS、Things、协议 SDK、定时、缓存与 WebSocket。
 - 本轮只改需求、导航与资料索引；保留已有候选，不切换实现、不启动迁移、不推送、不操作旧环境或旧数据。后续实施另核授权、路径认领与规格映射。
 - 当前交付：本地需求草稿；没有 Kafka 迁移运行、托管 CI、生产验收或正式团队采用结论。
@@ -49,7 +49,7 @@ Q2a、Q2b、Q3、Q5、Q6 的选择已确认，不再重复询问。Q1 的具体�
 | C9 内部周期协作 | [DM InitEventBus](../../../../../../backend/things/service/dmsvr/internal/startup/init.go) 的 OTA/在线统计等；[syssvr startup](../../../../../../backend/saas/service/syssvr/internal/startup/init.go) 的周期同步；[timedjob startup](../../../../../../backend/saas/service/timed/timedjobsvr/internal/startup/init.go) 的清理订阅 | DM 显式 Start；独立 syssvr/timedjob 的注册不能证明 Start 已执行。启动验收需覆盖独立进程和实际组合，历史未启动缺陷不保留为目标行为 |
 | C10 应用事件、旧接口与配置 | [pubApp](../../../../../../backend/things/service/dmsvr/internal/repo/event/publish/pubApp/pubApp.go)、旧 [subDev](../../../../../../backend/things/service/dmsvr/internal/repo/event/subscribe/subDev)、[server订阅](../../../../../../backend/things/service/dmsvr/internal/repo/event/subscribe/server)、[EventConf](../../../../../../backend/share/conf/event.go)、部署样例 | subDev 启动调用被注释且 NATS Subscribe 为空，不能统计成运行链；对其、pubApp 下游及其他无已知消费者条目逐项标“迁移/停用/保留兼容代码”，不能静默漏掉。当前活动配置与SDK样例须无 NATS 必需依赖；历史资料、旧环境不删 |
 
-实施前形成 C1–C10 的逐 subject / 发布 API / 消费 API / 启动方式 / 测试对应表，并扫描 `NatsClient`、`nats.Conn`、`nats.Subscription`、FastEvent、动态 task.Topics 和部署配置；当前分族清单不宣称穷尽仓外调用。无法证明已停用的调用不能从最终范围直接排除。
+实施前形成 C1–C10 的逐 subject / 发布 API / 消费 API / 启动方式 / 测试对应表，并映射到第 8 节的逻辑消息族；该表用于证明迁移无遗漏，不要求每个旧 subject 都建立同名 Kafka topic。另扫描 `NatsClient`、`nats.Conn`、`nats.Subscription`、FastEvent、动态 task.Topics 和部署配置；当前分族清单不宣称穷尽仓外调用。无法证明已停用的调用不能从最终范围直接排除。
 
 ## 3. Q2：按业务后果选择可靠性
 
@@ -205,6 +205,70 @@ R4 在原 Patch 增加一节，记录四项事实/术语发现，提出两个真
 
 此次收益证据是明确发现并收敛了“新操作准入”和“未完成可见性”两处行为缺口，下一位接手者可从决定追到验收。代价是两个业务问题及七处来源/正文/导航写回；源码核查和文档检查不替代 Kafka/设备运行验证，也不足以证明长期效率或团队正式采用。未来应从实际任务继续评估导航维护量，不为本例增加全库门禁。
 
+## 8. ThingsBoard 通道与消息模型：R6 源码分析
+
+### 8.1 输入与结论边界
+
+按 RAW-008 采用 `grill-with-docs` 的事实调查、术语辨析与反例方法；两项独立只读调查分别核对通道拓扑和消息/可靠性，主 Agent 对照 Ming IoT。术语和取舍留在本节，不另建 CONTEXT、ADR 或平行研究正文。
+
+ThingsBoard 固定源码为 `0439df09f31b0e8101b9f0a6be556c087d86818d`，提交日期 2026-10-02；[pom.xml](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/pom.xml#L13) 标记 `4.4.0-SNAPSHOT`。这是仓外只读参考，不宣称正式版本或最新发布，也不迁入本仓。Ming IoT 对照基线为 `addcf8b18425a47dfd3a8c322936c1363a712a62` / R5。只查源码与官方说明，未运行 ThingsBoard、Kafka 或设备；[官方队列文档](https://thingsboard.io/docs/reference/architecture/queue/)是辅助说明，下面的具体结论以固定源码为准。
+
+**方向合理，但应提炼成“按处理职责、路由及失败语义划分通道，统一基础消息契约”，不能把四类业务名称当作 ThingsBoard 的四个实际通道，也不能直接固定为四个 Kafka topic。** 原 subject 逐项盘点仍必要，用来防止遗漏；把旧 subject 命名逐个搬成新 topic 没有同等价值。
+
+### 8.2 源码实际做了什么
+
+| 事实 | 证据与含义 |
+| --- | --- |
+| TB 主体按接收服务和用途划分，而非固定四类 | [队列配置](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/resources/thingsboard.yml#L2330)包含 transport API 请求/响应、core、rule engine、各自 notifications，另有 OTA、usage、CF、integration 等；仅 integration 子系统出现 uplink/downlink 命名，不能外推全系统 |
+| telemetry 与部分业务事件进入同一 rule-engine 路径 | [DefaultTransportService:532–549、1117–1142](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/transport-api/src/main/java/org/thingsboard/server/common/transport/service/DefaultTransportService.java#L532)把 telemetry 构造成 TbMsg；[DefaultDeviceStateService:847–873](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/state/DefaultDeviceStateService.java#L847)也把连接/活动事件送入规则引擎。不是每个业务事件类型都有独立 topic |
+| RPC 跨服务路由，设备下行复用 transport notifications | [Core RPC:173–181](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/rpc/DefaultTbCoreDeviceRpcService.java#L173)先进入规则引擎；[Rule Engine RPC:154–167](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/rpc/DefaultTbRuleEngineRpcService.java#L154)路由到设备所属 core；[CoreToTransport:31–54](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/transport/DefaultTbCoreToTransportService.java#L31)发往指定 transport 节点。不是单一“下行队列” |
+| notifications 是内部低延迟、实例定向消息族，不能等同业务用户通知 | [queue.proto:1879–1901、1952–1967](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/proto/src/main/proto/queue.proto#L1879)包含 RPC、缓存失效、生命周期及用户通知触发等；transport 的同类消息还包含设备控制。它不只承载节点控制，也不等于邮件/短信/站内消息 |
+| 竞争、定向和广播有不同实现 | [Core factory:243–264](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/queue/src/main/java/org/thingsboard/server/queue/provider/KafkaTbCoreQueueFactory.java#L243)的工作队列与实例 notification consumer 不同；[TopicService:133–134](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/queue/src/main/java/org/thingsboard/server/queue/discovery/TopicService.java#L133)构造带 serviceId 的名称；[ClusterService:193–216](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/queue/DefaultTbClusterService.java#L193)枚举实例发送广播，不是同一个竞争组让每个实例都得到一份 |
+| TB 的逻辑分区不总等于 Kafka 原生分区 | [HashPartitionService:388–397](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/queue/src/main/java/org/thingsboard/server/queue/discovery/HashPartitionService.java#L388)按实体散列；[TopicPartitionInfo:28–45](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/message/src/main/java/org/thingsboard/server/common/msg/queue/TopicPartitionInfo.java#L28)默认可把逻辑分区映射到 topic 后缀。Ming IoT 不直接照搬这种拓扑，也不据此承诺跨通道全局顺序 |
+
+### 8.3 “统一消息格式”需要统一到哪层
+
+源码存在三层，而非全系统一个业务结构：
+
+1. [TbProtoQueueMsg:12–40](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/queue/src/main/java/org/thingsboard/server/queue/common/TbProtoQueueMsg.java#L12)统一 `key + typed value + headers` 的队列接口；value 自身编码为 protobuf。
+2. [queue.proto:1861–1969](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/proto/src/main/proto/queue.proto#L1861)分别定义 ToCoreMsg、ToCoreNotificationMsg、ToRuleEngineMsg、ToRuleEngineNotificationMsg、ToTransportMsg，各消费工厂选择对应 decoder；它们不是同一业务载荷。
+3. [TbMsgProto:27–61](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/message/src/main/proto/tbmsg.proto#L27)统一的是规则引擎消息，含 type、originator、metadata、data 以及 rule-chain 等上下文；不应把这些规则引擎专属字段强加给本项目每条控制或通知。
+
+对 Ming IoT 的技术建议：统一业务身份、schema 版本、事件类型、租户/对象身份、来源与发生时间、关联/因果标识和追踪的含义；各消息族定义自己的强类型 payload、必填字段和校验。命令另外校验 commandId、有效期、目标路由与确认上下文；eventId、commandId、correlationId 和 Kafka 分区 key 不能互相充当。具体字段名、编码格式及版本演进是后续契约设计，未因本次分析批准。
+
+[现有 RawRecord](../../../../../../backend/share/contracts/kafka/raw_record.go)只接受五类原始数据 headers，[catalog](../../../../../../backend/share/contracts/kafka/catalog.go)限制数据平面模板。建议保留原始报文的数据契约，规范化业务消息再采用公共信封；不能为“统一”直接放宽冻结校验或把控制消息塞进原始遥测格式。
+
+### 8.4 适合 Ming IoT 的分组建议（proposed）
+
+这里的“通道”先指一组相同处理责任与投递规则的逻辑消息，不等于一个物理 topic；四类业务加内部协调是本项目的候选分类，不是 TB 原版拓扑。
+
+| 逻辑消息族 | 对应本 Patch | 关键边界 |
+| --- | --- | --- |
+| 设备上报事实 | C1、部分 C4；F1/F2 | 高吞吐、对象保序、持久接受后可补处理；区分原始报文与规范化业务事实 |
+| 设备命令与回执 | C2，以及 C8/C9 中的动作载荷；F3 | 命令定向到持有连接的实例，回执关联原命令；两个方向可有各自物理路由。不能把命令回执塞在大批遥测之后而忽略响应时间；具体隔离验收见 Q7 |
+| 领域事实 | C3/C4 及 C7–C9 中的事实载荷；F1/F6 | 例如项目已删除；每个独立逻辑订阅者各处理一份，同一订阅者的副本竞争。按 D6 保证待发和消费结果可靠，按 D11 呈现未完成 |
+| 用户通知业务 | 现有通知模块及 C6 的结果展示关联 | 持久消息、邮件/短信发送结果与 WebSocket 页面刷新分开。通知基线目前是 RPC→持久化；此次只分析分类，不把原 RPC 链路自动改成 Kafka 异步，也不新增通知产品能力 |
+| 内部协调/广播 | C5、C4 配置刷新、C6 节点展示分发及相应周期协作 | 缓存失效必须覆盖所有相关活跃实例，重连恢复当前权威状态；节点定向、广播和持久业务通知不可混为一类重试策略 |
+
+反例：项目删除事实需要可靠补处理，权限缓存失效需要各实例恢复一致，页面刷新可读取当前快照；三者不能仅因都是“通知”而共用一个竞争组和统一失败策略。业务事件与遥测也不应因都叫“event”就承诺相同保留期。物理隔离还取决于 worker、连接池和数据库等共享资源，只分 topic 不足以证明互不阻塞。
+
+### 8.5 不能从 ThingsBoard 直接继承的承诺
+
+- **D6**：producer 成功只是 Kafka 写入回调。[TbRpcService:78–126](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/rpc/TbRpcService.java#L78)这个具体路径在持久化成功回调后发布状态事件；本轮未见该路径业务与待发记录原子保存，不能由队列封装推导出 outbox 已满足，也不能据此断言 TB 全库没有 outbox。
+- **D7/D10**：[DeviceActorMessageProcessor:237–275、529–551、893–921](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/actors/device/DeviceActorMessageProcessor.java#L237)已有持久 RPC 入队去重，但仍有超时重试和状态处理路径；设备未知结果默认不重发、新操作提示后确认，继续按本项目规则实现，不能把 TB 去重等同物理动作只执行一次。
+- **D11**：队列统计和通用 notification 不能代替“原操作人可见未完成、管理员处理”的业务状态入口。
+- [Rule Engine processing strategy](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/application/src/main/java/org/thingsboard/server/service/queue/processing/TbRuleEngineProcessingStrategyFactory.java#L73)存在失败跳过及不同重试策略；采用成熟框架不表示自动满足本项目“失败不冒充成功、重要事实不丢”的验收。
+
+### 8.6 决策树、实际问题与推进方式
+
+本轮决策树：**事实核对（已完成）→ 逻辑分类与契约分层（技术建议）→ 跨消息族积压隔离承诺 Q7（待用户）→ 物理 topic / 分区 / 消费组 / 资源与故障用例（按决定细化）**。D1–D11 不变，不重问已有可靠性和旧数据决定。原始需求 RAW-008 只授权分析，不把“参考 TB”当作同意其所有重试、分区或业务行为。
+
+**Q7 / 本轮需求用户 / pending**：是否把“上报积压时，控制和重要业务补处理仍能独立推进”列为必须验收？例子是遥测补处理期间，操作者确认的新停机操作、项目删除后的设备解绑，不必等遥测积压全部消化。推荐 A：列为必须验收，增加资源隔离与故障测试；B：先做逻辑分类，隔离能力后续验证；也可暂不决定。这个问题不是要求用户猜分区数或延迟参数；在新隔离测试环境可用、共享依赖正常且规定测试负载内定义通过条件，不承诺 broker 整体故障时继续服务或给出尚未测试的毫秒 SLA。
+
+Q7 只阻塞新增的隔离承诺及对应验收，不阻塞本轮源码结论和文档写回。若选 A，P0 补矩阵“消息族→类型/版本→目标消费方→竞争/广播/定向→分区键→可靠性/过期→资源边界→旧调用→验收”；P1/P4/P6 增加“遥测积压不使新控制和领域补处理停摆”的故障测试并记录实际响应分布。未收到实际回答前，这项测试是候选，不写成已确认标准。
+
+优先投入通道语义和新契约，再做旧调用覆盖映射与适配；保留映射表作为无遗漏证据，不建设一个靠所有旧 subject 名称维持的新通用总线。没有运行、切换、推送或操作旧环境数据；结论与一次问题轮留在同一 Patch。
+
 ## 技术依据与适用性
 
 2026-10-17 核对官方资料，仅用于解释机制；业务政策仍以上面的真实决定为准：
@@ -212,4 +276,4 @@ R4 在原 Patch 增加一节，记录四项事实/术语发现，提出两个真
 - [Apache Kafka Design：交付语义](https://kafka.apache.org/41/design/design/)：处理后提交可能重投；Kafka内部事务不自动包含外部存储或设备动作。
 - [NATS Core概念](https://docs.nats.io/learn/core-nats/)与[JetStream概念](https://docs.nats.io/concepts/jetstream)：Core无离线历史，JetStream的实际恢复能力受流/消费者配置约束。
 
-未升级broker/SDK版本，未借参考资料改变当前业务权威。源码现状在主规格，R5 在同一 Patch 保存已确认政策、实际问答、分析结果、剩余提案与验收。
+未升级broker/SDK版本，未借参考资料改变当前业务权威。源码现状在主规格，R6 在同一 Patch 保存已确认政策、实际问答、固定源码分析、剩余提案与验收。

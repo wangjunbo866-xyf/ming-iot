@@ -2,7 +2,7 @@
 
 - 当前正文：[spec.md@observed-v0](spec.md)。这是固定源码版本的现状记录，尚无获确认的完整 Eventbus 主规格；已知缺陷不自动成为必须保留的规则。
 - 需求来源：[raw.md](raw.md)。用户确定 NATS 全面迁往 Kafka，当前仅开发测试、按一次切换设计；已确认政策与适用范围统一见同一 Patch 的决定表；其余设计继续细化。
-- 在途变更：[PATCH-20261017-kafka-migration / R5](patches/PATCH-20261017-kafka-migration/change.md)。沿用 D6–D8，R4 的分析问题已在 R5 按真实答复形成 D10/D11，并连接到验收和实施切片；实施计划与技术设计仍为草案，尚未切换。
+- 在途变更：[PATCH-20261017-kafka-migration / R6](patches/PATCH-20261017-kafka-migration/change.md)。D1–D11 沿用，R6 在同一 Patch 增加 ThingsBoard 固定源码分析、分组与消息契约建议；Q7 的跨消息族积压隔离承诺待答；实施计划与技术设计仍为草案，尚未切换。
 - 人的长期模块负责人：未分配。需求取舍由本轮提出需求的用户确认；本次 AI 负责盘点、起草与本轮方案细化，独立 AI 复审不代替业务批准。
 - 模块边界：Share 的跨服务事件封装与传输，SaaS / Things / 协议 SDK 等调用方；进程内事件、设备 MQTT、通知 RPC 的角色需要分别说明。部署目录不是业务边界。
 - 当前验证：源码盘点见主规格。通知运行基线属于通知 RPC → 持久化，不能证明事件总线迁移成功。Kafka 验收用例见当前 Patch 的 V1–V8 候选矩阵，均未运行。
