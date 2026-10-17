@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.4.4-draft
+version: 0.4.5-draft
 ---
 
 # Ming IoT 业务地图与规格入口（草案）
@@ -14,17 +14,19 @@ version: 0.4.4-draft
 - [记录模板](../../.agents/skills/ming-specs/references/templates.md)：只在实际需要的环节使用。
 - [草案材料目录](../index.yaml)：本次草案的正文定位与采纳状态。
 
-首次收到目标时，按[受理到交付操作页](../runbook/requirement-to-delivery.md)进入模块；本轮新增 Eventbus 的 observed 现状与 Kafka 需求草稿，已确认的目标决定见同一 Patch，尚未实施为当前运行规则。
+首次收到目标时，按[受理到交付操作页](../runbook/requirement-to-delivery.md)进入模块。长期功能模块（Feature）、稳定 ID 与本次变更类型的区别见[术语约定](../runbook/team-development.md#feature-and-change)；不通过目录深度判断类型。Eventbus 的 P1 已在本地候选实施验证，其余 Kafka 迁移和 ProtocolApplication 设计不能据此视为完成。
 
 ## 模块地图
 
 | 模块 ID / 业务能力 | 模块入口 | 人的负责人 | 前台 / 后台 / 代码范围 | 当前基线及有效补丁 | 在途变更 |
 | --- | --- | --- | --- | --- | --- |
-| platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户决定与适用范围见当前 Patch | Share、SaaS、Things 与 SDK；具体认领见当前 Patch | [observed-v0](platform/eventbus/spec.md)，仅源码现状 | [Kafka 迁移 Patch](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，draft |
+| platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户决定与适用范围见当前 Patch | Share、SaaS、Things 与 SDK；具体认领见当前 Patch | [p1-v1](platform/eventbus/spec.md)，本地 P1 当前规则及旧链路观察；未推送或切换旧环境 | [Kafka 迁移 Patch](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，分段实施，后续设计未完成 |
 | engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
 | saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
 
-两份主规格以 `c165a56531f58421a870a0b8794f24556b60d3b2` 为来源基线，已随 PR #5 合并。核对至 main `56006502324800448c9775944d28478254be6142`，两个模块相关实现未变，继续适用 `current-v1`；当前合并验证与环境缺口见 [PR #6 后续记录](../changelog/2026-10-17-governance-merged-next-plan.md)。[S1 记录](../changelog/2026-10-15-specs-current-baseline.md)及各模块 observed 原文保留原时点，不作为当前候选或部署状态。业务地图目前有两个已收敛试点及一个 observed 受理模块，不表示全平台规格已完成。
+通知与 API 校验两份主规格以 `c165a56531f58421a870a0b8794f24556b60d3b2` 为来源基线，已随 PR #5 合并。核对至 main `56006502324800448c9775944d28478254be6142`，两个模块相关实现未变，继续适用 `current-v1`；当前合并验证与环境缺口见 [PR #6 后续记录](../changelog/2026-10-17-governance-merged-next-plan.md)。[S1 记录](../changelog/2026-10-15-specs-current-baseline.md)及各模块 observed 原文保留原时点，不作为当前候选或部署状态。业务地图目前有两个已合并试点及 Eventbus 的本地 P1，不表示全平台规格已完成。
+
+ProtocolApplication 按独立功能模块规划，目前评估与已确认边界暂存上述 Kafka Patch，尚未登记独立目录；该临时写回位置不表示它从属于 Eventbus。正式建立时按团队约定保留唯一正文及来源链接。
 
 由模块负责人确认新条目；AI 可以起草地图，但不能虚构负责人、路由或有效状态。同一业务模块跨仓时，在条目中分别给出仓库与契约版本，不复制多份权威正文。
 
@@ -33,7 +35,7 @@ version: 0.4.4-draft
 下面是可选结构；按任务需要创建，不要求每个小修改新建 raw、design 或 Patch 文件：
 
 ```text
-docs/specs/<业务域>/<模块>/
+docs/specs/<业务域>/<模块>/     # 长期功能模块（Feature），无须再加 features 层
 ├── README.md                  # 认领、当前版本、有效覆盖、在途变更
 ├── raw.md                     # 原始需求与澄清来源，可用可访问的来源引用代替
 ├── spec.md                    # 业务意图、条款 ID、验收和适用状态

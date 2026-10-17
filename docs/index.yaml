@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.11
+    revision: 1.0.14
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 统一维护 D1–D12 与 V1–V9，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed，本轮不推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 统一维护 D1–D15 与 V1–V9，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed；R10 按 RAW-012 仅评估 ProtocolApplication 前置边界，R12 已确认 D13-D15：首版上行、受控发布、decode-first，不承诺原报文补算，不推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.8.0-draft
+    revision: 0.8.1-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.8.0-draft
+    revision: 0.8.1-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -395,7 +395,7 @@ materials:
     role: requirement_intake_to_delivery_workflow
     status: draft
     path: docs/runbook/requirement-to-delivery.md
-    revision: 0.1.4
+    revision: 0.1.5
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -424,7 +424,7 @@ materials:
     role: eventbus_kafka_requirement_and_decisions
     status: confirmed
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R9
+    revision: R12
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,17 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "R9 confirmed仅对应RAW-011授权的P1；D1-D12继承，P2-P6保持proposed。认领、技术选择和局部验证在同一Patch第10节，不整体批准迁移，不推送或修改旧环境。"
+    conflict_rule: "R12 confirmed覆盖RAW-011授权的P1及RAW-013/014确认的D13-D15设计边界；D1-D12继承，P2-P6未实施方案保持proposed。第10节保留P1回执；RAW-012仅授权第11节ProtocolApplication评估，PA-Q1经另一次真实答复确认为decode-first，不承诺原报文补算。历史RFC作为设计来源，不覆盖当前规则，不自动授权实施、推送或修改旧环境。"
+  - source_id: ming-iot-raw-reliable-rfc-20260906
+    lifecycle: historical
+    role: historical_raw_canonical_recovery_design
+    status: accepted-design-only
+    path: docs/wiki/legacy/rd/rfcs/2026-09-06-raw-log-deployment-profiles-and-reliable-v1.md
+    revision: "2026-09-06"
+    authority: historical_owner_design_confirmation
+    related:
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "历史Reliable设计与当时确认保留；不证明当前实现或授权部署。与当前PA边界及验收的差异在Kafka Patch R12第11节澄清；D15已选择首版decode-first，旧Reliable不作为当前实施要求。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction

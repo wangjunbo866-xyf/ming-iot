@@ -5,7 +5,7 @@ version: p1-v1
 
 # Eventbus：当前候选规则与保留的旧路径
 
-本版本只收敛 [Kafka Patch R9](patches/PATCH-20261017-kafka-migration/change.md) 第 10 节已授权的 **P1 显式接入能力**；不是全面 NATS 切换或线上生效。P0 基线为 `6a59904edbf7d019e266fe910fb1436d3b1ee4c4`。最终候选 SHA、真实验证与独立评审由同一 Goal 外部回执绑定，部署事实另记。原话及确认见 [raw.md](raw.md)。
+本版本只收敛 [Kafka Patch（P1 来源为 R9）](patches/PATCH-20261017-kafka-migration/change.md) 第 10 节已授权的 **P1 显式接入能力**；不是全面 NATS 切换或线上生效。P0 基线为 `6a59904edbf7d019e266fe910fb1436d3b1ee4c4`。最终候选 SHA、真实验证与独立评审由同一 Goal 外部回执绑定，部署事实另记。原话及确认见 [raw.md](raw.md)。
 
 <a id="p1-contract"></a>
 ## BUS-P1-CONTRACT：受控公共契约

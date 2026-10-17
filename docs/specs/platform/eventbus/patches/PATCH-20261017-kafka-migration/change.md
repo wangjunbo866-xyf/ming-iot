@@ -1,18 +1,18 @@
 ---
 status: confirmed
-revision: R9
-confirmation_scope: P1-only
+revision: R12
+confirmation_scope: P1-implementation-and-D13-D15-design-only
 ---
 
 # PATCH-20261017-kafka-migration：跨服务 Eventbus 从 NATS 迁往 Kafka
 
-**R9 的 confirmed 仅覆盖第 10 节 P1 切片与 RAW-011 授权；第 2–9 节未实施的 P2–P6 方案继续是 proposed。** 元数据是当前执行切片状态，不把多阶段迁移整体批准或吸收。
+**R12 的 confirmed 覆盖第 10 节已授权 P1，以及 RAW-013/014 确认的 D13–D15：首版上行、受控发布、先解码再持久化标准消息。第 2–9 节未实施的 P2–P6 及第 11 节其余技术方案保持 proposed；与 D15 冲突的 Raw-first 建议不适用于首版。** 本轮不授权 P2 实施；元数据不把多阶段迁移整体批准或吸收。
 
 - 类型：patch；替换既有跨服务事件传输并补齐目标契约，不能声明“规格无变化”。
 - 模块：[platform.eventbus](../../README.md)；当前基线：[observed-v0](../../spec.md) 的 BUS-SCOPE、BUS-ENVELOPE、BUS-DISPATCH、BUS-DELIVERY、BUS-VERIFY。模块 README 反向指向本 Patch。
-- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11；R6 按 RAW-008 核对 ThingsBoard 通道与消息模型，形成第 8 节建议及 Q7；R7 按 RAW-009 将真实 Q7 答复写为 D12，并关联 V9 与实施切片。R8 按 RAW-010 推进 P0 设计，逐调用映射、契约、路由、资源和验证落在第 9 节；R9 按 RAW-011 进入 P1 实施，认领和结果写第 10 节。D1–D12 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
+- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11；R6 按 RAW-008 核对 ThingsBoard 通道与消息模型，形成第 8 节建议及 Q7；R7 按 RAW-009 将真实 Q7 答复写为 D12，并关联 V9 与实施切片。R8 按 RAW-010 推进 P0 设计，逐调用映射、契约、路由、资源和验证落在第 9 节；R9 按 RAW-011 进入 P1 实施，认领和结果写第 10 节；R10 按 RAW-012 评估 ProtocolApplication，写第 11 节；R11 按 RAW-013 确认 D13/D14 并澄清 PA-Q1 的 ThingsBoard 对照；R12 按 RAW-014 确认 D15，首版采用 decode-first。D1–D12 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
 - 本轮认领：用户决定业务取舍；`rdoc-pilot-codex` 盘点与维护文档；独立 AI 复核源码、方案与候选。长期模块负责人未分配。共享影响含 Share、SaaS、Things、协议 SDK、定时、缓存与 WebSocket。
-- 本轮按 RAW-011 实施 P1 公共契约、消费完成与真实缓存恢复；保留已有候选，不推送、不切换旧环境、不操作旧数据。P2–P6 仍为待实施设计。
+- 前轮按 RAW-011 实施 P1；本轮按 RAW-012/013 评估 ProtocolApplication 与 P2 的依赖，见第 11 节。保留已有候选，不推送、不切换旧环境、不操作旧数据。P2–P6 仍为待实施设计。
 - 当前交付：P1 本地实现及两轮真实隔离复验已通过；第 10 节保存验证范围，最终候选与独立复审由同一 Goal 外部回执绑定。其余技术设计仍为草稿，没有全面迁移、托管 CI、生产验收或正式团队采用结论。
 
 ## 1. 已确认什么
@@ -31,6 +31,9 @@ confirmation_scope: P1-only
 | D10 | RAW-007 / Q5；用户，2026-10-17；自 R5 适用 | 选择 A：同设备存在待核实旧操作时，提示旧结果未知，由操作者明确确认后允许提交一条新操作；旧记录继续待核实，查询照常 | 不是重发旧命令，也不把旧命令标为成功/失败；未确认不提交；不绕过既有权限、设备有效期等校验；不批准设备端自动重发例外 |
 | D11 | RAW-007 / Q6；用户，2026-10-17；自 R5 适用 | 选择 A：原操作人可见关联清理未完成，由管理员查看失败原因并处理；继续 D6 的可靠补处理 | 不选择仅管理员可见；主记录已删除不表示关联清理完成；失败、取消或人工关闭不冒充成功；不授权本轮操作真实数据 |
 | D12 | RAW-009 / Q7；用户，2026-10-17；自 R7 适用 | 选择 A：将“上报积压时，控制和重要业务补处理仍能独立推进”列为本次迁移必须验收；增加消费资源隔离与故障测试 | 不承诺具体毫秒 SLA、共享依赖整体故障时仍可服务或任意超载下可用；不授权实现、推送或旧环境数据操作；既有顺序、权限、确认与可靠性要求保持 |
+| D13 | RAW-013 / PA-Q2；用户，2026-10-17；自 R11 适用 | 首版先完成上行解码、标准化与失败处置，下行编码后续推进；上行命令回执仍须识别与分流 | 不授权本轮实施；不把命令回执排除出上行边界，不承诺本轮已完成 P4 |
+| D14 | RAW-013 / PA-Q3；用户，2026-10-17；自 R11 适用 | 首版客户定制适配器由团队或受控合作方发布 | 不包括客户自行上传任意代码运行；不免除测试、版本固定、资源限制与必要隔离；不授权实际发布 |
+| D15 | RAW-014 / PA-Q1；用户，2026-10-17；自 R12 适用 | 先从简：解码后持久化标准消息，暂不承诺原始报文补算；替代 R10/R11 的首版 Raw-first 推荐 | 不取消 D6 对已持久接受消息的可靠补处理；不把解码失败或仅进内存记成已接受；不要求首版全量 Raw Kafka 或重解码重放服务；不授权删除旧数据或实施切换 |
 
 Q2a、Q2b、Q3、Q5、Q6、Q7 的选择已确认，不再重复询问。Q1 的具体调用处置、Q4 的验收设计和技术配置仍是 AI 提案；其中与 D1/D6–D8/D10–D12 冲突的替代方案已排除。R1–R8 为 draft；R9 仅 P1 confirmed，方向确认、实施授权、运行通过分别记录。后续出现新的业务取舍时只追问受影响部分，已有决定继续适用。
 
@@ -316,6 +319,8 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 
 ### 9.2 消息族与逐入口承接
 
+**R12 适用范围修正（D15）：** 下文 R8 的完整原包持久保存提案不再作为首版要求。当前在解码后持久接受标准消息，保留父包/子项结果清单、逐设备顺序与业务去重要求；原始报文补算和 Raw Kafka 事务不在首版范围。当前链路见第 11.5 节。
+
 表中 U 是普通上报与设备事件/状态的同一有序通道，R 是控制回执，C 是下行，D 是领域事实，I 是内部协调，W 是页面实时分发。它们是目标通道代号，物理名称见下一节。`device.up.*` 必须结合受控 payload 中的方法/类型判别：例如 thing 包内既有属性上报也有 action 回执，不能只看 subject 前缀。表内 F/V 沿用第 3/5 节，不另建规则。
 
 | 项 / 旧 subject 或 API | 当前生产 → 实际接收入口 / 状态 | 目标通道、处理与 F / V |
@@ -460,4 +465,97 @@ R8 设计阶段验收为 M01–M19 映射可从源码追溯、D1–D12 无漂移
 - [check.json](check.json)是 R9 P1 的结构投影，确认来源限定 RAW-011 与第10节；完整PR基线继续使用 main `56006502324800448c9775944d28478254be6142`，保留早先候选并分别声明通知/API模块。结构工具不核实确认的业务含义，scope由语义评审核对。
 - Redis修改与Kafka失效非原子；发消息失败时返回错误，但不能保证远端立刻清缓存。代际恢复依赖检测故障，存在2s请求窗口与调度开销；不承诺所有故障下零陈旧窗口。重分配/提交/处理失败可fail-stop；纯consumer可同身份重建，Cache服务须重启整个进程，不能靠再次NewCache替换旧bus。普通空闲断网恢复复用原进程；handler必须响应取消。
 - F4缓存局部V1已验证，配置全量恢复、动态定时任务启停与选型器运行接线仍未完成。V2–V9、业务去重/outbox、设备执行账本、管理员处置和全部NATS调用切换均未完成；本Patch继续在途。
-- 下一建议为P2：先建立真实DG→持久接受→DM属性链及其模拟设备验收，再展开P3/P4。当前授权到P1，暂不推送、不切换旧环境、不清理旧仓/数据/备份。
+- R9 当时下一建议为 P2；RAW-012 新增 ProtocolApplication 前置评估，当前接续见第 11 节。P1 实施授权保持原范围，不推送、不切换旧环境、不清理旧仓/数据/备份。
+
+<a id="protocol-application-assessment"></a>
+## 11. R10–R12：ProtocolApplication 评估（D13–D15 已确认，其余技术方案 proposed）
+
+### 11.1 分析目的、认领与来源
+
+- 来源 RAW-012–014；Goal `ming-iot-knowledge-pilot`，任务 `todo_5c930ff38c388b64f9fbbb5a`。`rdoc-pilot-codex` 负责事实核对与统一写回，用户确认新增业务取舍；ProtocolApplication 长期模块负责人仍未分配。
+- 方法：按 `grill-with-docs` 组合的 grilling 与 domain-modeling 核对源码、澄清术语并分轮提问。术语和分析保留在本节，不生成平行 CONTEXT、ADR 或交接包。
+- 输入：Ming 本地候选 `94f666fd3659e417e0e9e541a1b763e9beed146e`；[历史 Reliable RFC](../../../../../wiki/legacy/rd/rfcs/2026-09-06-raw-log-deployment-profiles-and-reliable-v1.md)；ThingsBoard 固定源码 `0439df09f31b0e8101b9f0a6be556c087d86818d`（pom 为 4.4.0-SNAPSHOT）。历史 RFC 的 accepted 是当时的设计确认，不证明实现或自动授权当前部署；ThingsBoard 当前网站仅作补充，不混用不同版本能力。
+- 本轮只写文档与私有证据，不修改实现、模块执行映射或旧环境。第 10 节及 check.json 仍绑定 R9 P1，主规格 p1-v1 行为不变；第 11 节不能借用 P1 的实施确认。D1–D12 继续有效；D13–D15 确认首版范围、发布方式及 decode-first 接受边界，不授权实际开发。
+
+### 11.2 判断：模块合理，但先明确契约，再做一个真实协议切片
+
+建议将 **ProtocolApplication 定义为独立职责的协议适配模块**，把客户 Codec 与可靠消费、版本选择、失败处理框架分开。独立模块不自动等于独立仓库、每客户一个进程或允许客户上传任意代码；仍在 monorepo 内演进，部署隔离由故障及信任边界决定。
+
+P2 的数据链依赖明确的原始输入/Canonical 输出契约与一套可运行的适配器（D15 不要求 Raw 持久化）；不必先完成所有协议、客户管理后台、通用插件市场或整套 SDK 重写。沿已确认 D13–D15，建议将“一个真实协议＋标准协议直通适配＋标准消息持久接受＋DM 属性落库”作为 P2 的纵向切片；其他协议逐个接入。这里是设计建议，没有实施授权或运行结果。
+
+### 11.3 ThingsBoard 支持哪些判断
+
+| 源码事实 | 对 Ming 的启示及限制 |
+| --- | --- |
+| MQTT [JsonMqttAdaptor](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/mqtt/src/main/java/org/thingsboard/server/transport/mqtt/adaptors/JsonMqttAdaptor.java#L40)先解析并转换为内部遥测结构；[DefaultTransportService](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/transport-api/src/main/java/org/thingsboard/server/common/transport/service/DefaultTransportService.java#L532)再组织消息入队 | 支持“协议表示→统一内部表示→业务处理”的责任分离；常见 Transport 路径先解析再入队，不能据此声称 TB 已采用本 RFC 的 Raw 先持久化方案 |
+| MQTT 外部集成 [BasicMqttIntegration](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/integration/mqtt-integrations/src/main/java/org/thingsboard/integration/mqtt/basic/BasicMqttIntegration.java#L155)调用 Uplink Converter；[AbstractIntegration](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/integration/integration-api/src/main/java/org/thingsboard/integration/api/AbstractIntegration.java#L161)产出 DeviceUplinkDataProto；[RemoteIntegrationContext](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/integration/remote-integration-api/src/main/java/org/thingsboard/integration/remote/RemoteIntegrationContext.java#L88)存储转换后的消息 | 自定义转换器是最贴近客户 Codec 的参照；不能把外部 Integration、内置 Transport、MQTT Gateway API 和独立 IoT Gateway 合称为一个模块，也不能推断任意客户代码有沙箱 |
+| [DeviceSessionCtx](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/mqtt/src/main/java/org/thingsboard/server/transport/mqtt/session/DeviceSessionCtx.java#L135)按 Device Profile 选择 topic、JSON/Protobuf 等配置 | 协议族与设备配置应可绑定版本；Profile 配置不等于自定义代码生命周期，更不能替代可信设备身份 |
+| Kafka producer 回调经 [DefaultTransportService](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/transport-api/src/main/java/org/thingsboard/server/common/transport/service/DefaultTransportService.java#L1192)返回，MQTT [PUBACK](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/mqtt/src/main/java/org/thingsboard/server/transport/mqtt/MqttTransportHandler.java#L743)不等待后续时序业务节点落库 | 分清传输确认、标准消息入队和业务完成。Kafka ACK 的可靠程度还取决于复制与部署配置，不能用 PUBACK 代表全链完成 |
+| [MqttTransportHandler](https://github.com/thingsboard/thingsboard/blob/0439df09f31b0e8101b9f0a6be556c087d86818d/common/transport/mqtt/src/main/java/org/thingsboard/server/transport/mqtt/MqttTransportHandler.java#L568)先按 topic 分遥测、属性、RPC 回复等路径 | 控制回执应尽早分类；这支持路径分离，不能仅凭分 topic 声称已经满足 D12 的资源隔离验收 |
+
+补充官方 [IoT Gateway 概览](https://thingsboard.io/docs/iot-gateway/what-is-thingsboard-iot-gateway/)与[自定义连接器说明](https://thingsboard.io/docs/iot-gateway/custom/)展示 connector/converter 分工；这两份是未固定版本的网站材料，不当作上述固定服务端仓的已实现证据。
+
+### 11.4 Ming 已有能力与缺口
+
+- **已有解码能力，不是空白模块。** [DG deviceSub](../../../../../../backend/things/service/dgsvr/internal/event/deviceSub/deviceSub.go)的 getDevPublish 按产品脚本解码、重写后再发布内部 NATS；[scriptRepo](../../../../../../backend/things/service/dgsvr/internal/repo/cache/scriptRepo.go)缓存产品脚本 VM。[SDK Core](../../../../../../backend/things/sdk/protocol/coreProtocol.go)主要接受已经结构化的 DevPublish，再转发。新模块应收敛这些职责，不再加一层重复解码。
+- **DM 还有不可混入纯 Codec 的逻辑。** [UpBeforeTrans/UpAfterTrans](../../../../../../backend/things/service/dmsvr/internal/domain/protocol/script.go)与[属性处理](../../../../../../backend/things/service/dmsvr/internal/event/deviceMsgEvent/thing.go)混合模型校验、自动建模、持久化及异步 PubApp/Webhook 等副作用。PA 做协议语义解释与标准化；DM 保留领域权限/归属校验、状态与数据持久化、去重和副作用安排。不能把 DM 全搬到可重放的解码器。
+- **Canonical 尚未成为生产契约。** 当前 [DevPublish](../../../../../../backend/things/share/devices/msg.go)及 Payload 不能直接改名为最终 Canonical；稳定事件身份、可信租户、解码版本和模型版本尚未完整接线；历史方案中的 raw_ref 不是 D15 首版必填项。现有 [RawRecord](../../../../../../backend/share/contracts/kafka/raw_record.go)是严格的 key/value/五类 header 编码，不是业务 Canonical；P1 cache envelope 也不是设备数据契约。字段扩展要显式兼容设计，不能直接破坏现有严格 codec。
+- **版本机制只完成一部分。** [ModelRelease](../../../../../../backend/things/service/dmsvr/internal/domain/modelrelease/service.go)已有不可变模型包与精确读取；但[当前 DM 接线](../../../../../../backend/things/service/dmsvr/internal/svc/serviceContext.go)仍有 ComposeEditableModel，不能声称实时处理已固定发布版本。ProtocolCode 是路由标识，不是不可变 Codec 发布版本。
+
+### 11.5 术语与建议边界
+
+以下为本方案的拟议定义，不追溯改变历史文档中的用法。
+
+| 术语 | 明确含义 / 责任 |
+| --- | --- |
+| 原始输入 / Raw Record | 原始输入是客户协议解码前的应用 payload 与接入上下文；不是网络抓包。历史 Reliable 的 Raw Record 是持久化包装，D15 首版不强制建立它。设备/租户身份不能直接信任 payload 自报值 |
+| Access Adapter | 接收、认证与可信设备绑定、接入元数据、必要的早期分类及接入应答适配；D15 下不承担 Raw 持久提交，不做完整客户业务解码 |
+| Codec | 固定版本的协议解释和标准化规则，可将一包拆成零到多条独立结果；不得隐式访问可变业务状态、写业务数据库或执行设备动作 |
+| ProtocolApplication | 选择 Codec 与版本、执行转换、形成输出/失败结果并可靠提交标准消息的应用模块。受控依赖由框架显式注入，客户转换逻辑不自行决定接入确认或可靠性边界 |
+| Canonical Record | 具有明确类型、身份、时间、来源与版本的标准化设备事实；不是任意 JSON 包装，也不是 P1 缓存信封。属性、事件、命令回执的 payload 与路由要区分，不能一律塞入属性上报 |
+| DM 处理完成 | 对应领域持久结果与所需待发副作用已可靠登记；独立于 Raw 或 Canonical 入队。外部动作/通知另有完成语义 |
+| Quarantine / NO_OUTPUT | 前者为确定性坏输入/坏输出的不可变失败事实；后者为有解释的成功无输出。依赖超时是可重试处理失败，不能冒充坏数据或成功无输出 |
+
+需要固定：父包身份与可信租户/设备绑定、原始时刻与接收时刻、协议发布版本、所用模型发布版本、稳定子输出 ID/来源位置、消息类型及关联身份。D15 不要求 raw_ref；仅在确有原始存档时才提供有效引用，不能制造指向不存在 Raw 日志的字段。各值产生时机与 wire schema 在后续设计中明确；不是所有字段都由设备提供，也不以 Kafka offset 充当业务事件 ID。gateway 多设备包要逐子设备核验归属；重试沿用身份；换解码版本重算历史原报文不在 D15 首版范围，不能假设输入仍可读取。
+
+**R12 当前首版链路（D15）：设备 → Access Adapter → ProtocolApplication / Codec → Canonical Kafka（持久接受）→ DM（业务完成）。** 标准协议经同一边界直通校验。接入、认证和解码成功本身不承诺已持久接受；标准消息及所需结果清单持久提交后才进入 D6 的补处理边界，DM 成功前不宣称业务已完成。第 9.2/9.4 节所需逐设备登记、父包/子项清单和幂等仍需与这一入口接线。
+
+原 R10/R11 推荐的“Raw Kafka → PA → Canonical Kafka”保留为未采用的历史备选，首版不增加全量 Raw 日志及其重解码恢复义务。解码错误或故障发生在标准消息接受之前，必须区分失败、未接受和结果未知；不能静默成功。是否由设备/上游重发要看具体协议，首版不承诺凭平台已有数据补算。调试样本如需保留另定最小范围；本决定不授权删除既有材料，也不自动采纳旧 Diagnostic 档位的全部配置。
+
+### 11.6 需要补齐的关键细节
+
+1. **Raw-first 是独立的恢复承诺。** 解码器故障或发布 bug 时仍能保留输入再处理，有收益，但新增队列、存储、滞留告警和版本管理成本。TB 的 parse-first 路径不能替它提供证据。D15 已选择首版 decode-first；Raw-first 仅作为历史备选保留，不再作为 P2 前置。
+2. **输出互斥描述有矛盾（历史设计问题）。** 旧 RFC §3.4 写“Canonical / Quarantine / NO_OUTPUT 三选一”，§3.5 又允许同包有效输出和逐输出失败并存。建议事务结果为一个原子结果集，可含 Canonical[] 与 Quarantine[]；成功确实无输出时显式 NO_OUTPUT；瞬时失败中止事务并重试。无法稳定划分边界才整包隔离。旧文保留，此处是历史 Reliable 路线的拟议修正。当前 decode-first 首版仍要定义部分失败与结果清单，但不直接继承 Raw 位点事务。
+3. **Kafka 事务不是全链恰好一次。** 历史 Reliable 路线可在所设计的同集群事务内协调转换输出与 Raw 位点；D15 首版没有 Raw consumer offset，不能照搬其事务或恰好一次结论。标准消息批量提交与外部接入确认的边界需要单独设计；DM 数据库、Webhook 和物理设备动作不在内。仍须 D6 的业务去重/可靠副作用与 D7 的命令待核实政策，不能拿 P1 callback 成功替代这些能力。
+4. **原报文重解码重放不在首版；如未来扩展，必须固定上下文。** Codec、模型、路由/映射等参与解释的配置均须可恢复；只写两个版本名但继续查“最新配置”不能复现。受控重处理另行指定范围/版本/原因并隔离结果；不自动触发旧设备命令、线上告警或覆盖当前状态。保留旧现场、不自动导入仍按 D8。
+5. **早期分流决定 D12 是否成立。** 若遥测和命令回执先进入同一个拥堵的接入缓冲或解码 worker，直到完整解码才分类，后面拆通道仍可能让控制受阻。优先用可信 topic/endpoint/协议 envelope 分类；无法分类的协议需受限的最小分类步骤及独立预算。现有 property topic 内也可能有控制回执，不能只按属性 topic 分类；混合包或必须完整解码才能识别的协议仍是待解约束。尚无法证明分类/隔离的协议不得宣称通过 V9。分通道还要测 worker、连接池、锁和共享资源，不能仅改 topic 名称。
+6. **时间和吞吐按适用范围重新验。** 旧 RFC Raw 保留 72h 是历史生产设计；R9 P1 coordination 的 7 天是本地缓存试验，两者不能互相覆盖。P2 按 D15 冻结 Canonical 保留与去重窗口；Raw 窗口不作为首版强制参数；另核对故障恢复和容量参数；本轮没有新增容量或性能实测。
+7. **父包结果必须可汇总。** 第 9.2 节要求完整子项清单及部分失败不回整体成功，但 DM 只消费有效 Canonical 时，看不到 Quarantine/NO_OUTPUT，无法判断全部子项是否结束。后续契约必须给出父包身份（不依赖 Raw Kafka offset）、完整子项身份和终结结果清单、失败/无输出状态，以及哪个组件汇总业务应答；Kafka 原子提交不能替代跨消费者的业务完成判断。
+8. **接受与业务完成需要具体时序。** 按 D15，PA 未完成时尚无平台持久接受承诺；标准消息已提交但接入应答丢失、PA 产出到 DM 顺序登记由谁唯一消费、重投如何复用身份、直报与网关包并行怎样形成逐设备登记顺序，仍需冻结。第 11.5 节没有自动消除第 9.2/9.4 节的所有缺口；P2 前补时序与失败表，不能把传输确认混成业务成功。
+
+### 11.7 第一轮待决项及后续分支
+
+R10 发出第一轮三个问题；RAW-013 中用户确认 PA-Q2/PA-Q3，分别成为 D13/D14。PA-Q1 初答“thingsboard 是模式2吗”只作为参考实现追问；解释后用户在 RAW-014 明确选择 decode-first，成为 D15。界面 Q1–Q3 在本节使用 PA-Q1–PA-Q3，避免与原 Kafka 问题重号。
+
+| 问题 / 例子 | 推荐及成本 | 当前状态 / 责任 |
+| --- | --- | --- |
+| PA-Q1：解码服务停机或版本 bug 时，是否仍要求保留客户原始上报以便恢复？ | R10/R11 曾推荐 Raw-first；用户在了解区别后选择先解码再持久化标准消息，暂不承诺原始报文补算 | confirmed：RAW-014 → D15；首版 decode-first |
+| PA-Q2：首版是否同时包含下行编码？ | 先上行闭环；下行编码随后随 P4 推进。上行中的命令回执仍要识别并保持路由边界，不能伪装成遥测或丢掉 | confirmed：RAW-013 → D13；用户选择先上行，下行后续推进 |
+| PA-Q3：谁发布客户定制适配器，是否需要客户自行上传运行？ | 首版团队/受控合作方发布；客户自助执行将扩大沙箱、资源/租户隔离与审核范围 | confirmed：RAW-013 → D14；团队或受控合作方发布 |
+
+**PA-Q1 追问说明（R11）：** 若“模式2”指本轮第二个选项“先解码，只对标准化消息提供持久化边界”，ThingsBoard 常见 Transport / Integration 路径更接近这一选项，见第 11.3 节固定源码。它与历史 RFC 中第二档 **Reliable** 的编号不能混用。TB 内部数据格式也不等于本项目尚待冻结的 Canonical Record。
+
+- 本次复核固定源码的 JsonMqttAdaptor 与 BasicMqttIntegration 均先转换；RemoteIntegrationContext 的 eventStorage 写入转换结果。因此不能用这些队列补回尚未成功转换、且没有其它输入存档的报文。
+- [官方当前 Uplink Converter 文档的 Failures](https://thingsboard.io/docs/user-guide/integrations/uplink-data-converter/#failures)说明，解码异常/无效结果会记录失败并丢弃消息，不自动重试；Debug 开启后可查看输入/输出/元数据。这是当前网站说明，不推广成全部接入方式或所有历史版本的统一失败语义；调试记录也不等于完整、有保留期与重放契约的 Raw 日志。
+- 两条路线都可以为成功入队后的业务处理设计可靠恢复。差别在解码之前的恢复起点：例如 Codec 把温度比例算错但输出合法，只有标准化结果时不保证能恢复原始值；若 Raw 已持久提交且仍在保留期内，可修正版本后受控重处理。外部 broker/设备的重投是另一个机制，不能由平台内部标准消息队列代为承诺。
+- R11 的 Raw-first 推荐及代价已向用户解释；RAW-014 选择先从简，R12 按 D15 修订当前路线。此选择不等于放弃标准消息入队后的可靠性，也没有声称 TB 的 parse-first 路线本身不可靠；不额外推导出首版必须保留全量原始报文或调试样本。
+
+PA-Q1–PA-Q3 已确认，不重复询问。下一步待细化：首个真实协议样本及边界、协议自身可识别的重复/顺序、输出失败的业务可见性及整包应答、受控发布与失败处置的负责人。可从代码或样本查证的事实由 AI 调查，不把版本参数交给用户猜。不重新询问已确认 D6–D12，不用本轮选择扩大实施授权。
+
+### 11.8 接续建议与验证设计（尚未执行）
+
+沿 D13–D15 先形成最小输入/输出契约及模块认领，再承接获准的 P2 切片。建议验证：真实原始 payload 解码→Canonical 持久接受→DM 属性落库；解码失败不报接受成功；接受前后故障的不同恢复边界；标准消息已提交但应答丢失的重投/去重；同包部分坏输出与不可解析整包，以及父包结果完整汇总；非法租户/子设备、版本记录；下游故障后补处理；遥测积压时回执入口不被解码队列阻塞。首版不以 Raw 回放、Raw+输出位点事务或旧原报文补算作为完成条件。涉及 D12 的完整 V9 仍依赖 P3/P4 真实业务链。
+
+R10 的独立只读源码复核未发现当时本节严重事实错误；指出的父包结果汇总与两层接受时序缺口已补入第 11.6 节，仍未解决为可执行契约。这是静态评估，不是实现或运行验收。
+
+R12 已补记三项真实选择并修订首版路线。本轮出口为“源码判断与三项首版边界已确认，具体契约仍待细化”，并非已达成完整设计共识。没有开发 ProtocolApplication、没有建立 P2 运行证据，也没有切换、推送、删除或迁移旧数据。主规格只保留已验证 P1；后续实现验证后再吸收新规则。

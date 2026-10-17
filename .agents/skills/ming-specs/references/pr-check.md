@@ -1,6 +1,6 @@
 # 完整 PR 差异检查
 
-适用于 ming-specs 0.7.0-draft，沿用 S2 检查协议。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
+适用于 ming-specs 0.8.1-draft，沿用 S2 检查协议。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
 
 ## 谁维护什么
 
@@ -9,7 +9,9 @@
 - 工具核对完整路径覆盖、当前版本/显式条款、活动 Patch 双向指针、归档字节与候选身份；不判断业务语义。
 - 模块入口或实现路径变化时，在同一 PR 修改 [specs-map.json](../../../../tooling/specs-map.json)。映射只有路径和正文位置，不能写第二份规则。旧/新映射共同归属的路径仍须覆盖；删除一个已登记模块须另设计明确的退役迁移，本版不支持静默删除。
 
-当前映射仅有 `saas.notification-trigger` 和 `engineering.api-contract`。映射到一个代码文件只说明应向哪个模块解释影响，不证明文件中的所有逻辑已有规格。
+检查时读取候选实际映射；本地 P1 已在通知与 API 校验之外登记 `platform.eventbus`。映射到一个代码文件只说明应向哪个模块解释影响，不证明文件中的所有逻辑已有规格。
+
+`module`、变更 `type`、检查 `kind` 的含义见[术语约定](../../../../docs/runbook/team-development.md#feature-and-change)。不能因为长期目录叫 Feature 就填写 `kind=feature`，也不能把尚不支持自动检查的类型伪装为 Patch。
 
 ## 从实际 PR 生成输入
 
