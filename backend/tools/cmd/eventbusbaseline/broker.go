@@ -113,14 +113,13 @@ func competition(ctx context.Context) error {
 	done := make(chan error, 2)
 	runCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
-	for i := 0; i < 2; i++ {
-		c, err := foundation.NewBusConsumer(foundation.BusConsumerConfig{Client: clientConfig(fmt.Sprintf("%s-%d", run, i)), GroupID: group, Topic: contract.CoordinationTopic, PollTimeout: 200 * time.Millisecond, RequestTimeout: 2 * time.Second, MaxPollRecords: 32})
+	// start 启动同一逻辑身份的新副本，重新入组仍由 broker 决定分配。
+	start := func(index int, suffix string) (*foundation.BusConsumer, error) {
+		c, err := foundation.NewBusConsumer(foundation.BusConsumerConfig{Client: clientConfig(fmt.Sprintf("%s-%d-%s", run, index, suffix)), GroupID: group, Topic: contract.CoordinationTopic, PollTimeout: 200 * time.Millisecond, RequestTimeout: 2 * time.Second, MaxPollRecords: 32})
 		if err != nil {
-			return err
+			return nil, err
 		}
-		consumers = append(consumers, c)
-		defer c.Close()
-		go func(index int) {
+		go func() {
 			done <- c.Run(runCtx, func(_ context.Context, r *kgo.Record) error {
 				e, err := contract.Decode(r.Value)
 				if err != nil {
@@ -140,7 +139,16 @@ func competition(ctx context.Context) error {
 				mu.Unlock()
 				return nil
 			})
-		}(i)
+		}()
+		return c, nil
+	}
+	for i := 0; i < 2; i++ {
+		c, err := start(i, "initial")
+		if err != nil {
+			return err
+		}
+		consumers = append(consumers, c)
+		defer c.Close()
 	}
 	ticker := time.NewTicker(100 * time.Millisecond)
 	defer ticker.Stop()
@@ -186,6 +194,68 @@ func competition(ctx context.Context) error {
 	if err = waitCommitted(ctx, group); err != nil {
 		return err
 	}
+	// 先让一个成员退出，验证保留分区的成员不会永久丢失 ready。
+	survivorGeneration, _ := consumers[0].CacheState()
+	if err = consumers[1].Close(); err != nil {
+		return err
+	}
+	<-done
+	for {
+		generation, ready := consumers[0].CacheState()
+		if ready && generation > survivorGeneration {
+			break
+		}
+		select {
+		case <-ticker.C:
+		case err := <-done:
+			return fmt.Errorf("survivor stopped after peer left: %v", err)
+		case <-ctx.Done():
+			return fmt.Errorf("survivor readiness after peer left: %w", ctx.Err())
+		}
+	}
+	// 新成员加入触发协作式增量分配，随后用新消息验证消费仍向前推进。
+	consumers[1], err = start(1, "rejoined")
+	if err != nil {
+		return err
+	}
+	defer consumers[1].Close()
+	for {
+		_, a := consumers[0].CacheState()
+		_, b := consumers[1].CacheState()
+		if a && b {
+			break
+		}
+		select {
+		case <-ticker.C:
+		case err := <-done:
+			return fmt.Errorf("consumer stopped on rejoin: %v", err)
+		case <-ctx.Done():
+			return fmt.Errorf("rejoin readiness: %w", ctx.Err())
+		}
+	}
+	for i := 40; i < 60; i++ {
+		if err := producer.Publish(ctx, "server.cache.sync.p1-competition", fmt.Sprintf("%s-%02d", run, i)); err != nil {
+			return err
+		}
+	}
+	for {
+		mu.Lock()
+		n := len(counts)
+		mu.Unlock()
+		if n == 60 {
+			break
+		}
+		select {
+		case <-ticker.C:
+		case err := <-done:
+			return fmt.Errorf("consumer stopped after rejoin: %v", err)
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}
+	if err = waitCommitted(ctx, group); err != nil {
+		return err
+	}
 	cancel()
 	for _, c := range consumers {
 		_ = c.Close()
@@ -203,6 +273,6 @@ func competition(ctx context.Context) error {
 	if owners[0] == 0 || owners[1] == 0 {
 		return fmt.Errorf("both replicas must receive partitions: %v", owners)
 	}
-	fmt.Printf("{\"case\":\"same-group-competition\",\"result\":\"PASS\",\"messages\":40,\"replica_a\":%d,\"replica_b\":%d}\n", owners[0], owners[1])
+	fmt.Printf("{\"case\":\"same-group-competition\",\"result\":\"PASS\",\"messages\":60,\"member_leave_rejoin\":true,\"replica_a\":%d,\"replica_b\":%d}\n", owners[0], owners[1])
 	return nil
 }

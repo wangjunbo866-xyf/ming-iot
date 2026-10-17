@@ -29,17 +29,23 @@ type Event interface {
 
 // Cache 保存同一业务键类型的缓存与失效通知状态。
 type Cache[dataT any, keyType comparable] struct {
-	keyType    string
-	cache      otter.Cache[string, *dataT]
-	fastEvent  Event
-	getData    func(ctx context.Context, key keyType) (*dataT, error)
+	keyType   string
+	cache     otter.Cache[string, *dataT]
+	fastEvent Event
+	getData   func(ctx context.Context, key keyType) (*dataT, error)
+	// notifySlot 保存注册的同步失效回调。
 	notifySlot []func(ctx context.Context, key []byte)
-	notifyMu   sync.RWMutex
+	// notifyMu 保护回调注册与通知快照。
+	notifyMu sync.RWMutex
 	// stateMu 将代际检查、失效通知与 L1 回填串行化。
-	stateMu    sync.Mutex
-	state      CacheStateProvider
+	stateMu sync.Mutex
+	// state 提供总线当前的恢复代际与可用状态。
+	state CacheStateProvider
+	// generation 记录本地缓存已观察到的总线代际。
 	generation uint64
-	revision   uint64
+	// revision 隔离失效前后的在途读与 singleflight。
+	revision uint64
+	// ready 记录本地缓存已同步的订阅可用状态。
 	ready      bool
 	fmt        func(ctx context.Context, key keyType, data *dataT) *dataT
 	expireTime time.Duration
@@ -60,6 +66,7 @@ var (
 )
 
 // NewCache 按业务键类型创建进程内单例，并订阅失效通知。
+// 同键类型的再次调用不会替换总线；总线永久退出后须重启所属缓存进程。
 func NewCache[dataT any, keyType comparable](cfg CacheConfig[dataT, keyType]) (*Cache[dataT, keyType], error) {
 	cacheMutex.Lock() //单例模式
 	defer cacheMutex.Unlock()

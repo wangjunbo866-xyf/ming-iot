@@ -211,6 +211,7 @@ func completion(ctx context.Context) error {
 		return err
 	}
 	secondCtx, cancel := context.WithCancel(ctx)
+	defer cancel()
 	secondDone := make(chan error, 1)
 	go func() { secondDone <- second.Run(secondCtx) }()
 	for i := 0; i < 2; i++ {

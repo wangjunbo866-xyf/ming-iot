@@ -407,7 +407,7 @@ materials:
     conflict_rule: "本轮用户要求沉淀团队流程与harness；操作页复用团队约定，当前仅开始真实需求试跑，不代表Kafka实施完成或团队正式采用。"
   - source_id: ming-iot-eventbus-observed
     lifecycle: current
-    role: eventbus_source_observation
+    role: eventbus_current_rules_and_legacy_observation
     status: confirmed
     path: docs/specs/platform/eventbus/spec.md
     revision: p1-v1

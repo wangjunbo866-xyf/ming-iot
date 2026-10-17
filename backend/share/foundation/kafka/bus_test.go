@@ -12,6 +12,7 @@ import (
 
 	contract "gitee.com/ming-iot/share/contracts/eventbus"
 	"github.com/twmb/franz-go/pkg/kgo"
+	"github.com/twmb/franz-go/pkg/kmsg"
 )
 
 // busFakeClient 仅替代协议边界，不声明已经验证真实 Kafka 行为。
@@ -22,10 +23,20 @@ type busFakeClient struct {
 	fetches     kgo.Fetches
 	pollEntered chan struct{}
 	closed      atomic.Int32
+	// requestSharded 提供可控的不同分区 leader 响应，不能替代真实集群证据。
+	requestSharded func(context.Context, kmsg.Request) []kgo.ResponseShard
 }
 
 // Ping 返回可控制的连接结果。
 func (f *busFakeClient) Ping(context.Context) error { return f.pingError }
+
+// RequestSharded 返回按 leader 划分的响应，用于检查局部可达性和代际竞态。
+func (f *busFakeClient) RequestSharded(ctx context.Context, request kmsg.Request) []kgo.ResponseShard {
+	if f.requestSharded == nil {
+		return nil
+	}
+	return f.requestSharded(ctx, request)
+}
 
 // PollRecords 返回一次数据后等待取消。
 func (f *busFakeClient) PollRecords(ctx context.Context, _ int) kgo.Fetches {
@@ -63,7 +74,7 @@ func (f *busFakeClient) Close() { f.closed.Add(1) }
 
 // newBusTestConsumer 创建只用于单元边界的独立消费者。
 func newBusTestConsumer(fake *busFakeClient) *BusConsumer {
-	return &BusConsumer{client: fake, config: BusConsumerConfig{RequestTimeout: time.Second, PollTimeout: 5 * time.Millisecond, MaxPollRecords: 2}, generation: 1, done: make(chan struct{})}
+	return &BusConsumer{client: fake, config: BusConsumerConfig{Topic: contract.CoordinationTopic, GroupID: "bus-test", RequestTimeout: time.Second, PollTimeout: 5 * time.Millisecond, MaxPollRecords: 2}, generation: 1, done: make(chan struct{})}
 }
 
 // busTestRecords 创建同分区同键的连续记录。
@@ -137,9 +148,9 @@ func TestBusStateRequiresConfirmedSubscription(t *testing.T) {
 	if _, ready := consumer.CacheState(); ready {
 		t.Fatal("assignment without offsets reported ready")
 	}
-	consumer.mu.Lock()
-	consumer.offsetsFetched = true
-	consumer.mu.Unlock()
+	if err := consumer.confirmOffsets(busOffsetsResponse(0)); err != nil {
+		t.Fatal(err)
+	}
 	consumer.markReady(generation)
 	if _, ready := consumer.CacheState(); !ready {
 		t.Fatal("confirmed subscription did not become ready")
@@ -224,28 +235,203 @@ func TestBusEffectiveSafetyOptions(t *testing.T) {
 	}
 }
 
-// TestBusCooperativeAssignmentRetainsPartitions 验证协作式局部撤销不会忘记仍拥有的分区。
+// busOffsetsResponse 构造与 Kafka 位点回调一致的成功响应。
+func busOffsetsResponse(partitions ...int32) *kmsg.OffsetFetchResponse {
+	response := &kmsg.OffsetFetchResponse{Topics: []kmsg.OffsetFetchResponseTopic{{Topic: contract.CoordinationTopic}}}
+	for _, partition := range partitions {
+		response.Topics[0].Partitions = append(response.Topics[0].Partitions, kmsg.OffsetFetchResponseTopicPartition{Partition: partition, Offset: 0})
+	}
+	return response
+}
+
+// TestBusCooperativeAssignmentRetainsPartitions 按真实回调次序验证空增量没有位点回调时仍能恢复。
 func TestBusCooperativeAssignmentRetainsPartitions(t *testing.T) {
-	consumer := newBusTestConsumer(&busFakeClient{})
-	consumer.assignment([]int32{0, 1}, true)
-	consumer.assignment([]int32{1}, false)
-	consumer.assignment(nil, true)
-	consumer.mu.Lock()
-	retained := consumer.assigned && len(consumer.partitions) == 1
-	consumer.offsetsFetched = true
-	consumer.mu.Unlock()
-	if !retained {
-		t.Fatal("partial revoke forgot retained partition")
+	consumer, err := NewBusConsumer(BusConsumerConfig{Client: ClientConfig{Profile: ProfileLocal, Brokers: []string{"127.0.0.1:1"}, ClientID: "bus-callbacks"}, GroupID: "bus.callbacks", Topic: contract.CoordinationTopic})
+	if err != nil {
+		t.Fatal(err)
 	}
-	generation, _ := consumer.CacheState()
-	consumer.markReady(generation)
-	if _, ready := consumer.CacheState(); !ready {
-		t.Fatal("retained subscription never recovers")
+	defer consumer.Close()
+	client := consumer.client.(*kgo.Client)
+	assigned := client.OptValue(kgo.OnPartitionsAssigned).(func(context.Context, *kgo.Client, map[string][]int32))
+	revoked := client.OptValue(kgo.OnPartitionsRevoked).(func(context.Context, *kgo.Client, map[string][]int32))
+	lost := client.OptValue(kgo.OnPartitionsLost).(func(context.Context, *kgo.Client, map[string][]int32))
+	fetched := client.OptValue(kgo.OnOffsetsFetched).(func(context.Context, *kgo.Client, *kmsg.OffsetFetchResponse) error)
+	ctx := context.Background()
+	// checkReady 模拟成功的本代际全部分区 leader 检查，观察实际回调产生的位点确认状态。
+	checkReady := func(want bool) {
+		t.Helper()
+		generation, _ := consumer.CacheState()
+		consumer.markReady(generation)
+		if _, ready := consumer.CacheState(); ready != want {
+			t.Fatalf("ready=%v want=%v", ready, want)
+		}
 	}
-	consumer.assignment([]int32{0}, false)
-	generation, _ = consumer.CacheState()
-	consumer.markReady(generation)
+	// 初次分配必须取得全部分区的位置；局部响应不能让未确认分区就绪。
+	assigned(ctx, client, map[string][]int32{contract.CoordinationTopic: {0, 1}})
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(0)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(1)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(true)
+	// 无新增分区时 franz-go 不调用 OnOffsetsFetched，必须保留已有确认。
+	assigned(ctx, client, nil)
+	checkReady(true)
+	revoked(ctx, client, map[string][]int32{contract.CoordinationTopic: {1}})
+	assigned(ctx, client, nil)
+	checkReady(true)
+	// 新增分区重新阻止就绪，直到实际位点回调确认。
+	assigned(ctx, client, map[string][]int32{contract.CoordinationTopic: {2}})
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(2)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(true)
+	// 未确认的新分区被撤销后，不应阻断保留分区恢复。
+	assigned(ctx, client, map[string][]int32{contract.CoordinationTopic: {3}})
+	checkReady(false)
+	revoked(ctx, client, map[string][]int32{contract.CoordinationTopic: {3}})
+	assigned(ctx, client, nil)
+	checkReady(true)
+	// 全撤销及 lost 都不能因空回调或旧位点响应恢复。
+	revoked(ctx, client, map[string][]int32{contract.CoordinationTopic: {0, 2}})
+	assigned(ctx, client, nil)
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(0, 2)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(false)
+	assigned(ctx, client, map[string][]int32{contract.CoordinationTopic: {0}})
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(0)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(true)
+	lost(ctx, client, nil)
+	checkReady(false)
+	assigned(ctx, client, nil)
+	checkReady(false)
+	assigned(ctx, client, map[string][]int32{contract.CoordinationTopic: {0}})
+	checkReady(false)
+	if err := fetched(ctx, client, busOffsetsResponse(0)); err != nil {
+		t.Fatal(err)
+	}
+	checkReady(true)
+}
+
+// busLeaderResponse 构造某个 broker 对指定分区的真实 ListOffsets 响应形状。
+func busLeaderResponse(nodeID int32, partitions ...int32) kgo.ResponseShard {
+	response := &kmsg.ListOffsetsResponse{Topics: []kmsg.ListOffsetsResponseTopic{{Topic: contract.CoordinationTopic}}}
+	for _, partition := range partitions {
+		response.Topics[0].Partitions = append(response.Topics[0].Partitions, kmsg.ListOffsetsResponseTopicPartition{Partition: partition, Offset: 20})
+	}
+	return kgo.ResponseShard{Meta: kgo.BrokerMetadata{NodeID: nodeID}, Resp: response}
+}
+
+// TestBusReadinessRequiresEveryOwnedLeader 验证一个 broker 健康不代表另一个分区 leader 可服务。
+func TestBusReadinessRequiresEveryOwnedLeader(t *testing.T) {
+	for _, mode := range []string{"unreachable-leader", "partition-error", "negative-offset", "missing-partition", "wrong-topic", "duplicate-partition", "generation-changed", "all-leaders-recovered"} {
+		t.Run(mode, func(t *testing.T) {
+			fake := &busFakeClient{}
+			consumer := newBusTestConsumer(fake)
+			consumer.assignment([]int32{0, 1}, true)
+			if err := consumer.confirmOffsets(busOffsetsResponse(0, 1)); err != nil {
+				t.Fatal(err)
+			}
+			// 先确认已有两个 leader 健康，再模拟断连而保留消费位点确认。
+			fake.requestSharded = func(context.Context, kmsg.Request) []kgo.ResponseShard {
+				return []kgo.ResponseShard{busLeaderResponse(1, 0), busLeaderResponse(2, 1)}
+			}
+			if err := consumer.checkReadiness(context.Background()); err != nil {
+				t.Fatal(err)
+			}
+			if _, ready := consumer.CacheState(); !ready {
+				t.Fatal("initial leaders did not become ready")
+			}
+			consumer.invalidate(errors.New("connection lost"))
+			if err := fake.Ping(context.Background()); err != nil {
+				t.Fatal("healthy metadata broker unavailable")
+			}
+			fake.requestSharded = func(_ context.Context, request kmsg.Request) []kgo.ResponseShard {
+				offsets, ok := request.(*kmsg.ListOffsetsRequest)
+				if !ok || offsets.IsolationLevel != 1 || offsets.ReplicaID != -1 || len(offsets.Topics) != 1 || offsets.Topics[0].Topic != contract.CoordinationTopic {
+					t.Fatal("health check is not a read-committed owned-topic leader request")
+				}
+				requested := make(map[int32]bool)
+				for _, partition := range offsets.Topics[0].Partitions {
+					if partition.Timestamp != -1 {
+						t.Fatal("not querying stable end offset")
+					}
+					requested[partition.Partition] = true
+				}
+				if !reflect.DeepEqual(requested, map[int32]bool{0: true, 1: true}) {
+					t.Fatalf("requested=%v", requested)
+				}
+				// 两个分区分别由不同 broker 服务，只允许完整成功响应恢复。
+				healthy, other := busLeaderResponse(1, 0), busLeaderResponse(2, 1)
+				switch mode {
+				case "unreachable-leader":
+					other.Resp = nil
+					other.Err = context.DeadlineExceeded
+				case "partition-error":
+					other.Resp.(*kmsg.ListOffsetsResponse).Topics[0].Partitions[0].ErrorCode = 6
+				case "negative-offset":
+					other.Resp.(*kmsg.ListOffsetsResponse).Topics[0].Partitions[0].Offset = -1
+				case "missing-partition":
+					return []kgo.ResponseShard{healthy}
+				case "wrong-topic":
+					other.Resp.(*kmsg.ListOffsetsResponse).Topics[0].Topic = "other"
+				case "duplicate-partition":
+					return []kgo.ResponseShard{healthy, healthy, other}
+				case "generation-changed":
+					consumer.invalidate(errors.New("new disconnect during request"))
+				}
+				return []kgo.ResponseShard{healthy, other}
+			}
+			err := consumer.checkReadiness(context.Background())
+			_, ready := consumer.CacheState()
+			if mode == "all-leaders-recovered" {
+				if err != nil || !ready {
+					t.Fatalf("recovery error=%v ready=%v", err, ready)
+				}
+				return
+			}
+			if ready {
+				t.Fatal("partial connectivity or stale generation restored readiness")
+			}
+			if mode != "generation-changed" && err == nil {
+				t.Fatal("leader failure was swallowed")
+			}
+		})
+	}
+}
+
+// TestBusLeaderCheckWaitIsBounded 验证 leader 不可达时遵循请求取消且不持有状态锁。
+func TestBusLeaderCheckWaitIsBounded(t *testing.T) {
+	fake := &busFakeClient{}
+	consumer := newBusTestConsumer(fake)
+	consumer.assignment([]int32{0}, true)
+	if err := consumer.confirmOffsets(busOffsetsResponse(0)); err != nil {
+		t.Fatal(err)
+	}
+	fake.requestSharded = func(ctx context.Context, _ kmsg.Request) []kgo.ResponseShard {
+		consumer.invalidate(errors.New("broker unreachable"))
+		<-ctx.Done()
+		return []kgo.ResponseShard{{Meta: kgo.BrokerMetadata{NodeID: 2}, Err: ctx.Err()}}
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Millisecond)
+	defer cancel()
+	started := time.Now()
+	if err := consumer.checkReadiness(ctx); !errors.Is(err, context.DeadlineExceeded) {
+		t.Fatalf("error=%v", err)
+	}
+	if time.Since(started) > time.Second {
+		t.Fatal("leader check exceeded deadline")
+	}
 	if _, ready := consumer.CacheState(); ready {
-		t.Fatal("fully revoked subscription is ready")
+		t.Fatal("timed out leader is ready")
 	}
 }

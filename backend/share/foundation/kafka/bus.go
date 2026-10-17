@@ -33,6 +33,7 @@ type BusConsumerConfig struct {
 // busClient 定义可验证的提交和消费边界。
 type busClient interface {
 	Ping(context.Context) error
+	RequestSharded(context.Context, kmsg.Request) []kgo.ResponseShard
 	PollRecords(context.Context, int) kgo.Fetches
 	CommitRecords(context.Context, ...*kgo.Record) error
 	AllowRebalance()
@@ -41,21 +42,30 @@ type busClient interface {
 
 // BusConsumer 拥有独立生命周期；所有回调按批次串行执行，不承诺跨键并行。
 type BusConsumer struct {
-	config     BusConsumerConfig
-	client     busClient
-	mu         sync.Mutex
+	// config 保存受控连接、主题与等待上界。
+	config BusConsumerConfig
+	// client 是当前实例独立拥有的 Kafka 协议客户端。
+	client busClient
+	// mu 保护代际、分区确认及生命周期状态，不跨网络请求持有。
+	mu sync.Mutex
+	// generation 在连接或分配变化时隔离此前的就绪证据。
 	generation uint64
-	ready      bool
-	assigned   bool
-	// partitions 保存协作式重分配后仍属于本实例的分区。
-	partitions     map[int32]struct{}
-	offsetsFetched bool
-	lastError      error
-	started        bool
-	closed         bool
-	cancel         context.CancelFunc
-	done           chan struct{}
-	closeOnce      sync.Once
+	// ready 仅在当前全部分区确认且本代际 leader 检查成功后允许缓存读取。
+	ready bool
+	// partitions 保存仍拥有的分区及各自已确认的消费位置，空增量分配不能丢失旧确认。
+	partitions map[int32]bool
+	// lastError 保留最近故障供上层诊断。
+	lastError error
+	// started 阻止重复启动同一消费生命周期。
+	started bool
+	// closed 阻止退出后重新报告就绪或再次启动。
+	closed bool
+	// cancel 允许 Close 取消正在执行的同步处理。
+	cancel context.CancelFunc
+	// done 在 Run 完全释放客户端后通知并发关闭者。
+	done chan struct{}
+	// closeOnce 保证底层客户端只释放一次。
+	closeOnce sync.Once
 }
 
 // NewBusConsumer 创建尚未就绪的受控协调主题消费者，禁止任意 franz-go 选项覆盖。
@@ -98,19 +108,12 @@ func NewBusConsumer(config BusConsumerConfig) (*BusConsumer, error) {
 		kgo.OnPartitionsRevoked(func(_ context.Context, _ *kgo.Client, partitions map[string][]int32) {
 			c.assignment(partitions[config.Topic], false)
 		}),
-		kgo.OnPartitionsLost(func(_ context.Context, _ *kgo.Client, partitions map[string][]int32) {
-			c.assignment(partitions[config.Topic], false)
+		kgo.OnPartitionsLost(func(_ context.Context, _ *kgo.Client, _ map[string][]int32) {
+			c.lostAssignment()
 		}),
 		kgo.OnPartitionsCallbackBlocked(func(_ context.Context, _ *kgo.Client) { c.invalidate(errors.New("bus rebalance pending")) }),
 		kgo.OnOffsetsFetched(func(_ context.Context, _ *kgo.Client, response *kmsg.OffsetFetchResponse) error {
-			if err := validateBusOffsets(response); err != nil {
-				c.invalidate(err)
-				return err
-			}
-			c.mu.Lock()
-			c.offsetsFetched = true
-			c.mu.Unlock()
-			return nil
+			return c.confirmOffsets(response)
 		}), kgo.WithHooks(busDisconnectHook{consumer: c}),
 	)
 	cli, err := kgo.NewClient(opts...)
@@ -155,17 +158,62 @@ func (c *BusConsumer) assignment(partitions []int32, assigned bool) {
 	c.generation++
 	c.ready = false
 	if c.partitions == nil {
-		c.partitions = make(map[int32]struct{})
+		c.partitions = make(map[int32]bool)
 	}
 	for _, partition := range partitions {
 		if assigned {
-			c.partitions[partition] = struct{}{}
+			if _, exists := c.partitions[partition]; !exists {
+				c.partitions[partition] = false
+			}
 		} else {
 			delete(c.partitions, partition)
 		}
 	}
-	c.assigned = len(c.partitions) > 0
-	c.offsetsFetched = false
+}
+
+// lostAssignment 在失去组会话时清空所有旧分区确认，防止旧身份恢复就绪。
+func (c *BusConsumer) lostAssignment() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.generation++
+	c.ready = false
+	c.partitions = nil
+}
+
+// confirmOffsets 只确认响应中仍由本实例拥有的分区，不将局部确认扩大为全部确认。
+func (c *BusConsumer) confirmOffsets(response *kmsg.OffsetFetchResponse) error {
+	if err := validateBusOffsets(response); err != nil {
+		c.invalidate(err)
+		return err
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	for _, topic := range response.Topics {
+		if topic.Topic != c.config.Topic {
+			continue
+		}
+		for _, partition := range topic.Partitions {
+			if _, owned := c.partitions[partition.Partition]; owned {
+				c.partitions[partition.Partition] = true
+			}
+		}
+	}
+	for _, group := range response.Groups {
+		if group.Group != c.config.GroupID {
+			continue
+		}
+		for _, topic := range group.Topics {
+			if topic.Topic != c.config.Topic {
+				continue
+			}
+			for _, partition := range topic.Partitions {
+				if _, owned := c.partitions[partition.Partition]; owned {
+					c.partitions[partition.Partition] = true
+				}
+			}
+		}
+	}
+	return nil
 }
 
 // invalidate 立即隔离可能漏收通知的缓存，并保留可查询的故障。
@@ -197,9 +245,77 @@ func (c *BusConsumer) LastError() error {
 func (c *BusConsumer) markReady(generation uint64) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if !c.closed && c.generation == generation && c.assigned && c.offsetsFetched {
-		c.ready = true
+	if c.closed || c.generation != generation || len(c.partitions) == 0 {
+		return
 	}
+	for _, confirmed := range c.partitions {
+		if !confirmed {
+			return
+		}
+	}
+	c.ready = true
+}
+
+// checkReadiness 用当前拥有分区的 leader 响应证明本代际可服务，而非任意 broker 可达。
+// 此证明受下一次故障检测的时间窗口约束，不代表集群高可用或业务端到端完成。
+func (c *BusConsumer) checkReadiness(ctx context.Context) error {
+	c.mu.Lock()
+	// generation 和 owned 是同一时刻的分配快照，网络等待期间不持有状态锁。
+	generation := c.generation
+	owned := make(map[int32]bool, len(c.partitions))
+	for partition := range c.partitions {
+		owned[partition] = false
+	}
+	c.mu.Unlock()
+	if len(owned) == 0 {
+		return c.client.Ping(ctx)
+	}
+	// request 由 franz-go 按分区 leader 定向拆分；read_committed 返回稳定末尾位置。
+	request := kmsg.NewPtrListOffsetsRequest()
+	request.IsolationLevel = 1
+	request.Topics = []kmsg.ListOffsetsRequestTopic{{Topic: c.config.Topic}}
+	for partition := range owned {
+		entry := kmsg.NewListOffsetsRequestTopicPartition()
+		entry.Partition = partition
+		entry.Timestamp = -1
+		request.Topics[0].Partitions = append(request.Topics[0].Partitions, entry)
+	}
+	// shards 必须全部成功，单个健康 broker 的响应不能覆盖其他 leader 的失败。
+	shards := c.client.RequestSharded(ctx, request)
+	if err := ctx.Err(); err != nil {
+		return err
+	}
+	for _, shard := range shards {
+		if shard.Err != nil {
+			return fmt.Errorf("bus partition leader request: %w", shard.Err)
+		}
+		response, ok := shard.Resp.(*kmsg.ListOffsetsResponse)
+		if !ok || response == nil {
+			return errors.New("bus partition leader returned invalid response")
+		}
+		for _, topic := range response.Topics {
+			if topic.Topic != c.config.Topic {
+				return errors.New("bus partition leader returned unexpected topic")
+			}
+			for _, partition := range topic.Partitions {
+				seen, expected := owned[partition.Partition]
+				if !expected || seen {
+					return errors.New("bus partition leader returned unexpected or duplicate partition")
+				}
+				if partition.ErrorCode != 0 || partition.Offset < 0 {
+					return fmt.Errorf("bus partition leader unavailable for partition %d (code %d)", partition.Partition, partition.ErrorCode)
+				}
+				owned[partition.Partition] = true
+			}
+		}
+	}
+	for _, confirmed := range owned {
+		if !confirmed {
+			return errors.New("bus partition leader response missing owned partition")
+		}
+	}
+	c.markReady(generation)
+	return nil
 }
 
 // Run 单次启动消费；连接故障保持隔离并重试，处理或提交失败立即返回并保留重投。
@@ -233,12 +349,12 @@ func (c *BusConsumer) Run(ctx context.Context, handler func(context.Context, *kg
 		if err := runCtx.Err(); err != nil {
 			return err
 		}
-		generation, _ := c.CacheState()
-		pingCtx, pingCancel := context.WithTimeout(runCtx, c.config.RequestTimeout)
-		pingErr := c.client.Ping(pingCtx)
-		pingCancel()
-		if pingErr != nil {
-			c.invalidate(fmt.Errorf("bus connectivity: %w", pingErr))
+		healthCtx, healthCancel := context.WithTimeout(runCtx, c.config.RequestTimeout)
+		healthErr := c.checkReadiness(healthCtx)
+		healthCancel()
+		if healthErr != nil {
+			c.invalidate(fmt.Errorf("bus connectivity: %w", healthErr))
+			c.client.AllowRebalance()
 			timer := time.NewTimer(c.config.PollTimeout)
 			select {
 			case <-runCtx.Done():
@@ -248,7 +364,6 @@ func (c *BusConsumer) Run(ctx context.Context, handler func(context.Context, *kg
 			}
 			continue
 		}
-		c.markReady(generation)
 		pollCtx, pollCancel := context.WithTimeout(runCtx, c.config.PollTimeout)
 		fetches := c.client.PollRecords(pollCtx, c.config.MaxPollRecords)
 		pollCancel()

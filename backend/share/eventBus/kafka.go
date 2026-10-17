@@ -34,12 +34,19 @@ type KafkaBusConfig struct {
 
 // KafkaBus 为一个实例拥有生产者、广播消费者与同步回调注册表。
 type KafkaBus struct {
-	config    KafkaBusConfig
-	consumer  *foundation.BusConsumer
-	producer  *kgo.Client
-	mu        sync.RWMutex
-	handlers  map[string][]FastFunc
-	closed    bool
+	// config 保存本实例固定的连接与身份配置。
+	config KafkaBusConfig
+	// consumer 管理广播分配、消费完成与恢复代际。
+	consumer *foundation.BusConsumer
+	// producer 只发布当前支持的协调消息。
+	producer *kgo.Client
+	// mu 保护回调表和生命周期状态。
+	mu sync.RWMutex
+	// handlers 按旧缓存 subject 保存同步回调。
+	handlers map[string][]FastFunc
+	// closed 阻止关闭后注册或发布消息。
+	closed bool
+	// closeOnce 防止多个调用方重复关闭底层资源。
 	closeOnce sync.Once
 	// deliveryErr 保留异步确认最终失败，避免调用方超时后丢失诊断。
 	deliveryErr error

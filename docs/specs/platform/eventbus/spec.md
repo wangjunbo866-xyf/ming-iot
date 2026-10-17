@@ -23,13 +23,13 @@ version: p1-v1
 
 首版按一个 consumer 串行执行全部 key，保证同键副作用及分区成功前缀；暂不声称不同 key 的并行推进。不同 KafkaBus 实例拥有自己的客户端与生命周期，不使用 FastEvent 的全局第一 serverName。广播组包含稳定 role/instance；同组副本竞争使用 foundation 的显式 group，缓存实例不得共享同一实例身份。调用者负责稳定唯一实例 ID 与退出组回收。
 
-取消与 rebalance 使缓存失去 ready；同步 handler 必须响应 context，不能在 handler 内等待 Close。无法安全继续的处理/提交错误 fail-stop，调用方用相同稳定身份重新构造并 Run；不通过跳过坏消息或自动推进 offset 恢复。没有持久隔离队列或管理员修复界面。
+取消与 rebalance 使缓存失去 ready；同步 handler 必须响应 context，不能在 handler 内等待 Close。无法安全继续的处理/提交错误 fail-stop。独立 consumer 可按相同稳定身份重新构造并 Run；接入 Cache 的服务必须重启整个缓存进程，因为同 KeyType 的 NewCache 不会绑定新 bus。空闲期间的可恢复断网仍在原 bus、原进程内恢复。不通过跳过坏消息或自动推进 offset 恢复；没有持久隔离队列或管理员修复界面。
 
 <a id="p1-cache"></a>
 ## BUS-P1-CACHE：真实缓存恢复
 
 - [KafkaBus](../../../../backend/share/eventBus/kafka.go)以显式构造接入 [Cache](../../../../backend/share/caches/cache.go)，旧配置工厂不变；每个 Cache 仍是进程内按 KeyType 单例。广播验收必须使用两个独立进程。
-- `CacheState` 给出 generation 和 ready；创建客户端不算 ready，需实际连接、分区分配及订阅位点确认。检测到断连、重分配或处理失败后撤销 ready，generation 改变；网络故障检测有请求超时窗口，不承诺物理断网瞬间就知道故障。
+- `CacheState` 给出 generation 和 ready；创建客户端不算 ready，需分区分配、逐分区订阅位点确认及当前代际全部已分配分区 leader 的成功查询。任一 broker 可 Ping 不代表协调分区可消费；空增量分配保留仍拥有分区的确认，新增分区单独等待确认。检测到断连、重分配或处理失败后撤销 ready，generation 改变；网络故障检测有请求超时窗口，不承诺物理断网瞬间就知道故障。
 - Cache 在读取前同步代际，变化时清 L1；未 ready 明确返回 ErrCacheNotReady，不继续返回旧权限值。读期间收到通知或发生恢复时，旧结果不能回填，返回 ErrCacheInvalidated 后允许重新读取。
 - 新路径从 Redis 或配置的权威回调恢复；禁用旧的异步 DB→Redis 回填，避免删除后旧在途读取再次写回。任意键通知保守地让同一 Cache 其它在途读重试，有吞吐成本；Redis miss 也可能增加 DB 读取。
 - `SetData` 的 Redis 与 Publish 错误必须返回，不能吞错后宣告成功。两步非原子，错误时 Redis 可能已更新；不能据此保证所有远端缓存立刻失效，需要调用者协调重试/修复。旧事件实现也获得此错误传播修正，但不自动获得 Kafka 代际恢复协议。
