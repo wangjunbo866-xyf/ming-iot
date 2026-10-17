@@ -6,7 +6,7 @@ source_revision: c304bccd1663ee1299dc73d99855c61339b6ef4a
 
 # Eventbus：当前源码现状
 
-这是首次接入规格体系的现状基线，证据为上述固定提交的源码，**不是已批准的可靠性承诺，也不是运行验收**。迁移决定和剩余提案在 [Kafka Patch（当前 R3）](patches/PATCH-20261017-kafka-migration/change.md)，原话在 [raw.md](raw.md)。没有独立 Eventbus 当前规格的历史缺口在这里显式保留。
+这是首次接入规格体系的现状基线，证据为上述固定提交的源码，**不是已批准的可靠性承诺，也不是运行验收**。迁移决定和剩余提案在 [Kafka Patch（当前在途版本）](patches/PATCH-20261017-kafka-migration/change.md)，原话在 [raw.md](raw.md)。没有独立 Eventbus 当前规格的历史缺口在这里显式保留。
 
 <a id="bus-scope"></a>
 ## BUS-SCOPE：边界与实际使用者
