@@ -424,7 +424,7 @@ materials:
     role: eventbus_kafka_requirement_and_decisions
     status: draft
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R6
+    revision: R7
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,7 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "用户确认迁移目标、开发测试一次切换和 RAW-005 的三项政策 D6–D8；R6 沿用 D1–D11（含 RAW-007 的 D10/D11），按 RAW-008 分析 ThingsBoard 固定源码；分组与契约仍是建议，Q7 的隔离承诺待答。不得把局部确认等同整个草稿批准；本轮不实施切换、推送或操作旧环境数据。"
+    conflict_rule: "用户确认迁移目标、开发测试一次切换和 RAW-005 的三项政策 D6–D8；R7 沿用 D1–D11，保留 RAW-008 的 ThingsBoard 固定源码分析；按 RAW-009 将 Q7 记为 D12，要求积压隔离验收 V9；分组、契约与测试参数仍是技术建议，运行未验证。不得把局部确认等同整个草稿批准；本轮不实施切换、推送或操作旧环境数据。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction
