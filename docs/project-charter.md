@@ -63,7 +63,7 @@ goal_id: ming-iot-knowledge-pilot
 
 ## 4. 阶段路线与当前进度
 
-已完成工作以合并后的 `main` 提交 `56006502324800448c9775944d28478254be6142` 为本次快照。总纲 1.0.2、小修改约定和有界文档检查已随 PR #6 进入 GitHub；本次 1.0.6、模块入口修正、[需求受理流程](runbook/requirement-to-delivery.md)与[通知基线记录](changelog/2026-10-17-notification-runtime-baseline.md)是本地候选。后续主分支可能继续变化，执行具体任务前读取实时版本。
+已完成工作以合并后的 `main` 提交 `56006502324800448c9775944d28478254be6142` 为本次快照。总纲 1.0.2、小修改约定和有界文档检查已随 PR #6 进入 GitHub；本次 1.0.7、模块入口修正、[需求受理流程](runbook/requirement-to-delivery.md)与[通知基线记录](changelog/2026-10-17-notification-runtime-baseline.md)是本地候选。后续主分支可能继续变化，执行具体任务前读取实时版本。
 
 | 阶段 | 要解决的问题 | 当前状态与证据 | 尚未证明的部分 |
 | --- | --- | --- | --- |
