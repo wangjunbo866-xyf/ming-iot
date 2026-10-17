@@ -15,7 +15,7 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.5
+    revision: 1.0.6
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
@@ -395,7 +395,7 @@ materials:
     role: requirement_intake_to_delivery_workflow
     status: draft
     path: docs/runbook/requirement-to-delivery.md
-    revision: 0.1.0
+    revision: 0.1.1
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -418,13 +418,13 @@ materials:
     related:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
-    conflict_rule: "仅固定源码现状，已知缺陷不升级为批准规则；迁移决定见同模块R1，运行结果另证。"
+    conflict_rule: "仅固定源码现状，已知缺陷不升级为批准规则；迁移决定见同模块当前Patch，运行结果另证。"
   - source_id: ming-iot-eventbus-kafka-migration
     lifecycle: current
     role: eventbus_kafka_requirement_and_decisions
     status: draft
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R1
+    revision: R2
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,7 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "用户确认迁移目标及开发测试一次切换，完整语义与验收尚待澄清；不得据draft实施行为切换或删除旧数据。"
+    conflict_rule: "用户确认迁移目标及开发测试一次切换，R2 已细化调用范围、可靠性、旧消息和验收选项，业务政策待用户确认；不得据draft实施行为切换或删除旧数据。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction

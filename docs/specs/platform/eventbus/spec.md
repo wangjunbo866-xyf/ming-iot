@@ -6,7 +6,7 @@ source_revision: c304bccd1663ee1299dc73d99855c61339b6ef4a
 
 # Eventbus：当前源码现状
 
-这是首次接入规格体系的现状基线，证据为上述固定提交的源码，**不是已批准的可靠性承诺，也不是运行验收**。迁移方向和待决问题在 [Kafka Patch R1](patches/PATCH-20261017-kafka-migration/change.md)，原话在 [raw.md](raw.md)。没有独立 Eventbus 当前规格的历史缺口在这里显式保留。
+这是首次接入规格体系的现状基线，证据为上述固定提交的源码，**不是已批准的可靠性承诺，也不是运行验收**。迁移方向和待决问题在 [Kafka Patch（当前 R2）](patches/PATCH-20261017-kafka-migration/change.md)，原话在 [raw.md](raw.md)。没有独立 Eventbus 当前规格的历史缺口在这里显式保留。
 
 <a id="bus-scope"></a>
 ## BUS-SCOPE：边界与实际使用者
@@ -22,7 +22,7 @@ source_revision: c304bccd1663ee1299dc73d99855c61339b6ef4a
 <a id="envelope"></a>
 ## BUS-ENVELOPE：消息与上下文
 
-[events.go](../../../../backend/share/events/events.go)封装 JSON 消息，传递数据、时间、追踪与用户/租户上下文。迁移不能仅比较消息 payload；调用方依赖的 subject、上下文、发布时间与错误返回也需要验收。当前字段来自源码，未来格式及兼容要求尚待 R1 确认。
+[events.go](../../../../backend/share/events/events.go)封装 JSON 消息，传递数据、时间、追踪与用户/租户上下文。迁移不能仅比较消息 payload；调用方依赖的 subject、上下文、发布时间与错误返回也需要验收。当前字段来自源码，未来格式及兼容要求见当前 Patch 的待决事项。
 
 <a id="dispatch"></a>
 ## BUS-DISPATCH：广播、队列和回调
