@@ -71,7 +71,7 @@ Q2a、Q2b、Q3、Q5、Q6、Q7 的选择已确认，不再重复询问。Q1 的�
 
 可靠性的起点要分清：HTTP业务事务、DG/SDK收到报文、Kafka确认、业务数据库提交、设备确认是不同阶段。当前[项目删除](../../../../../../backend/saas/service/syssvr/internal/logic/projectmanage/projectInfoDeleteLogic.go)在数据库事务之后 Publish；[FastEvent](../../../../../../backend/share/eventBus/fastEvent.go)异步 handler 不把结果交回传输层。A 需要改变这些边界和失败返回链，不能沿用提前 ACK 后宣称可靠。
 
-推荐首次隔离验收采用“小批数据 + 受控重启”验证，保留窗口至少覆盖测试停机与重试窗口；初始候选为 72 小时，去重记录至少覆盖消息可能重放的窗口。该数值是待测试的开发参数，不是生产 SLA；不会用于修改旧 NATS 保存策略。
+推荐首次隔离验收采用“小批数据 + 受控重启”验证，保留窗口至少覆盖测试停机与重试窗口；R2 初始候选为 72 小时（R8 当前候选已在第 9.5 节改为 7 天），去重记录至少覆盖消息可能重放的窗口。该数值是待测试的开发参数，不是生产 SLA；不会用于修改旧 NATS 保存策略。
 
 失败处理建议：可重试错误先有界退避，超过次数进入可查询的失败记录并告警；有序业务停止该分区继续推进，保留后续积压。不能“移到失败队列后继续后面的事件”同时宣称原顺序不变。恢复和跳过要有明确操作记录；取消、死信和过期属于可观察终态，不是成功。具体重试间隔、容量、分区数由技术方案和故障测试确定，不让用户猜参数。现有部分 SDK 定时、DM OTA/在线状态/统计回调会丢弃超过 2 秒的消息；逐项按 F3/F6 决定过期或补算，不能机械搬运过滤后宣称可恢复。
 
@@ -313,13 +313,13 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 
 ### 9.2 消息族与逐入口承接
 
-表中 U/T 是普通上报、U/E 是设备事件/状态、R 是控制回执、C 是下行、D 是领域事实、I 是内部协调、W 是页面实时分发。它们是目标通道代号，物理名称见下一节。`device.up.*` 必须结合受控 payload 中的方法/类型判别：例如 thing 包内既有属性上报也有 action 回执，不能只看 subject 前缀。表内 F/V 沿用第 3/5 节，不另建规则。
+表中 U 是普通上报与设备事件/状态的同一有序通道，R 是控制回执，C 是下行，D 是领域事实，I 是内部协调，W 是页面实时分发。它们是目标通道代号，物理名称见下一节。`device.up.*` 必须结合受控 payload 中的方法/类型判别：例如 thing 包内既有属性上报也有 action 回执，不能只看 subject 前缀。表内 F/V 沿用第 3/5 节，不另建规则。
 
 | 项 / 旧 subject 或 API | 当前生产 → 实际接收入口 / 状态 | 目标通道、处理与 F / V |
 | --- | --- | --- |
-| M01 `device.up.thing.<product>.<device>` | DG DevPubThing/DevPubMsg、SDK DevPubMsg → DM Thing | 属性样本→U/T，设备事件→U/E，可信 action/属性查询回执→R；保留原类型与 token。普通事实 F2，回执按 C 状态合并；V2/V4/V6/V9 |
-| M02 `device.up.{ota,ext,config,log,shadow,gateway}.<product>.<device>` | DG 对应 DevPub 方法/通用发布、SDK → DM 对应 handler；shadow handler 的 TODO 不补成新功能 | 日志→U/T，设备发起的状态/协议请求→U/E，可识别控制回执→R；需回复的 ext/OTA/config/gateway 协议交互走 C，不能误当可任意重放动作。F2/F3；V2/V4/V6/V7 |
-| M03 `device.up.status.{connected,disconnected}` | DG PubConn、SDK 连接事件 → DM Connected/Disconnected | U/E，设备会话/对象身份及发生时间；更新事实可重放但防旧会话覆盖新会话。F2；V2/V3/V6 |
+| M01 `device.up.thing.<product>.<device>` | DG DevPubThing/DevPubMsg、SDK DevPubMsg → DM Thing | 属性 Report/ReportInfo、设备 EventPost、设备主动 Action 请求→U；ControlReply、GetReportReply、ActionReply→R，校验可信协议 token 关联。pack_report 混合包按下文 M01 补充规则。普通事实 F2，控制回执及附属属性处理按第 9.4 节；V2/V4/V6/V9 |
+| M02 `device.up.{ota,ext,config,log,shadow,gateway}.<product>.<device>` | DG 对应 DevPub 方法/通用发布、SDK → DM 对应 handler；shadow handler 的 TODO 不补成新功能 | 日志及设备发起的状态/协议请求→U，可识别控制回执→R；需回复的 ext/OTA/config/gateway 协议交互走 C，不能误当可任意重放动作。F2/F3；V2/V4/V6/V7 |
+| M03 `device.up.status.{connected,disconnected}` | DG PubConn、SDK 连接事件 → DM Connected/Disconnected | U，设备会话/对象身份及发生时间；更新事实可重放但防旧会话覆盖新会话。F2；V2/V3/V6 |
 | M04 `device.down.<protocol>.<handle>.<product>.<device>`；PublishToDev/ReqToDeviceSync | DM pubDev → DG `urMqtt` SubToDevMsg 或 SDK RegisterDeviceMsgDownHandler | C；按注册协议和连接所有权投递。同步等待改为等持久 commandId 的状态，超时不取消账本；R 独立收回执。F3；V4/V9 |
 | M05 `device.down.<protocol>.status.fix` | DM Thing 路径 → DG OnlineFix；与旧宽订阅重叠 | I 的 `connection.reconcile`，精确排除于 M04；幂等刷新当前连接状态，不当设备动作。F4；V1/V6/V7 |
 | M06 `server.core.{project.info.delete,user.delete,area.info.delete}` | syssvr 对应管理逻辑（含用户删除触发项目删除）→ DM InitEventBus | D，按来源事务生成事件，DM 关联清理逻辑消费者持久结果；D11 状态独立于被删记录。F1；V3/V9 |
@@ -329,13 +329,17 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 | M10 `server.things.dm.product.custom.update`、`server.things.dm.protocol.<code>.update` | 产品脚本更新→DG 清本地脚本缓存；协议创建/更新→SDK Cloud 配置回调 | I，相关实例各自收到并从权威存储恢复当前版本；不是任一副本刷新即可。若需审计事实，由 D 记录业务变化，I 仅驱动刷新。F4；V1/V6 |
 | M11 `server.cache.sync.<keyType>` | Share Cache.SetData → 各使用者 Cache.Subscribe | I，按缓存类/对象失效；API、DM、DG、SDK 等持有本地缓存的活跃实例分别应用。F4；V1 |
 | M12 `server.core.api.user.publish.<scope>` / UserSubscribe.Publish | DM 等聚合页面更新→SaaS websocket StartWsDp；Share 另有同名实现 | W，实例广播后按当前用户权限/订阅过滤；断线后读快照，不能作为持久业务通知已送达。F5；V8 |
-| M13 `application.device...report.thing.{property,event,action}`、`application.v2.device...report.thing.property`、`application.device...status.*` | DM PubApp 有属性/事件/action 发布；普通 Connected/Disconnected 的 PubApp 调用注释，在线修复路径有断开发布；动态订阅者需查新配置 | 按 payload 分到 U/T（派生属性）、U/E（派生事件/状态）、R 的独立应用投影类型（action 结果）；保留旧 subject 供 M16 筛选。投影不是原始新命令或原始回执，不再次完成命令。F2/F6；V5/V6/V8 |
+| M13 `application.device...report.thing.{property,event,action}`、`application.v2.device...report.thing.property`、`application.device...status.*` | DM PubApp 有属性/事件/action 发布；普通 Connected/Disconnected 的 PubApp 调用注释，在线修复路径有断开发布；动态订阅者需查新配置 | 派生属性/事件/状态→U 的 application 类型；action 请求与结果投影→I 的 application.action.observed，保留 ReqType、Dir、MsgToken 与旧 subject 供 M16 筛选；具体形状见下文。投影不是原始命令或可信设备回执，不发新动作、不再次完成命令。F2/F6；V5/V6/V8 |
 | M14 `server.things.dm.{ota.job.delay.run,ota.device.upgrade.push}`、`server.things.dm.action.check.delay` | 定时任务→DM OTA handler、直接 NATS server.Subscribe→Action 检查 | I 的受控任务触发；动作阶段进入 C，检查阶段只核实账本，禁止原自动重发。以 taskId/计划触发身份去重，不能把每次轮询都当新动作。F6/F3；V4/V5 |
 | M15 `server.things.dm.device.{onlineStatus.change,static.2Hour,static.1Day,static.halfHour,static.oneMinute}`、`server.things.dg.online.{timer,timer2}`、`server.core.sync.{halfHour,day}`、`server.core.timedjob.clean` | 新任务配置→DM/DG/syssvr/timedjob；各 startup 注册；syssvr/timedjob 注册不证明独立进程 Start 已执行 | I，按逻辑任务竞争处理；名称 `static.2Hour` 与常量 OneHour 不互相纠正成新业务周期。统计/刷新按当前状态重算；清理等副作用单列可重复边界。F6；V5/V7 |
 | M16 ProcessTask.Queue→PubJob.Publish；QueueTrigger 的 `task.Topics` / GroupSubType | 配置驱动发布、每任务 SubscribeWithConsumer→TaskSend→queue/SQL/script | 发布必须经注册类型映射到 U/C/D/I 等；不创建任意 Kafka topic。消费按持久 taskId+订阅 revision 独立投影，任务副本竞争；输入事件与待调度记录原子保存。SQL/script 效果不明不自动再执行。F6；V5 |
 | M17 `server.things.<ServerName>.protocol.timer` | SDK RegisterTimerHandler 创建定时配置且广播订阅；当前跳过两秒前触发 | I 的协议实例定时刷新；保留每实例刷新语义，周期来自注册配置；过期刷新合并为一次当前状态重建，不泛化为业务命令超时策略。F4/F6；V1/V5/V7 |
 | M18 常量-only、注释与旧封装 | CoreProjectDelete、UD/PAli 等常量；DM 旧 subDev 启动注释；Share/SaaS topic 与 websocket 副本 | 标为未接线/遗留，目标新配置发现引用即显式报错并定位配置。实际共享封装和初始化的直连仍须移除目标组合的 NATS 依赖，不以“没有 handler”豁免构造器。V7 |
 | M19 通知 RPC、进程内 AsyncEventBus、设备 MQTT、HTTP/gRPC、Redis/Asynq | 现有通知持久化与外部协议/调度机制 | 保持既有职责；只替换其中跨服务 Eventbus 段，不新建 Kafka 邮件/短信产品链。V8；不把这些名字列为遗漏 NATS |
+
+**M01 混合包与 M13 action 的补充规则：** [ThingLogic](../../../../../../backend/things/service/dmsvr/internal/event/deviceMsgEvent/thing.go) 的 HandlePackReport 同时处理本设备/子设备的 Properties、Events 和在线状态；HandleProperty 则有 ControlReply，不能把所有 property 当普通遥测。首版对 pack_report 保存完整接受记录，以父 eventId+目标设备+子项位置/类型生成稳定子项身份，并持久保存待处理/待发清单。拆分不是多个互不关联的 Publish：部分发送失败可继续同一清单，重投不产生新子项；网关与每个子设备分别校验租户、归属和绑定。子项与该子设备的直接上报进入同一设备顺序入口，串行登记接受序号、按该序号发送到同一 U key；不以 gateway key 声称所有子设备天然有序。父包接受顺序、子设备规范化接受顺序和设备采样时间分别记录；F2/V6 核对同目标设备的规范化接受顺序，不推导跨设备总序。需要前置持久清单的拆包路径以清单事务成功作为可恢复接受点；Kafka 失败仍留待发，存储失败不返回已接受。普通直报经过相同设备顺序入口，不能旁路序号。父包记录各子项结果，部分失败不能回业务整体成功；若协议只能一次性应答，业务应答等待规定子项完成，超时保持可查询未完成。传输接收确认与业务回复分开，成功过的子项不重做。新增持久入口和顺序分配属于待实现设计，需补直接/网关混合输入、子项失败/重启、重复包及解绑竞态用例，未运行。
+
+M13 的 action 必须按原 Method/ReqType/Dir 保持三个分支：设备主动请求是 Action→req/up；[ActionSend](../../../../../../backend/things/service/dmsvr/internal/logic/deviceinteract/actionSendLogic.go) 的发送投影是 req/down；设备回复投影是 ActionReply→resp/up。它们进入不同受控 subtype，动态任务按原选择器及这些字段筛选；req 不能进入 command-result 归并，req/down 不是再次下发的指令，resp/up 投影不能二次完成原命令。真实 R 只接受原协议回执并校验持久 token 映射；缺少或矛盾的方向/类型显式拒绝，不能推断为结果。
 
 **盘点的收口方式：** 实施前按 M01–M19 在当前候选生成调用清单，逐个记源文件/符号、注册和 Start、目标类型、消费者、处理结果与用例；缺项阻止该切片宣称完成。新测试库的任务配置也按相同规则做只读导出/校验；未注册 subject、通配歧义或未知 payload 显式拒绝，不自动落到某个通用成功队列。仓外 SDK、当前旧库任务和真实实例数量保持 unknown，本轮不为补清单读取旧环境。
 
@@ -345,10 +349,9 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 
 | 通道 / 物理名称候选 | 分区 key 与消费身份 | 处理资源 / 验收 |
 | --- | --- | --- |
-| U/T `iot.bus.uplink.telemetry.v1.g01` | 设备键；`dm.uplink.telemetry.v1` 内副本竞争 | 遥测专用 poll、worker、producer 缓冲与存储配额；V2/V6/V9 |
-| U/E `iot.bus.uplink.events.v1.g01` | 设备键；`dm.uplink.events.v1`，派生应用事件与入口事件分类型且不循环处理 | 独立于遥测的设备事件/协议请求池；V2/V3/V6 |
+| U `iot.bus.uplink.v1.g01` | 设备键；`dm.uplink.v1` 内副本竞争；普通遥测/设备事件保持同设备顺序，派生 application 类型不循环触发原处理 | 上报专用 poll、按键串行 worker、producer 缓冲与存储配额；与 C/R/D 分开；V2/V3/V6/V9 |
 | C `iot.bus.command.v1.<protocol>.g01` | 设备键；只允许预注册、数量有界的协议 token；DG 共享 broker 模式用 `dg.command.<protocol>.v1` 竞争 | 控制专用池；本地连接模式见下文，不能不同协议共组后丢弃不认识的记录；V4/V9 |
-| R `iot.bus.reply.v1.g01` | 设备键；`dm.command-result.v1`；按 commandId 校验归并，独立应用投影消费者有不同 group | 回执持久化专用池，不经 U/T consumer 或其锁；V4/V9 |
+| R `iot.bus.reply.v1.g01` | 设备键；`dm.command-result.v1`；按 commandId 校验归并，独立应用投影消费者有不同 group | 回执持久化专用池，不经 U consumer 或其锁；V4/V9 |
 | D `iot.bus.domain.v1.g01` | 领域对象键；如 `dm.relation-cleanup.v1`，其他逻辑订阅者另组 | 领域 outbox、消费与业务存储各保留资源；V3/V9 |
 | I `iot.bus.coordination.v1.g01` | 缓存/配置对象键或任务键；广播用 `coord.<role>.<instance>.v1`，任务执行用 `jobs.<logical-task>.v1` | 与遥测分开、有界广播/刷新/任务池；按类型筛选，不能用一组实现全部广播；V1/V5/V7 |
 | W `iot.bus.view.v1.g01` | 租户+用户/订阅域键；`api.view.<instance>.v1` 各实例接收 | 展示池与控制/领域池分开，限流/合并仅适用于可从快照恢复的 F5；V8 |
@@ -357,7 +360,7 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 
 **实例定向的首版提案：** DG 经共享 MQTT broker 发布时，可由同协议组内任一具备能力的实例认领；持有本地连接的 SDK 使用该协议 topic、每个活跃实例独立 group，各自读取但仅当前连接 owner 执行。连接登记含稳定 instanceId、启动 epoch 和租约；commandId 的持久发送认领与 owner/epoch 一起校验，旧 owner、双连接及重复记录不允许第二次物理发送。实例 ID 不能每次启动随机换组，退出实例的组回收与重启恢复另验；这是低下行量试跑方案，有按实例读取放大成本，不能称为已验证规模化拓扑。未找到 owner 时账本保留未投递；迁移所有权只有在可证明未开始发送时才允许继续同一命令，开始发送后崩溃按 D7 待核实，绝不因换 owner 自动重发。
 
-所有流只承诺同 Topic/同 key 的处理约束，不承诺跨通道总序。领域对象版本/设备会话标识检查陈旧写；批量删除按子项身份或持久清理清单分步记录。需要原设备序列的事件必须携带并核对来源序列，来源无序列时不能把 Kafka 顺序包装成采样时间顺序。[Kafka 的消费组与投递语义](https://kafka.apache.org/41/design/design/)仅提供此设计的机制依据，无法替代本项目的业务去重与设备执行账本。
+首版 U 不拆普通属性/设备事件 Topic，保留同目标设备的规范化接受顺序；其他通道按各自对象/命令身份约束，C/R/D 不等待遥测清空。所有有顺序要求的处理按 key 串行执行业务副作用，前项失败或存在未完成的同对象依赖时，后项不得先写业务；只顺序提交 offset 不够。其他 key 可继续，连续 offset 规则仍须满足。跨通道真实因果以持久关联和对象版本校验，回执引起的属性投影按第 9.4 节处理，不加一个跨 U/C/R/D 的设备大锁。领域对象版本/设备会话标识检查陈旧写；批量删除按子项身份或持久清理清单分步记录。需要原设备序列的事件必须携带并核对来源序列，来源无序列时不能把 Kafka 顺序包装成采样时间顺序。[Kafka 的消费组与投递语义](https://kafka.apache.org/41/design/design/)仅提供此设计的机制依据，无法替代本项目的业务去重与设备执行账本。
 
 ### 9.4 公共契约与处理完成边界
 
@@ -372,13 +375,13 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 | 回执附加 | `commandId` 或已持久登记的协议 token→commandId 映射、结果/观测时间；核对租户、设备、协议与请求类型。未知 token 单列待关联，不猜最近命令；迟到回执只更新原命令 |
 | 兼容与追踪 | `legacySubject` 仅兼容已有配置/诊断；追踪字段有界且不携带完整凭据/用户上下文。payload 与 type 一致；事件中身份不等同操作授权，消费端仍检查资源边界 |
 
-处理完成不能沿用当前“异步启动即成功”。拟建立 `Handle(record) → 已持久完成 / 已持久待核实 / 可重试失败 / 待人工处置` 的明确结果，只有业务结果或可恢复待办真实落盘才推进相应连续 offset；先存一条“done”再调用设备/数据库不成立。每分区只提交已经持久处理的连续前缀，不能因后一个 worker 成功越过前一个失败；rebalance/停止取消未完成工作并保留重投能力。
+处理完成不能沿用当前“异步启动即成功”。拟建立 `Handle(record) → 已持久完成 / 已持久待核实 / 可重试失败 / 待人工处置` 的明确结果，只有业务结果或可恢复待办真实落盘才推进相应连续 offset；先存一条“done”再调用设备/数据库不成立。先按键保证业务执行顺序，再按分区提交已经持久处理的连续前缀，不能让后一个同键 worker 先产生副作用，再靠延迟提交伪装有序；rebalance/停止取消未完成工作并保留重投能力。
 
 | 族 | 持久边界与失败处理 |
 | --- | --- |
 | F1 / D | 来源业务修改与 outbox 同事务；发送失败留待发，成功标记前崩溃可重投。消费者以逻辑订阅者+eventId 去重，业务结果和去重同事务；跨库清理拆有身份的子步骤，待办落盘后可释放 Kafka 分区，但业务状态持续“未完成”，恢复调度不得遗漏或越过同对象依赖 |
-| F2 / U | Kafka 成功持久接受后才承诺补处理；设备侧 MQTT ACK 不自动等于该接受点。DM 的主写入、去重和后续投递待办必须可恢复；PubApp/Webhook 等异步副作用不能因启动 goroutine 算完成，Webhook 效果未知单列。协议不给稳定来源 ID 时仅保证传输重投去重，设备重复上报的识别能力单列未证 |
-| F3 / C、R | commandId 先持久、发送认领前置；可能发送之后的重复投递只查状态，不再执行。回执持久归并后唤醒当前请求者；调用者退出不丢账本。待核实有持久记录后可提交该消息进度，让 D10 新操作继续；不同 commandId 的迟到结果不互改 |
+| F2 / U | 第 9.2 节设备顺序入口/完整包及子项清单持久保存后承诺补处理，Kafka 成功只是后续传输确认；此拟新增接受点未实现。设备侧 MQTT ACK 不自动等于该接受点。DM 的主写入、去重和后续投递待办必须可恢复；PubApp/Webhook 等异步副作用不能因启动 goroutine 算完成，Webhook 效果未知单列。协议不给稳定来源 ID 时仅保证传输重投去重，设备重复上报的识别能力单列未证 |
+| F3 / C、R | commandId 先持久、发送认领前置；可能发送之后的重复投递只查状态，不再执行。ControlReply/GetReportReply/ActionReply 先持久校验/归并可信结果，并在同一事务记后续属性/展示的待办，再唤醒当前请求者；调用者退出不丢账本。原 HandleControl/GetReportReply 中的属性写入不直接放进回执关键路径；执行结果与属性投影进度分开，不能把待办落盘说成全部副作用完成。投影进入有序 U 处理时核对来源版本/序号/会话，迟到值不得覆盖更可信的新值；无可比较版本则保存历史观测并发起受控当前状态查询，不能按到达时间强行覆盖最新属性。待核实有持久记录后可提交该消息进度，让 D10 新操作继续；不同 commandId 的迟到结果不互改 |
 | F4 / I | 首次/重连先建立订阅水位，再清本地缓存或加载权威版本并补水位后的更新，最后 ready；遗漏/位点过期触发重新同步。权限缓存同步失败时不能继续使用永久旧授权；不是从 latest 开始就算恢复成功 |
 | F5 / W | 页面广播、持久通知与实际用户送达分开；失败提示重取快照，保留既有权限检查。控制结果/删除进度从持久业务状态读取，不能只依赖瞬时推送 |
 | F6 / 动态任务 | 接收记录与待调度任务同事务，执行阶段按载荷所属族；SQL/script/设备动作若效果不明标待核实，不靠重置 offset 重跑。任务输入的幂等不等于执行副作用幂等 |
@@ -389,16 +392,16 @@ D12 不要求所有消息跨通道全局有序，也不承诺任意超载下可�
 
 ### 9.5 D12 的资源边界与运行参数冻结
 
-接收/最小鉴别层在写入 U/T 前识别 R、C 相关交互，分别使用 producer、缓冲额度和调度队列；若协议解析也共享重池，回执会在 Topic 分流前阻塞，V9 仍失败。未知消息不能仅为获得优先级自报成回执；最小解析核对来源和协议 token，不能借用遥测业务线程或被其占住的设备锁完成分流。
+接收/最小鉴别层在写入 U 的持久顺序入口前识别 R、C 相关交互，分别使用 producer、缓冲额度和调度队列；若协议解析也共享重池，回执会在 Topic 分流前阻塞，V9 仍失败。未知消息不能仅为获得优先级自报成回执；最小解析核对来源和协议 token，不能借用遥测业务线程或被其占住的设备锁完成分流。
 
 | 边界 | 首版隔离要求 | 故障验证 |
 | --- | --- | --- |
-| broker/client | U/T producer 与控制/回执、领域 outbox producer 分开且有界；不同 client 身份可配置限流，禁止共享无界发送缓冲 | 堵塞遥测发送/消费时测 C/R/D 的实际业务结果；共享 broker 资源争用仍纳入 V9，不能拿客户端分开代替验证 |
-| 执行 | U/T、U/E、C/R、D、协调和展示分别有有界队列与并发配额；C/R/D 保留最低资源；组合进程中的逻辑注册及 worker 不能被全局 FastEvent 单例合并 | 遥测 worker 满、处理器挂起、进程重启分别测；若同进程调度/GC 仍致失败，再拆进程验证，不预称隔离成功 |
+| broker/client | U producer 与控制/回执、领域 outbox producer 分开且有界；不同 client 身份可配置限流，禁止共享无界发送缓冲 | 堵塞遥测发送/消费时测 C/R/D 的实际业务结果；共享 broker 资源争用仍纳入 V9，不能拿客户端分开代替验证 |
+| 执行 | U、C/R、D、协调和展示分别有有界队列与并发配额；U 内按 key 串行而不同 key 可并发；C/R/D 保留最低资源；组合进程中的逻辑注册及 worker 不能被全局 FastEvent 单例合并 | 遥测 worker 满、处理器挂起、进程重启分别测；同 U key 首项失败时后项不能提前写业务，同时 C/R/D 可继续；若同进程调度/GC 仍致失败，再拆进程验证，不预称隔离成功 |
 | 存储/锁 | telemetry 写入并发受限；命令状态/领域补处理保留连接预算与超时；同设备长耗时遥测不可持有控制锁 | 遥测占满连接或锁后控制/解绑错过 W 属 FAIL；即使分池仍须检查数据库服务器/磁盘的共享瓶颈 |
 | 恢复/观测 | 按流记录 lag、最老消息年龄、poll/处理时间、池等待、outbox年龄、命令待核实数、清理未完成数与业务完成时间 | 用同一时轴证明 W 内完成时遥测仍有积压；去掉故障后核对已接受事实恢复，不通过丢弃积压造绿 |
 
-本轮没有可用的 Kafka 业务基线，**不伪造已经测得的吞吐、分区数或 W**。建议本地首轮各非命令 Topic 3 分区、每个协议命令 Topic 3 分区、RF=1/minISR=1，仅用于多分区/两副本竞争与广播测试；不证明容灾。消息保留期候选 7 天，所有待发/去重/待核实状态不得因该时间直接清除；重新放行超过去重窗口的消息必须核对记录。正式故障运行前在同一 Patch 回执固定实际 broker/客户端版本、机器资源、每池配额、消息大小/速率/总量、样本数、命令有效期与窗口 W/恢复窗口；缺任一项标 NOT_READY。W 由无积压实测与命令有效期约束先确定，再锁定进行积压场景，不能事后调宽换 PASS。
+本轮没有可用的 Kafka 业务基线，**不伪造已经测得的吞吐、分区数或 W**。建议本地首轮各非命令 Topic 3 分区、每个协议命令 Topic 3 分区、RF=1/minISR=1，仅用于多分区/两副本竞争与广播测试；不证明容灾。消息保留期候选 7 天，替代前文 R2 的 72 小时候选；所有待发/去重/待核实状态不得因该时间直接清除；重新放行超过去重窗口的消息必须核对记录。正式故障运行前在同一 Patch 回执固定实际 broker/客户端版本、机器资源、每池配额、消息大小/速率/总量、样本数、命令有效期与窗口 W/恢复窗口；缺任一项标 NOT_READY。W 由无积压实测与命令有效期约束先确定，再锁定进行积压场景，不能事后调宽换 PASS。
 
 这个参数冻结是 P1–P4 建立可运行链后的技术实验前置，不是再让用户选择 Kafka 参数。本轮交付的是 P0 设计，不是 V9 就绪或运行通过。
 
