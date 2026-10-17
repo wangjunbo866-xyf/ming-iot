@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.1.5
+version: 0.1.6
 date: 2026-10-17
 ---
 
@@ -12,7 +12,7 @@ date: 2026-10-17
 
 人只需描述目标，不必先填写技术模板。AI 先查模块和现状，把原话保留在已有 Change 的来源节；像 Kafka 这种跨模块、需要多轮澄清的需求，可用模块内 `raw.md` 持续追加原话。复用现有 Issue/PR 时可直接引用可访问来源。原话、AI 判断和已确认决定分别标明。
 
-先按[术语约定](team-development.md#feature-and-change)定位长期功能模块（Feature），再判断本次变更类型。例如 Eventbus 是长期单元，NATS → Kafka 是它的 Patch；既有能力补录文档不因新建目录成为新增功能。
+先按[划分标准](team-development.md#domain-feature-service)识别业务/能力域与完整 Feature，另行记录服务映射，再判断本次变更类型。例如 Eventbus 是长期单元，NATS → Kafka 是它的 Patch；既有能力补录文档不因新建目录成为新增功能。
 
 AI 首次回报应能回答四件事：**文档落在哪里；已确认什么；还要决定什么；接下来哪部分能直接推进。** 不把每次回答都拆成新文档，也不要求人先学会 Spec、Patch 或 consumer group 才能提出需求。
 
@@ -41,11 +41,11 @@ docs/specs/platform/eventbus/
     └── change.md                     当前 Patch：已确认政策、分析记录、验收候选和实施切片
 ```
 
-早期 R3 将用户对三个业务例子的答复追加为 RAW-005，并记录为 D6/D7/D8；后续分析和决定持续写回同一 Patch。当前入口为 R12，P1 已完成本地实施验证并接入模块映射，主规格收敛为 p1-v1；剩余迁移、ProtocolApplication 契约及后续实施仍未完成。决定、适用范围和验收以该 Patch 为准，不把局部确认或 P1 通过扩大为整个 Kafka 迁移完成、合并或部署。
+早期 R3 将用户对三个业务例子的答复追加为 RAW-005，并记录为 D6/D7/D8；后续分析和决定持续写回同一 Patch。当前入口为 R13，P1 已完成本地实施验证并接入模块映射，主规格收敛为 p1-v1；剩余迁移、ProtocolApplication 契约及后续实施仍未完成。决定、适用范围和验收以该 Patch 为准，不把局部确认或 P1 通过扩大为整个 Kafka 迁移完成、合并或部署。
 
 可选分析方法按[接入与写回约定](team-development.md#optional-analysis-skills)嵌入第 2–3 步。本例 R4 用 `grill-with-docs` 对同一 Kafka Patch 试跑：AI 核查四项事实，用户回答两个新增业务问题，R5 将真实答复写成 D10/D11，并同步对应验收及步骤；具体规则只在该 Patch 维护。Skill 的默认输出目录不会自动成为新规格入口；未回答的问题保留 pending。
 
-Eventbus 的后续演进仍回到这个模块；若识别出 ProtocolApplication 这样的独立功能模块，按术语约定安排独立正文与跨模块依赖，不因为最初在 Kafka Patch 讨论就永久混写。当前仍遵守同一 Patch 的评估范围。各模块确认目标语义后实施，在同一候选形成完整新主规格，完成吸收的 Patch 标为 absorbed 并注明吸收版本。架构图、启动说明和回执各司其职，引用规格中的业务规则。
+Eventbus 的后续演进仍回到这个模块；ProtocolApplication 的协议适配职责已按 RAW-015 授权建立[能力域](../specs/protocol/README.md)及[上行 Feature](../specs/protocol/uplink-normalization/README.md)。当前设计由新 spec 维护，Kafka Patch 保留原始决定、历史评估和依赖；部署服务与 Feature 分开映射。各模块确认目标语义后实施，在同一候选形成完整新主规格，完成吸收的 Patch 标为 absorbed 并注明吸收版本。架构图、启动说明和回执各司其职，引用规格中的业务规则。
 
 ## harness 由什么组成
 

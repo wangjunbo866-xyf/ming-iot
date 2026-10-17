@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.14
+    revision: 1.0.15
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 统一维护 D1–D15 与 V1–V9，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed；R10 按 RAW-012 仅评估 ProtocolApplication 前置边界，R12 已确认 D13-D15：首版上行、受控发布、decode-first，不承诺原报文补算，不推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 维护 D1–D16 原始决定与 V1–V9 共同验收，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed；R10 按 RAW-012 仅评估 ProtocolApplication 前置边界，R12 已确认 D13-D15；R13 按 RAW-015 建立 protocol 域和上行候选正文，原来源及跨域依赖保留，不实施 PA、推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.8.1-draft
+    revision: 0.9.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.8.1-draft
+    revision: 0.9.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -395,7 +395,7 @@ materials:
     role: requirement_intake_to_delivery_workflow
     status: draft
     path: docs/runbook/requirement-to-delivery.md
-    revision: 0.1.5
+    revision: 0.1.6
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -404,7 +404,7 @@ materials:
       - docs/runbook/team-development.md
       - .agents/skills/ming-specs/SKILL.md
       - docs/specs/platform/eventbus/README.md
-    conflict_rule: "本轮用户要求沉淀团队流程与harness；操作页复用团队约定，当前仅开始真实需求试跑，不代表Kafka实施完成或团队正式采用。"
+    conflict_rule: "操作页复用团队约定，按当前域与 Feature 入口接手；PA 设计已从 Kafka Patch 提取，来源与依赖保留，不代表 Kafka 全面迁移、PA 实施或团队正式采用。"
   - source_id: ming-iot-eventbus-observed
     lifecycle: current
     role: eventbus_current_rules_and_legacy_observation
@@ -424,7 +424,7 @@ materials:
     role: eventbus_kafka_requirement_and_decisions
     status: confirmed
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R12
+    revision: R13
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,9 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "R12 confirmed覆盖RAW-011授权的P1及RAW-013/014确认的D13-D15设计边界；D1-D12继承，P2-P6未实施方案保持proposed。第10节保留P1回执；RAW-012仅授权第11节ProtocolApplication评估，PA-Q1经另一次真实答复确认为decode-first，不承诺原报文补算。历史RFC作为设计来源，不覆盖当前规则，不自动授权实施、推送或修改旧环境。"
+      - docs/specs/protocol/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+    conflict_rule: "R13 继承 P1 及 D13-D15，D16 仅授权分域与规格入口文档；第11节保留历史评估，PA 当前设计转到 protocol.uplink-normalization。原决定与跨域依赖留在本 Patch；P2-P6 未实施，保留旧环境和数据，不推送。"
   - source_id: ming-iot-raw-reliable-rfc-20260906
     lifecycle: historical
     role: historical_raw_canonical_recovery_design
@@ -443,7 +445,7 @@ materials:
     authority: historical_owner_design_confirmation
     related:
       - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    conflict_rule: "历史Reliable设计与当时确认保留；不证明当前实现或授权部署。与当前PA边界及验收的差异在Kafka Patch R12第11节澄清；D15已选择首版decode-first，旧Reliable不作为当前实施要求。"
+    conflict_rule: "历史Reliable设计与当时确认保留；不证明当前实现或授权部署。R12第11节保存当时差异评估，R13后的上行当前设计由protocol.uplink-normalization维护；D15选择decode-first，旧Reliable不作为当前实施要求。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction
@@ -471,3 +473,47 @@ materials:
       - docs/runbook/requirement-to-delivery.md
       - docs/specs/platform/eventbus/README.md
     conflict_rule: "同一Goal的本轮授权与局部证据；最终Head、完整验证和独立Review由外部回执绑定，保留旧环境、旧仓、备份和历史。"
+  - source_id: ming-iot-protocol-domain
+    lifecycle: current
+    role: protocol_capability_domain_navigation
+    status: draft
+    path: docs/specs/protocol/README.md
+    revision: 0.1.0-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_document_structure
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/runbook/team-development.md
+    conflict_rule: "域入口维护职责与导航；服务部署未定，业务规则由各 Feature 当前正文维护；不视为已完成 DDD 或运行验收。"
+  - source_id: ming-iot-protocol-uplink-entry
+    lifecycle: current
+    role: protocol_uplink_feature_navigation
+    status: draft
+    path: docs/specs/protocol/uplink-normalization/README.md
+    revision: 0.1.0-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_document_structure
+    related:
+      - docs/specs/protocol/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "只登记文档入口，产品差异映射及新链路实施尚未开始；长期责任仍待分配。"
+  - source_id: ming-iot-protocol-uplink-spec
+    lifecycle: current
+    role: protocol_uplink_candidate_specification
+    status: draft
+    path: docs/specs/protocol/uplink-normalization/spec.md
+    revision: 0.1.0-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: candidate_with_inherited_confirmed_boundaries
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/specs/platform/eventbus/raw.md
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "本 Feature 唯一当前设计正文；D13-D15 原决定及 D16 文档授权留在 Kafka Patch，R10-R12 评估为历史来源。具体技术契约仍为候选；不批准实施、独立部署、推送或原报文补算。"

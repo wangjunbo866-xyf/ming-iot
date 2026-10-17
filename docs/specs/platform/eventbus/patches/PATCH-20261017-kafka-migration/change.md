@@ -1,18 +1,18 @@
 ---
 status: confirmed
-revision: R12
-confirmation_scope: P1-implementation-and-D13-D15-design-only
+revision: R13
+confirmation_scope: P1-implementation-D13-D15-design-D16-docs-only
 ---
 
 # PATCH-20261017-kafka-migration：跨服务 Eventbus 从 NATS 迁往 Kafka
 
-**R12 的 confirmed 覆盖第 10 节已授权 P1，以及 RAW-013/014 确认的 D13–D15：首版上行、受控发布、先解码再持久化标准消息。第 2–9 节未实施的 P2–P6 及第 11 节其余技术方案保持 proposed；与 D15 冲突的 Raw-first 建议不适用于首版。** 本轮不授权 P2 实施；元数据不把多阶段迁移整体批准或吸收。
+**R13 的 confirmed 继承第 10 节已授权 P1，以及 RAW-013/014 确认的 D13–D15，并新增 RAW-015 / D16 的分域与规格入口文档授权。PA 当前设计转到[上行 Feature](../../../../protocol/uplink-normalization/README.md)，第 11 节保留 R10–R12 历史评估。第 2–9 节未实施的 P2–P6 及新 Feature 的具体技术方案保持候选；与 D15 冲突的 Raw-first 建议不适用于首版。** 本轮不授权 P2 实施；元数据不把多阶段迁移整体批准或吸收。
 
 - 类型：patch；替换既有跨服务事件传输并补齐目标契约，不能声明“规格无变化”。
 - 模块：[platform.eventbus](../../README.md)；当前基线：[observed-v0](../../spec.md) 的 BUS-SCOPE、BUS-ENVELOPE、BUS-DISPATCH、BUS-DELIVERY、BUS-VERIFY。模块 README 反向指向本 Patch。
-- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11；R6 按 RAW-008 核对 ThingsBoard 通道与消息模型，形成第 8 节建议及 Q7；R7 按 RAW-009 将真实 Q7 答复写为 D12，并关联 V9 与实施切片。R8 按 RAW-010 推进 P0 设计，逐调用映射、契约、路由、资源和验证落在第 9 节；R9 按 RAW-011 进入 P1 实施，认领和结果写第 10 节；R10 按 RAW-012 评估 ProtocolApplication，写第 11 节；R11 按 RAW-013 确认 D13/D14 并澄清 PA-Q1 的 ThingsBoard 对照；R12 按 RAW-014 确认 D15，首版采用 decode-first。D1–D12 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
+- 来源：[raw.md](../../raw.md)。原话只追加；R1 为首次受理，R2 为调用盘点和选项细化，R3 记录 RAW-005 的真实答复，R4 按 RAW-006 试跑可选分析方法，R5 按 RAW-007 写回 Q5/Q6 的真实选择为 D10/D11；R6 按 RAW-008 核对 ThingsBoard 通道与消息模型，形成第 8 节建议及 Q7；R7 按 RAW-009 将真实 Q7 答复写为 D12，并关联 V9 与实施切片。R8 按 RAW-010 推进 P0 设计，逐调用映射、契约、路由、资源和验证落在第 9 节；R9 按 RAW-011 进入 P1 实施，认领和结果写第 10 节；R10 按 RAW-012 评估 ProtocolApplication，写第 11 节；R11 按 RAW-013 确认 D13/D14 并澄清 PA-Q1 的 ThingsBoard 对照；R12 按 RAW-014 确认 D15，首版采用 decode-first；R13 按 RAW-015 建立协议适配能力域与上行 Feature，第 12 节维护来源及跨域依赖。D1–D12 继承有效；D9 仅确认方法与写回范围，不把分析建议算作用户批准。
 - 本轮认领：用户决定业务取舍；`rdoc-pilot-codex` 盘点与维护文档；独立 AI 复核源码、方案与候选。长期模块负责人未分配。共享影响含 Share、SaaS、Things、协议 SDK、定时、缓存与 WebSocket。
-- 前轮按 RAW-011 实施 P1；本轮按 RAW-012/013 评估 ProtocolApplication 与 P2 的依赖，见第 11 节。保留已有候选，不推送、不切换旧环境、不操作旧数据。P2–P6 仍为待实施设计。
+- 前轮按 RAW-011 实施 P1，RAW-012–014 评估 ProtocolApplication；本轮按 RAW-015 提取协议适配域与上行候选规格，当前依赖见第 12 节。保留已有候选，不推送、不切换旧环境、不操作旧数据。P2–P6 仍为待实施设计。
 - 当前交付：P1 本地实现及两轮真实隔离复验已通过；第 10 节保存验证范围，最终候选与独立复审由同一 Goal 外部回执绑定。其余技术设计仍为草稿，没有全面迁移、托管 CI、生产验收或正式团队采用结论。
 
 ## 1. 已确认什么
@@ -34,6 +34,7 @@ confirmation_scope: P1-implementation-and-D13-D15-design-only
 | D13 | RAW-013 / PA-Q2；用户，2026-10-17；自 R11 适用 | 首版先完成上行解码、标准化与失败处置，下行编码后续推进；上行命令回执仍须识别与分流 | 不授权本轮实施；不把命令回执排除出上行边界，不承诺本轮已完成 P4 |
 | D14 | RAW-013 / PA-Q3；用户，2026-10-17；自 R11 适用 | 首版客户定制适配器由团队或受控合作方发布 | 不包括客户自行上传任意代码运行；不免除测试、版本固定、资源限制与必要隔离；不授权实际发布 |
 | D15 | RAW-014 / PA-Q1；用户，2026-10-17；自 R12 适用 | 先从简：解码后持久化标准消息，暂不承诺原始报文补算；替代 R10/R11 的首版 Raw-first 推荐 | 不取消 D6 对已持久接受消息的可靠补处理；不把解码失败或仅进内存记成已接受；不要求首版全量 Raw Kafka 或重解码重放服务；不授权删除旧数据或实施切换 |
+| D16 | RAW-015；用户，2026-10-17；自 R13 适用 | 补齐域、Feature、服务划分标准，按协议适配能力域建立上行闭环规格入口；保留本 Patch 来源与依赖，验证并独立复审 | 仅文档组织与候选设计，不授权实现或推送；不决定独立部署，不替代 D13–D15，不批准全部待定技术契约 |
 
 Q2a、Q2b、Q3、Q5、Q6、Q7 的选择已确认，不再重复询问。Q1 的具体调用处置、Q4 的验收设计和技术配置仍是 AI 提案；其中与 D1/D6–D8/D10–D12 冲突的替代方案已排除。R1–R8 为 draft；R9 仅 P1 confirmed，方向确认、实施授权、运行通过分别记录。后续出现新的业务取舍时只追问受影响部分，已有决定继续适用。
 
@@ -468,7 +469,9 @@ R8 设计阶段验收为 M01–M19 映射可从源码追溯、D1–D12 无漂移
 - R9 当时下一建议为 P2；RAW-012 新增 ProtocolApplication 前置评估，当前接续见第 11 节。P1 实施授权保持原范围，不推送、不切换旧环境、不清理旧仓/数据/备份。
 
 <a id="protocol-application-assessment"></a>
-## 11. R10–R12：ProtocolApplication 评估（D13–D15 已确认，其余技术方案 proposed）
+## 11. R10–R12：ProtocolApplication 历史评估（来源保留）
+
+**自 R13 起，本节保留当时的源码判断、取舍与缺口；其中“当前”“下一步”均指 R12 时点。PA 当前规则及待决项统一维护于[上行候选规格](../../../../protocol/uplink-normalization/spec.md)，域边界见[protocol](../../../../protocol/README.md)。本节的笼统“模块”称呼不再决定业务地图层级。D13–D15 的原始确认仍由本 Patch 第 1 节保留；本节不再作为第二份当前设计正文。**
 
 ### 11.1 分析目的、认领与来源
 
@@ -559,3 +562,25 @@ PA-Q1–PA-Q3 已确认，不重复询问。下一步待细化：首个真实协
 R10 的独立只读源码复核未发现当时本节严重事实错误；指出的父包结果汇总与两层接受时序缺口已补入第 11.6 节，仍未解决为可执行契约。这是静态评估，不是实现或运行验收。
 
 R12 已补记三项真实选择并修订首版路线。本轮出口为“源码判断与三项首版边界已确认，具体契约仍待细化”，并非已达成完整设计共识。没有开发 ProtocolApplication、没有建立 P2 运行证据，也没有切换、推送、删除或迁移旧数据。主规格只保留已验证 P1；后续实现验证后再吸收新规则。
+
+
+<a id="protocol-domain-extraction"></a>
+## 12. R13：协议适配能力域与上行规格入口
+
+RAW-015 / D16 授权本次文档组织。`protocol` 是协议适配能力域，`protocol.uplink-normalization` 是本轮建立的上行闭环 Feature，ProtocolApplication 是拟承载相关职责的应用实现名称；独立部署仍待设计。域与 Feature 的长期负责人均未分配，当前认领和状态见[新入口](../../../../protocol/uplink-normalization/README.md)。
+
+### 正文归属与来源保留
+
+- 本 Patch 继续维护 Eventbus 跨服务迁移的范围、阶段、D1–D16 原始决定及共同验收 V1–V9；原话保留在 [raw.md](../../raw.md#raw-015)，第 11 节保留历史评估，不删除或重写旧结论的适用时点。
+- [protocol 域入口](../../../../protocol/README.md)维护职责与能力导航；[上行 spec](../../../../protocol/uplink-normalization/spec.md)是该 Feature 唯一当前候选设计。它引用原始决定，并将当前目标、既有代码事实、待定契约和后续验收集中展示。
+- 本次提取不将 Kafka Patch 标为 absorbed，也不把 PA 计作 Eventbus 子 Feature。P1 主规格 p1-v1 及 check.json 的原认领范围保持，文档登记不表示产品差异映射或运行验证完成。
+
+### 跨域依赖与接续
+
+| 方向 | 要交接的内容 | 当前状态 |
+| --- | --- | --- |
+| Eventbus 基础 → 协议上行 | 公共信封、发布/消费完成接口；设备 Canonical 的具体类型、payload 及提交契约共同评审 | P1 仅证明已有基础与缓存切片；设备契约待细化 |
+| 协议上行 → Kafka P2 / DM | 原始协议解释、标准消息身份与版本、接受/应答及结果清单，DM 接续领域处理 | 见上行 spec 的 PA-UP-DEPENDENCIES、PA-UP-OPEN；未实施 |
+| 协议入口 + Eventbus 后续链 → D12 / V9 | 最早可靠分类、回执资源隔离与后续控制/业务补处理 | 局部上行验收与完整 P3/P4/V9 分开取证，不能互相替代 |
+
+按这些依赖推进一个真实协议的纵向切片，不要求任一域先整体完成。下一步从新 Feature 入口细化样本、契约和验收；产品实现仍需具体范围授权。本轮完成依据为文档检查、原始决定保留、来源/依赖双向可达及绑定最终候选的独立复审，结果见同一 Goal 回执，不包含代码、服务或设备验收。

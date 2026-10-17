@@ -133,3 +133,11 @@ date: 2026-10-17
 > 先从简：解码后持久化，暂不承诺原报文补算
 
 同一 Patch R12 记录 D15，替代 R10/R11 的首版 Raw-first 推荐。D13/D14 继续有效；已持久接受标准消息的 D6 可靠补处理承诺保持。不是实际实施、切换、推送或删除旧数据的授权。
+
+
+<a id="raw-015"></a>
+## RAW-015：ProtocolApplication 分域与上行规格入口（用户，2026-10-17）
+
+> 可以，继续用 ming-iot-knowledge-pilot，把业务域、Feature 和服务的划分标准补进团队约定与 ming-specs，按协议适配能力域组织 ProtocolApplication，先建立上行闭环的规格入口，保留 Kafka Patch 中的来源和依赖关系，完成验证与独立复审。先不实现或推送。
+
+Kafka Patch R13 将本次文档组织授权记为 D16；D13–D15 不变。当前设计入口转到 [protocol 域](../../protocol/README.md)与[上行 Feature](../../protocol/uplink-normalization/README.md)。原始决定与历史评估继续保留，不代表新链路实施、部署方式或整套技术契约已获确认。
