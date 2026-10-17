@@ -50,7 +50,9 @@
     "docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md",
     "docs/specs/protocol/README.md",
     "docs/specs/protocol/uplink-normalization/README.md",
-    "docs/specs/protocol/uplink-normalization/spec.md"
+    "docs/specs/protocol/uplink-normalization/spec.md",
+    "docs/runbook/cross-agent-development.md",
+    "docs/runbook/loopx-development.md"
   ],
   "discovered_skills": [
     ".agents/skills/ming-specs/SKILL.md"

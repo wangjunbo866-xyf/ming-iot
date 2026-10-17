@@ -9,6 +9,7 @@ git clone https://github.com/wangjunbo866-xyf/ming-iot.git
 cd ming-iot
 git worktree add -b feature/my-change .worktrees/my-change main
 cd .worktrees/my-change
+python3 -m pip install -r tooling/requirements-docs.txt
 make knowledge-check
 python3 tooling/knowledge.py where
 make verify-pr
@@ -17,6 +18,10 @@ make verify-pr
 主规格从 [业务地图](../specs/README.md) 进入；认领、需求确认、Patch 双向指针和提交差异提醒遵循 [团队约定](team-development.md)。`.agents/skills/ming-specs` 随 clone 获取；宿主实际加载和团队正式采用需分别确认。
 
 历史研发材料统一放在 [wiki/legacy](../wiki/legacy/README.md)，包括 `rd` 与 `superpowers`。历史工具在 `tooling/experiments`，不自动安装或发现。文档来源状态在 [index.yaml](../index.yaml)，机器检查清单在 [tooling/policy](../../tooling/policy/README.md)。
+
+## 跨 Agent 与普通开发
+
+新成员或更换 coding agent 时读[通用接入](cross-agent-development.md)。普通任务复用原任务/PR 的认领、决定和证据；不运行 Goal 初始化，不要求维护者私有配置。只有明确纳入 LoopX 的任务才继续下节，并遵循 [LoopX 任务约定](loopx-development.md)。
 
 ## LoopX 本机接入
 
@@ -45,6 +50,6 @@ Agent 的进展写回继续使用原准入身份和 Turn，并通过 `--delivery
 
 如新入口失效，先核对 `.local/loopx.json` 指向已审运行包，再验证同一 Goal 的身份、Todo 和历史。旧版本会拒绝新路由，不能将换回旧二进制当作恢复。迁移中断只能按保留的原计划和摘要，通过迁移入口重试；先停止调度并排空在途写入。代码回退使用新的修复 PR，不覆盖旧仓、不重写主分支、不从备份重建同名 Goal。迁移计划、原始回执和备份仅私有保存。
 
-Codex Project 是工作区入口。创建或切换到 ming-iot Project 不需要创建第二个同名 Goal；当前对话可以继续使用上述稳定入口。新的聊天也应先读取现有 Goal，而不是重新初始化。
+Codex Project 是工作区入口。创建或切换到 ming-iot Project 不需要创建第二个同名 Goal；当前对话可以继续使用上述稳定入口。明确继续该 Goal 的新聊天应读取现有 Goal，而不是重新初始化；普通开发聊天按通用入口开始。
 
 小黄反馈及依赖该反馈的任务已停止并废弃。现有代码与文档仍可供开发者理解和验证，历史 AI 交接演练保持原结论，未记录真人验收通过。

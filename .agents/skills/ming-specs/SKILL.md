@@ -7,11 +7,13 @@ metadata:
 
 # Ming IoT 规格维护
 
-版本：0.9.0-draft。组织 AI 的操作；业务正文归模块规格，协作规则归团队约定，确定性检查归工具。本 Skill 不执行业务审批，也不自动安装 Hook 或启用合并门禁。
+版本：0.10.0-draft。组织 AI 的操作；业务正文归模块规格，协作规则归团队约定，确定性检查归工具。本 Skill 不执行业务审批，也不自动安装 Hook 或启用合并门禁。
 
 ## 先定位，再选择操作
 
-读取用户指定工作树的 AGENTS.md、[团队开发约定](../../../docs/runbook/team-development.md)、[业务地图](../../../docs/specs/README.md)，再进入相关模块 README 和当前 spec。仅按需追溯历史 Patch；不要让接手者拼接历史才能知道当前行为。核对任务已采用的入口，未获授权时不切换规格权威。
+先从用户指定工作树的 AGENTS.md 和[通用接入](../../../docs/runbook/cross-agent-development.md)判断任务方式。普通任务在原任务/Issue/PR 留证，不要求 LoopX；已明确纳管任务读其专用约定并满足准入。宿主未发现 Skill 时可直接读取本文件，按相对路径进入引用；本说明不要求安装全局 Skill。
+
+读取[团队开发约定](../../../docs/runbook/team-development.md)、[业务地图](../../../docs/specs/README.md)，再进入相关模块 README 和当前 spec。仅按需追溯历史 Patch；不要让接手者拼接历史才能知道当前行为。核对任务已采用的入口，未获授权时不切换规格权威。
 
 | 请求 | 读取约定 | 结果 |
 | --- | --- | --- |

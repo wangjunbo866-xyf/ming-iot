@@ -15,7 +15,7 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.15
+    revision: 1.0.16
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.9.0-draft
+    revision: 0.10.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.9.0-draft
+    revision: 0.10.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -517,3 +517,43 @@ materials:
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
     conflict_rule: "本 Feature 唯一当前设计正文；D13-D15 原决定及 D16 文档授权留在 Kafka Patch，R10-R12 评估为历史来源。具体技术契约仍为候选；不批准实施、独立部署、推送或原报文补算。"
+  - source_id: ming-iot-cross-agent-development
+    lifecycle: current
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    role: portable_agent_onboarding_and_task_modes
+    status: draft
+    path: docs/runbook/cross-agent-development.md
+    revision: 0.1.0-draft
+    authority: user_authorized_local_pilot
+    related:
+      - AGENTS.md
+      - docs/runbook/loopx-development.md
+      - docs/runbook/daily-development.md
+    conflict_rule: "普通任务不依赖维护者私有调度环境；已明确纳管任务保留原约束。本地试跑不代表所有 Agent 自动加载、团队采用或新强制门禁。"
+  - source_id: ming-iot-loopx-task-mode
+    lifecycle: current
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    role: managed_task_only_execution_contract
+    status: draft
+    path: docs/runbook/loopx-development.md
+    revision: 0.1.0-draft
+    authority: preserved_managed_task_constraints
+    related:
+      - AGENTS.md
+      - docs/runbook/cross-agent-development.md
+    conflict_rule: "只对明确纳管任务生效；移动原控制面约定不解除已有 Todo/Gate，也不改变 Goal、历史、权限或调度器。"
+  - source_id: ming-iot-cross-agent-pilot-20261018
+    lifecycle: historical
+    role: local_cross_agent_trial_evidence
+    status: local_candidate
+    path: docs/changelog/2026-10-18-cross-agent-onboarding.md
+    revision: cross-agent-1
+    authority: user_authorized_scoped_trial
+    related:
+      - docs/runbook/cross-agent-development.md
+      - docs/specs/saas/notification-trigger/spec.md
+    conflict_rule: "以真实 Agent 运行、候选差异、检查与独立回执为准；本地试跑不是托管 CI、全团队采用或所有宿主认证。"

@@ -5,6 +5,7 @@
 | 任务 | 入口 |
 | --- | --- |
 | 总目标、路线、进度与完成标准 | [总纲](project-charter.md) |
+| 新成员或其他 coding agent 开工 | [跨 Agent 通用接入](runbook/cross-agent-development.md) |
 | 日常开发、工具与 LoopX 接入 | [开发入口](runbook/daily-development.md) |
 | 查业务模块、主规格与在途变更 | [specs](specs/README.md) |
 | 提出一句话需求，跟进到交付与接手 | [受理到交付流程与 harness](runbook/requirement-to-delivery.md)；[Kafka 迁移实例](specs/platform/eventbus/README.md) |
