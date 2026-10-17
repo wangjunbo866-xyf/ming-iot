@@ -82,7 +82,7 @@ PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记
 
 ## 5. 下一步怎样推进
 
-本轮优先补齐[跨 Agent 接入](runbook/cross-agent-development.md)，明确普通开发与 LoopX 适用边界，并以另一 coding agent 的全新 clone 小修改和独立复审验证。协议适配剩余契约保留待办；本轮不推送、不启用新强制门禁、不改变业务规则。实际试跑结论见[本轮记录](changelog/2026-10-18-cross-agent-onboarding.md)，候选通过不代表团队正式采用。
+[跨 Agent 接入](runbook/cross-agent-development.md)已形成普通开发与 LoopX 的条件入口，并由 ZCode 在全新 clone 中完成小修改、规格维护及差异检查；最终验证与独立复审由同一候选回执绑定。后续回到协议适配剩余契约待办；本轮不推送、不启用新强制门禁、不改变业务规则。实际试跑结论见[本轮记录](changelog/2026-10-18-cross-agent-onboarding.md)，候选通过不代表团队正式采用。
 
 1. **受理路径已落到仓内。** [流程与 harness](runbook/requirement-to-delivery.md)定义原话、现状、决定、候选规格、代码和证据的连接；团队约定与 ming-specs 同步指向它。通知/API 入口修正及本轮新增材料均为本地候选，尚未推送。
 2. **沿用已验证的隔离通知基线。** 按[启动与验证说明](runbook/notification-baseline.md)复跑既有行为。该路径不经过 Eventbus，只作为无关行为回归；Kafka 需要另选真实事件链和故障验收。
