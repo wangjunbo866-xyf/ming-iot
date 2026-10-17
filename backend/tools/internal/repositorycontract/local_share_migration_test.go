@@ -19,7 +19,14 @@ import (
 
 const legacyShareModulePath = "gitee.com/" + "unitedrhino/share"
 
+// localShareProjectOwnedExtensions 列出本项目新增或明确维护的精确扩展；不改变保留的上游署名。
 var localShareProjectOwnedExtensions = []string{
+	"contracts/eventbus",
+	"eventBus/kafka.go",
+	"eventBus/kafka_test.go",
+	"caches/cache.go",
+	"caches/recovery.go",
+	"caches/recovery_test.go",
 	"contracts/kafka",
 	"foundation/kafka",
 	"go.mod",
@@ -118,13 +125,16 @@ func TestLocalShareUpstreamOwnedSourceRemainder(t *testing.T) {
 	repoRoot := localShareRepositoryRoot(t)
 	count, got := localShareNormalizedTreeDigest(t, filepath.Join(repoRoot, "backend/share"))
 
-	if count != 253 {
-		t.Errorf("upstream-owned Share source file count = %d, want 253", count)
+	if count != 252 {
+		t.Errorf("upstream-owned Share source file count = %d, want 252", count)
 	}
 	// M4 removes embedded example credentials in two files; exact transforms are
 	// recorded in tooling/policy/PUBLICATION_TRANSFORMS.json. Keep the full remainder
 	// frozen, including those files, rather than adding directory exclusions.
-	const want = "b4d4dab7f7d7ae530e050a089be7ab6b891b08bc6c0fccb80d37068712ade07d"
+	// P1 只将获批修改的 caches/cache.go 移入精确项目维护清单；此摘要由
+	// 不可变基线 6a59904edbf7d019e266fe910fb1436d3b1ee4c4 的其余252个文件计算，
+	// 未从待验收工作树重新生成；新增 bus 文件单列，不排除整个 caches/eventBus 目录。
+	const want = "50721d9737e2236349b89335806ba8ed6254393857148488970a622ba85dec62"
 	if got != want {
 		t.Errorf("upstream-owned Share source remainder digest = %s, want %s", got, want)
 	}

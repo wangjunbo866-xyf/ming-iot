@@ -1,6 +1,6 @@
 ---
 status: direction-baseline
-version: 1.0.10
+version: 1.0.11
 date: 2026-10-17
 goal_id: ming-iot-knowledge-pilot
 ---
@@ -63,7 +63,7 @@ goal_id: ming-iot-knowledge-pilot
 
 ## 4. 阶段路线与当前进度
 
-已完成工作以合并后的 `main` 提交 `56006502324800448c9775944d28478254be6142` 为本次快照。总纲 1.0.2、小修改约定和有界文档检查已随 PR #6 进入 GitHub；本次 1.0.10、模块入口修正、[需求受理流程](runbook/requirement-to-delivery.md)与[通知基线记录](changelog/2026-10-17-notification-runtime-baseline.md)是本地候选。后续主分支可能继续变化，执行具体任务前读取实时版本。
+已完成工作以合并后的 `main` 提交 `56006502324800448c9775944d28478254be6142` 为本次快照。总纲 1.0.2、小修改约定和有界文档检查已随 PR #6 进入 GitHub；本次 1.0.11、模块入口修正、[需求受理流程](runbook/requirement-to-delivery.md)与[通知基线记录](changelog/2026-10-17-notification-runtime-baseline.md)是本地候选。后续主分支可能继续变化，执行具体任务前读取实时版本。
 
 | 阶段 | 要解决的问题 | 当前状态与证据 | 尚未证明的部分 |
 | --- | --- | --- | --- |
@@ -75,7 +75,7 @@ goal_id: ming-iot-knowledge-pilot
 | 方向收敛 | 让所有人能说明目标、进度与何时算完成 | 总纲及小修改规则已随 PR #6 合并，完整验证与独立复审通过 | 不代表整个 Goal 已验收 |
 | 有界文档检查 | 避免维护正文断链、找不到入口、索引或替代关系漂移 | 已随 PR #6 合并，范围见[检查说明](runbook/document-checks.md)，合并后验证见[本轮记录](changelog/2026-10-17-governance-merged-next-plan.md) | 不含语义去重、自动归档、全库门禁或正式采用 |
 | S4 前置：最小联调基线 | 在真实需求改动前验证相关服务与依赖 | 隔离 syssvr 的四种通知 RPC→持久化分支与停止/重启复验已通过，见[本轮记录](changelog/2026-10-17-notification-runtime-baseline.md)；最终候选与复审见 Goal 回执 | 不含 HTTP 鉴权、设备告警上游、外部推送、Eventbus 消费或 Kafka 迁移 |
-| S4：连续业务演进 | 真实需求推进时知识仍完整且维护负担合理 | [Kafka 当前 Patch](specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)已完成需求澄清及 ThingsBoard 源码对照；D1–D12 与 V1–V9 统一在该正文维护。R8 已细化 P0 的调用、契约、路由和资源设计，仍为本地草案；实施入口、参数冻结及运行均未完成 | Kafka 实施、连续演进效果、日常维护成本及正式采用结论 |
+| S4：连续业务演进 | 真实需求推进时知识仍完整且维护负担合理 | [Kafka 当前 Patch](specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)已完成需求澄清及 ThingsBoard 源码对照；D1–D12 与 V1–V9 统一在该正文维护。R9 正实施获授权的 P1：模块认领、公共契约、消费完成与两实例真实缓存恢复；P2–P6 及全链路切换继续待办 | Kafka 实施、连续演进效果、日常维护成本及正式采用结论 |
 | 按需扩域与强化 | 将有效方法用于下一业务域，修复已观察到的工具缺口 | 后续提案，按真实任务和证据决定 | 不预先批量补齐全平台规格或启用全套门禁 |
 
 PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记录](changelog/2026-10-16-specs-merged-next-plan.md)。它记录的“先补服务端门禁”是此前建议，**本次已改为先收敛方向，再用真实业务验证方法与成本；门禁按必要性单独决定。** 历史建议保留，不能作为当前执行顺序。
@@ -84,7 +84,7 @@ PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记
 
 1. **受理路径已落到仓内。** [流程与 harness](runbook/requirement-to-delivery.md)定义原话、现状、决定、候选规格、代码和证据的连接；团队约定与 ming-specs 同步指向它。通知/API 入口修正及本轮新增材料均为本地候选，尚未推送。
 2. **沿用已验证的隔离通知基线。** 按[启动与验证说明](runbook/notification-baseline.md)复跑既有行为。该路径不经过 Eventbus，只作为无关行为回归；Kafka 需要另选真实事件链和故障验收。
-3. **沿同一 Kafka Patch 推进。** 从 [Eventbus 模块](specs/platform/eventbus/README.md)进入当前观察与 Patch；已确认决定不重复提问。P0 文档设计见当前 Patch 第 9 节，下一建议是补实施认领/检查投影并做 P1 受控契约、处理完成边界与真实广播恢复验证，再推进设备上报、领域补处理和命令回执。当前仅授权设计，尚未实施或推送；技术参数在运行前冻结，V1–V9 仍待真实验证。
+3. **沿同一 Kafka Patch 推进。** 从 [Eventbus 模块](specs/platform/eventbus/README.md)进入当前观察与 Patch；已确认决定不重复提问。P0 文档设计见当前 Patch 第 9 节，下一建议是补实施认领/检查投影并做 P1 受控契约、处理完成边界与真实广播恢复验证，再推进设备上报、领域补处理和命令回执。本轮 RAW-011 已授权 P1，按第 10 节限定范围实现和验证，暂不推送或切换旧环境；P2–P6 需接续授权，V2–V9 与完整迁移仍待验证。
 4. **记录成本，再决定扩展。** 在原任务记录定位、文档维护、重复填写、追问、误报和返工；首次环境/工具建设与日常成本分开，缺数据记 unknown。通过这次真实需求评估流程，而不是先扩建门禁。
 
 服务端必需检查、CODEOWNERS、新 Hook、其他变更类型的自动化与新框架选型都不作为本轮工作。若实际协作暴露出需要，再提出具体配置、收益、成本和验收；涉及权限的操作遵守原授权边界。

@@ -15,9 +15,39 @@
     },
     {
       "id": "engineering.api-contract",
-      "paths": ["backend/tools/cmd/apicheck/**", "docs/specs/engineering/api-contract/**"],
+      "paths": [
+        "backend/tools/cmd/apicheck/**",
+        "docs/specs/engineering/api-contract/**"
+      ],
       "spec": "docs/specs/engineering/api-contract/spec.md",
       "entry": "docs/specs/engineering/api-contract/README.md"
+    },
+    {
+      "id": "platform.eventbus",
+      "paths": [
+        "backend/share/contracts/eventbus/**",
+        "backend/share/foundation/kafka/**",
+        "backend/share/eventBus/**",
+        "backend/share/events/**",
+        "backend/share/caches/**",
+        "backend/share/conf/event.go",
+        "backend/share/clients/nats.go",
+        "backend/tools/cmd/eventbusbaseline/**",
+        "deploy/profiles/eventbus-baseline/**",
+        "docs/specs/platform/eventbus/**",
+        "backend/things/sdk/protocol/**",
+        "backend/things/service/dgsvr/internal/repo/event/**",
+        "backend/things/service/dmsvr/internal/repo/event/**",
+        "backend/things/service/dmsvr/internal/startup/init.go",
+        "backend/saas/service/apisvr/internal/startup/init.go",
+        "backend/saas/service/syssvr/internal/startup/init.go",
+        "backend/saas/service/timed/internal/repo/event/**",
+        "backend/saas/service/timed/timedschedulersvr/internal/timer/queueTrigger.go",
+        "backend/saas/service/timed/timedjobsvr/internal/logic/processTask/queue.go",
+        "backend/tools/internal/repositorycontract/local_share_migration_test.go"
+      ],
+      "spec": "docs/specs/platform/eventbus/spec.md",
+      "entry": "docs/specs/platform/eventbus/README.md"
     }
   ]
 }

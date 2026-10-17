@@ -1,12 +1,49 @@
 ---
-status: observed
-version: observed-v0
-source_revision: c304bccd1663ee1299dc73d99855c61339b6ef4a
+status: confirmed
+version: p1-v1
 ---
 
-# Eventbus：当前源码现状
+# Eventbus：当前候选规则与保留的旧路径
 
-这是首次接入规格体系的现状基线，证据为上述固定提交的源码，**不是已批准的可靠性承诺，也不是运行验收**。迁移决定和剩余提案在 [Kafka Patch（当前在途版本）](patches/PATCH-20261017-kafka-migration/change.md)，原话在 [raw.md](raw.md)。没有独立 Eventbus 当前规格的历史缺口在这里显式保留。
+本版本只收敛 [Kafka Patch R9](patches/PATCH-20261017-kafka-migration/change.md) 第 10 节已授权的 **P1 显式接入能力**；不是全面 NATS 切换或线上生效。P0 基线为 `6a59904edbf7d019e266fe910fb1436d3b1ee4c4`。最终候选 SHA、真实验证与独立评审由同一 Goal 外部回执绑定，部署事实另记。原话及确认见 [raw.md](raw.md)。
+
+<a id="p1-contract"></a>
+## BUS-P1-CONTRACT：受控公共契约
+
+- [contracts/eventbus](../../../../backend/share/contracts/eventbus) 与已有 data-plane catalog / RawRecord 分离；P1 只开放 `coord.cache.invalidate`、`iot.bus.coordination.v1.g01`。其它通道仍是设计，没有声明可执行 schema。
+- JSON 信封含稳定 eventId、type/schemaMajor、source、occurredAt/acceptedAt、scope/tenant、object、correlationId，causationId 可选；payload 是 CacheInvalidation{cacheType,key}。对象身份、payload、legacySubject 与 JSON tuple 分区键必须一致；身份不是业务授权。
+- Codec 限长并拒绝未知 type/major、重复键、字段别名、null、未知字段、畸形载荷或错配身份。P1 选择严格字段白名单：新增可选字段也须先升级消费者，不承诺旧消费者自动前向兼容；这收窄 P0 的兼容性提案。
+- 显式 KafkaBus 仅接受可信 system 缓存，不接受 tenant 信封、不解释任意 subject。`PublishEnvelope` 可复用事件身份，普通 Publish 每次调用生成一次身份；确认超时不能解释为 broker 一定未收到。失效本身可重复执行，不能借此宣称所有业务幂等。
+- 选择器工具校验精确段、`*` 一个非空段、末尾 `>` 一个或多个段；仅测试兼容匹配语义，没有接入定时任务调度或数据库订阅配置。
+
+<a id="p1-completion"></a>
+## BUS-P1-COMPLETION：消费完成与身份
+
+[foundation bus](../../../../backend/share/foundation/kafka/bus.go)使用显式 group、read-committed、禁自动提交、有界 poll 和串行同步 callback。只有 callback 成功返回后才向 broker 提交该记录；处理、解码、提交失败停止当前消费，后继记录不越过失败项。处理后的崩溃或提交结果未知仍可重投，因此业务去重、outbox 与设备动作账本留待后续阶段。
+
+首版按一个 consumer 串行执行全部 key，保证同键副作用及分区成功前缀；暂不声称不同 key 的并行推进。不同 KafkaBus 实例拥有自己的客户端与生命周期，不使用 FastEvent 的全局第一 serverName。广播组包含稳定 role/instance；同组副本竞争使用 foundation 的显式 group，缓存实例不得共享同一实例身份。调用者负责稳定唯一实例 ID 与退出组回收。
+
+取消与 rebalance 使缓存失去 ready；同步 handler 必须响应 context，不能在 handler 内等待 Close。无法安全继续的处理/提交错误 fail-stop，调用方用相同稳定身份重新构造并 Run；不通过跳过坏消息或自动推进 offset 恢复。没有持久隔离队列或管理员修复界面。
+
+<a id="p1-cache"></a>
+## BUS-P1-CACHE：真实缓存恢复
+
+- [KafkaBus](../../../../backend/share/eventBus/kafka.go)以显式构造接入 [Cache](../../../../backend/share/caches/cache.go)，旧配置工厂不变；每个 Cache 仍是进程内按 KeyType 单例。广播验收必须使用两个独立进程。
+- `CacheState` 给出 generation 和 ready；创建客户端不算 ready，需实际连接、分区分配及订阅位点确认。检测到断连、重分配或处理失败后撤销 ready，generation 改变；网络故障检测有请求超时窗口，不承诺物理断网瞬间就知道故障。
+- Cache 在读取前同步代际，变化时清 L1；未 ready 明确返回 ErrCacheNotReady，不继续返回旧权限值。读期间收到通知或发生恢复时，旧结果不能回填，返回 ErrCacheInvalidated 后允许重新读取。
+- 新路径从 Redis 或配置的权威回调恢复；禁用旧的异步 DB→Redis 回填，避免删除后旧在途读取再次写回。任意键通知保守地让同一 Cache 其它在途读重试，有吞吐成本；Redis miss 也可能增加 DB 读取。
+- `SetData` 的 Redis 与 Publish 错误必须返回，不能吞错后宣告成功。两步非原子，错误时 Redis 可能已更新；不能据此保证所有远端缓存立刻失效，需要调用者协调重试/修复。旧事件实现也获得此错误传播修正，但不自动获得 Kafka 代际恢复协议。
+
+<a id="p1-validation"></a>
+## BUS-P1-VERIFY：复验与边界
+
+执行 `make verify-pr`、Share 相关包 race，以及 `make verify-integration VERIFY_SUITE=eventbus`。隔离运行入口为 [run.py](../../../../deploy/profiles/eventbus-baseline/run.py)，详细冻结参数与运行回执仍在同一 [Patch 第 10 节](patches/PATCH-20261017-kafka-migration/change.md)。测试专属 Kafka/Redis 与两个真实 Cache 进程，无宿主端口、不复用旧卷，停止保留数据。
+
+P1 不覆盖业务 outbox、设备命令、完整通道接线、动态任务或 D12/V9 遥测积压隔离。后续只按实际完成的族吸收规则；整个多阶段 Patch 继续在途，不提前标 absorbed。
+
+## 保留的 NATS 运行路径现状（observed-v0）
+
+以下为 `c304bccd1663ee1299dc73d99855c61339b6ef4a` 的来源观察。P1 新入口没有替换这些业务调用，已知缺陷不是批准规则。
 
 <a id="bus-scope"></a>
 ## BUS-SCOPE：边界与实际使用者

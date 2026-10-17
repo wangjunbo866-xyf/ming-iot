@@ -178,3 +178,13 @@ go -C backend/saas mod download
 ```
 
 Go 构建依赖使用本机 Go 工具链与 `backend/go.work`，依赖未缓存时需在准备阶段允许模块下载。运行 profile 的镜像策略仍为 never，网络仍为 internal，无宿主端口；不会自动拉起或复用旧环境。镜像更新需要明确修改固定 digest 后重新验证。
+
+## 隔离 Eventbus P1 复验
+
+`make verify-integration VERIFY_SUITE=eventbus` 构建本仓静态探针并执行两轮启动、真实双缓存广播、断网重连、失败重投、同组竞争与 Redis 数据保留检查。需要本机 Docker、Go 及已缓存的固定 Kafka 4.3.1、Redis 7.4 镜像；准确 digest 见 [独立配置](profiles/eventbus-baseline/compose.yaml)。缺镜像时明确失败，不自动换 tag。
+
+使用专属 `ming-iot-eventbus-baseline` Compose 项目、内部网络和两个专属数据卷，无宿主端口；脚本忽略外部 Docker/Compose 路由变量。检查器先拒绝宿主端口、共享网络、旧卷、宿主目录或外部 broker 环境注入，再运行。`cache-a`/`cache-b` 是两个独立真实 Cache 进程，断网由脚本仅针对本项目的 b 容器执行，重连仍为同一进程。完整运行会停止容器并保留卷、消息与数据；可用 `python3 deploy/profiles/eventbus-baseline/run.py status|stop` 查看或停止本测试项目，不执行 down -v。
+
+日志默认留在未跟踪的 `deploy/.runtime/eventbus-baseline/evidence`，可用 `EVENTBUS_BASELINE_EVIDENCE_DIR` 指定私有目录。每次使用新的测试对象和逻辑组；缓存实例组 a/b 稳定，从真实已提交位点恢复。结果包含实际 topic 参数、两实例状态、每轮广播/重连证据、失败后的重投、竞争组计数和退出状态。业务规则、参数冻结与范围局限统一见 [Kafka Patch 第 10 节](../docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，不另建平行规格。
+
+本 suite 不修改旧环境、服务配置或任何原有数据；不证明多 broker 容灾、完整 Kafka 切换、业务 outbox、设备命令或遥测积压隔离。

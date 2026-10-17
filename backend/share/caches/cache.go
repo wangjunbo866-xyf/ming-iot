@@ -1,8 +1,10 @@
+// 本文件提供进程内、Redis 与权威数据源之间的缓存入口。
 package caches
 
 import (
 	"context"
 	"encoding/json"
+	stderrors "errors"
 	"fmt"
 	"math/rand"
 	"sync"
@@ -25,12 +27,20 @@ type Event interface {
 	Publish(ctx context.Context, topic string, arg any) error
 }
 
+// Cache 保存同一业务键类型的缓存与失效通知状态。
 type Cache[dataT any, keyType comparable] struct {
 	keyType    string
 	cache      otter.Cache[string, *dataT]
 	fastEvent  Event
 	getData    func(ctx context.Context, key keyType) (*dataT, error)
 	notifySlot []func(ctx context.Context, key []byte)
+	notifyMu   sync.RWMutex
+	// stateMu 将代际检查、失效通知与 L1 回填串行化。
+	stateMu    sync.Mutex
+	state      CacheStateProvider
+	generation uint64
+	revision   uint64
+	ready      bool
 	fmt        func(ctx context.Context, key keyType, data *dataT) *dataT
 	expireTime time.Duration
 	sf         syncx.SingleFlight
@@ -49,18 +59,28 @@ var (
 	cacheMutex sync.Mutex
 )
 
+// NewCache 按业务键类型创建进程内单例，并订阅失效通知。
 func NewCache[dataT any, keyType comparable](cfg CacheConfig[dataT, keyType]) (*Cache[dataT, keyType], error) {
 	cacheMutex.Lock() //单例模式
 	defer cacheMutex.Unlock()
 	if v, ok := cacheMap[cfg.KeyType]; ok {
-		return v.(*Cache[dataT, keyType]), nil
+		if existing, ok := v.(*Cache[dataT, keyType]); ok {
+			return existing, nil
+		}
+		return nil, fmt.Errorf("cache key type %q already registered with different Go types", cfg.KeyType)
+	}
+	if cfg.ExpireTime < 0 {
+		return nil, fmt.Errorf("cache expiry must not be negative")
+	}
+	if cfg.ExpireTime == 0 {
+		cfg.ExpireTime = time.Minute*10 + time.Second*time.Duration(rand.Int63n(60))
 	}
 	cache, err := otter.MustBuilder[string, *dataT](10_000).
 		CollectStats().
 		Cost(func(key string, value *dataT) uint32 {
 			return 1
 		}).
-		WithTTL(cfg.ExpireTime/3 + 1).
+		WithTTL(cfg.ExpireTime/3 + time.Nanosecond).
 		Build()
 	if err != nil {
 		return nil, err
@@ -74,18 +94,20 @@ func NewCache[dataT any, keyType comparable](cfg CacheConfig[dataT, keyType]) (*
 		expireTime: cfg.ExpireTime,
 		fmt:        cfg.Fmt,
 	}
-	if ret.expireTime == 0 {
-		ret.expireTime = time.Minute*10 + time.Second*time.Duration(rand.Int63n(60))
-	}
+	ret.state, _ = cfg.FastEvent.(CacheStateProvider)
 	if ret.fastEvent != nil {
 		err = ret.fastEvent.Subscribe(ret.genTopic(), func(ctx context.Context, t time.Time, body []byte) error {
-			ret.cache.Delete(string(body))
-			for _, f := range ret.notifySlot {
+			ret.invalidate(string(body))
+			ret.notifyMu.RLock()
+			slots := append([]func(context.Context, []byte){}, ret.notifySlot...)
+			ret.notifyMu.RUnlock()
+			for _, f := range slots {
 				f(ctx, body)
 			}
 			return nil
 		})
 		if err != nil {
+			ret.cache.Close()
 			return nil, err
 		}
 	}
@@ -98,8 +120,10 @@ func GenKeyStr(in any) string {
 	return utils.Fmt2(in)
 }
 
-// 更新通知插槽
+// AddNotifySlot 安全注册失效通知回调。
 func (c *Cache[dataT, keyType]) AddNotifySlot(f func(ctx context.Context, key []byte)) {
+	c.notifyMu.Lock()
+	defer c.notifyMu.Unlock()
 	c.notifySlot = append(c.notifySlot, f)
 }
 
@@ -111,44 +135,52 @@ func (c *Cache[dataT, keyType]) GenCacheKey(key any) string {
 	return fmt.Sprintf("cache:%s:%v", c.keyType, key)
 }
 
+// DeleteByFunc 删除满足条件的 L1 项，并阻止可恢复路径的并发读取回填旧值。
 func (c *Cache[dataT, keyType]) DeleteByFunc(f func(cacheKey string) bool) {
+	c.stateMu.Lock()
+	defer c.stateMu.Unlock()
+	c.revision++
 	c.cache.DeleteByFunc(func(key string, value *dataT) bool {
 		return f(key)
 	})
 }
 
-// 删除数据的时候设置为空即可
+// SetData 更新 Redis 并广播失效；传 nil 删除 Redis 数据。
+// Redis 与事件总线不构成原子事务：返回错误时 Redis 仍可能已更新，调用方需重试或协调修复。
 func (c *Cache[dataT, keyType]) SetData(ctx context.Context, key keyType, data *dataT) error {
 	cacheKey := c.GenCacheKey(key)
-	if data != nil { //如果是
+	keyStr := GenKeyStr(key)
+	c.invalidate(keyStr)
+	var writeErr error
+	if data != nil {
 		dataStr, err := json.Marshal(data)
 		if err != nil {
-			logx.WithContext(ctx).Error(err)
 			return err
 		}
-		err = store.SetexCtx(ctx, cacheKey, string(dataStr), int(c.expireTime/time.Second))
-		if err != nil {
-			logx.WithContext(ctx).Error(err)
-		}
+		writeErr = store.SetexCtx(ctx, cacheKey, string(dataStr), c.expirySeconds())
 	} else {
-		_, err := store.Del(cacheKey)
-		if err != nil {
-			logx.WithContext(ctx).Error(err)
-		}
+		_, writeErr = store.DelCtx(ctx, cacheKey)
 	}
-	keyStr := GenKeyStr(key)
-	c.cache.Delete(keyStr)
+	c.invalidate(keyStr)
+	var publishErr error
 	if c.fastEvent != nil {
-		err := c.fastEvent.Publish(ctx, c.genTopic(), keyStr)
-		if err != nil {
-			logx.WithContext(ctx).Error(err)
-		}
+		publishErr = c.fastEvent.Publish(ctx, c.genTopic(), keyStr)
 	}
-	return nil
+	if writeErr != nil {
+		writeErr = fmt.Errorf("cache Redis update failed: %w", writeErr)
+	}
+	if publishErr != nil {
+		publishErr = fmt.Errorf("cache invalidation publish failed (Redis may already be updated): %w", publishErr)
+	}
+	return stderrors.Join(writeErr, publishErr)
 }
 
+// GetData 读取缓存；可恢复事件总线未就绪时拒绝返回可能过期的数据。
 func (c *Cache[dataT, keyType]) GetData(ctx context.Context, key keyType) (*dataT, error) {
 	ctx = ctxs.WithRoot(ctx)
+	if c.state != nil {
+		return c.getRecoverable(ctx, key)
+	}
 	cacheKey := c.GenCacheKey(key)
 	keyStr := GenKeyStr(key)
 	temp, ok := c.cache.Get(keyStr)
@@ -190,11 +222,12 @@ func (c *Cache[dataT, keyType]) GetData(ctx context.Context, key keyType) (*data
 				if err != nil {
 					return nil, err
 				}
+				data := &ret
 				if c.fmt != nil {
-					ret = *c.fmt(ctx, key, &ret)
+					data = c.fmt(ctx, key, data)
 				}
-				c.cache.Set(keyStr, &ret)
-				return &ret, nil
+				c.cache.Set(keyStr, data)
+				return data, nil
 			}
 		}
 		if c.getData == nil { //如果没有设置第三级缓存则直接设置该参数为空并返回
@@ -221,7 +254,7 @@ func (c *Cache[dataT, keyType]) GetData(ctx context.Context, key keyType) (*data
 				logx.WithContext(ctx).Error(err)
 				return
 			}
-			_, err = store.SetnxExCtx(ctx, cacheKey, string(str), int(c.expireTime/time.Second))
+			_, err = store.SetnxExCtx(ctx, cacheKey, string(str), c.expirySeconds())
 			if err != nil {
 				logx.WithContext(ctx).Error(err)
 				return
@@ -232,5 +265,12 @@ func (c *Cache[dataT, keyType]) GetData(ctx context.Context, key keyType) (*data
 	if err != nil {
 		return nil, err
 	}
-	return ret.(*dataT), nil
+	if ret == nil {
+		return nil, errors.NotFind
+	}
+	data := ret.(*dataT)
+	if data == nil {
+		return nil, errors.NotFind
+	}
+	return data, nil
 }

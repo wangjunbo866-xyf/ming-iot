@@ -1,11 +1,11 @@
 # platform.eventbus：跨服务事件总线
 
-- 当前正文：[spec.md@observed-v0](spec.md)。这是固定源码版本的现状记录，尚无获确认的完整 Eventbus 主规格；已知缺陷不自动成为必须保留的规则。
-- 需求来源：[raw.md](raw.md)。用户确定 NATS 全面迁往 Kafka，当前仅开发测试、按一次切换设计；已确认政策与适用范围统一见同一 Patch 的决定表；其余设计继续细化。
-- 在途变更：[PATCH-20261017-kafka-migration / R8](patches/PATCH-20261017-kafka-migration/change.md)。D1–D12 沿用；R8 第 9 节细化 P0 的源码映射、通道/路由、处理完成边界、资源隔离和下一切片。属于可评审设计草案，尚未切换；P0 实施入口及运行参数冻结仍未完成。
-- 人的长期模块负责人：未分配。需求取舍由本轮提出需求的用户确认；本次 AI 负责盘点、起草与本轮方案细化，独立 AI 复审不代替业务批准。
-- 模块边界：Share 的跨服务事件封装与传输，SaaS / Things / 协议 SDK 等调用方；进程内事件、设备 MQTT、通知 RPC 的角色需要分别说明。部署目录不是业务边界。
-- 当前验证：源码盘点见主规格。通知运行基线属于通知 RPC → 持久化，不能证明事件总线迁移成功。Kafka 验收用例见当前 Patch 的 V1–V9 验收设计（D12/V9 为已确认目标，参数候选与冻结条件见第 9 节），均未运行。
-- 工具覆盖：[现有 PR 映射](../../../../tooling/specs-map.json)尚未登记本模块。需求受理文档接受有界文档检查与独立语义复审；进入行为实施前补齐认领、v2 Patch 检查投影与实际调用方映射，不能把当前草稿声明成已确认的实施 Patch。
+- 当前正文：[spec.md@p1-v1](spec.md)。完整描述本地 P1 显式 Kafka 接入能力，同时保留 observed-v0 的旧 NATS 路径；不表示全面切换或生产生效。
+- 来源：[raw.md](raw.md)；用户确认的 D1–D12 继续适用，RAW-011 只授权本轮 P1。
+- 在途变更：[PATCH-20261017-kafka-migration / R9](patches/PATCH-20261017-kafka-migration/change.md)。第 10 节为当前实施认领和验收；P2–P6 仍是候选，不整体批准或吸收。
+- 长期模块负责人未分配；需求负责人为用户，任务协调实施者为 `rdoc-pilot-codex`，独立 AI 负责最终候选复审，不冒充真人批准。
+- 模块边界：Share 契约、跨服务传输与缓存及 SaaS/Things/SDK 调用方；本轮实际写范围以 Patch 认领为准，前台和旧服务配置不变。
+- 差异导航：[specs-map.json](../../../../tooling/specs-map.json)登记本模块；[v2 检查投影](patches/PATCH-20261017-kafka-migration/check.json)只声明 P1 写范围和确认来源，不能用它给后续业务切换授权。
 
-后续仍在本目录演进同一主规格。变更完成时写出完整的新规则并保留本次 Patch 的来源指针；读者无需叠加所有历史记录才能接手。
+<a id="kafka-patch"></a>
+当前主规格的 BUS-P1-CONTRACT、BUS-P1-COMPLETION、BUS-P1-CACHE、BUS-P1-VERIFY 回链到 [同一 Patch](patches/PATCH-20261017-kafka-migration/change.md)。复验通过入口找到实际代码、参数和证据；不需要另建交接包。

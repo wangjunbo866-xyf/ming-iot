@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "module": "platform.eventbus",
+  "task": "todo_5ce8f24639a97a421bdaddb4",
+  "type": "patch",
+  "claim": "docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md",
+  "confirmation_source": "user:2026-10-17:RAW-011:P1-only; change:R9#10; P2-P6 remain proposed",
+  "spec": "docs/specs/platform/eventbus/spec.md#p1-contract",
+  "spec_version": "p1-v1",
+  "backlink": "docs/specs/platform/eventbus/README.md#kafka-patch",
+  "write_scope": [
+    "backend/share/contracts/eventbus/**",
+    "backend/share/foundation/kafka/bus*",
+    "backend/share/eventBus/kafka*",
+    "backend/share/caches/**",
+    "backend/tools/cmd/eventbusbaseline/**",
+    "deploy/profiles/eventbus-baseline/**",
+    "Makefile",
+    "deploy/README.md",
+    "docs/specs/platform/eventbus/**",
+    "docs/project-charter.md",
+    "docs/index.yaml",
+    "tooling/specs-map.json",
+    "backend/tools/internal/repositorycontract/local_share_migration_test.go"
+  ]
+}

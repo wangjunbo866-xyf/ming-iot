@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.10
+    revision: 1.0.11
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 统一维护 D1–D12 与 V1–V9，R8 已细化 P0 文档设计；实施入口、运行参数冻结及验证仍未完成；技术方案及实施计划仍是草稿，本轮不实施或推送。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 统一维护 D1–D12 与 V1–V9，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed，本轮不推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -408,9 +408,9 @@ materials:
   - source_id: ming-iot-eventbus-observed
     lifecycle: current
     role: eventbus_source_observation
-    status: observed
+    status: confirmed
     path: docs/specs/platform/eventbus/spec.md
-    revision: observed-v0
+    revision: p1-v1
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -418,13 +418,13 @@ materials:
     related:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
-    conflict_rule: "仅固定源码现状，已知缺陷不升级为批准规则；迁移决定见同模块当前Patch，运行结果另证。"
+    conflict_rule: "P1 显式新入口当前规则与旧NATS观察分开；只在本地候选生效，未切换业务服务。运行、复审及最终Head见同Goal回执。"
   - source_id: ming-iot-eventbus-kafka-migration
     lifecycle: current
     role: eventbus_kafka_requirement_and_decisions
-    status: draft
+    status: confirmed
     path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    revision: R8
+    revision: R9
     body_bindings:
       revision: frontmatter.revision
       status: frontmatter.status
@@ -433,7 +433,7 @@ materials:
       - docs/specs/platform/eventbus/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/spec.md
-    conflict_rule: "用户确认迁移目标、开发测试一次切换和 RAW-005 的三项政策 D6–D8；R8 沿用 D1–D12，保留 RAW-008 的 ThingsBoard 固定源码分析及 RAW-009 的 V9 决定；按 RAW-010 细化 P0 源码映射、契约、路由和资源设计。实施入口与运行参数冻结仍未完成，技术方案为提案，运行未验证。不得把局部确认等同整个草稿批准；本轮不实施切换、推送或操作旧环境数据。"
+    conflict_rule: "R9 confirmed仅对应RAW-011授权的P1；D1-D12继承，P2-P6保持proposed。认领、技术选择和局部验证在同一Patch第10节，不整体批准迁移，不推送或修改旧环境。"
   - source_id: ming-iot-notification-runtime-runbook
     lifecycle: current
     role: isolated_notification_runtime_reproduction
