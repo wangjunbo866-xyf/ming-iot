@@ -3,6 +3,7 @@ package notifymanagelogic
 import (
 	"context"
 	"strings"
+	"unicode/utf8"
 
 	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
 	"github.com/spf13/cast"
@@ -110,27 +111,20 @@ func triggerUserDisplayName(t triggerUserFields) string {
 	return name
 }
 
-// compactRuleSceneActionBody 多行模板正文合并为一条动作描述（取信息最完整的一行）。
+// compactRuleSceneActionBody 取清理空白后 Unicode 字符数最长的非空行，同长取首个。
 func compactRuleSceneActionBody(body string) string {
 	body = strings.TrimSpace(body)
 	if body == "" {
 		return ""
 	}
 	lines := strings.Split(body, "\n")
-	var parts []string
+	var best string
+	bestLen := 0
 	for _, l := range lines {
 		l = strings.TrimSpace(l)
-		if l != "" {
-			parts = append(parts, l)
-		}
-	}
-	if len(parts) == 0 {
-		return ""
-	}
-	best := parts[0]
-	for _, l := range parts[1:] {
-		if len([]rune(l)) > len([]rune(best)) {
+		if length := utf8.RuneCountInString(l); length > bestLen {
 			best = l
+			bestLen = length
 		}
 	}
 	return best

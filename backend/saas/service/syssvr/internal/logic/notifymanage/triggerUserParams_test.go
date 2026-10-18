@@ -1,6 +1,9 @@
 package notifymanagelogic
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestFormatTriggerUserLine(t *testing.T) {
 	auto := FormatTriggerUserLine(triggerUserFields{Type: triggerTypeAuto})
@@ -136,6 +139,40 @@ func TestCompactRuleSceneActionBodyEqualRunesKeepsFirst(t *testing.T) {
 				t.Fatalf("got %q want %q", got, tt.want)
 			}
 		})
+	}
+}
+
+func TestCompactRuleSceneActionBodySelectionBoundaries(t *testing.T) {
+	// 防止缓存最长字符数后漏更新、同长覆盖首个，或把空白行作为动作。
+	tests := []struct {
+		name string
+		body string
+		want string
+	}{
+		{"empty", "", ""},
+		{"blank only", " \t\r\n\u3000\n ", ""},
+		{"later winner keeps first tie", "a\n 中华人民 \r\n abcd ", "中华人民"},
+		{"later winner replaced again", "a\n 中华人民 \r\n abcdef ", "abcdef"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := compactRuleSceneActionBody(tt.body); got != tt.want {
+				t.Fatalf("got %q want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func BenchmarkCompactRuleSceneActionBody(b *testing.B) {
+	// 合成长首行场景，衡量重复扫描成本，不代表真实模板分布或发送吞吐量。
+	want := strings.Repeat("长", 4096)
+	body := want + strings.Repeat("\n开启", 128)
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		if got := compactRuleSceneActionBody(body); got != want {
+			b.Fatalf("selected action differs from the longest first line")
+		}
 	}
 }
 

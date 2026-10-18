@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.15.1-draft
+    revision: 0.16.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.14.1-draft
+    revision: 0.15.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -592,7 +592,7 @@ materials:
     role: notification_tdd_pilot_evidence_and_cost
     status: local-candidate
     path: docs/changelog/2026-10-18-notification-tdd-pilot.md
-    revision: 0.2.0
+    revision: 0.3.0
     authority: user_authorized_scoped_pilot
     related:
       - docs/specs/saas/notification-trigger/spec.md

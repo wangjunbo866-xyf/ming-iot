@@ -30,6 +30,8 @@ source_revision: c165a56531f58421a870a0b8794f24556b60d3b2
 
 `FormatRuleSceneNotifyLine` 仅在 Type=deviceButton 且 UserID>0 时选择上述专用入口；其他输入走通用入口。动作取正文中清理空白后的非空行，以 Unicode 字符数最长的一行为准，相同长度取首个；不把“信息最完整”作为可额外推断的规则。直接调用 `PrependRuleSceneTriggerLine` 时，manual 复用下述手动兼容处理，其他类型使用场景入口。发送流程是否调用该函数见 [调用边界](#call-sites)。
 
+本地保护性重构候选在遍历时记录最长行及其字符数，避免为后续各行重复扫描当前最长行；选择规则不变。行为保护、合成基准及候选审计见 [Superpowers 7.0 试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#superpowers7-pilot)，不表示已合并、部署或证明真实发送性能收益。
+
 <a id="body-compatibility"></a>
 ## BODY-COMPATIBILITY：正文与旧格式
 
@@ -83,11 +85,17 @@ go -C backend/saas test ./service/syssvr/internal/logic/notifymanage -count=1
 | 条款 | 现有验证 |
 | --- | --- |
 | DISPLAY-NAME | `TestFormatTriggerUserLine*`：同时有昵称/账号、空白、ID、匿名、非 manual 账号优先 |
-| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestCompactRuleSceneActionBodyCountsRunesNotBytes`、`TestCompactRuleSceneActionBodyEqualRunesKeepsFirst`、`TestRuleSceneNotifyLinePicksRuneLongestAction`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior`：账号优先的动作格式；多行取 Unicode 字符数最长的非空行且区别于按字节比较；同字符数取首行（含空白行与首尾空白清理用例）；deviceButton 入口级选取与非正 UserID 回退 |
+| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestCompactRuleSceneActionBodyCountsRunesNotBytes`、`TestCompactRuleSceneActionBodyEqualRunesKeepsFirst`、`TestCompactRuleSceneActionBodySelectionBoundaries`、`TestRuleSceneNotifyLinePicksRuneLongestAction`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior`：账号优先的动作格式；多行取 Unicode 字符数最长的非空行且区别于按字节比较；同字符数取首行（含空白行与首尾空白清理用例）；空正文、全空白、后续最长行的同长保留与再次替换；deviceButton 入口级选取与非正 UserID 回退 |
 | BODY-COMPATIBILITY | `TestPrependTriggerUserLine`、`TestManualTriggerBodyCompatibility`、`TestNonManualTriggerBodyPreservesManualAccountLine`；本地候选 `TestTriggerBodyCompleteLinesWithCRLF` 覆盖三个入口的 CRLF 首行、旧格式首尾与中间行、部分匹配、裸回车、无触发人及自动触发；`TestManualTriggerBodyPreservesInteriorLegacyLine` 覆盖清理边界后仍须保留的中间同文行，以及唯一旧行、仅首尾两行、LF/CRLF 与混合换行 |
 | BOUNDARY | 格式化函数值参数由源码核对；不将此核对冒充数据库或输入不变的专门运行测试 |
 
 测试证明所含用例及包级回归，不证明所有组合。真实数据库、设备、推送渠道和生产部署未在 S1 验证。人的长期模块负责人仍未分配；本次范围授权见 [模块入口](README.md)。
+
+`BenchmarkCompactRuleSceneActionBody` 使用 4096 字符的首行和后续 128 个短行，比较该合成输入的选行耗时与分配；它不代表真实模板分布或发送吞吐量。从仓库根复跑：
+
+```bash
+go -C backend/saas test ./service/syssvr/internal/logic/notifymanage -run '^$' -bench '^BenchmarkCompactRuleSceneActionBody$' -benchmem -benchtime=100ms -count=3 -cpu=1
+```
 
 ## 变更来源
 

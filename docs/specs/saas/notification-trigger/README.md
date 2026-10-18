@@ -6,6 +6,7 @@
 - 实现、调用、验证命令及未验证边界均在主规格；当前没有需叠加的有效覆盖或未完成业务 Patch。
 - 本地修复候选：[CRLF 完整首行识别与 TDD 试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md)，恢复 BODY-COMPATIBILITY，规则分类为 `no_behavior_change`；尚未合并或部署，三个辅助入口的测试不等于全部发送渠道验收。
 - 同条款后续候选：[保留中间旧账号行与个人计划不入仓试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#local-plan-pilot)。规则、边界例子和测试入口均在当前主规格；接续无需读取个人计划。实施、独立 AI 接续与最终候选状态以该条目的实际回执为准，尚未合并或部署。
+- 场景动作选行的本地保护性重构：[Superpowers 7.0 适配试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#superpowers7-pilot)。按 SCENE-BUTTON 保留 Unicode 最长与同长取首行，减少重复扫描；主规格包含行为测试和合成基准入口。规则仍为 current-v1，性能结果限合成输入，未合并或部署。
 - 合并后验证及当前环境缺口见 [PR #6 后续记录](../../../changelog/2026-10-17-governance-merged-next-plan.md)；[S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)保留首次收敛时点的候选与验证事实，不承担当前交付状态。
 - 理解真实发送路径时，先读主规格的 [调用边界](spec.md#call-sites)，区分辅助函数行为与发送层是否调用；新上下文接手及文档修正见 [S3 记录](../../../changelog/2026-10-16-specs-clean-clone-takeover.md)。
 
