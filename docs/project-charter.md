@@ -85,7 +85,7 @@ PR #5 的合并、main 完整本地验证及真实 GitHub CI 结果见[合并记
 
 ## 5. 当前审视与下一步
 
-本轮按用户确认补齐“如何开发与完成审计”：以[团队约定](runbook/team-development.md#tdd-scope)为细则正文，[需求到交付流程](runbook/requirement-to-delivery.md)串联阶段，ming-specs 按触发条件读取。当前仅修订文档并验证、独立复审；没有新增业务实现、TDD 自动认证或强制门禁。下一条获授权的真实代码任务应验证规则→测试→实现→审计的完整链路及记录成本，不能将本轮文档检查计为真实 TDD 试跑。
+此前文档阶段已补齐“如何开发与完成审计”：以[团队约定](runbook/team-development.md#tdd-scope)为细则正文，[需求到交付流程](runbook/requirement-to-delivery.md)串联阶段，ming-specs 按触发条件读取。随后按用户授权完成通知完整首行的小修复，已保留真实红绿和完整本地验证；独立审计、处置与成本见[通知 TDD 试跑](changelog/2026-10-18-notification-tdd-pilot.md)。原文档阶段不追补为 TDD 过程；当前候选未推送，不启用过程自动认证或强制门禁。
 
 2026-10-18 用户再次明确三项方向：分域/Feature/Patch 支持并行；文档在自身职责内完整；根 AGENTS.md 作为不超过 120 行的渐进披露入口。本轮按已确认路线改造入口与 Skill，并用通知及上行 Feature 验证阅读、写回和并行边界。改造仍为本地候选，验证记录追加到[接入演练记录](changelog/2026-10-18-cross-agent-onboarding.md#progressive-disclosure-trial)。Kafka/ProtocolApplication 继续作为验证知识持续演进的真实案例，已有决定和未完成事项保留。
 

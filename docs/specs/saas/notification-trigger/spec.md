@@ -6,7 +6,7 @@ source_revision: c165a56531f58421a870a0b8794f24556b60d3b2
 
 # 通知触发人展示：当前主规格
 
-本规格覆盖通知触发人格式化及正文组装，不涵盖整个通知领域。适用代码是上方新仓 main 基线；本轮只收敛文档，不改变业务行为。手动昵称优先沿用 [R2 的 D2 与 AC1–AC4](patches/PATCH-20261014-display-name/change.md)；其余行为由既有实现与测试核实，不扩展为新的业务承诺。旧现状原文保留在 [observed-v0 快照](spec.observed-v0.md)，仅用于追溯。
+本规格覆盖通知触发人格式化及正文组装，不涵盖整个通知领域。上方记录 S1 收敛时的新仓 main 来源基线；后续实现修复的本地候选与验证在对应条款标注，不能据此推断 main 或生产已更新。手动昵称优先沿用 [R2 的 D2 与 AC1–AC4](patches/PATCH-20261014-display-name/change.md)；其余行为由既有实现与测试核实，不扩展为新的业务承诺。旧现状原文保留在 [observed-v0 快照](spec.observed-v0.md)，仅用于追溯。
 
 `effective` 限上述代码版本的格式化行为；文档候选、验证与最终评审另见 [S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)，不代表生产部署或真人验收。
 
