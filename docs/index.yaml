@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.16
+    revision: 1.0.17
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。PR #6 已按后续明确授权合并；当前状态与后续建议见本轮合并记录；入口修正与本轮需求流程、通知隔离基线为本地候选；Kafka 已选为首项真实需求，仅开发测试、一次切换；D6–D8 已确认可靠补处理、超时待核实默认不重发、旧消息不自动导入；当前 Kafka Patch 维护 D1–D16 原始决定与 V1–V9 共同验收，R9 按 RAW-011 仅实施并验证 P1 公共契约、消费完成与缓存恢复；P2–P6 仍为 proposed；R10 按 RAW-012 仅评估 ProtocolApplication 前置边界，R12 已确认 D13-D15；R13 按 RAW-015 建立 protocol 域和上行候选正文，原来源及跨域依赖保留，不实施 PA、推送或切换旧环境。旧交付条目的不合并限制仅说明当时授权。不自动去重、归档或启用全库门禁；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "总目标、设计原则、阶段顺序和验收以本总纲为准；具体业务规则归对应 Feature 当前规格，历史条目保留原时点。用户最新指令优先，候选、已合并、运行验证和正式采用分别判定；索引不复述业务决定与逐轮进度。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
