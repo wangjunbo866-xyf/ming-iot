@@ -15,7 +15,7 @@ python3 tooling/knowledge.py where
 make verify-pr
 ```
 
-主规格从 [业务地图](../specs/README.md) 进入；认领、需求确认、Patch 双向指针和提交差异提醒遵循 [团队约定](team-development.md)。`.agents/skills/ming-specs` 随 clone 获取；宿主实际加载和团队正式采用需分别确认。
+主规格从 [业务地图](../specs/README.md) 进入；认领、需求确认、Patch 双向指针和提交差异提醒遵循 [团队约定](team-development.md)。[ming-specs](../../.agents/skills/ming-specs/SKILL.md) 与 [ming-runbook](../../.agents/skills/ming-runbook/SKILL.md) 随 clone 获取，分别维护业务规格和操作知识/入口；宿主实际加载和团队正式采用需分别确认。
 
 历史研发材料统一放在 [wiki/legacy](../wiki/legacy/README.md)，包括 `rd` 与 `superpowers`。历史工具在 `tooling/experiments`，不自动安装或发现。文档来源状态在 [index.yaml](../index.yaml)，机器检查清单在 [tooling/policy](../../tooling/policy/README.md)。
 

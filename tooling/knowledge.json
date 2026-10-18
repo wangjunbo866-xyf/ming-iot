@@ -53,10 +53,12 @@
     "docs/specs/protocol/uplink-normalization/raw.md",
     "docs/specs/protocol/uplink-normalization/spec.md",
     "docs/runbook/cross-agent-development.md",
-    "docs/runbook/loopx-development.md"
+    "docs/runbook/loopx-development.md",
+    ".agents/skills/ming-runbook/SKILL.md"
   ],
   "discovered_skills": [
-    ".agents/skills/ming-specs/SKILL.md"
+    ".agents/skills/ming-specs/SKILL.md",
+    ".agents/skills/ming-runbook/SKILL.md"
   ],
   "excluded_reference_directories": [
     "third_party/airmq",

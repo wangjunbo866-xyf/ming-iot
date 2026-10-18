@@ -27,6 +27,7 @@ help:
 		'ming-iot verification targets:' \
 		'  ci-tools / publication-check / publication-ready   audit tools, technical boundary, release readiness' \
 		'  knowledge-check                            check local knowledge entrypoints and specs regressions' \
+		'  agents-check                               opt-in root AGENTS.md line budget check (local only)' \
 		'  build                                      build SaaS and Things service binaries' \
 		'  test                                       run all Go package tests' \
 		'  vet                                        run go vet for all Go packages' \
@@ -163,7 +164,10 @@ verify-release:
 	@$(MAKE) verify-integration VERIFY_SUITE=kafka
 	@$(MAKE) verify-integration VERIFY_SUITE=things-startup
 
-.PHONY: knowledge-check
+.PHONY: agents-check knowledge-check
+agents-check:
+	@python3 tooling/agents_check.py
+
 knowledge-check:
 	@python3 tooling/knowledge.py check
 	@python3 -m unittest discover -s tooling/tests

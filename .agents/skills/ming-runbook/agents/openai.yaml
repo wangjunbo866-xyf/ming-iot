@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ming IoT 操作知识维护"
+  short_description: "按任务维护操作知识与入口地图，并检查写回位置、行数及证据边界"
+  default_prompt: "使用 $ming-runbook，从 AGENTS.md 按任务定位现有操作知识，更新所属正文及必要导航并运行适用本地检查。"

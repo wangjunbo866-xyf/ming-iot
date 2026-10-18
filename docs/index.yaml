@@ -15,7 +15,7 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.18
+    revision: 1.0.19
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.12.0-draft
+    revision: 0.13.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.12.0-draft
+    revision: 0.12.1-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -353,7 +353,7 @@ materials:
     role: bounded_document_structure_checks
     status: local-candidate
     path: docs/runbook/document-checks.md
-    revision: 0.1.0
+    revision: 0.2.0
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -540,7 +540,7 @@ materials:
     role: portable_agent_onboarding_and_task_modes
     status: draft
     path: docs/runbook/cross-agent-development.md
-    revision: 0.2.0-draft
+    revision: 0.2.1-draft
     authority: user_authorized_local_pilot
     related:
       - AGENTS.md
@@ -566,9 +566,24 @@ materials:
     role: local_cross_agent_trial_evidence
     status: local_candidate
     path: docs/changelog/2026-10-18-cross-agent-onboarding.md
-    revision: cross-agent-2
+    revision: cross-agent-3
     authority: user_authorized_scoped_trial
     related:
       - docs/runbook/cross-agent-development.md
       - docs/specs/saas/notification-trigger/spec.md
     conflict_rule: "以真实 Agent 运行、候选差异、检查与独立回执为准；本地试跑不是托管 CI、全团队采用或所有宿主认证。"
+  - source_id: ming-iot-runbook-skill-draft-v01
+    lifecycle: current
+    body_bindings:
+      revision: skill.version
+    role: candidate_runbook_and_entry_maintenance_skill
+    status: draft
+    path: .agents/skills/ming-runbook/SKILL.md
+    revision: 0.1.0-draft
+    authority: user_authorized_scoped_trial
+    related:
+      - .agents/skills/ming-runbook/agents/openai.yaml
+      - docs/runbook/team-development.md
+      - docs/runbook/document-checks.md
+      - tooling/agents_check.py
+    conflict_rule: "规则以团队约定和所属 Feature 为准；本 Skill 仅提供操作知识及入口维护方法，本地检查不是强制门禁或团队采纳证明。"

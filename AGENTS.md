@@ -11,6 +11,7 @@
 | 理解项目目标、路线和完成标准 | [总纲](docs/project-charter.md) |
 | 理解或修改业务能力 | [业务地图](docs/specs/README.md) → Feature 入口 → 当前 spec；已知 Feature 可直接进入 |
 | 维护规格、需求决定或检查差异 | [ming-specs](.agents/skills/ming-specs/SKILL.md)，按请求选择读取与写回路径 |
+| 沉淀操作方法、维护入口或团队命令 | [ming-runbook](.agents/skills/ming-runbook/SKILL.md)，按任务维护所属正文与受影响导航 |
 | 首次使用某个 Agent 或新 clone | [跨 Agent 接入](docs/runbook/cross-agent-development.md) |
 | 准备开发、运行或测试环境 | [日常开发](docs/runbook/daily-development.md)、[部署入口](deploy/README.md) |
 | 任务明确纳入 LoopX | [LoopX 专用约定](docs/runbook/loopx-development.md)，沿用指定 Goal 与真实身份 |
@@ -26,7 +27,7 @@
 | `docs/specs/` | 域、Feature 当前知识及单次变更 |
 | `docs/architecture/`、`docs/runbook/` | 系统关系、共享设计及操作方法 |
 | `docs/changelog/`、`docs/vendor/`、`docs/wiki/` | 演进证据、外部来源、讨论与历史 |
-| `tooling/`、`.agents/skills/ming-specs/` | 团队检查工具与可选操作方法 |
+| `tooling/`、`.agents/skills/` | 团队检查工具与可选操作方法 |
 | `deploy/` | 隔离环境与部署说明 |
 
 ## 快速命令
@@ -37,6 +38,7 @@
 | --- | --- |
 | 查可用开发与验证入口 | `make help` |
 | 文档及方法变更检查 | `make knowledge-check`；[检查范围](docs/runbook/document-checks.md) |
+| 根入口或导航/命令变化检查 | `make agents-check`；[结果与失败处理](docs/runbook/document-checks.md#agents-local-check) |
 | 普通代码 PR 验证 | `make verify-pr`；[CI 与验证层次](docs/runbook/monorepo-ci.md) |
 | 检查实际提交 / PR 差异 | [完整差异入口](.agents/skills/ming-specs/references/pr-check.md) |
 

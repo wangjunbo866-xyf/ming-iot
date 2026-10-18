@@ -7,7 +7,7 @@ metadata:
 
 # Ming IoT 规格维护
 
-版本：0.12.0-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
+版本：0.12.1-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
 
 ## 先选路径
 
@@ -30,6 +30,8 @@ metadata:
 | 收敛主规格、交接执行 | [Patch 收敛](../../../docs/runbook/team-development.md#patch-convergence)、[交付与接手](../../../docs/runbook/team-development.md#handoff) | 同一候选收敛当前规则；保留吸收来源，原任务提供版本、待办和验证入口 | 下一位能从当前正文接手；合并、部署分别核实 |
 
 ## 执行时补齐什么
+
+- 任务只涉及操作经验、排障步骤或项目入口维护时，转 [ming-runbook](../ming-runbook/SKILL.md)；业务规则及需求决定继续写回所属 Feature。
 
 - 需要记录格式时才读[模板](references/templates.md)对应段落；复用原任务/PR/Change，格式不替代事实与批准。
 - 缺少现行规则时按[已有模块首次接入](../../../docs/runbook/team-development.md#observed-baseline)补可核实的最小基线；源码现状与已确认要求分别说明。
