@@ -214,14 +214,20 @@ func PrependTriggerUserLine(body string, t triggerUserFields) string {
 		if legacyLine != line {
 			// 旧版 manual 使用账号行；仅清理正文首尾的完整历史行。
 			body = strings.TrimSpace(body)
-			if strings.HasPrefix(body, legacyLine+"\r\n") {
-				body = strings.TrimPrefix(body, legacyLine+"\r\n")
-			} else {
-				body = strings.TrimPrefix(body, legacyLine+"\n")
-			}
-			body = strings.TrimSuffix(body, "\n"+legacyLine)
 			if body == legacyLine {
 				body = ""
+			} else {
+				// 先识别原始尾行，避免移除首行后丢失两行正文的尾部边界。
+				hasLegacySuffix := strings.HasSuffix(body, "\n"+legacyLine)
+				if strings.HasPrefix(body, legacyLine+"\r\n") {
+					body = strings.TrimPrefix(body, legacyLine+"\r\n")
+				} else {
+					body = strings.TrimPrefix(body, legacyLine+"\n")
+				}
+				if hasLegacySuffix {
+					body = strings.TrimSuffix(body, legacyLine)
+					body = strings.TrimSuffix(body, "\n")
+				}
 			}
 		}
 	}

@@ -203,6 +203,40 @@ func TestManualTriggerBodyCompatibility(t *testing.T) {
 	}
 }
 
+func TestManualTriggerBodyPreservesInteriorLegacyLine(t *testing.T) {
+	fields := triggerUserFields{Type: triggerTypeManual, Nick: "张三", Account: "13800138000"}
+	tests := []struct {
+		name string
+		body string
+		want string
+	}{
+		{"three LF lines", "由 13800138000 手动触发\n由 13800138000 手动触发\n由 13800138000 手动触发", "由 张三 手动触发\n由 13800138000 手动触发"},
+		{"only legacy line", "由 13800138000 手动触发", "由 张三 手动触发"},
+		{"two boundary lines", "由 13800138000 手动触发\n由 13800138000 手动触发", "由 张三 手动触发"},
+		{"four LF lines", "由 13800138000 手动触发\n由 13800138000 手动触发\n由 13800138000 手动触发\n由 13800138000 手动触发", "由 张三 手动触发\n由 13800138000 手动触发\n由 13800138000 手动触发"},
+		{"mixed CRLF and LF", "由 13800138000 手动触发\r\n由 13800138000 手动触发\n由 13800138000 手动触发", "由 张三 手动触发\n由 13800138000 手动触发"},
+		{"three CRLF lines", "由 13800138000 手动触发\r\n由 13800138000 手动触发\r\n由 13800138000 手动触发", "由 张三 手动触发\n由 13800138000 手动触发"},
+	}
+	for _, entry := range []struct {
+		name string
+		fn   func(string, triggerUserFields) string
+	}{
+		{"notification", PrependTriggerUserLine},
+		{"legacy alias", AppendTriggerUserLine},
+		{"manual scene", PrependRuleSceneTriggerLine},
+	} {
+		t.Run(entry.name, func(t *testing.T) {
+			for _, tt := range tests {
+				t.Run(tt.name, func(t *testing.T) {
+					if got := entry.fn(tt.body, fields); got != tt.want {
+						t.Fatalf("got %q want %q", got, tt.want)
+					}
+				})
+			}
+		})
+	}
+}
+
 func TestTriggerBodyCompleteLinesWithCRLF(t *testing.T) {
 	// BODY-COMPATIBILITY: 完整首行使用 CRLF 时仍应识别；其余正文原样保留。
 	fields := triggerUserFields{Type: triggerTypeManual, Nick: "张三", Account: "13800138000"}

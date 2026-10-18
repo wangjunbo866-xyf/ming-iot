@@ -592,7 +592,7 @@ materials:
     role: notification_tdd_pilot_evidence_and_cost
     status: local-candidate
     path: docs/changelog/2026-10-18-notification-tdd-pilot.md
-    revision: 0.1.0
+    revision: 0.2.0
     authority: user_authorized_scoped_pilot
     related:
       - docs/specs/saas/notification-trigger/spec.md
