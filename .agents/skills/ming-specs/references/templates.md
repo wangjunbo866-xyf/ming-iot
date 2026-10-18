@@ -4,6 +4,8 @@
 
 业务域、Feature、服务与本次变更按[唯一划分标准](../../../../docs/runbook/team-development.md#domain-feature-service)填写。下列为人工记录提示，不新增机器必填字段；纯术语问答或既有能力补录，不为填模板虚构新功能。
 
+实施记录先按[协作分工与依赖条件](../../../../docs/runbook/team-development.md#collaboration-records)选位置；模板不要求新建 plan/task 文件。仅需协调实施时，在原 Change（无 Change 的规则不变任务则在原任务）补“实施顺序与依赖”，按实际需要写目标/认领、前置接口或版本、验证与暂停条件，并引用唯一进度入口。这不是主规格的必填章节，已有记录可直接引用。
+
 ## 认领记录
 
 ```markdown
