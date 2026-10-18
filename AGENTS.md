@@ -48,6 +48,7 @@
 | 准备修改文件 | 先明确受影响 Feature、条款与修改范围，协调并行改动 | [认领与并行](docs/runbook/team-development.md#module-claim) |
 | 理解或更新规则 | 当前 spec 完整描述自身业务；原因与历史按需追溯 | [知识完整性](docs/runbook/team-development.md#feature-knowledge-completeness) |
 | 处理小改动 | 先判断约定行为是否改变，再选择最小记录与验证 | [小修改](docs/runbook/team-development.md#small-changes) |
+| 编写实现、修复或重构 | 按适用范围用测试驱动实现，交付时完成独立审计；具体 Skill 自选 | [TDD 与证据](docs/runbook/team-development.md#tdd-scope)、[独立审计](docs/runbook/team-development.md#independent-audit) |
 | 提交、交付或高风险操作 | 必读动作授权与公开边界；验证及独立评审绑定实际候选 | [交付边界](docs/runbook/team-development.md#delivery-boundaries)、[差异检查](docs/runbook/team-development.md#spec-code-check) |
 | 留存决定与验证 | 在原任务/Issue/PR 记录范围、决定及实际结果 | [交付与接手](docs/runbook/team-development.md#handoff) |
 
