@@ -597,4 +597,4 @@ materials:
     related:
       - docs/specs/saas/notification-trigger/spec.md
       - docs/runbook/team-development.md
-    conflict_rule: "记录本轮真实修复、原始红绿、独立审计与成本；最终候选以任务回执绑定，单例不证明团队采用或生产验收。"
+    conflict_rule: "记录通知真实改动、适用的 TDD 过程、独立审计与成本；最终候选以任务回执绑定，单例不证明团队采用或生产验收。"
