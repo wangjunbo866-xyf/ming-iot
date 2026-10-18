@@ -1,14 +1,14 @@
 ---
 status: draft
-version: 0.1.0-draft
+version: 0.1.1-draft
 date: 2026-10-18
 ---
 
 # LoopX 已纳管任务约定
 
-仅在[跨 Agent 接入](cross-agent-development.md)判定任务已明确纳入 LoopX 时读取本页。共同规则在 [AGENTS.md](../../AGENTS.md)；普通任务不依赖此运行环境。已接受的纳管任务不能通过改称“普通开发”绕开已有身份、Todo、写范围或 Gate。
+仅在任务负责人明确选择 LoopX，或已接受的任务明确由其管理时读取本页。本页是工具专用补充，不是团队默认开发流程。共同规则在 [AGENTS.md](../../AGENTS.md)；普通任务不依赖此运行环境。已接受的纳管任务不能通过改称“普通开发”绕开已有身份、Todo、写范围或 Gate。
 
-按[本机接入](daily-development.md#loopx-本机接入)定位已注册项目。缺配置时恢复或报告精确缺口，不重建 Goal、不复制他人 SQLite、不借用他人的 Agent 身份。当前试点复用同一 ming-iot-knowledge-pilot。
+按本页[本机接入](#local-setup)定位已注册项目。缺配置时恢复或报告精确缺口，不重建 Goal、不复制他人 SQLite、不借用他人的 Agent 身份。当前试点复用同一 ming-iot-knowledge-pilot。
 
 ## 开始修改前
 
@@ -59,3 +59,36 @@ date: 2026-10-18
 当前用户指令优先于旧阶段推荐；改变任务选择时先通过正式接口更新和重新准入。同一 Turn 的写回及结算按当前契约执行，不能把状态操作当产品验证。
 
 Agent 合并需要绑定精确 PR、Head、目标分支和方式的 User Gate；版本发布、生产、凭据处理和权限变更及重写已发布共享功能分支同样需要精确 Gate。根入口的 Git、公开和保护边界始终适用。本页不修改调度器、身份、数据库或宿主自动化配置。
+
+
+<a id="local-setup"></a>
+## 本机接入
+
+已有 `ming-iot-knowledge-pilot` 的维护机器继续使用同一 Goal、Agent 身份和 SQLite 数据库。经隔离验证及独立复审，已通过 LoopX 项目迁移入口把注册和 `.loopx/goals/` 状态目录迁入本仓；共享运行时、数据库与完整历史留在原位。此次采用固定本地候选，恢复时需使用支持该路由协议的运行包。具体证据与验收边界见 [M5 记录](../changelog/2026-10-15-m5-cutover.md)。
+
+在 Git 主工作区创建被忽略的 `.local/loopx.json`，填写本机已有 CLI 和 Registry 的绝对路径：
+
+```json
+{
+  "binary": "/absolute/path/to/loopx",
+  "registry": "/absolute/path/to/registered/registry.json"
+}
+```
+
+`tooling/loopx` 从 Git 公共目录定位该配置，独立工作树复用同一配置。它只转发参数，配置缺失即失败；不连接新项目、不建 Goal、不复制 Registry 或数据库。新同事不复制维护者的私有文件，应按自己获授权的 LoopX 项目完成接入；普通构建和知识检查不依赖 LoopX。
+
+```sh
+tooling/loopx --format json status --goal-id ming-iot-knowledge-pilot
+```
+
+Agent 的进展写回继续使用原准入身份和 Turn，并通过 `--delivery-workspace-path` 指定实际产出所在的独立工作树。该参数记录交付位置，不改变 Goal 注册路径。自动化使用稳定的主工作区入口，不指向临时工作树。
+
+## 迁移恢复与历史保留
+
+旧源码仓、原候选、私有备份继续保留，日常代码和文档改动在本仓进行。旧项目 Registry 已标记为退休，旧状态文件作为迁移前快照保留；当前写入由本仓注册位置承接。路由核验仍读取退休标记，部分历史材料仍引用旧来源，不能据此删除旧目录。
+
+如新入口失效，先核对 `.local/loopx.json` 指向已审运行包，再验证同一 Goal 的身份、Todo 和历史。旧版本会拒绝新路由，不能将换回旧二进制当作恢复。迁移中断只能按保留的原计划和摘要，通过迁移入口重试；先停止调度并排空在途写入。代码回退使用新的修复 PR，不覆盖旧仓、不重写主分支、不从备份重建同名 Goal。迁移计划、原始回执和备份仅私有保存。
+
+Codex Project 是工作区入口。创建或切换到 ming-iot Project 不需要创建第二个同名 Goal；当前对话可以继续使用上述稳定入口。明确继续该 Goal 的新聊天应读取现有 Goal，而不是重新初始化；普通开发聊天按通用入口开始。
+
+小黄反馈及依赖该反馈的任务已停止并废弃。现有代码与文档仍可供开发者理解和验证，历史 AI 交接演练保持原结论，未记录真人验收通过。

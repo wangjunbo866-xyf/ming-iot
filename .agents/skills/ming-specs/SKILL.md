@@ -7,11 +7,11 @@ metadata:
 
 # Ming IoT 规格维护
 
-版本：0.12.1-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
+版本：0.12.2-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
 
 ## 先选路径
 
-从当前工作树 [AGENTS.md](../../../AGENTS.md) 定位任务入口；已读且任务未变时无需重复读取。只读当前任务相关的章节，不预先通读所有约定、raw、Patch 或模板。首次接入或不清楚任务方式时读[通用接入](../../../docs/runbook/cross-agent-development.md#task-mode)；明确纳管后才读 LoopX 专用入口。
+从当前工作树 [AGENTS.md](../../../AGENTS.md) 定位任务入口；已读且任务未变时无需重复读取。只读当前任务相关的章节，不预先通读所有约定、raw、Patch 或模板。首次使用本仓开发方式时读[通用接入](../../../docs/runbook/cross-agent-development.md#task-mode)。
 
 从[业务地图](../../../docs/specs/README.md)找到 Feature README 与当前 spec；已知入口可直接读取。先判断当前规则、候选、实现和部署分别是什么状态。以下一行就是本次操作的阅读与写回契约；复合任务依次选实际涉及的行。
 
