@@ -19,6 +19,17 @@ class IsolationTest(unittest.TestCase):
         """合法 profile 必须通过。"""
         validate(self.config)
 
+    def test_local_volume_driver(self):
+        cfg = copy.deepcopy(self.config)
+        cfg['volumes']['postgres_postgis_data']['driver'] = 'local'
+        validate(cfg)
+
+    def test_reject_external_volume_driver(self):
+        cfg = copy.deepcopy(self.config)
+        cfg['volumes']['postgres_postgis_data']['driver'] = 'remote-storage'
+        with self.assertRaises(ValueError):
+            validate(cfg)
+
     def test_reject_unsafe_resources(self):
         """四种实际危险配置必须被合同阻断。"""
         for mutation in ('port', 'external', 'bind', 'volume'):

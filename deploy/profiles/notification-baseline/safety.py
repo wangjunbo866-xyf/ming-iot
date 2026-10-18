@@ -20,6 +20,7 @@ def validate(config):
     require(set(config['volumes']) == {'postgres_postgis_data', 'nats_data', 'redis_data'}, 'unexpected volume')
     for key, volume in config['volumes'].items():
         require(not volume.get('external') and not volume.get('driver_opts'), 'external volume')
+        require(volume.get('driver', 'local') == 'local', 'external volume driver')
         require(volume.get('name') == 'ming-iot-notification-baseline_' + key, 'volume name')
     require(set(config['services']) == {'postgres', 'redis', 'nats', 'syssvr', 'probe'}, 'unexpected service')
     for name, service in config['services'].items():

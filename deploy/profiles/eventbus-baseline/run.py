@@ -26,38 +26,45 @@ def run(args, timeout=180, capture=True):
     return result.stdout or ""
 
 
+def require(condition, message):
+    """隔离和验收检查在 python -O 下也必须执行。"""
+    if not condition:
+        raise ValueError(message)
+
+
 def check(config):
     """拒绝外部网络、宿主端口、外部卷、额外服务及配置注入。"""
-    assert config["name"] == PROJECT
-    assert set(config["services"]) == {"kafka", "redis", "cache-a", "cache-b", "probe"}
+    require(config["name"] == PROJECT, "unexpected compose project")
+    require(set(config["services"]) == {"kafka", "redis", "cache-a", "cache-b", "probe"}, "unexpected service set")
     networks = config["networks"]
-    assert set(networks) == {"isolated"} and networks["isolated"].get("internal") is True
-    assert networks["isolated"].get("name") == PROJECT + "_isolated"
-    assert not networks["isolated"].get("external")
-    assert set(config["volumes"]) == {"kafka_data", "redis_data"}
+    require(set(networks) == {"isolated"} and networks["isolated"].get("internal") is True, "internal isolated network required")
+    require(networks["isolated"].get("name") == PROJECT + "_isolated", "unexpected network name")
+    require(not networks["isolated"].get("external"), "external network forbidden")
+    require(set(config["volumes"]) == {"kafka_data", "redis_data"}, "unexpected volume set")
     for name, volume in config["volumes"].items():
-        assert volume.get("name") == PROJECT + "_" + name and not volume.get("external")
+        require(volume.get("name") == PROJECT + "_" + name and not volume.get("external"), f"{name}: dedicated volume required")
+        require(volume.get("driver", "local") == "local" and not volume.get("driver_opts"), f"{name}: volume driver or options forbidden")
     images = {
         "kafka": "apache/kafka:4.3.1@sha256:77e3df9054047a88b520d0cc46e16696d3b22022e1d580aeccd2632df6532837",
         "redis": "redis:7.4-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf",
     }
     for name, service in config["services"].items():
-        assert service["image"] == images.get(name, "ming-iot-eventbus-baseline:local")
-        assert service.get("pull_policy") == "never"
-        assert set(service["networks"]) == {"isolated"}
-        for forbidden in ("ports", "network_mode", "privileged", "devices", "extra_hosts", "env_file", "secrets", "configs", "cap_add", "pid", "ipc"):
-            assert not service.get(forbidden), (name, forbidden)
-        assert service.get("environment", {}) == ({"CLUSTER_ID": "P1BusVerifyIndependent1"} if name == "kafka" else {})
+        require(service["image"] == images.get(name, "ming-iot-eventbus-baseline:local"), f"{name}: unexpected image")
+        require(service.get("pull_policy") == "never", f"{name}: image pull forbidden")
+        require(set(service["networks"]) == {"isolated"}, f"{name}: unexpected network")
+        for forbidden in ("ports", "network_mode", "privileged", "devices", "extra_hosts", "env_file", "secrets", "configs", "cap_add", "pid", "ipc", "volumes_from"):
+            require(not service.get(forbidden), f"{name}: {forbidden} forbidden")
+        require(service.get("environment", {}) == ({"CLUSTER_ID": "P1BusVerifyIndependent1"} if name == "kafka" else {}), f"{name}: unexpected environment")
         for volume in service.get("volumes", []):
             if volume["type"] == "bind":
-                assert name == "kafka" and Path(volume["source"]).resolve() == PROFILE / "config"
-                assert volume["target"] == "/mnt/shared/config" and volume.get("read_only") is True
+                require(name == "kafka" and Path(volume["source"]).resolve() == PROFILE / "config", f"{name}: unexpected bind source")
+                require(volume["target"] == "/mnt/shared/config" and volume.get("read_only") is True, f"{name}: read-only config mount required")
             else:
-                assert volume["type"] == "volume" and volume["source"] == name + "_data"
-                assert volume["target"] == {"kafka": "/var/lib/kafka/data", "redis": "/data"}[name]
+                require(volume["type"] == "volume" and volume["source"] == name + "_data", f"{name}: unexpected volume source")
+                require(volume["target"] == {"kafka": "/var/lib/kafka/data", "redis": "/data"}[name], f"{name}: unexpected volume target")
     properties = (PROFILE / "config/server.properties").read_text()
-    assert "advertised.listeners=INTERNAL://kafka:29092\n" in properties
-    assert "EXTERNAL" not in properties
+    require("advertised.listeners=INTERNAL://kafka:29092\n" in properties, "internal advertised listener required")
+    require("EXTERNAL" not in properties, "external listener forbidden")
 
 
 def contract():
@@ -99,14 +106,14 @@ def verify(evidence, cycle):
     for name in "ab":
         wait("ready " + name, lambda name=name: call(name, "/state")["ready"])
     ids = [run(COMPOSE + ["ps", "-q", "cache-" + n]).strip() for n in "ab"]
-    assert ids[0] and ids[1] and ids[0] != ids[1]
+    require(ids[0] and ids[1] and ids[0] != ids[1], "two distinct cache processes required")
     key = "p1-" + uuid.uuid4().hex
-    assert call("a", "/write", {"key": key, "value": "v1"}).get("ok")
+    require(call("a", "/write", {"key": key, "value": "v1"}).get("ok"), "v1 write failed")
     for name in "ab":
         wait("broadcast v1 " + name, lambda name=name: call(name, "/state")["notifications"].get(key, 0) >= 1)
-        assert assert_read(name, key, "v1")
-        assert assert_read(name, key, "v1")
-    assert call("a", "/write", {"key": key, "value": "v2"}).get("ok")
+        require(assert_read(name, key, "v1"), f"{name}: initial v1 read failed")
+        require(assert_read(name, key, "v1"), f"{name}: cached v1 read failed")
+    require(call("a", "/write", {"key": key, "value": "v2"}).get("ok"), "v2 write failed")
     for name in "ab":
         wait("broadcast v2 " + name, lambda name=name: call(name, "/state")["notifications"].get(key, 0) >= 2)
         wait("read v2 " + name, lambda name=name: assert_read(name, key, "v2"))
@@ -117,15 +124,15 @@ def verify(evidence, cycle):
     try:
         wait("disconnected readiness", lambda: not call("b", "/state")["ready"], 20)
         rejected = call("b", "/read?key=" + key)
-        assert not rejected.get("ok"), rejected
-        assert call("a", "/write", {"key": key, "value": "v3"}).get("ok")
+        require(not rejected.get("ok"), f"offline read must fail: {rejected}")
+        require(call("a", "/write", {"key": key, "value": "v3"}).get("ok"), "v3 write failed")
         wait("healthy replica", lambda: assert_read("a", key, "v3"))
     finally:
         run(DOCKER + ["network", "connect", "--alias", "cache-b", network, ids[1]])
     wait("reconnected readiness", lambda: call("b", "/state")["ready"], 60)
     wait("recovered value", lambda: assert_read("b", key, "v3"))
     after = call("b", "/state")
-    assert after["generation"] > before["generation"] and after["pid"] == before["pid"]
+    require(after["generation"] > before["generation"] and after["pid"] == before["pid"], "reconnect must advance generation within the same process")
     wait("replayed invalidation", lambda: call("b", "/state")["notifications"].get(key, 0) >= 3)
     result = {"case": "two-real-cache-processes", "result": "PASS", "cycle": cycle,
               "key": key, "containers": ids, "before": before, "after": after, "offline_read": rejected}
