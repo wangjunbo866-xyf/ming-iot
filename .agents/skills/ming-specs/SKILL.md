@@ -7,7 +7,7 @@ metadata:
 
 # Ming IoT 规格维护
 
-版本：0.14.0-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
+版本：0.14.1-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
 
 ## 先选路径
 
@@ -26,7 +26,7 @@ metadata:
 | 小修复、重构、补测试或说明 | 当前条款、[小修改](../../../docs/runbook/team-development.md#small-changes) | 先比约定行为；规则不变则改实际文件，在原任务留条款、理由和验证；规则缺失或改变转澄清/变更路径 | 用对应回归证明所述范围；不为了检查制造 Patch |
 | 新建能力、改变行为、退出或探索 | [四种类型](../../../docs/runbook/team-development.md#change-types)中对应类型；Patch 读[收敛规则](../../../docs/runbook/team-development.md#patch-convergence) | 按归属写 feature/patch/sunset/blueprint；规则变化在同一候选更新完整主规格与双向指针 | 业务取舍有真实确认；候选状态、验收、未决项与依赖一致 |
 | 引入可选分析方法 | [分析接入与写回](../../../docs/runbook/team-development.md#optional-analysis-skills) | 方法产物映射回当前 Feature/Change，保留事实、建议与真实决定；不另建平行业务正文 | 新发现有归属、确认责任和下一步 |
-| 判断计划需求、安排实施或接续协作 | [记录分工与实施依赖](../../../docs/runbook/team-development.md#collaboration-records)、相关认领与当前条款 | 复用 Spec、Change、认领和原任务/PR；不默认新增 plan/task 文件；有影响推进的依赖时，在同一 Change 或原任务补实施顺序，状态引用唯一主入口 | 接手者能判断范围、前置条件和验证；简单任务无额外计划要求，复杂任务依赖可查 |
+| 安排协作依赖、交付方法产物或接续工作 | [个人方法与共享记录](../../../docs/runbook/team-development.md#collaboration-records)、相关认领与当前条款 | 个人可自由使用 Skill 生成 plan/task 并执行 TDD，文件不要求提交 Git；需共享的决定、实施依赖和验证结果回到 Spec、Change 或原任务/PR，团队状态引用唯一主入口 | 接手者不依赖个人计划也能理解规则、范围和前置条件；没有计划文件不阻塞交付 |
 | 准备实现、修复、重构或补测试 | [TDD 适用范围](../../../docs/runbook/team-development.md#tdd-scope)、[证据与缺口](../../../docs/runbook/team-development.md#tdd-evidence)及已确认条款 | 将规则/验收例子关联测试与实际结果；首次运行前确定快照和日志留存位置，再按适用路径推进；成员自行选实现 Skill，证据复用原任务/PR，缺口按约定处理 | 适用过程、有效测试、最终验证分别有依据；不适用和例外明确，不用事后回放冒充原始过程 |
 | 提交、PR 或交付 | [差异检查](../../../docs/runbook/team-development.md#spec-code-check)、[独立审计](../../../docs/runbook/team-development.md#independent-audit)、[工具命令](references/pr-check.md)、[动作边界](../../../docs/runbook/team-development.md#delivery-boundaries) | 从实际完整差异找归属；运行适用检查，由独立评审者审查并闭环发现；证据与结论留原任务/PR | 需求、测试、实现/集成及知识均已审查；最终候选、未验证项和处理决定明确 |
 | 收敛主规格、交接执行 | [Patch 收敛](../../../docs/runbook/team-development.md#patch-convergence)、[交付与接手](../../../docs/runbook/team-development.md#handoff) | 同一候选收敛当前规则；保留吸收来源，原任务提供版本、待办和验证入口 | 下一位能从当前正文接手；合并、部署分别核实 |
@@ -35,7 +35,7 @@ metadata:
 
 - 任务只涉及操作经验、排障步骤或项目入口维护时，转 [ming-runbook](../ming-runbook/SKILL.md)；业务规则及需求决定继续写回所属 Feature。
 
-- 需要记录格式时才读[模板](references/templates.md)对应段落；复用原任务/PR/Change，格式不替代事实与批准。实施前或所选 Skill 要生成计划/任务文件时，先走“判断计划需求”路径；临时清单不自动成为团队维护材料。
+- 需要记录格式时才读[模板](references/templates.md)对应段落；复用原任务/PR/Change，格式不替代事实与批准。个人计划由成员及所选方法自行生成和使用；出现共享依赖或准备交付方法产物时选上表对应路径，提取团队需要的知识与证据，不要求上传整份个人计划。
 - 缺少现行规则时按[已有模块首次接入](../../../docs/runbook/team-development.md#observed-baseline)补可核实的最小基线；源码现状与已确认要求分别说明。
 - 新事实与已有规则冲突时，回到对应条款判断实现偏差、需求歧义或业务调整；只对依赖真实取舍的部分请求确认。人的责任与已有授权按[责任约定](../../../docs/runbook/team-development.md#responsibilities)核对。
 - 单 Patch 暂存区检查、离线或跨权限的固定快照仅在任务需要时读[手动检查与快照](references/pilot-regressions.md)；日常接手无需额外交接包。
