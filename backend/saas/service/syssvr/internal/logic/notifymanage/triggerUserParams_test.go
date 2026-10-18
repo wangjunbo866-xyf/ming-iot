@@ -203,6 +203,50 @@ func TestManualTriggerBodyCompatibility(t *testing.T) {
 	}
 }
 
+func TestTriggerBodyCompleteLinesWithCRLF(t *testing.T) {
+	// BODY-COMPATIBILITY: 完整首行使用 CRLF 时仍应识别；其余正文原样保留。
+	fields := triggerUserFields{Type: triggerTypeManual, Nick: "张三", Account: "13800138000"}
+	tests := []struct {
+		name string
+		body string
+		want string
+	}{
+		{"current prefix", "由 张三 手动触发\r\n设备已联动\r\n请检查", "由 张三 手动触发\r\n设备已联动\r\n请检查"},
+		{"legacy prefix", "由 13800138000 手动触发\r\n设备已联动\r\n请检查", "由 张三 手动触发\n设备已联动\r\n请检查"},
+		{"legacy boundaries and middle", "由 13800138000 手动触发\r\n开始\r\n由 13800138000 手动触发\r\n结束\r\n由 13800138000 手动触发", "由 张三 手动触发\n开始\r\n由 13800138000 手动触发\r\n结束"},
+		{"partial prefix", "由 张三 手动触发后继续\r\n设备已联动", "由 张三 手动触发\n由 张三 手动触发后继续\r\n设备已联动"},
+		{"bare carriage return is not CRLF", "由 张三 手动触发\r设备已联动", "由 张三 手动触发\n由 张三 手动触发\r设备已联动"},
+	}
+	for _, entry := range []struct {
+		name string
+		fn   func(string, triggerUserFields) string
+	}{
+		{"notification", PrependTriggerUserLine},
+		{"legacy alias", AppendTriggerUserLine},
+		{"manual scene", PrependRuleSceneTriggerLine},
+	} {
+		t.Run(entry.name, func(t *testing.T) {
+			for _, tt := range tests {
+				t.Run(tt.name, func(t *testing.T) {
+					if got := entry.fn(tt.body, fields); got != tt.want {
+						t.Fatalf("got %q want %q", got, tt.want)
+					}
+				})
+			}
+		})
+	}
+	// 没有触发人时不做换行标准化；自动触发仍用账号且保留完整首行。
+	body := " 开始\r\n结束 "
+	if got := PrependTriggerUserLine(body, triggerUserFields{}); got != body {
+		t.Fatalf("empty trigger changed body: %q", got)
+	}
+	auto := triggerUserFields{Type: triggerTypeAuto, Nick: "张三", Account: "13800138000"}
+	body = "由 13800138000 触发\r\n设备已联动"
+	if got := PrependTriggerUserLine(body, auto); got != body {
+		t.Fatalf("auto prefix: got %q want %q", got, body)
+	}
+}
+
 func TestNonManualTriggerBodyPreservesManualAccountLine(t *testing.T) {
 	body := "由 13800138000 手动触发\n设备已联动\n由 13800138000 手动触发"
 	want := "由 13800138000 触发\n由 13800138000 手动触发\n设备已联动\n由 13800138000 手动触发"

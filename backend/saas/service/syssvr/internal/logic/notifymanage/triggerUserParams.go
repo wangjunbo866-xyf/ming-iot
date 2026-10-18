@@ -214,7 +214,11 @@ func PrependTriggerUserLine(body string, t triggerUserFields) string {
 		if legacyLine != line {
 			// 旧版 manual 使用账号行；仅清理正文首尾的完整历史行。
 			body = strings.TrimSpace(body)
-			body = strings.TrimPrefix(body, legacyLine+"\n")
+			if strings.HasPrefix(body, legacyLine+"\r\n") {
+				body = strings.TrimPrefix(body, legacyLine+"\r\n")
+			} else {
+				body = strings.TrimPrefix(body, legacyLine+"\n")
+			}
 			body = strings.TrimSuffix(body, "\n"+legacyLine)
 			if body == legacyLine {
 				body = ""
@@ -232,10 +236,7 @@ func prependNotifyLine(body, line string) string {
 	if body == line {
 		return line
 	}
-	if strings.HasPrefix(body, line+"\n") {
-		return body
-	}
-	if strings.HasPrefix(body, line) && (len(body) == len(line) || body[len(line)] == '\n') {
+	if strings.HasPrefix(body, line+"\n") || strings.HasPrefix(body, line+"\r\n") {
 		return body
 	}
 	// 兼容历史数据：触发人在末尾时移到逻辑上的「前面」展示
