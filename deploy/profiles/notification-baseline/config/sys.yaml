@@ -1,0 +1,16 @@
+# 隔离通知基线：所有依赖仅位于专属 internal 网络。
+Name: notification.baseline.sys
+ListenOn: 0.0.0.0:9180
+Mode: test
+CpuThreshold: 0
+Log: {Encoding: plain, Level: error}
+Database: {DBType: pgsql, IsInitTable: true, DSN: "host=postgres user=notification password=notification-local-only dbname=notification port=5432 sslmode=disable"}
+CacheRedis: [{Host: "redis:6379", Type: node}]
+Event: {Mode: natsJs, Nats: {Url: "nats://nats:4222", Consumer: notification-baseline}}
+OssConf: {OssType: local, StorePath: /tmp/oss}
+UserToken: {AccessSecret: notification-baseline-not-for-authentication, AccessExpire: 3600}
+UserOpt: {NeedUserName: true, NeedPassWord: true}
+Map: {Mode: gaode, AccessKey: disabled, AccessSecret: disabled}
+Sms: {Enable: false}
+TimedJobRpc: {Enable: false}
+UniPush: {Enabled: false}

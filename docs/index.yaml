@@ -15,13 +15,13 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.2
+    revision: 1.1.1
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
       - docs/wiki/team-development-outline.md
       - docs/changelog/2026-10-16-specs-merged-next-plan.md
-    conflict_rule: "当前方向总入口；单仓与已确认边界沿用用户决定，阶段结论按证据范围，未来 S4/扩域/门禁保持提案。方向已收敛；有界文档检查的 GitHub 交付已获授权，具体范围见本轮交付条目和公开策略；不自动去重、归档、启用全库门禁或合并；旧 r-doc 简介、父子仓与先做门禁的建议不再决定当前路线。保留同一 Goal、历史、旧仓与私有备份，小黄任务不恢复。"
+    conflict_rule: "总目标、设计原则、阶段顺序和验收以本总纲为准；具体业务规则归对应 Feature 当前规格，历史条目保留原时点。用户最新指令优先，候选、已合并、运行验证和正式采用分别判定；索引不复述业务决定与逐轮进度。"
   - source_id: ming-iot-specs-pr5-merged-next-plan-20261016
     lifecycle: historical
     role: specs_merge_acceptance_and_next_plan
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.6.0-draft
+    revision: 0.16.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.6.0-draft
+    revision: 0.15.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -353,7 +353,7 @@ materials:
     role: bounded_document_structure_checks
     status: local-candidate
     path: docs/runbook/document-checks.md
-    revision: 0.1.0
+    revision: 0.2.0
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -378,3 +378,223 @@ materials:
       - docs/runbook/monorepo-ci.md
       - tooling/policy/PUBLICATION_POLICY.json
     conflict_rule: "本轮授权将三个已验证候选一起推送、创建 PR、运行真实 CI 与独立复审；最终 Head/运行/结论以 PR 及同一 Goal 回执为准。不授权合并、自动去重归档、全库门禁或删除旧源与私有备份；历史实验和采用边界保留。"
+  - source_id: ming-iot-governance-pr6-merged-next-plan-20261017
+    lifecycle: historical
+    role: governance_merge_acceptance_and_next_plan
+    status: proposal
+    path: docs/changelog/2026-10-17-governance-merged-next-plan.md
+    revision: merge-plan-2
+    authority: user_authorized_merge_verification_and_planning
+    related:
+      - docs/project-charter.md
+      - docs/changelog/2026-10-17-knowledge-governance-delivery.md
+      - docs/runbook/team-development.md
+    conflict_rule: "用户已授权 PR6 合并及 main 验证，后续授权修正模块入口、同步总纲计划；本轮仅做只读环境预检，未启动服务，入口修正未推送。本文记录事实与建议，当前总纲决定方向。S4 业务任务、责任分配及后续工具增强尚未启动；保留旧仓、私有备份与历史，不恢复小黄任务，不自动去重归档或启用全库门禁。"
+  - source_id: ming-iot-requirement-delivery-workflow
+    lifecycle: current
+    role: requirement_intake_to_delivery_workflow
+    status: draft
+    path: docs/runbook/requirement-to-delivery.md
+    revision: 0.2.3
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_scoped_pilot
+    related:
+      - docs/runbook/team-development.md
+      - .agents/skills/ming-specs/SKILL.md
+      - docs/specs/platform/eventbus/README.md
+    conflict_rule: "操作页复用团队约定，按当前域与 Feature 入口接手；PA 设计已从 Kafka Patch 提取，来源与依赖保留，不代表 Kafka 全面迁移、PA 实施或团队正式采用。"
+  - source_id: ming-iot-eventbus-observed
+    lifecycle: current
+    role: eventbus_current_rules_and_legacy_observation
+    status: confirmed
+    path: docs/specs/platform/eventbus/spec.md
+    revision: p1-v1
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_scoped_pilot
+    related:
+      - docs/specs/platform/eventbus/README.md
+      - docs/specs/platform/eventbus/raw.md
+    conflict_rule: "P1 显式新入口当前规则与旧NATS观察分开；只在本地候选生效，未切换业务服务。运行、复审及最终Head见同Goal回执。"
+  - source_id: ming-iot-eventbus-kafka-migration
+    lifecycle: current
+    role: eventbus_kafka_requirement_and_decisions
+    status: confirmed
+    path: docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    revision: R13
+    body_bindings:
+      revision: frontmatter.revision
+      status: frontmatter.status
+    authority: user_authorized_scoped_pilot
+    related:
+      - docs/specs/platform/eventbus/README.md
+      - docs/specs/platform/eventbus/raw.md
+      - docs/specs/platform/eventbus/spec.md
+      - docs/specs/protocol/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+    conflict_rule: "R13 继承 P1 及 D13-D15，D16 仅授权分域与规格入口文档；第11节保留历史评估，PA 当前设计转到 protocol.uplink-normalization。原决定与跨域依赖留在本 Patch；P2-P6 未实施，保留旧环境和数据，不推送。"
+  - source_id: ming-iot-raw-reliable-rfc-20260906
+    lifecycle: historical
+    role: historical_raw_canonical_recovery_design
+    status: accepted-design-only
+    path: docs/wiki/legacy/rd/rfcs/2026-09-06-raw-log-deployment-profiles-and-reliable-v1.md
+    revision: "2026-09-06"
+    authority: historical_owner_design_confirmation
+    related:
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "历史Reliable设计与当时确认保留；不证明当前实现或授权部署。R12第11节保存当时差异评估，R13后的上行当前设计由protocol.uplink-normalization维护；D15选择decode-first，旧Reliable不作为当前实施要求。"
+  - source_id: ming-iot-notification-runtime-runbook
+    lifecycle: current
+    role: isolated_notification_runtime_reproduction
+    status: local-candidate
+    path: docs/runbook/notification-baseline.md
+    revision: 0.1.0
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_scoped_pilot
+    related:
+      - deploy/README.md
+      - docs/specs/saas/notification-trigger/spec.md
+      - docs/changelog/2026-10-17-notification-runtime-baseline.md
+    conflict_rule: "只证明实际通知RPC到持久化及重启复验；不代表HTTP鉴权、Eventbus消费、Kafka或外部推送验收。"
+  - source_id: ming-iot-notification-runtime-20261017
+    lifecycle: historical
+    role: notification_baseline_and_requirement_intake_evidence
+    status: local-candidate
+    path: docs/changelog/2026-10-17-notification-runtime-baseline.md
+    revision: 0.1.0
+    authority: user_authorized_scoped_pilot
+    related:
+      - docs/project-charter.md
+      - docs/runbook/requirement-to-delivery.md
+      - docs/specs/platform/eventbus/README.md
+    conflict_rule: "同一Goal的本轮授权与局部证据；最终Head、完整验证和独立Review由外部回执绑定，保留旧环境、旧仓、备份和历史。"
+  - source_id: ming-iot-protocol-domain
+    lifecycle: current
+    role: protocol_capability_domain_navigation
+    status: draft
+    path: docs/specs/protocol/README.md
+    revision: 0.2.1-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_document_structure
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/runbook/team-development.md
+    conflict_rule: "域入口维护职责与导航；服务部署未定，业务规则由各 Feature 当前正文维护；不视为已完成 DDD 或运行验收。"
+  - source_id: ming-iot-protocol-uplink-entry
+    lifecycle: current
+    role: protocol_uplink_feature_navigation
+    status: draft
+    path: docs/specs/protocol/uplink-normalization/README.md
+    revision: 0.2.2-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_authorized_document_structure
+    related:
+      - docs/specs/protocol/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+      - docs/specs/protocol/uplink-normalization/raw.md
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "只登记文档入口，产品差异映射及新链路实施尚未开始；长期责任仍待分配。"
+  - source_id: ming-iot-protocol-uplink-raw
+    lifecycle: current
+    role: protocol_uplink_requirements_and_clarifications
+    status: source-record
+    path: docs/specs/protocol/uplink-normalization/raw.md
+    revision: 1.0.0
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_statements_with_dated_provenance
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+    conflict_rule: "上行功能的本地需求来源；迁入摘录保留原日期和答复，不构成新批准。后续澄清在此追加，当前规则由同目录 spec 维护；原 Eventbus 记录只作历史，实施和运行验收仍未完成。"
+  - source_id: ming-iot-protocol-uplink-spec
+    lifecycle: current
+    role: protocol_uplink_candidate_specification
+    status: draft
+    path: docs/specs/protocol/uplink-normalization/spec.md
+    revision: 0.2.1-draft
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: candidate_with_inherited_confirmed_boundaries
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/specs/protocol/uplink-normalization/raw.md
+      - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
+    conflict_rule: "本 Feature 唯一当前设计正文；来源与真实答复在本目录 raw，原 Eventbus 记录仅供历史追溯。0.2.1 只纠正知识归属；PA-D1-D3 等已确认行为不变，技术契约仍为候选，不授权实施或推送。"
+  - source_id: ming-iot-cross-agent-development
+    lifecycle: current
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    role: portable_agent_onboarding_and_task_modes
+    status: draft
+    path: docs/runbook/cross-agent-development.md
+    revision: 0.2.2-draft
+    authority: user_authorized_local_pilot
+    related:
+      - AGENTS.md
+      - docs/runbook/loopx-development.md
+      - docs/runbook/daily-development.md
+    conflict_rule: "普通任务不依赖维护者私有调度环境；已明确纳管任务保留原约束。本地试跑不代表所有 Agent 自动加载、团队采用或新强制门禁。"
+  - source_id: ming-iot-loopx-task-mode
+    lifecycle: current
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    role: managed_task_only_execution_contract
+    status: draft
+    path: docs/runbook/loopx-development.md
+    revision: 0.1.1-draft
+    authority: preserved_managed_task_constraints
+    related:
+      - AGENTS.md
+      - docs/runbook/cross-agent-development.md
+    conflict_rule: "只对明确纳管任务生效；移动原控制面约定不解除已有 Todo/Gate，也不改变 Goal、历史、权限或调度器。"
+  - source_id: ming-iot-cross-agent-pilot-20261018
+    lifecycle: historical
+    role: local_cross_agent_trial_evidence
+    status: local_candidate
+    path: docs/changelog/2026-10-18-cross-agent-onboarding.md
+    revision: cross-agent-3
+    authority: user_authorized_scoped_trial
+    related:
+      - docs/runbook/cross-agent-development.md
+      - docs/specs/saas/notification-trigger/spec.md
+    conflict_rule: "以真实 Agent 运行、候选差异、检查与独立回执为准；本地试跑不是托管 CI、全团队采用或所有宿主认证。"
+  - source_id: ming-iot-runbook-skill-draft-v01
+    lifecycle: current
+    body_bindings:
+      revision: skill.version
+    role: candidate_runbook_and_entry_maintenance_skill
+    status: draft
+    path: .agents/skills/ming-runbook/SKILL.md
+    revision: 0.1.1-draft
+    authority: user_authorized_scoped_trial
+    related:
+      - .agents/skills/ming-runbook/agents/openai.yaml
+      - docs/runbook/team-development.md
+      - docs/runbook/document-checks.md
+      - tooling/agents_check.py
+    conflict_rule: "规则以团队约定和所属 Feature 为准；本 Skill 仅提供操作知识及入口维护方法，本地检查不是强制门禁或团队采纳证明。"
+  - source_id: ming-iot-notification-tdd-pilot-20261018
+    lifecycle: historical
+    role: notification_tdd_pilot_evidence_and_cost
+    status: local-candidate
+    path: docs/changelog/2026-10-18-notification-tdd-pilot.md
+    revision: 0.3.0
+    authority: user_authorized_scoped_pilot
+    related:
+      - docs/specs/saas/notification-trigger/spec.md
+      - docs/runbook/team-development.md
+    conflict_rule: "记录通知真实改动、适用的 TDD 过程、独立审计与成本；最终候选以任务回执绑定，单例不证明团队采用或生产验收。"

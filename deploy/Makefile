@@ -73,3 +73,8 @@ kafka-logs:
 
 kafka-down:
 	$(KAFKA_COMPOSE) down
+
+# 隔离通知基线，停止保留专属持久卷。
+.PHONY: notification-baseline-contract notification-baseline-build notification-baseline-up notification-baseline-verify notification-baseline-stop notification-baseline-logs
+notification-baseline-contract notification-baseline-build notification-baseline-up notification-baseline-verify notification-baseline-stop notification-baseline-logs:
+	$(ROOT)/deploy/profiles/notification-baseline/run.sh $(patsubst notification-baseline-%,%,$@)

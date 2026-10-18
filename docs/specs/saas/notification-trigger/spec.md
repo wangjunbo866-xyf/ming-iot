@@ -6,7 +6,7 @@ source_revision: c165a56531f58421a870a0b8794f24556b60d3b2
 
 # 通知触发人展示：当前主规格
 
-本规格覆盖通知触发人格式化及正文组装，不涵盖整个通知领域。适用代码是上方新仓 main 基线；本轮只收敛文档，不改变业务行为。手动昵称优先沿用 [R2 的 D2 与 AC1–AC4](patches/PATCH-20261014-display-name/change.md)；其余行为由既有实现与测试核实，不扩展为新的业务承诺。旧现状原文保留在 [observed-v0 快照](spec.observed-v0.md)，仅用于追溯。
+本规格覆盖通知触发人格式化及正文组装，不涵盖整个通知领域。上方记录 S1 收敛时的新仓 main 来源基线；后续实现修复的本地候选与验证在对应条款标注，不能据此推断 main 或生产已更新。手动昵称优先沿用 [R2 的 D2 与 AC1–AC4](patches/PATCH-20261014-display-name/change.md)；其余行为由既有实现与测试核实，不扩展为新的业务承诺。旧现状原文保留在 [observed-v0 快照](spec.observed-v0.md)，仅用于追溯。
 
 `effective` 限上述代码版本的格式化行为；文档候选、验证与最终评审另见 [S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)，不代表生产部署或真人验收。
 
@@ -30,6 +30,8 @@ source_revision: c165a56531f58421a870a0b8794f24556b60d3b2
 
 `FormatRuleSceneNotifyLine` 仅在 Type=deviceButton 且 UserID>0 时选择上述专用入口；其他输入走通用入口。动作取正文中清理空白后的非空行，以 Unicode 字符数最长的一行为准，相同长度取首个；不把“信息最完整”作为可额外推断的规则。直接调用 `PrependRuleSceneTriggerLine` 时，manual 复用下述手动兼容处理，其他类型使用场景入口。发送流程是否调用该函数见 [调用边界](#call-sites)。
 
+本地保护性重构候选在遍历时记录最长行及其字符数，避免为后续各行重复扫描当前最长行；选择规则不变。行为保护、合成基准及候选审计见 [Superpowers 7.0 试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#superpowers7-pilot)，不表示已合并、部署或证明真实发送性能收益。
+
 <a id="body-compatibility"></a>
 ## BODY-COMPATIBILITY：正文与旧格式
 
@@ -38,6 +40,10 @@ source_revision: c165a56531f58421a870a0b8794f24556b60d3b2
 - manual 有非空 Account，且旧账号行 `由 {trim(Account)} 手动触发` 与当前行不同时，清理正文首尾空白后，仅移除匹配的首部完整行、尾部完整行或唯一整行，再组装新行。非 manual 不执行此清理。
 - 不清理正文中间的同文行、部分匹配或其他账号的行；不是任意全文替换，也不是循环清理所有重复历史行。
 - 通用组装：触发人行为空时原样返回正文；否则清理正文首尾空白。正文已经等于当前行或以当前完整行开头时保留，不重复添加。否则将尾部匹配的完整当前行移到前面；空正文返回当前行，其余返回 `当前行 + 换行 + 正文`。
+
+“唯一整行”以清理首尾空白后的原正文判断。移除首尾旧账号行后，原来位于中间的同文行仍属于正文，不能再当作唯一历史行删除。例如正文为三行相同旧账号行时，只移除首尾两行，输出新触发人行和保留的中间行。此边界的本地修复与接续验证见[个人计划不入仓试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#local-plan-pilot)，不改变 current-v1 的业务约定或发送层调用范围。
+
+完整首行以 LF 或 CRLF 结束，单独的回车不作 CRLF 识别。移除旧账号首行时只处理一次，不继续清理紧接的重复行；保留下来的正文不整体转换换行，新增触发人行仍以 LF 拼接。CRLF 首行曾未被实现正确识别，本地修复及验证见 [TDD 试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md)，尚未合并或部署；名称优先级与调用边界不变。
 
 以上兼容条件使用旧版实际产生的账号行验证，不能用新的昵称行冒充旧输入。
 
@@ -79,11 +85,17 @@ go -C backend/saas test ./service/syssvr/internal/logic/notifymanage -count=1
 | 条款 | 现有验证 |
 | --- | --- |
 | DISPLAY-NAME | `TestFormatTriggerUserLine*`：同时有昵称/账号、空白、ID、匿名、非 manual 账号优先 |
-| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior` |
-| BODY-COMPATIBILITY | `TestPrependTriggerUserLine`、`TestManualTriggerBodyCompatibility`、`TestNonManualTriggerBodyPreservesManualAccountLine` |
+| SCENE-BUTTON | `TestFormatSceneButtonTriggerLine`、`TestCompactRuleSceneActionBody`、`TestCompactRuleSceneActionBodyCountsRunesNotBytes`、`TestCompactRuleSceneActionBodyEqualRunesKeepsFirst`、`TestCompactRuleSceneActionBodySelectionBoundaries`、`TestRuleSceneNotifyLinePicksRuneLongestAction`、`TestRuleSceneTriggerKeepsDeviceButtonBehavior`：账号优先的动作格式；多行取 Unicode 字符数最长的非空行且区别于按字节比较；同字符数取首行（含空白行与首尾空白清理用例）；空正文、全空白、后续最长行的同长保留与再次替换；deviceButton 入口级选取与非正 UserID 回退 |
+| BODY-COMPATIBILITY | `TestPrependTriggerUserLine`、`TestManualTriggerBodyCompatibility`、`TestNonManualTriggerBodyPreservesManualAccountLine`；本地候选 `TestTriggerBodyCompleteLinesWithCRLF` 覆盖三个入口的 CRLF 首行、旧格式首尾与中间行、部分匹配、裸回车、无触发人及自动触发；`TestManualTriggerBodyPreservesInteriorLegacyLine` 覆盖清理边界后仍须保留的中间同文行，以及唯一旧行、仅首尾两行、LF/CRLF 与混合换行 |
 | BOUNDARY | 格式化函数值参数由源码核对；不将此核对冒充数据库或输入不变的专门运行测试 |
 
 测试证明所含用例及包级回归，不证明所有组合。真实数据库、设备、推送渠道和生产部署未在 S1 验证。人的长期模块负责人仍未分配；本次范围授权见 [模块入口](README.md)。
+
+`BenchmarkCompactRuleSceneActionBody` 使用 4096 字符的首行和后续 128 个短行，比较该合成输入的选行耗时与分配；它不代表真实模板分布或发送吞吐量。从仓库根复跑：
+
+```bash
+go -C backend/saas test ./service/syssvr/internal/logic/notifymanage -run '^$' -bench '^BenchmarkCompactRuleSceneActionBody$' -benchmem -benchtime=100ms -count=3 -cpu=1
+```
 
 ## 变更来源
 

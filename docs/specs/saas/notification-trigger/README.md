@@ -1,11 +1,18 @@
 # saas.notification-trigger：通知触发人展示
 
 - 当前规则：[spec.md@current-v1](spec.md)，覆盖触发人名称、场景按钮文案和正文兼容；不是整个通知领域。
-- 适用源码：新仓 main `c165a56531f58421a870a0b8794f24556b60d3b2`；本轮文档收敛位于 S1 候选，尚不能凭文件存在宣称已合并或上线。
+- 规格来源基线：`c165a56531f58421a870a0b8794f24556b60d3b2`。当前主规格已随 [PR #5](https://github.com/wangjunbo866-xyf/ming-iot/pull/5) 合并；核对至 main `56006502324800448c9775944d28478254be6142`，本模块相关实现未变，继续适用 `current-v1`。这不代表已部署或通过真实服务验收。
 - 人的长期负责人：未分配。手动昵称优先由当前用户在 R2/D2 确认，本轮用户授权收敛文档；任务责任不变成长期所有权。
 - 实现、调用、验证命令及未验证边界均在主规格；当前没有需叠加的有效覆盖或未完成业务 Patch。
-- 新仓验证和候选状态：[S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)。
+- 本地修复候选：[CRLF 完整首行识别与 TDD 试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md)，恢复 BODY-COMPATIBILITY，规则分类为 `no_behavior_change`；尚未合并或部署，三个辅助入口的测试不等于全部发送渠道验收。
+- 同条款后续候选：[保留中间旧账号行与个人计划不入仓试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#local-plan-pilot)。规则、边界例子和测试入口均在当前主规格；接续无需读取个人计划。实施、独立 AI 接续与最终候选状态以该条目的实际回执为准，尚未合并或部署。
+- 场景动作选行的本地保护性重构：[Superpowers 7.0 适配试跑](../../../changelog/2026-10-18-notification-tdd-pilot.md#superpowers7-pilot)。按 SCENE-BUTTON 保留 Unicode 最长与同长取首行，减少重复扫描；主规格包含行为测试和合成基准入口。规则仍为 current-v1，性能结果限合成输入，未合并或部署。
+- 合并后验证及当前环境缺口见 [PR #6 后续记录](../../../changelog/2026-10-17-governance-merged-next-plan.md)；[S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)保留首次收敛时点的候选与验证事实，不承担当前交付状态。
 - 理解真实发送路径时，先读主规格的 [调用边界](spec.md#call-sites)，区分辅助函数行为与发送层是否调用；新上下文接手及文档修正见 [S3 记录](../../../changelog/2026-10-16-specs-clean-clone-takeover.md)。
+
+## 按任务读取
+
+日常理解从当前 spec 的规则、调用边界和验收开始；只有追查需求来源或准备改变这些行为时，再读取相关历史 Patch。规则不变的小修复直接引用条款，认领与验证回原任务/PR；新的行为调整按[团队 Patch 约定](../../../runbook/team-development.md#patch-convergence)维护。导航维护本身不改变 current-v1 规则；本地实现修复状态见上方试跑入口。
 
 <a id="display-name-patches"></a>
 ## 历史与吸收关系

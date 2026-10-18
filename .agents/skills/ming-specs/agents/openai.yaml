@@ -1,4 +1,4 @@
 interface:
   display_name: "Ming IoT 规格维护（草案）"
   short_description: "维护模块规格与需求决定，按风险选用记录并检查提交差异"
-  default_prompt: "使用 $ming-specs 为已授权任务定位当前模块规格，按风险选择记录深度，维护认领与决定、检查真实差异，并在候选中收敛主规格；接手从仓库入口与验证方法开始。"
+  default_prompt: "使用 $ming-specs 从仓库 AGENTS.md 进入，按本次任务定位 Feature 当前规格，选择对应阅读与写回路径；只读咨询解释规则，修改任务按授权维护认领、决定和实际差异，交付前收敛主规格并验证。"

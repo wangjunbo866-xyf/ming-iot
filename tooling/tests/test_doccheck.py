@@ -191,6 +191,16 @@ class DocumentTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 doccheck.yaml_mapping(body)
 
+    def test_patch_revision_binding_detects_stale_index(self):
+        self.item['revision'] = 'R1'
+        self.item['body_bindings']['revision'] = 'frontmatter.revision'
+        self.put('docs/current.md', '---\nrevision: R1\nstatus: draft\n---\n# 规则\n')
+        self.assertEqual(self.run_check()['result'], 'PASS')
+        for metadata in ['revision: R2', 'revision: []', 'version: R1']:
+            with self.subTest(metadata=metadata):
+                self.put('docs/current.md', f'---\n{metadata}\nstatus: draft\n---\n# 规则\n')
+                self.assertIn('index-body-mismatch', self.codes(self.run_check()))
+
     def relation(self):
         self.put('docs/history/old.md', '[current](../current.md)\n[unrelated old broken link](gone.md)')
         with (self.root/'docs/current.md').open('a') as f:

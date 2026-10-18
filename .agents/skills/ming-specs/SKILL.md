@@ -1,67 +1,50 @@
 ---
 name: ming-specs
-description: 在 Ming IoT 已指定采用本方法的任务中，认领模块、澄清和维护规格、分类 feature/patch/sunset/blueprint、检查提交差异、收敛主规格或从仓库接手。普通代码阅读和历史资料导入不切换规格权威。
+description: 在 Ming IoT 任务中定位当前 Feature 规则，按任务维护需求、规格与 Patch，处理并行认领、提交差异及交付收敛。只读咨询可仅定位和解释；历史资料不自动成为当前规格。
 metadata:
-  short-description: Ming IoT 模块规格维护与提交差异提醒
+  short-description: 按任务读取、维护与验证 Ming IoT 规格
 ---
 
 # Ming IoT 规格维护
 
-版本：0.6.0-draft。组织 AI 的操作；业务正文归模块规格，协作规则归团队约定，确定性检查归工具。本 Skill 不执行业务审批，也不自动安装 Hook 或启用合并门禁。
+版本：0.15.0-draft。本 Skill 组织操作；规则正文在 Feature 和团队约定中。
 
-## 先定位，再选择操作
+## 先选路径
 
-读取用户指定工作树的 AGENTS.md、[团队开发约定](../../../docs/runbook/team-development.md)、[业务地图](../../../docs/specs/README.md)，再进入相关模块 README 和当前 spec。仅按需追溯历史 Patch；不要让接手者拼接历史才能知道当前行为。核对任务已采用的入口，未获授权时不切换规格权威。
+从当前工作树 [AGENTS.md](../../../AGENTS.md) 定位任务入口；已读且任务未变时无需重复读取。只读当前任务相关的章节，不预先通读所有约定、raw、Patch 或模板。首次使用本仓开发方式时读[通用接入](../../../docs/runbook/cross-agent-development.md#task-mode)。
 
-| 请求 | 读取约定 | 结果 |
-| --- | --- | --- |
-| 认领或准备工作 | 模块认领 | 在现有任务中明确边界、责任、并行冲突及确认来源 |
-| 澄清或接受新决定 | 需求澄清与决策留存 | 区分事实、假设、人的决定及适用 revision |
-| 新增、调整、退出或探索 | 四种变更类型；按风险选择记录深度 | 选择 feature/patch/sunset/blueprint 及必要记录 |
-| 小修改：错字、修复、重构、补说明或局部规则调整 | [小修改处理步骤](../../../docs/runbook/team-development.md#small-changes) | 先判断规则是否变化，再检查影响；按表选择文件、确认点和验证，复用原任务记录 |
-| 提交或 PR 检查 | 提交时的 Spec-Code 差异提醒 | 覆盖真实基线至候选的所有路径，保留语义差异及验证缺口 |
-| 收敛与交付 | patch：双向指针与并行收敛；交付与交接 | 候选内完整主规格、吸收关系、实际版本及证据 |
-| 新成员或新会话接手 | 交付与交接 | 从仓库入口恢复规则并复验，疑问回到正文 |
+从[业务地图](../../../docs/specs/README.md)找到 Feature README 与当前 spec；已知入口可直接读取。先判断当前规则、候选、实现和部署分别是什么状态。以下一行就是本次操作的阅读与写回契约；复合任务依次选实际涉及的行，涉及实现或修复时同时选 TDD 路径。
 
-仅在需要记录格式时读取[模板](references/templates.md)对应部分。一次只读检查不自动升级为实施、远端写入或发布。
+读取锚点链接时先定位该章节，再按其依赖补读；需要多个章节时分段读取，避免整页加载与截断后的重复读取。
 
-## 执行
+| 任务 | 按需读取 | 操作与写回位置 | 本路径出口 |
+| --- | --- | --- | --- |
+| 只读定位、解释规则、接手理解 | Feature README → 当前 spec；需核实实现才读相关代码，需原因才读本地 raw/历史 | 解释目标、正常/异常规则、边界、版本及验收；报告具体知识缺口 | 能用当前正文回答；仅咨询时不建任务或改文件 |
+| 收到一句话需求、接受澄清 | [受理流程](../../../docs/runbook/requirement-to-delivery.md)、[决定规则](../../../docs/runbook/team-development.md#decisions)及相关当前条款 | 原话/真实回答追加本 Feature raw 或现有 Change 来源节；选项、确认、未决项回同一 Change | 事实与建议可区分；确认来源及阻塞范围明确 |
+| 划分域、Feature、服务或提取能力 | [划分标准](../../../docs/runbook/team-development.md#domain-feature-service)、[完整性](../../../docs/runbook/team-development.md#feature-knowledge-completeness) | 按长期职责定归属，另记服务映射；获准提取时将需求、澄清和规则归入该 Feature，旧处留历史及依赖 | 新正文独立说明本功能；现状、候选和部署不混同 |
+| 开始写入、多人/多 Agent 并行 | [认领](../../../docs/runbook/team-development.md#module-claim)、相关在途任务；重叠时读[并行收敛](../../../docs/runbook/team-development.md#patch-convergence) | 在原任务/PR 记录 Feature、基线条款、写范围、责任及共享影响；协调重叠条款和接口 | 本次写范围明确；未决冲突仅阻塞相关写入 |
+| 小修复、重构、补测试或说明 | 当前条款、[小修改](../../../docs/runbook/team-development.md#small-changes) | 先比约定行为；规则不变则改实际文件，在原任务留条款、理由和验证；规则缺失或改变转澄清/变更路径 | 用对应回归证明所述范围；不为了检查制造 Patch |
+| 新建能力、改变行为、退出或探索 | [四种类型](../../../docs/runbook/team-development.md#change-types)中对应类型；Patch 读[收敛规则](../../../docs/runbook/team-development.md#patch-convergence) | 按归属写 feature/patch/sunset/blueprint；规则变化在同一候选更新完整主规格与双向指针 | 业务取舍有真实确认；候选状态、验收、未决项与依赖一致 |
+| 引入可选分析方法 | [分析接入与写回](../../../docs/runbook/team-development.md#optional-analysis-skills) | 方法产物映射回当前 Feature/Change，保留事实、建议与真实决定；不另建平行业务正文 | 新发现有归属、确认责任和下一步 |
+| 选择、升级或执行外部开发 Skill | [适配边界](../../../docs/runbook/team-development.md#external-development-skills)、当前任务授权与条款 | 在原任务记所用版本及必要适配，确定个人材料与证据位置；按实际变更选本表实现/写回/交付路径，清理前核对证据可取回 | 默认目录、裁定、清理或交付动作均服从本仓边界；接手不依赖个人 plan，所需证据保留 |
+| 安排协作依赖、交付方法产物或接续工作 | [个人方法与共享记录](../../../docs/runbook/team-development.md#collaboration-records)、相关认领与当前条款 | 个人可自由使用 Skill 生成 plan/task 并执行 TDD，文件不要求提交 Git；需共享的决定、实施依赖和验证结果回到 Spec、Change 或原任务/PR，团队状态引用唯一主入口 | 接手者不依赖个人计划也能理解规则、范围和前置条件；没有计划文件不阻塞交付 |
+| 准备实现、修复、重构或补测试 | [TDD 适用范围](../../../docs/runbook/team-development.md#tdd-scope)、[证据与缺口](../../../docs/runbook/team-development.md#tdd-evidence)及已确认条款 | 将规则/验收例子关联测试与实际结果；首次运行前确定快照和日志留存位置，再按适用路径推进；成员自行选实现 Skill，证据复用原任务/PR，缺口按约定处理 | 适用过程、有效测试、最终验证分别有依据；不适用和例外明确，不用事后回放冒充原始过程 |
+| 提交、PR 或交付 | [差异检查](../../../docs/runbook/team-development.md#spec-code-check)、[独立审计](../../../docs/runbook/team-development.md#independent-audit)、[工具命令](references/pr-check.md)、[动作边界](../../../docs/runbook/team-development.md#delivery-boundaries) | 从实际完整差异找归属；运行适用检查，由独立评审者审查并闭环发现；证据与结论留原任务/PR | 需求、测试、实现/集成及知识均已审查；最终候选、未验证项和处理决定明确 |
+| 收敛主规格、交接执行 | [Patch 收敛](../../../docs/runbook/team-development.md#patch-convergence)、[交付与接手](../../../docs/runbook/team-development.md#handoff) | 同一候选收敛当前规则；保留吸收来源，原任务提供版本、待办和验证入口 | 下一位能从当前正文接手；合并、部署分别核实 |
 
-1. **认领。** 读取当前条款、在途变更、相关实现与测试；检查 API、数据/权限、共享契约和已有认领。区分人的长期负责人、任务级委托及 Agent 身份。已有确认覆盖本次范围就继续；只对改变业务承诺、验收或写范围的分歧请求决定。没有规格的既有能力按约定建立 observed 基线，不把代码现状当批准。
-2. **分类与澄清。** 小修改先执行约定的四步：找到适用条款并判断规则是否变化，检查影响，选择最小记录，核对完成条件。无条款或有歧义时先调查/澄清，不借用无关条款声明规则不变。复用原 Issue/PR/Change 保存来源、旧/新行为、不变项、验收与实际决定。原始需求只追加或引用；业务含义变化更新 revision，标明继承或替代的决定。实现细节在授权内自行选择，待决行为保持候选。
-3. **同步候选。** 只修改实际受影响的实现、测试与文档。规则不变的修复引用现行条款和回归，不为通过检查机械修改主规格或建立 Patch；规则变化在同一候选收敛主规格，Patch 指向基线条款，主规格或模块入口反向指向 Patch。发生偏差时先判断实现错误、需求歧义或合理调整，不能因代码已写完就改写确认的意图。缺陷结论回到唯一规格和对应回归，避免新建平行规则。
-4. **检查差异。** 固定实际 base/head 或 staged tree，解释每个变更路径的规则归属或规格无变化理由。检查测试期望来自已确认规则；兼容用例使用旧版本实际可产生的输入。结构检查与 AI 语义检查分别留证；未知、未运行、未验证的真实依赖不记 PASS。
-5. **收敛。** 合并前在同一候选内写出完整当前规则，与实现一起评审；吸收的 Patch 标 absorbed，保留基线、决定、出处和吸收位置。当前入口不要求叠加所有历史补丁。分别记录候选、合并、部署和验证事实；报告入库时由外部回执绑定最终 Head，避免自引用。
+## 执行时补齐什么
 
-## 检查真实 PR 与本地提交
+- 任务只涉及操作经验、排障步骤或项目入口维护时，转 [ming-runbook](../ming-runbook/SKILL.md)；业务规则及需求决定继续写回所属 Feature。
 
-PR 使用 [完整差异检查](references/pr-check.md)：先读取 `tooling/specs-map.json`，按实际所有路径汇总模块，生成 PR 说明中的一个 `ming-specs` JSON 块。模块映射只是导航投影，规则仍以当前主规格为准。多个模块分别声明；同一路径属于多个模块时须覆盖全部。不得为了通过检查放宽历史认领或缩小 PR 基线。
+- 需要记录格式时才读[模板](references/templates.md)对应段落；复用原任务/PR/Change，格式不替代事实与批准。个人计划由成员及所选方法自行生成和使用；出现共享依赖或准备交付方法产物时选上表对应路径，提取团队需要的知识与证据，不要求上传整份个人计划。
+- 缺少现行规则时按[已有模块首次接入](../../../docs/runbook/team-development.md#observed-baseline)补可核实的最小基线；源码现状与已确认要求分别说明。
+- 新事实与已有规则冲突时，回到对应条款判断实现偏差、需求歧义或业务调整；只对依赖真实取舍的部分请求确认。人的责任与已有授权按[责任约定](../../../docs/runbook/team-development.md#responsibilities)核对。
+- 单 Patch 暂存区检查、离线或跨权限的固定快照仅在任务需要时读[手动检查与快照](references/pilot-regressions.md)；日常接手无需额外交接包。
 
-- 行为变化引用当前 v2 Patch、revision 和真实决定，在同一 PR 收敛主规格。
-- 规则不变的小修复引用当前版本、条款、路径与理由，不强建 Patch 目录。`no_behavior_change` 指约定行为未变，允许修正错误实现；影响较大的修复仍需对应验证。
-- 文档、团队工具、历史材料分开说明；归档移动用 from/to 核对字节和模式。未登记的产品代码必须显式列出归属缺口和依据，继续接受语义评审。
+## 完成检查
 
-从仓库根检查明确的目标分支 tip 和不可变 Head：
+核对本路径出口、实际差异及未完成项：写回了唯一所属正文，规则变化已在候选内收敛，所需认领/决定/验证有依据，当前入口可达。实施任务核对适用的 TDD 证据及例外；准备交付时按约定完成独立审计与发现处置。只读定位和纯概念问答不自动扩为实施。
 
-```bash
-python3 tooling/specs_pr.py --base <目标分支commit> --head <候选commit> --declaration <本地JSON路径>
-```
+任务从设计进入实施或验证完成时，同步受影响当前入口的阶段表述，核对正文中是否还把已完成工作列为“下一步”；历史回执保留原时点。
 
-工具自行计算唯一 merge-base；不要用前一次提交冒充完整 PR 基线。GitHub 工作流从事件读取 base/head 和 PR 正文，要求检出真实 head。只读候选 Git 对象，未提交修改另报。声明和映射本身也需评审；结果始终是 `STRUCTURE_OK_REVIEW_REQUIRED`，不证明真实授权、语义或服务端必需检查已启用。
-
-单个 Patch 的暂存区提前反馈仍用原入口：
-
-```bash
-python3 .agents/skills/ming-specs/scripts/preflight.py \
-  --change <仓库相对check.json> --base <实际基线commit> --staged
-```
-
-该入口是单 Patch 范围检查；多模块 PR 用完整差异入口，不能把整个 PR 塞进一个历史 Patch。详细反例与例外快照见[试跑回归说明](references/pilot-regressions.md)。历史零差异结构检查不能证明当前 PR 范围；新仓使用新证据，旧仓 SHA 与历史回执原样保留。S2 的工作流属于本地候选配置，托管运行及远程合并限制仍须分别取得实际证据。
-
-## 日常接手与例外交付
-
-默认提供模块入口、明确候选版本、当前待办和关键验证方法，结果留在原任务/PR/CI。接手者找到当前条款、复述变化与不变项、核对范围及来源、复跑相关检查；发现理解缺口优先修复入口、主规格或验证说明。独立 AI 演练明确实际身份，不代写人的批准。
-
-仅在离线、跨权限或特定外部交付需要冻结输入时，按约定使用固定快照。收到快照时校验原附件与指定候选，不能重新生成来消除失配；absorbed 历史 Patch 不重新生成实施交接包。普通接手无需专门交接包或重复问答。
-
-完成时提供实际文件、版本、验证与独立评审结果，以及仍未解决的事项。草拟可以以 draft 完成；只读检查可以以发现差异或证据不足完成，不伪造批准或 PASS。
+结构检查通过只证明其确定性范围。缺证据、未运行、候选和待确认分别如实说明；本 Skill 的发现、加载或调用不等于 Hook 已安装、门禁已启用或需求已验收。

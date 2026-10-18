@@ -1,7 +1,7 @@
 ---
 status: local-candidate
-version: 0.1.0
-date: 2026-10-16
+version: 0.2.0
+date: 2026-10-18
 ---
 
 # 有界文档检查
@@ -55,6 +55,30 @@ make knowledge-check
 `result=PASS` 仅表示本轮声明的确定性检查通过。`classification_counts`、`bodies_read`、`supersession_bodies_read` 显示实际覆盖。`unverified_fragments` 明列历史/外部正文内未读取的锚点，不能计作已验证。外部 URL 只识别为外部，不发请求，固定显示 `external_urls=NOT_FETCHED`；业务语义显示 `semantic_review=NOT_RUN`。
 
 遇到断链先核对目的地；遇到不可达先补真实导航；遇到索引冲突核对哪个是当前正文；遇到替代冲突由变更责任人确认适用范围。工具只报告，不自动修复、去重、归档或删除。不要为了过检把当前正文标成历史或把所有文件加成导航根。
+
+<a id="agents-local-check"></a>
+## 根入口的本地行数检查
+
+适用于包含 `tooling/agents_check.py` 的当前检出；在仓库根使用 Python 3 和 make，无需安装文档检查依赖、连接服务或取得环境凭据。新增团队命令、Skill 或修改入口时，按[入口维护规则](team-development.md#agents-maintenance)判断写回范围；可使用 [ming-runbook](../../.agents/skills/ming-runbook/SKILL.md)组织操作。检查只读取当前检出的根 `AGENTS.md`，不递归检查子目录入口，不改文件或业务数据。
+
+```sh
+make agents-check
+```
+
+命令输出 JSON；`lines` 是实际物理行数，空行计入，LF 与 CRLF 等价，末尾换行不额外计一行。`warning_at` 与 `maximum` 是当前阈值；`semantic_review=NOT_RUN` 明确表示未验证导航语义。
+
+| 输出与条件 | 退出码 | 后续处理 |
+| --- | --- | --- |
+| `PASS`，少于 115 行 | 脚本和 make 均为 0 | 再核对五类入口职责及链接；行数正常不证明内容完整 |
+| `WARN`，115–120 行（含两端） | 脚本和 make 均为 0 | 添加内容前审视细节归属；保留有效路标，不能把警告当作无需处理 |
+| `ERROR`，超过 120 行 | 脚本为 1；make 报失败，通常为 2 | 将操作细节归位到已有维护正文，保留必要指针后重跑 |
+| `ERROR`，文件不存在、为空、不是普通文件、为符号链接、无法按 UTF-8 读取或超过 2 MiB 读取上限 | 脚本为 1；make 报失败，通常为 2 | 按 `message` 核实当前检出、文件类型、编码或读取权限，修复根入口后重跑；不得删掉有效内容来消除错误 |
+
+命令无法启动（如缺少 Python 3 或 make）属于环境失败，不会产生上述正常 JSON；补齐本地工具后重新执行。直接运行 `python3 tooling/agents_check.py` 可查看脚本结果与退出码。检查不写入任何文件，无需数据回滚；文档调整只撤销本次误改，保留他人变更及原现场。
+
+修复后运行 `make agents-check` 和 `make knowledge-check`，分别报告行数/警告和链接、索引/回归结果。禁止通过挤行、删约束或缩小维护清单取得通过。人工还需核对根入口的任务路由、仓库地图、快速命令、关键约定速查、状态入口，以及命令语义与授权范围。
+
+`agents-check` 是独立的本地按需命令，当前未加入 `knowledge-check`、`verify-pr`、Hook、CI 或分支保护；不要从本地成功推断已启用强制门禁。`knowledge-check` 的链接/索引检查也不能替代上述人工判断。后续调整接入方式时应同时更新命令实现和本节说明。
 
 ## 读取与解析边界
 

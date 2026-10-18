@@ -3,6 +3,7 @@ package notifymanagelogic
 import (
 	"context"
 	"strings"
+	"unicode/utf8"
 
 	"gitee.com/ming-iot/saas/service/syssvr/internal/repo/relationDB"
 	"github.com/spf13/cast"
@@ -110,27 +111,20 @@ func triggerUserDisplayName(t triggerUserFields) string {
 	return name
 }
 
-// compactRuleSceneActionBody 多行模板正文合并为一条动作描述（取信息最完整的一行）。
+// compactRuleSceneActionBody 取清理空白后 Unicode 字符数最长的非空行，同长取首个。
 func compactRuleSceneActionBody(body string) string {
 	body = strings.TrimSpace(body)
 	if body == "" {
 		return ""
 	}
 	lines := strings.Split(body, "\n")
-	var parts []string
+	var best string
+	bestLen := 0
 	for _, l := range lines {
 		l = strings.TrimSpace(l)
-		if l != "" {
-			parts = append(parts, l)
-		}
-	}
-	if len(parts) == 0 {
-		return ""
-	}
-	best := parts[0]
-	for _, l := range parts[1:] {
-		if len([]rune(l)) > len([]rune(best)) {
+		if length := utf8.RuneCountInString(l); length > bestLen {
 			best = l
+			bestLen = length
 		}
 	}
 	return best
@@ -214,10 +208,20 @@ func PrependTriggerUserLine(body string, t triggerUserFields) string {
 		if legacyLine != line {
 			// 旧版 manual 使用账号行；仅清理正文首尾的完整历史行。
 			body = strings.TrimSpace(body)
-			body = strings.TrimPrefix(body, legacyLine+"\n")
-			body = strings.TrimSuffix(body, "\n"+legacyLine)
 			if body == legacyLine {
 				body = ""
+			} else {
+				// 先识别原始尾行，避免移除首行后丢失两行正文的尾部边界。
+				hasLegacySuffix := strings.HasSuffix(body, "\n"+legacyLine)
+				if strings.HasPrefix(body, legacyLine+"\r\n") {
+					body = strings.TrimPrefix(body, legacyLine+"\r\n")
+				} else {
+					body = strings.TrimPrefix(body, legacyLine+"\n")
+				}
+				if hasLegacySuffix {
+					body = strings.TrimSuffix(body, legacyLine)
+					body = strings.TrimSuffix(body, "\n")
+				}
 			}
 		}
 	}
@@ -232,10 +236,7 @@ func prependNotifyLine(body, line string) string {
 	if body == line {
 		return line
 	}
-	if strings.HasPrefix(body, line+"\n") {
-		return body
-	}
-	if strings.HasPrefix(body, line) && (len(body) == len(line) || body[len(line)] == '\n') {
+	if strings.HasPrefix(body, line+"\n") || strings.HasPrefix(body, line+"\r\n") {
 		return body
 	}
 	// 兼容历史数据：触发人在末尾时移到逻辑上的「前面」展示

@@ -1,6 +1,6 @@
 # 完整 PR 差异检查
 
-适用于 ming-specs 0.6.0-draft，沿用 S2 检查协议。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
+本页维护 S2 检查协议（PR 声明 schema_version 1），由 ming-specs 的提交/PR 路径按需读取。业务规则仍在模块当前 spec；此文只定义检查输入、输出与局限。
 
 ## 谁维护什么
 
@@ -9,7 +9,11 @@
 - 工具核对完整路径覆盖、当前版本/显式条款、活动 Patch 双向指针、归档字节与候选身份；不判断业务语义。
 - 模块入口或实现路径变化时，在同一 PR 修改 [specs-map.json](../../../../tooling/specs-map.json)。映射只有路径和正文位置，不能写第二份规则。旧/新映射共同归属的路径仍须覆盖；删除一个已登记模块须另设计明确的退役迁移，本版不支持静默删除。
 
-当前映射仅有 `saas.notification-trigger` 和 `engineering.api-contract`。映射到一个代码文件只说明应向哪个模块解释影响，不证明文件中的所有逻辑已有规格。
+设计 Feature 可以先登记文档地图和来源索引；产品路径尚未认领时，不把文档登记说成差异映射已覆盖，实施前按真实范围补齐。
+
+检查时读取候选实际映射；本地 P1 已在通知与 API 校验之外登记 `platform.eventbus`。映射到一个代码文件只说明应向哪个模块解释影响，不证明文件中的所有逻辑已有规格。
+
+域、Feature、服务及 `module`、变更 `type`、检查 `kind` 的含义见[划分标准](../../../../docs/runbook/team-development.md#domain-feature-service)。不能因为长期目录叫 Feature 就填写 `kind=feature`，也不能把尚不支持自动检查的类型伪装为 Patch。
 
 ## 从实际 PR 生成输入
 
@@ -86,4 +90,4 @@ GitHub 使用 `python3 tooling/specs_pr.py --event "$GITHUB_EVENT_PATH"`。工�
 
 成功仅表示 `STRUCTURE_OK_REVIEW_REQUIRED`；semantic_review=NOT_RUN、authorization=NOT_VERIFIED、server_merge_rules=NOT_VERIFIED。测试和语义 Review 的有效性由实际回执核对。`make verify-pr` 包含检查器回归，完整 PR 检查另需真实 base/head/声明。零差异只可作结构检查，不能作为某个非空 PR 已检查的证据。
 
-S2 工作流与检查器是可供评审的候选；本地事件回放不等于托管运行，不自动启用服务器必需检查。本工具使用候选中的检查代码及映射，对它们的变更必须可信评审；不能充当抵抗恶意 PR 的安全边界。
+S2 工作流与检查器已随 PR #5 合并，真实托管结果见[合并记录](../../../../docs/changelog/2026-10-16-specs-merged-next-plan.md)；本地事件回放仍不能替代新候选的托管运行，也不自动启用服务器必需检查。本工具使用候选中的检查代码及映射，对它们的变更必须可信评审；不能充当抵抗恶意 PR 的安全边界。
