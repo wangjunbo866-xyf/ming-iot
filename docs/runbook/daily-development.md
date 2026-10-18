@@ -2,7 +2,7 @@
 
 目标、阶段进度和完成标准统一从 [总纲](../project-charter.md) 读取；本页只维护日常操作入口。
 
-产品源码、当前文档、团队工具和 CI 的入口统一为 [ming-iot](https://github.com/wangjunbo866-xyf/ming-iot)。从 `main` 创建分支和独立工作树；改动通过 PR 合入。
+产品源码、当前文档、团队工具和 CI 的入口统一为 [ming-iot](https://github.com/wangjunbo866-xyf/ming-iot)。首次开展独立任务时从 `main` 创建分支和工作树；同一候选上的后续阶段优先复用已有工作树，不因阶段变化重复新建。改动通过 PR 合入。
 
 ```sh
 git clone https://github.com/wangjunbo866-xyf/ming-iot.git
@@ -45,6 +45,8 @@ tooling/loopx --format json status --goal-id ming-iot-knowledge-pilot
 Agent 的进展写回继续使用原准入身份和 Turn，并通过 `--delivery-workspace-path` 指定实际产出所在的独立工作树。该参数记录交付位置，不改变 Goal 注册路径。自动化使用稳定的主工作区入口，不指向临时工作树。
 
 ## 保留与恢复
+
+清理旧工作树前，确认其提交已合并或被当前保留候选包含，并核对未提交文件、被 Git 忽略的数据、证据、进程与容器挂载、符号链接和工具入口。先保全并恢复核验，再移除目录或失效登记；保留分支和提交历史，不将“移除工作树”当作“删除分支”。当前候选及其运行环境继续保留，已验证的历史证据迁入私有备份后保持可恢复。
 
 旧源码仓、原候选、私有备份继续保留，日常代码和文档改动在本仓进行。旧项目 Registry 已标记为退休，旧状态文件作为迁移前快照保留；当前写入由本仓注册位置承接。路由核验仍读取退休标记，部分历史材料仍引用旧来源，不能据此删除旧目录。
 
