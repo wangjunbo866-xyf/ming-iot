@@ -1,6 +1,6 @@
 ---
 status: draft
-version: 0.1.0-draft
+version: 0.2.0-draft
 ---
 
 # protocol：协议适配能力域
@@ -20,7 +20,7 @@ version: 0.1.0-draft
 
 | 能力 | 入口与当前状态 |
 | --- | --- |
-| 上行解码、标准化与结果交付 | [protocol.uplink-normalization](uplink-normalization/README.md)：本轮建立候选规格，尚未实施新链路 |
+| 上行解码、标准化与结果交付 | [protocol.uplink-normalization](uplink-normalization/README.md)：0.2.0-draft 已细化契约、故障与验收，PA-Q4–Q6 已确认；尚未实施新链路 |
 | 适配器版本与发布管理 | 规划能力，暂未单独建 Feature；首版上行所需的版本约束先在上行规格维护，出现独立工作流与验收后再提取 |
 | 下行编码 | 后续能力，未建规格；上行中的命令回执仍属于当前上行范围 |
 
@@ -32,4 +32,4 @@ version: 0.1.0-draft
 
 ## 来源与维护入口
 
-原始需求与决定保留在 [Eventbus raw](../platform/eventbus/raw.md#raw-015)及 [Kafka Patch R13](../platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md#protocol-domain-extraction)。Patch 第 11 节保留 R10–R12 的历史评估；本域当前设计从上述 Feature 入口维护，旧评估不会因保留而成为第二份当前规格。
+原始需求与决定保留在 [Eventbus raw](../platform/eventbus/raw.md#raw-016)及 [Kafka Patch R13](../platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md#protocol-domain-extraction)。Patch 第 11 节保留 R10–R12 的历史评估；本域当前设计从上述 Feature 入口维护，旧评估不会因保留而成为第二份当前规格。

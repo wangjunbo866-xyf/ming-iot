@@ -141,3 +141,17 @@ date: 2026-10-17
 > 可以，继续用 ming-iot-knowledge-pilot，把业务域、Feature 和服务的划分标准补进团队约定与 ming-specs，按协议适配能力域组织 ProtocolApplication，先建立上行闭环的规格入口，保留 Kafka Patch 中的来源和依赖关系，完成验证与独立复审。先不实现或推送。
 
 Kafka Patch R13 将本次文档组织授权记为 D16；D13–D15 不变。当前设计入口转到 [protocol 域](../../protocol/README.md)与[上行 Feature](../../protocol/uplink-normalization/README.md)。原始决定与历史评估继续保留，不代表新链路实施、部署方式或整套技术契约已获确认。
+
+
+<a id="raw-016"></a>
+## RAW-016：上行契约细化与 PA-Q4–Q6（用户，2026-10-18）
+
+> 继续用 ming-iot-knowledge-pilot，复用 notification-runtime-baseline，接着细化 ProtocolApplication 上行闭环的消息契约、接受与应答边界、失败处理和验收场景，需要我决定的用业务例子解释清楚。先不实现或推送，保留旧环境和数据。
+
+| 问题及业务例子 | 用户原答 | 当前正文 |
+| --- | --- | --- |
+| PA-Q4：网关包 10 块电表，9 块合法、1 块格式错误；能逐项应答则保留合法项，只能整包应答则全部通过才接受 | 按协议能力处理，支持逐项结果时保留合法数据（推荐） | 上行 spec PA-D1 / PA-UP-FAILURE |
+| PA-Q5：收到数据后应答丢失、设备重连重发；首个试点要求重发时不变的编号，防止重复计费/告警 | 首个试点要求稳定上报编号（推荐） | 上行 spec PA-D2 / PA-UP-INPUT |
+| PA-Q6：已收到今天读数，又补昨天的数据；只补历史、不覆盖最新值、不重触发实时动作，历史能耗重算另议 | 补历史，不覆盖最新值或重触发实时动作（推荐） | 上行 spec PA-D3 / PA-UP-ORDER |
+
+当前业务决定与技术候选集中在[同一上行规格](../../protocol/uplink-normalization/spec.md)。本条只追加原始授权与答复；D13–D16 及旧记录保留。三项选择不等于批准 wire schema、部署、实现或推送，旧环境、数据及私有备份继续保留。

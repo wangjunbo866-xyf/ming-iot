@@ -478,7 +478,7 @@ materials:
     role: protocol_capability_domain_navigation
     status: draft
     path: docs/specs/protocol/README.md
-    revision: 0.1.0-draft
+    revision: 0.2.0-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -492,7 +492,7 @@ materials:
     role: protocol_uplink_feature_navigation
     status: draft
     path: docs/specs/protocol/uplink-normalization/README.md
-    revision: 0.1.0-draft
+    revision: 0.2.0-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -507,7 +507,7 @@ materials:
     role: protocol_uplink_candidate_specification
     status: draft
     path: docs/specs/protocol/uplink-normalization/spec.md
-    revision: 0.1.0-draft
+    revision: 0.2.0-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -516,7 +516,7 @@ materials:
       - docs/specs/protocol/uplink-normalization/README.md
       - docs/specs/platform/eventbus/raw.md
       - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    conflict_rule: "本 Feature 唯一当前设计正文；D13-D15 原决定及 D16 文档授权留在 Kafka Patch，R10-R12 评估为历史来源。具体技术契约仍为候选；不批准实施、独立部署、推送或原报文补算。"
+    conflict_rule: "本 Feature 唯一当前设计正文；D13-D15 原决定及 D16 文档授权留在 Kafka Patch，R10-R12 评估为历史来源。RAW-016 的 PA-Q4-Q6 确认已写回 PA-D1-D3；具体技术契约仍为候选，真实协议及运行验收未完成；不批准实施、独立部署、推送或原报文补算。"
   - source_id: ming-iot-cross-agent-development
     lifecycle: current
     body_bindings:

@@ -25,7 +25,7 @@ version: 0.5.0-draft
 | 模块 ID / 业务能力 | 模块入口 | 人的负责人 | 前台 / 后台 / 代码范围 | 当前基线及有效补丁 | 在途变更 |
 | --- | --- | --- | --- | --- | --- |
 | platform.eventbus / 跨服务事件总线 | [模块入口](platform/eventbus/README.md) | 长期未分配；用户决定与适用范围见当前 Patch | Share、SaaS、Things 与 SDK；具体认领见当前 Patch | [p1-v1](platform/eventbus/spec.md)，本地 P1 当前规则及旧链路观察；未推送或切换旧环境 | [Kafka 迁移 Patch](platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md)，分段实施，后续设计未完成 |
-| protocol.uplink-normalization / 设备上行解码与标准化 | [Feature 入口](protocol/uplink-normalization/README.md) | 长期未分配；本轮文档认领见入口 | 既有 DG、SDK、DM 为现状线索；本轮无产品代码认领 | [0.1.0-draft](protocol/uplink-normalization/spec.md)，当前设计候选，尚无新链路生效版本 | 文档入口已登记；契约待细化，产品差异映射与实施未开始 |
+| protocol.uplink-normalization / 设备上行解码与标准化 | [Feature 入口](protocol/uplink-normalization/README.md) | 长期未分配；本轮文档认领见入口 | 既有 DG、SDK、DM 为现状线索；本轮无产品代码认领 | [0.2.0-draft](protocol/uplink-normalization/spec.md)，当前设计候选，尚无新链路生效版本 | 契约已细化，批量/编号/迟到取舍已确认；真实协议与恢复接线待冻结，尚未实施 |
 | engineering.api-contract / HTTP API 契约校验 | [模块入口](engineering/api-contract/README.md) | 长期未分配；本次责任见认领 | 无前台；apicheck lint CLI；cmd/apicheck 两文件 | [current-v1](engineering/api-contract/spec.md)，无需叠加历史 | 无；lint 选择 Patch 已 absorbed |
 | saas.notification-trigger / 通知触发人展示 | [模块入口](saas/notification-trigger/README.md) | 长期未分配；本轮用户确定业务取舍 | 无前台写入；SaaS 通知格式化两文件 | [current-v1](saas/notification-trigger/spec.md)，仅 manual 昵称优先 | 无；展示名称 Patch R2 已 absorbed |
 
