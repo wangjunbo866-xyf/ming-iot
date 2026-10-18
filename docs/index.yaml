@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.10.0-draft
+    revision: 0.11.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.10.0-draft
+    revision: 0.11.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -478,7 +478,7 @@ materials:
     role: protocol_capability_domain_navigation
     status: draft
     path: docs/specs/protocol/README.md
-    revision: 0.2.0-draft
+    revision: 0.2.1-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -492,7 +492,7 @@ materials:
     role: protocol_uplink_feature_navigation
     status: draft
     path: docs/specs/protocol/uplink-normalization/README.md
-    revision: 0.2.0-draft
+    revision: 0.2.1-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -500,23 +500,38 @@ materials:
     related:
       - docs/specs/protocol/README.md
       - docs/specs/protocol/uplink-normalization/spec.md
+      - docs/specs/protocol/uplink-normalization/raw.md
       - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
     conflict_rule: "只登记文档入口，产品差异映射及新链路实施尚未开始；长期责任仍待分配。"
+  - source_id: ming-iot-protocol-uplink-raw
+    lifecycle: current
+    role: protocol_uplink_requirements_and_clarifications
+    status: source-record
+    path: docs/specs/protocol/uplink-normalization/raw.md
+    revision: 1.0.0
+    body_bindings:
+      revision: frontmatter.version
+      status: frontmatter.status
+    authority: user_statements_with_dated_provenance
+    related:
+      - docs/specs/protocol/uplink-normalization/README.md
+      - docs/specs/protocol/uplink-normalization/spec.md
+    conflict_rule: "上行功能的本地需求来源；迁入摘录保留原日期和答复，不构成新批准。后续澄清在此追加，当前规则由同目录 spec 维护；原 Eventbus 记录只作历史，实施和运行验收仍未完成。"
   - source_id: ming-iot-protocol-uplink-spec
     lifecycle: current
     role: protocol_uplink_candidate_specification
     status: draft
     path: docs/specs/protocol/uplink-normalization/spec.md
-    revision: 0.2.0-draft
+    revision: 0.2.1-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
     authority: candidate_with_inherited_confirmed_boundaries
     related:
       - docs/specs/protocol/uplink-normalization/README.md
-      - docs/specs/platform/eventbus/raw.md
+      - docs/specs/protocol/uplink-normalization/raw.md
       - docs/specs/platform/eventbus/patches/PATCH-20261017-kafka-migration/change.md
-    conflict_rule: "本 Feature 唯一当前设计正文；D13-D15 原决定及 D16 文档授权留在 Kafka Patch，R10-R12 评估为历史来源。RAW-016 的 PA-Q4-Q6 确认已写回 PA-D1-D3；具体技术契约仍为候选，真实协议及运行验收未完成；不批准实施、独立部署、推送或原报文补算。"
+    conflict_rule: "本 Feature 唯一当前设计正文；来源与真实答复在本目录 raw，原 Eventbus 记录仅供历史追溯。0.2.1 只纠正知识归属；PA-D1-D3 等已确认行为不变，技术契约仍为候选，不授权实施或推送。"
   - source_id: ming-iot-cross-agent-development
     lifecycle: current
     body_bindings:
