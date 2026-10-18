@@ -15,7 +15,7 @@ materials:
     role: current_goal_direction_and_acceptance
     status: direction-baseline
     path: docs/project-charter.md
-    revision: 1.0.17
+    revision: 1.0.18
     authority: user_authorized_consolidation_of_confirmed_decisions
     related:
       - docs/runbook/team-development.md
@@ -157,7 +157,7 @@ materials:
     role: candidate_team_development_agreement
     status: draft
     path: docs/runbook/team-development.md
-    revision: 0.11.0-draft
+    revision: 0.12.0-draft
     authority: proposed
     related:
       - docs/specs/README.md
@@ -171,7 +171,7 @@ materials:
     role: candidate_specs_maintenance_skill
     status: draft
     path: .agents/skills/ming-specs/SKILL.md
-    revision: 0.11.0-draft
+    revision: 0.12.0-draft
     authority: proposed
     related:
       - docs/runbook/team-development.md
@@ -395,7 +395,7 @@ materials:
     role: requirement_intake_to_delivery_workflow
     status: draft
     path: docs/runbook/requirement-to-delivery.md
-    revision: 0.1.6
+    revision: 0.1.7
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -492,7 +492,7 @@ materials:
     role: protocol_uplink_feature_navigation
     status: draft
     path: docs/specs/protocol/uplink-normalization/README.md
-    revision: 0.2.1-draft
+    revision: 0.2.2-draft
     body_bindings:
       revision: frontmatter.version
       status: frontmatter.status
@@ -540,7 +540,7 @@ materials:
     role: portable_agent_onboarding_and_task_modes
     status: draft
     path: docs/runbook/cross-agent-development.md
-    revision: 0.1.0-draft
+    revision: 0.2.0-draft
     authority: user_authorized_local_pilot
     related:
       - AGENTS.md
@@ -566,7 +566,7 @@ materials:
     role: local_cross_agent_trial_evidence
     status: local_candidate
     path: docs/changelog/2026-10-18-cross-agent-onboarding.md
-    revision: cross-agent-1
+    revision: cross-agent-2
     authority: user_authorized_scoped_trial
     related:
       - docs/runbook/cross-agent-development.md

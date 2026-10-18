@@ -1,12 +1,12 @@
 ---
 status: draft
-version: 0.1.6
-date: 2026-10-17
+version: 0.1.7
+date: 2026-10-18
 ---
 
 # 从一句话需求到可接手的交付
 
-这是[团队开发约定](team-development.md)的操作页。试跑目标是让需求、决定、当前规格、代码与证据形成一条可追溯的路径，后续开发者从模块入口即可接手。当前用 [Eventbus 迁移](../specs/platform/eventbus/README.md)试跑；尚未完成这项需求的开发与团队采用验证。
+这是[团队开发约定](team-development.md)的操作页。试跑目标是让需求、决定、当前规格、代码与证据形成一条可追溯的路径，后续开发者从模块入口即可接手。收到目标但尚缺细节时读取本页；理解已有规则先进入 Feature 当前 spec。示例使用 [Eventbus 迁移](../specs/platform/eventbus/README.md)，各阶段是否完成以模块当前入口及证据为准。
 
 ## 第一次接到一句话时
 
@@ -41,11 +41,9 @@ docs/specs/platform/eventbus/
     └── change.md                     当前 Patch：已确认政策、分析记录、验收候选和实施切片
 ```
 
-早期 R3 将用户对三个业务例子的答复追加为 RAW-005，并记录为 D6/D7/D8；后续分析和决定持续写回同一 Patch。当前入口为 R13，P1 已完成本地实施验证并接入模块映射，主规格收敛为 p1-v1；剩余迁移、ProtocolApplication 契约及后续实施仍未完成。决定、适用范围和验收以该 Patch 为准，不把局部确认或 P1 通过扩大为整个 Kafka 迁移完成、合并或部署。
+当前规则及生效范围从 [Eventbus spec](../specs/platform/eventbus/spec.md)读取，尚未实施的迁移内容、决定与验收从模块入口进入活动 Patch；本操作页不维护第二份 revision 或决定表。可选分析方法按[接入与写回约定](team-development.md#optional-analysis-skills)嵌入第 2–3 步，已有实际试跑来源保留在原 Patch。
 
-可选分析方法按[接入与写回约定](team-development.md#optional-analysis-skills)嵌入第 2–3 步。本例 R4 用 `grill-with-docs` 对同一 Kafka Patch 试跑：AI 核查四项事实，用户回答两个新增业务问题，R5 将真实答复写成 D10/D11，并同步对应验收及步骤；具体规则只在该 Patch 维护。Skill 的默认输出目录不会自动成为新规格入口；未回答的问题保留 pending。
-
-Eventbus 的后续演进仍回到这个模块；ProtocolApplication 的协议适配职责已按 RAW-015 授权建立[能力域](../specs/protocol/README.md)及[上行 Feature](../specs/protocol/uplink-normalization/README.md)。当前设计由新 spec 维护，Kafka Patch 保留原始决定、历史评估和依赖；部署服务与 Feature 分开映射。各模块确认目标语义后实施，在同一候选形成完整新主规格，完成吸收的 Patch 标为 absorbed 并注明吸收版本。架构图、启动说明和回执各司其职，引用规格中的业务规则。
+ProtocolApplication 的协议适配职责已建立[能力域](../specs/protocol/README.md)及[上行 Feature](../specs/protocol/uplink-normalization/README.md)。该 Feature 的需求与澄清在本地 raw，当前设计在本地 spec；Kafka Patch 保留历史来源和依赖。分别维护实现状态与部署事实，按对应变更在候选内收敛主规格。
 
 ## harness 由什么组成
 

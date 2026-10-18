@@ -7,6 +7,10 @@
 - 合并后验证及当前环境缺口见 [PR #6 后续记录](../../../changelog/2026-10-17-governance-merged-next-plan.md)；[S1 记录](../../../changelog/2026-10-15-specs-current-baseline.md)保留首次收敛时点的候选与验证事实，不承担当前交付状态。
 - 理解真实发送路径时，先读主规格的 [调用边界](spec.md#call-sites)，区分辅助函数行为与发送层是否调用；新上下文接手及文档修正见 [S3 记录](../../../changelog/2026-10-16-specs-clean-clone-takeover.md)。
 
+## 按任务读取
+
+日常理解从当前 spec 的规则、调用边界和验收开始；只有追查需求来源或准备改变这些行为时，再读取相关历史 Patch。规则不变的小修复直接引用条款，认领与验证回原任务/PR；新的行为调整按[团队 Patch 约定](../../../runbook/team-development.md#patch-convergence)维护。本轮仅改导航，不改变 current-v1 规则。
+
 <a id="display-name-patches"></a>
 ## 历史与吸收关系
 
